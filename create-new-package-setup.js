@@ -331,7 +331,6 @@ function showOverlay() {
 
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
-    console.log('Hiding overlay');
 
     // Check if any dropdown with the class name 'hotel_data_options_dropdown_class'is visible and hide it
     let visibleDropdown_1 = document.querySelector('.hotel_data_options_dropdown_class.show');
