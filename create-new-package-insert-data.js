@@ -194,11 +194,12 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelNameInput = document.getElementById('hotel_name_input_id'); // Hotel name input element
         let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id'); // Check-in date input element
         let totalNightsInput = document.getElementById('total_nights_input_id'); // Check-out date input element
-        let roomDescriptionTextArea = document.getElementById('room_description_textarea_id'); // Room description input element
+        let roomDescriptionInput = document.getElementById('room_description_input_id'); // Room description input element
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
+        let roomExtraInfoTextArea = document.getElementById('room_extra_info_textarea_id'); // Room description input element
 
 
-        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionTextArea.value === '') {
+        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionInput.value === '') {
 
             hotel_inputs_submit_button.style.backgroundColor = 'red';
 
@@ -241,9 +242,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                 rightSideContent += ` - ${hotelNameInput.value}\n`;
             }
 
-            rightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionTextArea.value}`;
+            rightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionInput.value}`;
             if (breakfastCheckbox.checked) {
                 rightSideContent += ` شامل الإفطار`;
+            }
+
+            if (roomExtraInfoTextArea.value !== '') {
+                rightSideContent += `\n${roomExtraInfoTextArea.value}`;
             }
 
             // Create h6 element for right side content
@@ -277,8 +282,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_name_input_id').value = '';
             document.getElementById('check_in_check_out_date_input_id').value = '';
             document.getElementById('total_nights_input_id').value = '';
-            document.getElementById('room_description_textarea_id').value = '';
+            document.getElementById('room_description_input_id').value = '';
             document.getElementById('breakfast_checkbox').checked = false;
+            document.getElementById('room_extra_info_textarea_id').value = '';
 
             // Disable the hotel_area_input_id and hotel_name_input_id inputs
             document.getElementById('hotel_area_input_id').disabled = true;
