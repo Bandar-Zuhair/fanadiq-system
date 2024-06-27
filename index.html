@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>فنادق اندونيسيا</title>
+    <link rel="stylesheet" href="create-new-package-insert-data.css" />
+    <link rel="stylesheet" href="create-new-package-setup.css" />
+
+</head>
+
+
+
+
+
+
+<body id="body">
+
+
+    <!-- Header Section -->
+    <header id="header">
+
+
+        <div id="header_div">
+            <img src="فنادق-اندونيسيا/فنادق-اندونيسيا.png" alt="فنادق اندونيسيا">
+            <h1>Fanadiq Indonesia</h1>
+        </div>
+
+        <div class="header_navbar_section" onclick="toggleLinks('support-links')">
+
+
+            <div class="header_navbar_header">
+                <ion-icon name="caret-down-outline"></ion-icon>
+                <span class="header_navbar_title">Work Flow Sections</span>
+            </div>
+
+
+            <div class="header_navbar_links" id="support-links">
+                <a href="#">Create New Voucher</a>
+                <a href="#">Create New Invoice</a>
+                <a href="#">Create New Clint Movements</a>
+                <a href="توافرات-الفنادق/hotel-availability.html">Check Hotel Availability</a>
+            </div>
+
+        </div>
+        <!-- Add more sections as needed -->
+
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- create-new-package-setup -->
+    <!-- create-new-package-setup -->
+    <!-- create-new-package-setup -->
+    <!-- create-new-package-setup -->
+    <!-- create-new-package-setup -->
+
+
+
+
+
+
+
+
+
+    <!-- Create New Package Section -->
+    <section id="create_new_package_section">
+
+
+        <div class="section_title_text_div" id="toggle_clint_elements">
+            <h1 class="section_title_text" title="فنادق اندونيسيا">تفاصيل العميل</h1>
+        </div>
+
+        <div id="dropdown_clint_content" class="dropdown_content_div_class">
+
+            <div class="package_info_input_div">
+
+                <input type="text" id="hotel_person_amount_input_id" placeholder="عدد الاشخاص" readonly>
+
+                <div id="package_date_info_input_div">
+                    <input type="date" id="first_clint_check_in_date_input_id" placeholder="بداية البرنامج" readonly>
+                    <input type="date" id="last_clint_check_out_date_input_id" placeholder="نهاية البرنامج" readonly>
+                </div>
+
+
+                <input type="text" id="clint_company_name_input_id" placeholder="شركة..؟" readonly>
+
+
+                <div class="submit_package_pdf_div">
+                    <button id="clint_inputs_submit_button"
+                        onclick="checkInputsToInsertData('clint_inputs_submit_button')">تم</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="section_title_text_div" id="toggle_hotel_elements">
+            <h1 class="section_title_text" title="فنادق اندونيسيا">تفاصيل الفندق</h1>
+        </div>
+
+        <div id="dropdown_hotel_content" class="dropdown_content_div_class">
+
+            <div class="package_info_input_div">
+                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly
+                    style="cursor: pointer;">
+                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly style="cursor: pointer;">
+                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly style="cursor: pointer;">
+
+                <div id="package_date_info_input_div">
+                    <input type="date" id="check_in_date_input_id" placeholder="تاريخ الدخول" readonly>
+                    <input type="date" id="check_out_date_input_id" placeholder="تاريخ الخروج" readonly>
+                </div>
+
+
+
+                <textarea id="hotel_details_input_id" class="package_details_input_class"
+                    placeholder="وصف الغرفة"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('hotel_details_input_id')">تكبير</button>
+
+
+                <div class="custom_checkbox">
+                    <input type="checkbox" id="breakfast_checkbox">
+                    <label for="breakfast_checkbox">شامل الإفطار</label>
+                </div>
+
+                <div class="submit_package_pdf_div">
+                    <button id="hotel_inputs_submit_button"
+                        onclick="checkInputsToInsertData('hotel_inputs_submit_button')">تم</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="section_title_text_div" id="toggle_package_elements">
+            <h1 class="section_title_text" title="فنادق اندونيسيا">تفاصيل العرض</h1>
+        </div>
+
+        <div id="dropdown_package_content" class="dropdown_content_div_class">
+            <div class="package_info_input_div">
+                <textarea id="package_details_input_id" class="package_details_input_class"
+                    placeholder="العرض شامل..؟"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('package_details_input_id')">تكبير</button>
+
+                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر">
+
+                <!-- Button for exiting full-screen mode -->
+                <div class="submit_package_pdf_div">
+                    <button id="package_inputs_submit_button"
+                        onclick="checkInputsToInsertData('package_inputs_submit_button')">تم</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Company Names Suggestions -->
+        <div id="company_names_dropdown" class="company_names_dropdown_class">
+            <div class="company_name_search_bar_div">
+                <input type="text" id="company_name_search_bar" placeholder="بحث..">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>فييد</h3>
+                <h3>عين ماليزيا</h3>
+                <h3>ترافيل جيت</h3>
+                <h3>هالو بونشاك</h3>
+                <h3>حجوزات كوم</h3>
+                <h3>إنجاز الإتحاد</h3>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="hotel_location_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>بالي</h3>
+            <h3>جاكرتا</h3>
+            <h3>بونشاك</h3>
+            <h3>باندونج</h3>
+            <h3>لومبوك</h3>
+        </div>
+
+        <!-- Dropdown Div For Hotel Area -->
+        <div id="hotel_bali_area_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>كيراماس</h3>
+            <h3>اوبود</h3>
+            <h3>نوسا دوا</h3>
+            <h3>سيمنياك</h3>
+            <h3>كوتا</h3>
+            <h3>جيمباران</h3>
+            <h3>اولواتو</h3>
+        </div>
+
+        <!-- Dropdown Div For Hotel Area in Bali -->
+        <div id="keramas_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Komaneka Keramas</h3>
+        </div>
+
+        <!-- Ubud -->
+        <div id="ubud_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Komaneka Tanggayuda</h3>
+            <h3>Samsara Ubud</h3>
+            <h3>Tejaprana</h3>
+            <h3>Ulaman Eco Luxury</h3>
+        </div>
+
+        <!-- Nusa Dua -->
+        <div id="nusa_dua_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Ulu Segara</h3>
+            <h3>Merusaka Nusa Dua</h3>
+            <h3>Apurva Kempinski</h3>
+            <h3>Merusaka</h3>
+            <h3>Hilton Bali</h3>
+            <h3>The Nest</h3>
+            <h3>Agranusa Signature Villa</h3>
+        </div>
+
+        <!-- Seminyak -->
+        <div id="seminyak_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>The Trans Bali</h3>
+            <h3>Indigo Bali</h3>
+            <h3>Sini Vie Villa</h3>
+        </div>
+
+        <!-- Kuta -->
+        <div id="kuta_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Mamaka By Ovolo</h3>
+            <h3>Aryaduta Kuta Bali</h3>
+            <h3>Tribe</h3>
+        </div>
+
+        <!-- Jimbaran -->
+        <div id="jimbaran_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Movenpick Jimbaran</h3>
+        </div>
+
+        <!-- Uluwatu -->
+        <div id="uluwatu_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Umana Bali</h3>
+        </div>
+
+
+
+
+        <!-- Jakarta -->
+        <div id="jakarta_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Ascott Jakarta</h3>
+            <h3>Citadines Sudirman</h3>
+            <h3>Somerset Sudirman</h3>
+            <h3>Parkroyal Serviced Suites</h3>
+            <h3>Aloft Wahied Hasiem</h3>
+        </div>
+
+
+
+
+        <!-- Puncak -->
+        <div id="puncak_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Grand Aston</h3>
+            <h3>Le Eminence</h3>
+        </div>
+
+
+
+
+
+        <!-- Bandung -->
+        <div id="bandung_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Courtyard Bandung</h3>
+            <h3>The Trans Luxury</h3>
+        </div>
+
+
+
+        <!-- Lombok -->
+        <div id="lombok_hotel_dropdown" class="hotel_data_options_dropdown_class">
+            <h3>Kalandara</h3>
+        </div>
+
+
+
+
+
+        <!-- Dropdown Div For Person Amount -->
+        <div id="person_amount_dropdown">
+            <div class="counter_div">
+                <div class="counter_label">بالغ:</div>
+                <div class="counter_controls">
+                    <button class="counter_btn minus">-</button>
+                    <span class="count">1</span>
+                    <button class="counter_btn plus">+</button>
+                </div>
+            </div>
+            <div class="counter_div">
+                <div class="counter_label">طفل:</div>
+                <div class="counter_controls">
+                    <button class="counter_btn minus">-</button>
+                    <span class="count">0</span>
+                    <button class="counter_btn plus">+</button>
+                </div>
+            </div>
+            <div id="child_age_inputs_container"></div>
+
+            <div class="submit_package_pdf_div">
+                <button id="filter_person_amount_submit_button">تم</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Delete the clicked company logo -->
+        <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
+            <button onclick="deleteClickedCompanyLogo()">حذف</button>
+        </div>
+
+
+
+
+
+
+        <!-- Delete the clicked inserted hotel data -->
+        <div id="ensure_delete_hotel_data_div" class="ensure_your_delete_action">
+            <button onclick="deleteClickedHotelData()">حذف</button>
+        </div>
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Create New Package Insert Data Section -->
+    <!-- Create New Package Insert Data Section -->
+    <!-- Create New Package Insert Data Section -->
+    <!-- Create New Package Insert Data Section -->
+    <!-- Create New Package Insert Data Section -->
+
+
+
+
+
+
+
+
+
+
+    <div class="section_title_text_div" style="cursor: default;">
+        <h1 class="section_title_text" title="فنادق اندونيسيا"
+            style="text-align: right; background: white; color: black; border: 1px solid black;">البكج <ion-icon
+                name="arrow-down-circle-outline"></ion-icon></h1>
+    </div>
+
+    <section id="inserted_package_data_section">
+
+
+        <div id="inserted_company_name_image_position_div">
+            <!-- Dynamic JS Code Here -->
+        </div>
+
+
+        <div id="inserted_clint_data_position_div">
+            <!-- Dynamic JS Code Here -->
+        </div>
+
+
+        <div id="inserted_hotel_data_position_div">
+            <!-- Dynamic JS Code Here -->
+        </div>
+
+
+        <div id="inserted_package_data_position_div">
+            <!-- Dynamic JS Code Here -->
+        </div>
+
+
+
+
+    </section>
+
+    <div id="export_package_pdf_div_id">
+        <button onclick="openPdfDownloadBox()">تحميل</button>
+    </div>
+
+
+
+
+    <!-- Choose pdf file name box -->
+    <div id="name_pdf_file_div">
+        <span onclick="closeDownloadPdfBox()">&times;</span>
+        <input type="text" id="pdf_file_name_input_id" placeholder="إسم الملف..؟">
+        <button id="check_pdf_name_button" onclick="checkThePdfNameToDownload()">تحميل</button>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Picking Date  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+    <!-- Download PDF Link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+    <!-- System Js Filees -->
+    <script src="create-new-package-insert-data.js"></script>
+    <script src="create-new-package-setup.js"></script>
+
+</body>
+
+</html>

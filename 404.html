@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+
+
+<head id="fanadiqindonesia_head">
+
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="فنادق اندونيسيا" />
+    <title>خطأ في العنوان</title>
+    <link rel="stylesheet" href="create-new-package-setup.css" />
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+<body id="body">
+    <!-- Header Section -->
+    <header id="header">
+
+        <div id="header_div">
+            <img src="فنادق-اندونيسيا/error.jpg" alt="فنادق اندونيسيا">
+            <h1>Fanadiq Indonesia</h1>
+        </div>
+
+        <div class="header_navbar_section" onclick="toggleLinks('support-links')">
+
+
+            <div class="header_navbar_header">
+                <ion-icon name="caret-down-outline"></ion-icon>
+                <span class="header_navbar_title">Work Flow Sections</span>
+            </div>
+
+
+            <div class="header_navbar_links" id="support-links">
+                <a href="#">Create New Voucher</a>
+                <a href="#">Create New Invoice</a>
+                <a href="#">Create New Clint Movements</a>
+                <a href="#">Check Hotel Availability</a>
+            </div>
+
+        </div>
+        <!-- Add more sections as needed -->
+
+    </header>
+
+
+
+    <script>
+
+        /* Header Nav Bar */
+        function toggleLinks(id) {
+            var links = document.getElementById(id);
+            if (links.style.maxHeight) {
+                links.style.maxHeight = null;
+            } else {
+                links.style.maxHeight = links.scrollHeight + "px";
+            }
+        }
+
+
+        /* Page Load Header Fade Animation */
+        setTimeout(function () {
+            document.getElementById('body').style.opacity = "1";
+        }, 100);
+
+
+
+        // Create and append script for 'Ionicons' Website Icons (Module Script)
+        let ioniconsModuleScript = document.createElement('script');
+        ioniconsModuleScript.type = 'module';
+        ioniconsModuleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
+        document.body.appendChild(ioniconsModuleScript);
+
+        // Create and append script for 'Ionicons' Website Icons (Module Script)
+        let ioniconsNomoduleScript = document.createElement('script');
+        ioniconsNomoduleScript.setAttribute('nomodule', '');
+        ioniconsNomoduleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js';
+        document.body.appendChild(ioniconsNomoduleScript);
+
+    </script>
+
+</body>
+
+</html>

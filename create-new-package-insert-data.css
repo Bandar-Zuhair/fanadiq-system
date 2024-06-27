@@ -1,0 +1,520 @@
+/* Inserted clint data position */
+#inserted_company_name_image_position_div{
+    background: rgb(172, 209, 235);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inserted_company_name_logo{
+    width: 20vw;
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: 0 0 2px black;
+}
+
+
+
+
+
+
+
+
+
+
+/* Inserted clint data position */
+#inserted_clint_data_position_div {
+    background: rgb(172, 209, 235);
+}
+
+.inserted_clint_data_div {
+    padding: 5px;
+}
+
+.inserted_clint_data_div h6 {
+    font-size: 2vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inserted hotel data position */
+#inserted_hotel_data_position_div {
+    background: rgb(215, 232, 244);
+    border: 1px solid black;
+}
+
+.inserted_hotel_data_div {
+    padding: 10px 5px;
+    /* Add some padding to create space between content and border */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+    border-bottom: 1px solid black;
+    /* Add a thin horizontal line */
+}
+
+.inserted_hotel_data_div:last-child {
+    border-bottom: none;
+    /* Remove the border from the last item */
+}
+
+.inserted_hotel_data_div.dragging {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0.8;
+    position: relative;
+}
+
+.inserted_hotel_data_div.drop-transition {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inserted_hotel_data_div h6 {
+    font-size: 2vw;
+}
+
+.right_side_hotel_data_div {
+    width: 100%;
+}
+
+.left_side_hotel_data_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.left_side_hotel_data_div h6 {
+    text-align: end;
+}
+
+.left_side_hotel_data_div img {
+    width: 15vw;
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: 0 0 2px black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inserted package data position */
+#inserted_package_data_position_div {
+    background: rgb(172, 209, 235);
+}
+
+.inserted_package_data_div {
+    margin-top: 5px 0 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inserted_package_data_div h6 {
+    font-size: 1.5vw;
+}
+
+#package_total_price_h6_id {
+    background: white;
+    color: rgb(27, 0, 125);
+    width: fit-content;
+    padding: 3px 5px;
+    margin: 40px 50px 10px 0;
+    border-radius: 7px;
+    border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Delete box message */
+.ensure_your_delete_action {
+    z-index: 1000;
+    background-color: white;
+    width: fit-content;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 7px;
+    text-align: center;
+    box-shadow: 0 0 5px black;
+    transform: translate(-50%, -100vh);
+    transition: transform 0.5s ease;
+}
+
+.ensure_your_delete_action button {
+    font-size: 3vw;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.ensure_your_delete_action button:hover {
+    box-shadow: 0 0.5px 3px black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Download pdf file */
+#export_package_pdf_div_id {
+    display: none;
+    width: 100%;
+}
+
+#export_package_pdf_div_id button {
+    width: 100%;
+    font-size: 3vw;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+/* Name pdf file box */
+#name_pdf_file_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 5px black;
+    transform: translate(-50%, -100vh);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 95%;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+
+#name_pdf_file_div span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 4vw;
+    color: #888;
+}
+
+#name_pdf_file_div input{
+    width: 90%;
+    font-size: 3vw;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#name_pdf_file_div button{
+    font-size: 2.5vw;
+    margin-top: 10px;
+    padding: 1px 10px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid black;
+    transition: all 0.1s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Queries */
+/* 1250px */
+@media(max-width:1250px) {}
+
+/* 1040px */
+@media(max-width:1040px) {}
+
+/* 950px */
+@media(max-width:950px) {
+    .inserted_company_name_logo{
+        width: 23vw;
+    }
+
+    .inserted_clint_data_div h6 {
+        font-size: 3vw;
+    }
+
+    .inserted_hotel_data_div h6 {
+        font-size: 3vw;
+    }
+
+    .left_side_hotel_data_div img {
+        width: 20vw;
+    }
+
+    .inserted_package_data_div h6 {
+        font-size: 2vw;
+    }
+
+    #package_total_price_h6_id {
+        margin: 30px 40px 10px 0;
+    }
+
+    .ensure_your_delete_action button {
+        font-size: 4vw;
+        padding: 4px;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 4vw;
+    }
+
+    #name_pdf_file_div span {
+        font-size: 6vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 4vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 3.5vw;
+    }
+}
+
+/* 850px */
+@media(max-width:850px) {}
+
+/* 760px */
+@media(max-width:760px) {}
+
+/* 650px */
+@media(max-width:650px) {
+    .ensure_your_delete_action {
+        padding: 10px;
+    }
+
+    .ensure_your_delete_action button {
+        font-size: 5vw;
+        padding: 3px;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 5vw;
+    }
+}
+
+
+/* 580px */
+@media(max-width:580px) {
+    .inserted_company_name_logo{
+        width: 26vw;
+        box-shadow: 0 0 0 black;
+    }
+
+    .inserted_clint_data_div h6 {
+        font-size: 3.5vw;
+    }
+
+    .inserted_hotel_data_div {
+        padding: 3px;
+    }
+
+    .inserted_hotel_data_div h6 {
+        font-size: 3.5vw;
+    }
+
+    .left_side_hotel_data_div img {
+        width: 23vw;
+        box-shadow: 0 0 0 black;
+    }
+
+    .inserted_package_data_div {
+        margin-top: 3px;
+        padding: 3px;
+    }
+
+    .inserted_package_data_div h6 {
+        font-size: 2.5vw;
+    }
+
+    #package_total_price_h6_id {
+        margin: 20px 30px 10px 0;
+    }
+
+    #name_pdf_file_div span {
+        font-size: 7vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 5vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 4.5vw;
+        padding: 1px 5px;
+    }
+}
+
+/* 500px */
+@media(max-width:500px) {}
+
+/* 400px */
+@media(max-width:400px) {
+    .inserted_company_name_logo{
+        width: 29vw;
+    }
+
+    .inserted_clint_data_div {
+        padding: 3px;
+    }
+
+    .inserted_clint_data_div h6 {
+        font-size: 4vw;
+    }
+
+    .inserted_hotel_data_div h6 {
+        font-size: 4vw;
+    }
+
+    .left_side_hotel_data_div img {
+        width: 26vw;
+    }
+
+    .inserted_package_data_div {
+        margin-top: 3px;
+    }
+
+    .inserted_package_data_div h6 {
+        font-size: 3vw;
+    }
+
+    #package_total_price_h6_id {
+        margin: 15px 20px 10px 0;
+    }
+
+    .ensure_your_delete_action {
+        padding: 5px;
+    }
+
+    .ensure_your_delete_action button {
+        font-size: 6vw;
+        padding: 2px;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 6vw;
+    }
+
+    #name_pdf_file_div span {
+        font-size: 8vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 6vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 5.5vw;
+        padding: 1px 3px;
+    }
+}
+
+/* 320px */
+@media(max-width:320px) {}
