@@ -1,0 +1,281 @@
+/* Choose Hotel Location Cards Section */
+#pdf_file_type_div {
+    background: rgb(157, 203, 236);
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0 60px;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0 0 3px 0.5px black;
+}
+
+
+
+
+
+
+
+
+
+
+/* Choose Hotel Location Cards Section */
+.main_sections {
+    background: rgb(215, 232, 244);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+.main_section_title_text_div {
+    width: 100%;
+}
+
+.section_title_text_class {
+    background: rgb(131, 0, 148);
+    color: white;
+    width: 100%;
+    font-size: 3vw;
+    padding: 10px 20px;
+    text-align: center;
+    box-shadow: 0 0 3px 0.5px black;
+    border-radius: 7px;
+    line-height: 1.5;
+}
+
+.choose_hotel_location_card_div_class {
+    background: rgb(157, 203, 236);
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0 60px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0 0 3px 0.5px black;
+}
+
+/* Hide vertical scrollbar */
+.choose_hotel_location_card_div_class::-webkit-scrollbar {
+    display: none;
+}
+
+.hotel_location_card_div {
+    background: rgb(0, 162, 255);
+    min-width: 25vw;
+    width: 25vw;
+    margin: 0 5px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0 0 3px 0.5px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.hotel_location_card_div:hover {
+    transform: scale(1.015);
+    box-shadow: 0 0 3px 0.5px rgb(0, 255, 0);
+}
+
+.hotel_info_card_div {
+    background: rgb(0, 162, 255);
+    min-width: 25vw;
+    width: 25vw;
+    margin: 0 5px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0 0 3px 0.5px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.hotel_info_card_div:hover {
+    transform: scale(1.015);
+    box-shadow: 0 0 3px 0.5px rgb(0, 255, 0);
+}
+
+.hotel_location_img_div img {
+    width: 100%;
+    border-radius: 7px;
+}
+
+.hotel_location_card_text_div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hotel_location_card_text_div h2 {
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Choose Hotel Cards Section */
+#choose_hotel_location_card_div_id {
+    background: rgb(157, 203, 236);
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0 60px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0 0 3px 0.5px black;
+}
+
+/* Hide vertical scrollbar */
+#choose_hotel_location_card_div_id::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Queries */
+/* 1250px */
+@media(max-width:1250px) {}
+
+/* 1040px */
+@media(max-width:1040px) {}
+
+/* 950px */
+@media(max-width:950px) {
+    .hotel_location_card_div {
+        min-width: 35vw;
+        width: 35vw;
+    }
+
+    .hotel_info_card_div {
+        min-width: 35vw;
+        width: 35vw;
+    }
+
+    .hotel_location_card_text_div h2 {
+        font-size: 3vw;
+    }
+}
+
+/* 850px */
+@media(max-width:850px) {
+    .main_sections {
+        padding: 30px 0;
+    }
+}
+
+/* 760px */
+@media(max-width:760px) {
+    .section_title_text_class {
+        font-size: 4vw;
+        padding: 8px 14px;
+    }
+}
+
+/* 650px */
+@media(max-width:650px) {
+    .main_sections {
+        padding: 20px 0;
+    }
+
+    #pdf_file_type_div {
+        padding: 10px 0 40px;
+    }
+
+    .choose_hotel_location_card_div_class {
+        padding: 10px 0 40px;
+    }
+}
+
+
+/* 580px */
+@media(max-width:580px) {
+}
+
+/* 500px */
+@media(max-width:500px) {
+    .section_title_text_class {
+        font-size: 5vw;
+        padding: 8px;
+    }
+
+    .hotel_location_card_div {
+        min-width: 40vw;
+        width: 40vw;
+    }
+
+    .hotel_info_card_div {
+        min-width: 40vw;
+        width: 40vw;
+    }
+
+    .hotel_location_card_text_div h2 {
+        font-size: 4vw;
+    }
+
+    .main_sections {
+        padding: 15px 0;
+    }
+
+    #pdf_file_type_div {
+        padding: 10px 0 30px;
+    }
+
+    .choose_hotel_location_card_div_class {
+        padding: 10px 0 30px;
+    }
+}
+
+/* 400px */
+@media(max-width:400px) {
+}
+
+/* 320px */
+@media(max-width:320px) {
+    .section_title_text_class {
+        font-size: 6vw;
+        padding: 6px;
+    }
+
+    .main_sections {
+        padding: 10px 0;
+    }
+
+    #pdf_file_type_div {
+        padding: 10px 0 25px;
+    }
+
+    .choose_hotel_location_card_div_class {
+        padding: 10px 0 25px;
+    }
+}
