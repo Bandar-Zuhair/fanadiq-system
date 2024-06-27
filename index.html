@@ -129,19 +129,23 @@
 
 
                 <input type="text" id="check_in_check_out_date_input_id" placeholder="تاريخ الحجز" autocomplete="off">
-                <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" readonly>
+                <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
 
 
-                <textarea id="room_description_textarea_id" class="package_details_input_class"
-                    placeholder="وصف الغرفة"></textarea>
-                <button class="fullscreenToggleBtn_class"
-                    onclick="toggleFullscreen('room_description_textarea_id')">تكبير</button>
+                <input type="text" id="room_description_input_id" placeholder="وصف الغرفة" autocomplete="off">
 
 
                 <div class="custom_checkbox">
                     <input type="checkbox" id="breakfast_checkbox">
                     <label for="breakfast_checkbox">شامل الإفطار</label>
                 </div>
+
+
+                <textarea id="room_extra_info_textarea_id" class="package_details_input_class"
+                    placeholder="معلومات اكثر؟"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('room_extra_info_textarea_id')">تكبير</button>
+
 
                 <div class="submit_package_pdf_div">
                     <button id="hotel_inputs_submit_button"
