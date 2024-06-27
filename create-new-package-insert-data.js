@@ -774,43 +774,73 @@ downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
     let section = document.getElementById('inserted_package_data_section');
 
-    // Use html2canvas to create a canvas of the section with a balance between quality and size
-    html2canvas(section, { scale: 2 }).then(canvas => {
-        let imgData = canvas.toDataURL('image/jpeg', 0.7); // Use JPEG format with 70% quality for smaller file size
-        let pdf = new jsPDF('p', 'mm', 'a4');
-        let imgWidth = 210; // A4 width in mm
-        let pageHeight = 295; // A4 height in mm
-        let imgHeight = canvas.height * imgWidth / canvas.width;
+    // Create a new jsPDF instance
+    let pdf = new jsPDF('p', 'mm', 'a4');
 
-        // Calculate offset to center the image on the PDF
-        let offsetX = (imgWidth - imgWidth) / 2; // This should be 0 as imgWidth is the same for both sides
-        let offsetY = (pageHeight - imgHeight) / 2;
+    // Set the background color for the PDF
+    let imgWidth = 210; // A4 width in mm
+    let pageHeight = pdf.internal.pageSize.height;
 
-        let heightLeft = imgHeight;
-        let position = 0;
+    pdf.setFillColor(172, 209, 235);
+    pdf.rect(0, 0, imgWidth, pageHeight, 'F');
 
-        // Add background color to each page of the PDF
-        pdf.setFillColor(172, 209, 235);
-        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
+    // Get the text content of the section
+    let textContent = section.innerText || section.textContent;
 
-        // Add scaled image to PDF with compression and center it
-        pdf.addImage(imgData, 'JPEG', offsetX, offsetY, imgWidth, imgHeight);
+    // Set the font size and calculate line height
+    pdf.setFontSize(12);
+    let lineHeight = pdf.getLineHeight() / pdf.internal.scaleFactor;
+    let margins = {
+        top: 20,
+        bottom: 20,
+        left: 20,
+        width: 170
+    };
 
-        heightLeft -= pageHeight;
+    // Split the text content into pages if necessary
+    let lines = pdf.splitTextToSize(textContent, margins.width);
+    let y = margins.top;
+    let totalHeight = lines.length * lineHeight;
 
-        while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
+    // Centering the content vertically
+    let verticalOffset = (pageHeight - totalHeight) / 2;
+
+    if (verticalOffset < margins.top) {
+        verticalOffset = margins.top;
+    }
+
+    y = verticalOffset;
+
+    // Add each line of text to the PDF
+    lines.forEach(line => {
+        if (y + lineHeight > pageHeight - margins.bottom) {
             pdf.addPage();
             pdf.setFillColor(172, 209, 235);
             pdf.rect(0, 0, imgWidth, pageHeight, 'F');
-            pdf.addImage(imgData, 'JPEG', offsetX, position + offsetY, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
+            y = margins.top;
         }
+        pdf.text(line, margins.left, y);
+        y += lineHeight;
+    });
+
+    // Use html2canvas to create a canvas of the section for the images
+    html2canvas(section, { scale: 2 }).then(canvas => {
+        let imgData = canvas.toDataURL('image/jpeg', 0.7); // Use JPEG format with 70% quality for smaller file size
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+
+        // Calculate vertical and horizontal offset to center the image on the PDF
+        let imgXOffset = (imgWidth - imgWidth) / 2;
+        let imgYOffset = (pageHeight - imgHeight) / 2;
+
+        // Add scaled image to PDF with compression and center it
+        pdf.addImage(imgData, 'JPEG', imgXOffset, imgYOffset, imgWidth, imgHeight, '', 'FAST');
 
         // Save the PDF
         pdf.save(pdfName);
     });
 };
+
+
 
 
 
