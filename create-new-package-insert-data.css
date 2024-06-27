@@ -23,6 +23,7 @@
 
 /* Inserted clint data position */
 #inserted_clint_data_position_div {
+    display: none;
     background: rgb(172, 209, 235);
     border-bottom: 0.5px solid black;
 }
@@ -122,18 +123,17 @@
 /* Inserted package data position */
 #inserted_package_data_position_div {
     background: rgb(172, 209, 235);
-    border-top: 0.5px solid black;
 }
 
 .inserted_package_data_div {
-    padding: 5px;
+    padding: 15px 15px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .inserted_package_data_div h6 {
-    font-size: 1.5vw;
+    font-size: 1.7vw;
 }
 
 #package_total_price_h6_id {
@@ -226,6 +226,9 @@
     font-size: 3vw;
     text-align: center;
     cursor: pointer;
+    border: 0.5px solid black;
+    border-radius: 0;
+    box-shadow: 0 0 0 black;
     transition: all 0.2s ease-in-out;
 }
 
@@ -249,6 +252,7 @@
     top: 50%;
     left: 50%;
     box-shadow: 0 0 5px black;
+    border: 1px solid black;
     transform: translate(-50%, -100vh);
     background-color: #fefefe;
     padding: 20px;
@@ -347,7 +351,7 @@
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2vw;
+        font-size: 2.2vw;
     }
 
     #package_total_price_h6_id {
@@ -423,11 +427,11 @@
     }
 
     .inserted_package_data_div {
-        padding: 3px;
+        padding: 10px 10px 0;
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2.5vw;
+        font-size: 2.7vw;
     }
 
     #package_total_price_h6_id {
@@ -474,7 +478,7 @@
     }
 
     .inserted_package_data_div h6 {
-        font-size: 3vw;
+        font-size: 3.2vw;
     }
 
     #package_total_price_h6_id {
