@@ -4,53 +4,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-    // Function To Format the date etxt in the package final text
-    function formatDateString(date, isStartDate, compareDate = null, addDash = false) {
-        // Array of month names
-        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        // Get the day of the month from the date
-        let day = date.getDate();
-        // Get the month name from the date
-        let month = months[date.getMonth()];
-        // Get the full year from the date
-        let year = date.getFullYear();
-
-        // Check if there is a comparison date provided
-        if (compareDate) {
-            // Get the month and year of the comparison date
-            let compareMonth = compareDate.getMonth();
-            let compareYear = compareDate.getFullYear();
-
-            // Check if the years are the same
-            if (year === compareYear) {
-                // Check if the months are the same
-                if (date.getMonth() === compareMonth) {
-                    // If it's the start date, return only the day
-                    if (isStartDate) {
-                        return `${day}`;
-                    } else {
-                        // If it's not the start date, return the day and month
-                        return `${day} ${month}`;
-                    }
-                } else {
-                    // If the months are different, return the day and month
-                    return `${day} ${month}`;
-                }
-            } else {
-                // If the years are different, format with year based on addDash flag
-                if (addDash) {
-                    return `${day} new year ${year} ${month}`;
-                } else {
-                    return `${day} this year ${year} ${month}`;
-                }
-            }
-        } else {
-            // If there is no comparison date, return the full date
-            return `${day} ${month} ${year}`;
-        }
-    }
-
-
     // Check if the clicked button is the 'clint_inputs_submit_button'
     if (clickedButtonId === 'clint_inputs_submit_button') {
 
@@ -59,6 +12,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let personAmountInput = document.getElementById('hotel_person_amount_input_id');
         let firstCheckInDateInput = document.getElementById('first_clint_check_in_date_input_id');
         let lastCheckOutDateInput = document.getElementById('last_clint_check_out_date_input_id');
+        let allTotalNightsInput = document.getElementById('all_total_nights_input_id');
         let clintCompanyNameInput = document.getElementById('clint_company_name_input_id');
         let childAgeInputs = document.querySelectorAll('.child_age_input');
 
@@ -79,64 +33,58 @@ checkInputsToInsertData = function (clickedButtonId) {
             }, 500);
 
 
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
 
 
-            // Create a new div element to insert client data
-            let insertedClintDataDiv = document.createElement('div');
-            insertedClintDataDiv.classList.add('inserted_clint_data_div');
+            if (clintCompanyNameInput.value !== '') {
+                // Create a new image element for the company logo
+                let insertedCompanyNameLogo = document.createElement('img');
+                // Replace spaces with dashes in the company name
+                let companyNameWithoutSpaces = clintCompanyNameInput.value.replace(/\s+/g, '-');
+                insertedCompanyNameLogo.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
+                insertedCompanyNameLogo.classList.add('inserted_company_name_logo');
+                insertedCompanyNameLogo.onclick = function () {
+                    event.preventDefault(); // Prevent the default behavior of the click event
+                    event.stopPropagation(); // Stop the event from propagating further
 
 
-            // Create a new image element for the company logo
-            let insertedCompanyNameLogo = document.createElement('img');
-            // Replace spaces with dashes in the company name
-            let companyNameWithoutSpaces = clintCompanyNameInput.value.replace(/\s+/g, '-');
-            insertedCompanyNameLogo.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
-            insertedCompanyNameLogo.classList.add('inserted_company_name_logo');
-            insertedCompanyNameLogo.onclick = function(){
-                event.preventDefault(); // Prevent the default behavior of the click event
-                event.stopPropagation(); // Stop the event from propagating further
+                    // Create overlay layer
+                    let overlayLayer = document.createElement('div');
+                    overlayLayer.className = 'black_overlay';
+                    overlayLayer.id = 'black_overlay_id';
+                    document.body.appendChild(overlayLayer);
 
-
-                // Create overlay layer
-                let overlayLayer = document.createElement('div');
-                overlayLayer.className = 'black_overlay';
-                overlayLayer.id = 'black_overlay_id';
-                document.body.appendChild(overlayLayer);
-
-                // Show overlay layer with smooth opacity transition
-                setTimeout(() => {
-                    overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                }, 100);
-
-                // Slide in delete box options div
-                let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
-
-                // Smoothly slide to the middle of the screen
-                setTimeout(() => {
-                    editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                }, 50); // Adjust timing as needed
-
-                // Event listener to close overlay and delete box div on click outside
-                overlayLayer.onclick = () => {
-                    // Hide delete box options div
-                    editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                    // Hide overlay layer with opacity transition
-                    overlayLayer.style.opacity = '0';
-
-                    // Remove overlay and delete box div from DOM after transition
+                    // Show overlay layer with smooth opacity transition
                     setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
+                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+                    }, 100);
+
+                    // Slide in delete box options div
+                    let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
+
+                    // Smoothly slide to the middle of the screen
+                    setTimeout(() => {
+                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                    }, 50); // Adjust timing as needed
+
+                    // Event listener to close overlay and delete box div on click outside
+                    overlayLayer.onclick = () => {
+                        // Hide delete box options div
+                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
+
+                        // Hide overlay layer with opacity transition
+                        overlayLayer.style.opacity = '0';
+
+                        // Remove overlay and delete box div from DOM after transition
+                        setTimeout(() => {
+                            document.body.removeChild(overlayLayer);
+                        }, 300); // Match transition duration in CSS
+                    };
                 };
-            };
 
-            // Clear previous company logo and insert the new logo div
-            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-            document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogo);
-
+                // Clear previous company logo and insert the new logo div
+                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+                document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogo);
+            }
 
 
             /* Function to delete company logo */
@@ -153,7 +101,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Hide overlay layer with opacity transition
                 let overlayLayer = document.getElementById('black_overlay_id')
-                
+
                 overlayLayer.style.opacity = '0';
 
                 // Remove overlay and delete box div from DOM after transition
@@ -162,6 +110,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }, 300); // Match transition duration in CSS
             }
 
+
+
+
+
+            // Create a new div element to insert client data
+            let insertedClintDataDiv = document.createElement('div');
+            insertedClintDataDiv.classList.add('inserted_clint_data_div');
 
 
             // Praper the person amount text
@@ -176,61 +131,29 @@ checkInputsToInsertData = function (clickedButtonId) {
             }
 
 
-            // Get the input values as text
-            let firstCheckInDateReadyText = firstCheckInDateInput.value;
-            let lastCheckOutDateReadyText = lastCheckOutDateInput.value;
-
-            // Convert the input text to Date objects
-            let startDate = new Date(firstCheckInDateReadyText);
-            let endDate = new Date(lastCheckOutDateReadyText);
-            // Calculate the difference in time between the dates
-            let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-            // Calculate the number of nights between the dates
-            let nightCount = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate nights
-
-            // Format the check-in and check-out dates
-            let formattedCheckInDate = formatDateString(startDate, true, endDate, false);
-            let formattedCheckOutDate = formatDateString(endDate, false, startDate, startDate.getFullYear() !== endDate.getFullYear());
-
-            // Check if the check-in and check-out dates are in different years
-            if (startDate.getFullYear() !== endDate.getFullYear()) {
-
-                if (clintCompanyNameInput.value === '') {
-
-                    // Create an h6 element for the check-in date
-                    let h6CheckInDifferentYears = document.createElement('h6');
-                    h6CheckInDifferentYears.innerText = `بكج جديد\n${personAmountText}\nمن\n${formattedCheckInDate}\nالى\n${formattedCheckOutDate}\nمجموع الليالي ${nightCount}`;
-                    insertedClintDataDiv.appendChild(h6CheckInDifferentYears);
-                } else {
-
-                    // Create an h6 element for the check-in date
-                    let h6CheckInDifferentYears = document.createElement('h6');
-                    h6CheckInDifferentYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\nمن\n${formattedCheckInDate}\nالى\n${formattedCheckOutDate}\nمجموع الليالي ${nightCount}`;
-                    insertedClintDataDiv.appendChild(h6CheckInDifferentYears);
-                }
 
 
+            if (clintCompanyNameInput.value === '') {
+
+                // If the years are the same, display both dates in a single h6 element
+                let h6CheckInSameYears = document.createElement('h6');
+                h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\nمن ${firstCheckInDateInput.value} الى ${lastCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                insertedClintDataDiv.appendChild(h6CheckInSameYears);
             } else {
 
-                if (clintCompanyNameInput.value === '') {
-
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\nمن ${formattedCheckInDate} الى ${formattedCheckOutDate}\nمجموع الليالي ${nightCount}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-                } else {
-
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\nمن ${formattedCheckInDate} الى ${formattedCheckOutDate}\nمجموع الليالي ${nightCount}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-                }
-
+                // If the years are the same, display both dates in a single h6 element
+                let h6CheckInSameYears = document.createElement('h6');
+                h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\nمن ${firstCheckInDateInput.value} الى ${lastCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                insertedClintDataDiv.appendChild(h6CheckInSameYears);
             }
+
 
             // Clear previous client data and insert the new data div
             document.getElementById('inserted_clint_data_position_div').innerHTML = '';
             document.getElementById('inserted_clint_data_position_div').appendChild(insertedClintDataDiv);
+
+
+            document.getElementById('inserted_clint_data_position_div').style.display = 'block';
         }
 
 
@@ -251,11 +174,12 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelNameInput = document.getElementById('hotel_name_input_id'); // Hotel name input element
         let checkInDateInput = document.getElementById('check_in_date_input_id'); // Check-in date input element
         let checkOutDateInput = document.getElementById('check_out_date_input_id'); // Check-out date input element
-        let roomDescriptionInput = document.getElementById('hotel_details_input_id'); // Room description input element
+        let totalNightsInput = document.getElementById('total_nights_input_id'); // Check-out date input element
+        let roomDescriptionTextArea = document.getElementById('room_description_textarea_id'); // Room description input element
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
 
 
-        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInDateInput.value === '' || checkOutDateInput.value === '' || roomDescriptionInput.value === '') {
+        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInDateInput.value === '' || checkOutDateInput.value === '' || roomDescriptionTextArea.value === '') {
 
             hotel_inputs_submit_button.style.backgroundColor = 'red';
 
@@ -272,13 +196,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                 hotel_inputs_submit_button.style.backgroundColor = 'white';
             }, 500);
 
-
             /* Show the download button */
             document.getElementById('export_package_pdf_div_id').style.display = 'block';
 
-
             // Create a new div element to insert hotel data
             let insertedHotelDataDiv = document.createElement('div');
+            let uniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
+            insertedHotelDataDiv.id = uniqueId; // Assign the unique ID to the div
             insertedHotelDataDiv.classList.add('inserted_hotel_data_div');
 
             // Right side content div
@@ -289,64 +213,19 @@ checkInputsToInsertData = function (clickedButtonId) {
             let leftSideDiv = document.createElement('div');
             leftSideDiv.classList.add('left_side_hotel_data_div');
 
-
-
-
-
-            // Get the input values as text
-            let checkInDateReadyText = checkInDateInput.value;
-            let checkOutDateReadyText = checkOutDateInput.value;
-
-            // Convert the input text to Date objects
-            let startDate = new Date(checkInDateReadyText);
-            let endDate = new Date(checkOutDateReadyText);
-            // Calculate the difference in time between the dates
-            let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-            // Calculate the number of nights between the dates
-            let nightCount = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate nights
-
-            // Format the check-in and check-out dates
-            let formattedCheckInDate = formatDateString(startDate, true, endDate, false);
-            let formattedCheckOutDate = formatDateString(endDate, false, startDate, startDate.getFullYear() !== endDate.getFullYear());
-
             // Arrange content for the right side
             let rightSideContent = `${hotelLocationInput.value}`;
 
-            // Check if the check-in and check-out dates are in different years
-            if (startDate.getFullYear() !== endDate.getFullYear()) {
-                /* Also check if the 'hotelAreaInput' contain text or no */
-                if (hotelAreaInput.value !== '') {
-                    rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}`;
-
-                } else {
-                    rightSideContent += ` - ${hotelNameInput.value}`;
-
-                }
-
-                /* in case both dates are in different years */
-                rightSideContent += `\nمن\n${formattedCheckInDate}\nالى\n${formattedCheckOutDate}\nمجموع الليالي ${nightCount}\n${roomDescriptionInput.value}`;
-                if (breakfastCheckbox.checked) {
-                    rightSideContent += ` شامل الإفطار`;
-                }
-
+            if (hotelAreaInput.value !== '') {
+                rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}`;
             } else {
-                if (hotelAreaInput.value !== '') {
-                    /* Also check if the 'hotelAreaInput' contain text or no */
-                    rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}`;
-                } else {
-                    rightSideContent += ` - ${hotelNameInput.value}`;
-                }
-
-                /* in case both dates are in the same years */
-                rightSideContent += `\nمن ${formattedCheckInDate} الى ${formattedCheckOutDate}\nمجموع الليالي ${nightCount}\n${roomDescriptionInput.value}`;
-                if (breakfastCheckbox.checked) {
-                    rightSideContent += ` شامل الإفطار`;
-                }
-
+                rightSideContent += ` - ${hotelNameInput.value}`;
             }
 
-
-
+            rightSideContent += `\nمن ${checkInDateInput.value} الى ${checkOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionTextArea.value}`;
+            if (breakfastCheckbox.checked) {
+                rightSideContent += ` شامل الإفطار`;
+            }
 
             // Create h6 element for right side content
             let rightSideH6 = document.createElement('h6');
@@ -359,50 +238,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Create img element for left side content
             let hotelImg = document.createElement('img');
 
-            // Function to show edit or delete the inserted hotel data
-            hotelImg.onclick = (event) => {
-                event.preventDefault(); // Prevent the default behavior of the click event
-                event.stopPropagation(); // Stop the event from propagating further
-
-                // Store the current hotel data div
-                currentHotelDataDiv = event.target.closest('.inserted_hotel_data_div');
-
-                // Create overlay layer
-                let overlayLayer = document.createElement('div');
-                overlayLayer.className = 'black_overlay';
-                document.body.appendChild(overlayLayer);
-
-                // Show overlay layer with smooth opacity transition
-                setTimeout(() => {
-                    overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                }, 100);
-
-                // Slide in delete box options div
-                let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
-
-                // Smoothly slide to the middle of the screen
-                setTimeout(() => {
-                    editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                }, 50); // Adjust timing as needed
-
-                // Event listener to close overlay and delete box div on click outside
-                overlayLayer.onclick = () => {
-                    // Hide delete box options div
-                    editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                    // Hide overlay layer with opacity transition
-                    overlayLayer.style.opacity = '0';
-
-                    // Remove overlay and delete box div from DOM after transition
-                    setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
-                };
-            };
-
-
-            /* Enter the hotel image src value and then append it */
-            hotelImg.src = `صور-الفنادق/${hotelImgSrcReadyText}.jpg`; // Replace with your image path
+            hotelImg.src = `صور-الفنادق/${hotelImgSrcReadyText}.jpg`;
             leftSideDiv.appendChild(hotelImg);
 
             // Append left and right side content to insertedHotelDataDiv
@@ -415,13 +251,15 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
             // Get references to all input elements and the ensure text element
             document.getElementById('hotel_location_input_id').value = '';
             document.getElementById('hotel_area_input_id').value = '';
             document.getElementById('hotel_name_input_id').value = '';
             document.getElementById('check_in_date_input_id').value = '';
             document.getElementById('check_out_date_input_id').value = '';
-            document.getElementById('hotel_details_input_id').value = '';
+            document.getElementById('total_nights_input_id').value = '';
+            document.getElementById('room_description_textarea_id').value = '';
             document.getElementById('breakfast_checkbox').checked = false;
 
             // Disable the hotel_area_input_id and hotel_name_input_id inputs
@@ -430,19 +268,22 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
+
             // Define a global variable to store the reference
             let currentHotelDataDiv;
 
-
-            // Function to handle delete or edit button click
+            // Function to handle delete clicked hotel data
             deleteClickedHotelData = function () {
-                let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
                 let overlayLayer = document.querySelector('.black_overlay');
 
                 // Delete the corresponding inserted hotel data div
                 currentHotelDataDiv.remove();
 
                 // Hide edit/delete options div
+                let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
                 editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
@@ -452,24 +293,48 @@ checkInputsToInsertData = function (clickedButtonId) {
                 setTimeout(() => {
                     document.body.removeChild(overlayLayer);
                 }, 300); // Match transition duration in CSS
+
+                // Clear currentHotelDataDiv reference
+                currentHotelDataDiv = null;
             }
 
-
-
-
-
-            // Function to praper drag and drop 'insertedHotelDataDiv' elements functionality
+            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function initializeDragAndDrop() {
-                let hotelImgs = document.querySelectorAll('.left_side_hotel_data_div img'); // Select all hotel images for drag handles
 
-                // Add event listeners for each hotelImg element
-                hotelImgs.forEach((img) => {
-                    // Event listener for mouse down (dragging starts)
-                    img.addEventListener('mousedown', mouseDown);
+                // Function to show edit or delete the inserted hotel data
+                hotelImg.onclick = (event) => {
+                    let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
+                    currentHotelDataDiv = event.target.closest('.inserted_hotel_data_div');
 
-                    // Event listener for touch start (dragging starts)
-                    img.addEventListener('touchstart', touchStart);
-                });
+                    // Create an overlay layer for better visual effect
+                    let overlayLayer = document.createElement('div');
+                    overlayLayer.classList.add('black_overlay');
+                    document.body.appendChild(overlayLayer);
+                    setTimeout(() => {
+                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                    }, 50);
+
+                    // Click handler to close overlay and delete box div on click outside
+                    overlayLayer.onclick = () => {
+                        // Hide delete box options div
+                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
+
+                        // Hide overlay layer with opacity transition
+                        overlayLayer.style.opacity = '0';
+
+                        // Remove overlay and delete box div from DOM after transition
+                        setTimeout(() => {
+                            document.body.removeChild(overlayLayer);
+                        }, 300); // Match transition duration in CSS
+                    };
+
+                    // Prevent overlayLayer click propagation to avoid immediate closure
+                    overlayLayer.addEventListener('click', (event) => {
+                        event.stopPropagation(); // Prevent immediate closure of overlay on click
+                    });
+                };
+
 
                 // Event listener for the drop zone (inserted_hotel_data_position_div)
                 let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
@@ -568,15 +433,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Function to handle mouse up event
                 function mouseUp(event) {
                     let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    draggingElement.classList.remove('dragging'); // Remove dragging class
-                    draggingElement.style.transform = ''; // Reset transform after dragging ends
-                    draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
 
-                    // Add a class to trigger the smooth transition effect
-                    draggingElement.classList.add('drop-transition');
-                    setTimeout(() => {
-                        draggingElement.classList.remove('drop-transition');
-                    }, 300); // Duration of the transition
+                    // Check if draggingElement exists before proceeding
+                    if (draggingElement) {
+                        draggingElement.classList.remove('dragging'); // Remove dragging class
+                        draggingElement.style.transform = ''; // Reset transform after dragging ends
+                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+
+                        // Add a class to trigger the smooth transition effect
+                        draggingElement.classList.add('drop-transition');
+                        setTimeout(() => {
+                            draggingElement.classList.remove('drop-transition');
+                        }, 300); // Duration of the transition
+                    }
 
                     document.removeEventListener('mousemove', mouseMove); // Stop listening for mouse move events
                     document.removeEventListener('mouseup', mouseUp); // Stop listening for mouse up events
@@ -588,15 +457,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Function to handle touch end event
                 function touchEnd(event) {
                     let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    draggingElement.classList.remove('dragging'); // Remove dragging class
-                    draggingElement.style.transform = ''; // Reset transform after dragging ends
-                    draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
 
-                    // Add a class to trigger the smooth transition effect
-                    draggingElement.classList.add('drop-transition');
-                    setTimeout(() => {
-                        draggingElement.classList.remove('drop-transition');
-                    }, 300); // Duration of the transition
+                    // Check if draggingElement exists before proceeding
+                    if (draggingElement) {
+                        draggingElement.classList.remove('dragging'); // Remove dragging class
+                        draggingElement.style.transform = ''; // Reset transform after dragging ends
+                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+
+                        // Add a class to trigger the smooth transition effect
+                        draggingElement.classList.add('drop-transition');
+                        setTimeout(() => {
+                            draggingElement.classList.remove('drop-transition');
+                        }, 300); // Duration of the transition
+                    }
 
                     document.removeEventListener('touchmove', touchMove); // Stop listening for touch move events
                     document.removeEventListener('touchend', touchEnd); // Stop listening for touch end events
@@ -604,8 +477,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Enable scrolling
                     document.body.style.overflow = ''; // Re-enable page scrolling
                 }
+
+
+                // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
+                let insertedHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
+                insertedHotelDataDivs.forEach((div) => {
+                    div.addEventListener('mousedown', mouseDown);
+                    div.addEventListener('touchstart', touchStart);
+                });
             }
-            // Call the initializeDragAndDrop function to set up drag-and-drop functionality
+
+            // Call the initializeDragAndDrop function to set up delete and drag-and-drop functionality
             initializeDragAndDrop();
         }
 
@@ -629,11 +511,11 @@ checkInputsToInsertData = function (clickedButtonId) {
     } else {
 
         // Get references to all input elements and the ensure text element
-        let packageDetailsInput = document.getElementById('package_details_input_id'); // Person amount input element
+        let packageDetailsTextArea = document.getElementById('package_details_textarea_id'); // Person amount input element
         let packageTotalPriceInput = document.getElementById('package_totla_price_input_id'); // Person amount input element
 
         // If Not All Inputs Are Valid, Show The Error Message
-        if (packageDetailsInput.value === '' || packageTotalPriceInput.value === '') {
+        if (packageDetailsTextArea.value === '' || packageTotalPriceInput.value === '') {
             package_inputs_submit_button.style.backgroundColor = 'red';
 
             // Hide ensure text after 2 seconds
@@ -653,15 +535,11 @@ checkInputsToInsertData = function (clickedButtonId) {
             }, 500);
 
 
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-
             // Create a new div element to insert client data
             let insertedPackageDataDiv = document.createElement('div');
             insertedPackageDataDiv.classList.add('inserted_package_data_div');
 
-            let packageDetailsReayText = packageDetailsInput.value;
+            let packageDetailsReayText = packageDetailsTextArea.value;
             let packageTotalPriceReayText = packageTotalPriceInput.value;
 
             // Replace multiple consecutive new line characters with a single new line character
@@ -769,76 +647,80 @@ checkThePdfNameToDownload = function () {
 }
 
 
-/* Function to download the pdf file with the name of the 'pdfName' value */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
-    let section = document.getElementById('inserted_package_data_section');
+    let section1 = document.getElementById('inserted_package_data_section_1');
+    let section2 = document.getElementById('inserted_package_data_section_2');
+    let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
+    let packageDataDiv = document.getElementById('inserted_package_data_position_div');
 
-    // Create a new jsPDF instance
+    // Function to check if a div has any child elements
+    let hasElements = function (div) {
+        return div && div.children.length > 0;
+    };
+
+    // Create a new jsPDF instance with A4 dimensions
     let pdf = new jsPDF('p', 'mm', 'a4');
 
     // Set the background color for the PDF
-    let imgWidth = 210; // A4 width in mm
+    let imgWidth = pdf.internal.pageSize.width;
     let pageHeight = pdf.internal.pageSize.height;
 
-    pdf.setFillColor(172, 209, 235);
-    pdf.rect(0, 0, imgWidth, pageHeight, 'F');
-
-    // Get the text content of the section
-    let textContent = section.innerText || section.textContent;
-
-    // Set the font size and calculate line height
-    pdf.setFontSize(12);
-    let lineHeight = pdf.getLineHeight() / pdf.internal.scaleFactor;
-    let margins = {
-        top: 20,
-        bottom: 20,
-        left: 20,
-        width: 170
-    };
-
-    // Split the text content into pages if necessary
-    let lines = pdf.splitTextToSize(textContent, margins.width);
-    let y = margins.top;
-    let totalHeight = lines.length * lineHeight;
-
-    // Centering the content vertically
-    let verticalOffset = (pageHeight - totalHeight) / 2;
-
-    if (verticalOffset < margins.top) {
-        verticalOffset = margins.top;
-    }
-
-    y = verticalOffset;
-
-    // Add each line of text to the PDF
-    lines.forEach(line => {
-        if (y + lineHeight > pageHeight - margins.bottom) {
+    // Function to add content to the PDF
+    let addContentToPDF = function (canvas, isFirstPage) {
+        if (!isFirstPage) {
             pdf.addPage();
-            pdf.setFillColor(172, 209, 235);
-            pdf.rect(0, 0, imgWidth, pageHeight, 'F');
-            y = margins.top;
         }
-        pdf.text(line, margins.left, y);
-        y += lineHeight;
-    });
 
-    // Use html2canvas to create a canvas of the section for the images
-    html2canvas(section, { scale: 2 }).then(canvas => {
+        // Set background color
+        pdf.setFillColor(172, 209, 235);
+        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
+
         let imgData = canvas.toDataURL('image/jpeg', 0.7); // Use JPEG format with 70% quality for smaller file size
         let imgHeight = canvas.height * imgWidth / canvas.width;
 
-        // Calculate vertical and horizontal offset to center the image on the PDF
+        // Calculate vertical and horizontal offset to center the image on the PDF for the first page
         let imgXOffset = (imgWidth - imgWidth) / 2;
-        let imgYOffset = (pageHeight - imgHeight) / 2;
+        let imgYOffset = isFirstPage ? (pageHeight - imgHeight) / 2 : 0; // Center for the first page, start from the top for the second page
 
         // Add scaled image to PDF with compression and center it
         pdf.addImage(imgData, 'JPEG', imgXOffset, imgYOffset, imgWidth, imgHeight, '', 'FAST');
+    };
 
-        // Save the PDF
-        pdf.save(pdfName);
-    });
+    // Check if the package data div contains elements
+    if (hasElements(hotelDataDiv) && hasElements(packageDataDiv)) {
+        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_1)
+        html2canvas(section1, { scale: 2 }).then(canvas1 => {
+            addContentToPDF(canvas1, true);
+
+            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_2)
+            html2canvas(section2, { scale: 2 }).then(canvas2 => {
+                addContentToPDF(canvas2, false);
+
+                // Save the PDF
+                pdf.save(pdfName);
+            });
+        });
+    } else if (hasElements(hotelDataDiv)) {
+        // Only generate PDF with the first section
+        html2canvas(section1, { scale: 2 }).then(canvas1 => {
+            addContentToPDF(canvas1, true);
+
+            // Save the PDF
+            pdf.save(pdfName);
+        });
+    }
 };
+
+
+
+
+
+
+
+
+
+
 
 
 
