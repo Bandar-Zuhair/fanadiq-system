@@ -419,6 +419,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     min-height: 50vh;
     /* Set the minimum height to 50% of the viewport width */
+    padding: 5px 0;
     position: fixed;
     bottom: 0;
     display: flex;
@@ -464,6 +465,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     min-height: 50vh;
     /* Half of the viewport height */
+    padding: 5px 0;
     position: fixed;
     bottom: 0;
     display: flex;
@@ -588,6 +590,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: rgb(0, 191, 234);
     width: 100%;
     min-height: 50vh;
+    padding: 5px 0;
     position: fixed;
     bottom: 0;
     display: flex;
