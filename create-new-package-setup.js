@@ -331,6 +331,8 @@ function showOverlay() {
 
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
+    console.log('Hiding overlay');
+
     // Check if any dropdown with the class name 'hotel_data_options_dropdown_class'is visible and hide it
     let visibleDropdown_1 = document.querySelector('.hotel_data_options_dropdown_class.show');
     if (visibleDropdown_1) {
@@ -353,10 +355,11 @@ function hideOverlay() {
     if (overlayLayer) {
         overlayLayer.style.opacity = '0'; // Set opacity to 0 for smooth disappearance
 
-
         setTimeout(() => {
-            document.body.removeChild(overlayLayer); // Remove overlay from DOM
-            overlayLayer = null; // Reset overlay variable
+            if (overlayLayer) {
+                document.body.removeChild(overlayLayer); // Remove overlay from DOM
+                overlayLayer = null; // Reset overlay variable
+            }
         }, 200); // Assuming 200ms is the duration of your opacity transition
     }
 }
@@ -382,50 +385,6 @@ checkInputClickability();
 
 
 
-
-
-
-// Initialize Flatpickr date pickers for hotel and client inputs
-initializeFlatpickr('#check_in_date_input_id', '#check_out_date_input_id');
-initializeFlatpickr('#first_clint_check_in_date_input_id', '#last_clint_check_out_date_input_id');
-
-// Function to initialize Flatpickr date pickers
-function initializeFlatpickr(checkInId, checkOutId) {
-    let checkInDateInput = document.querySelector(checkInId);
-    let checkOutDateInput = document.querySelector(checkOutId);
-
-    flatpickr(checkInDateInput, {
-        dateFormat: 'Y-m-d',
-        minDate: 'today',
-        onChange: function (selectedDates) {
-            updateMinDate(checkOutDateInput, selectedDates[0]);
-        }
-    });
-
-    flatpickr(checkOutDateInput, {
-        dateFormat: 'Y-m-d',
-        minDate: 'today',
-        onChange: function (selectedDates) {
-            validateCheckOutDate(checkInDateInput, selectedDates[0]);
-        }
-    });
-}
-
-// Function to update minimum date for check-out based on selected check-in date
-function updateMinDate(checkOutInput, minDate) {
-    let nextDay = new Date(minDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-    checkOutInput._flatpickr.set('minDate', nextDay);
-}
-
-// Function to validate that check-out date is after the check-in date
-function validateCheckOutDate(checkInInput, checkOutDate) {
-    let checkInDate = new Date(checkInInput.value);
-    if (checkOutDate <= checkInDate) {
-        alert('Check-out date must be after the check-in date.');
-        checkOutInput._flatpickr.clear();
-    }
-}
 
 
 
