@@ -67,6 +67,21 @@ body {
     transition: opacity 0.2s ease-in-out;
 }
 
+.black_overlay_2 {
+    z-index: 999;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.6);
+    /* Black with 70% opacity */
+    width: 100vw;
+    /* Full width of the viewport */
+    height: 100vh;
+    /* Full height of the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
 
 /* TextArea for full screen mood */
 .package_details_input_class {
@@ -283,6 +298,7 @@ body {
 
 .section_title_text_div {
     width: 100%;
+    margin: 3px 0;
     cursor: pointer;
 }
 
@@ -314,13 +330,6 @@ body {
     border-radius: 7px;
 }
 
-#package_date_info_input_div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .package_info_input_div input {
     width: 85vw;
     font-size: 2.5vw;
@@ -330,6 +339,7 @@ body {
     padding: 10px;
     height: 70px;
     box-sizing: border-box;
+    border: 0.5px solid black;
 }
 
 /* Prevent interaction with the date input's text field */
@@ -857,6 +867,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .header_navbar_links a {
         font-size: 3.5vw;
+    }
+
+    .section_title_text_div {
+        margin: 2px 0;
     }
 
     .section_title_text {
