@@ -395,19 +395,6 @@ checkInputClickability();
 
 
 
-// Function to toggle full-screen mode of textarea
-function toggleFullscreen(textareaId) {
-    let textarea = document.getElementById(textareaId);
-    textarea.classList.toggle('fullscreen_mode_class');
-
-    if (textarea.classList.contains('fullscreen_mode_class')) {
-        document.body.style.overflow = 'hidden'; // Disable scrolling
-        textarea.focus();
-    } else {
-        document.body.style.overflow = ''; // Enable scrolling
-        textarea.blur();
-    }
-}
 
 
 
@@ -634,8 +621,8 @@ function toggleFullscreen(textAreaId) {
     };
 
     // Set textarea to full-screen size and center it
-    textarea.style.width = '95vw';
-    textarea.style.height = '95vh';
+    textarea.style.width = '90vw';
+    textarea.style.height = '90vh';
     textarea.style.zIndex = '1000';
     textarea.style.position = 'fixed';
     textarea.style.top = '50%'; // Center vertically
