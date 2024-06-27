@@ -10,14 +10,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         // Get the input elements for person amount and dates
         let personAmountInput = document.getElementById('hotel_person_amount_input_id');
-        let firstCheckInDateInput = document.getElementById('first_clint_check_in_date_input_id');
-        let lastCheckOutDateInput = document.getElementById('last_clint_check_out_date_input_id');
+        let firstLastCheckInCheckOutDateInput = document.getElementById('first_last_clint_check_in_check_out_date_input_id');
         let allTotalNightsInput = document.getElementById('all_total_nights_input_id');
         let clintCompanyNameInput = document.getElementById('clint_company_name_input_id');
         let childAgeInputs = document.querySelectorAll('.child_age_input');
+        let honeymoonCheckbox = document.getElementById('honeymoon_checkbox');
 
         // Check if any of the input values are empty
-        if (personAmountInput.value === '' || firstCheckInDateInput.value === '' || lastCheckOutDateInput.value === '') {
+        if (personAmountInput.value === '' || firstLastCheckInCheckOutDateInput.value === '') {
             // Change the button color to red to indicate error
             clint_inputs_submit_button.style.backgroundColor = 'red';
             // Reset the button color after 1 second
@@ -135,16 +135,36 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             if (clintCompanyNameInput.value === '') {
 
-                // If the years are the same, display both dates in a single h6 element
-                let h6CheckInSameYears = document.createElement('h6');
-                h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\nمن ${firstCheckInDateInput.value} الى ${lastCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                insertedClintDataDiv.appendChild(h6CheckInSameYears);
+                /* If شهر عشل checkbox is checked then iclude the text in the content */
+                if (honeymoonCheckbox.checked) {
+                    // If the years are the same, display both dates in a single h6 element
+                    let h6CheckInSameYears = document.createElement('h6');
+                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
+
+                } else {
+                    // If the years are the same, display both dates in a single h6 element
+                    let h6CheckInSameYears = document.createElement('h6');
+                    h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
+
+                }
+
             } else {
 
-                // If the years are the same, display both dates in a single h6 element
-                let h6CheckInSameYears = document.createElement('h6');
-                h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\nمن ${firstCheckInDateInput.value} الى ${lastCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                insertedClintDataDiv.appendChild(h6CheckInSameYears);
+                /* If شهر عشل checkbox is checked then iclude the text in the content */
+                if (honeymoonCheckbox.checked) {
+                    // If the years are the same, display both dates in a single h6 element
+                    let h6CheckInSameYears = document.createElement('h6');
+                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝 - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
+
+                } else {
+                    // If the years are the same, display both dates in a single h6 element
+                    let h6CheckInSameYears = document.createElement('h6');
+                    h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
+                }
             }
 
 
@@ -172,14 +192,13 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelLocationInput = document.getElementById('hotel_location_input_id'); // Hotel location input element
         let hotelAreaInput = document.getElementById('hotel_area_input_id'); // Hotel area input element
         let hotelNameInput = document.getElementById('hotel_name_input_id'); // Hotel name input element
-        let checkInDateInput = document.getElementById('check_in_date_input_id'); // Check-in date input element
-        let checkOutDateInput = document.getElementById('check_out_date_input_id'); // Check-out date input element
+        let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id'); // Check-in date input element
         let totalNightsInput = document.getElementById('total_nights_input_id'); // Check-out date input element
         let roomDescriptionTextArea = document.getElementById('room_description_textarea_id'); // Room description input element
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
 
 
-        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInDateInput.value === '' || checkOutDateInput.value === '' || roomDescriptionTextArea.value === '') {
+        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionTextArea.value === '') {
 
             hotel_inputs_submit_button.style.backgroundColor = 'red';
 
@@ -217,12 +236,12 @@ checkInputsToInsertData = function (clickedButtonId) {
             let rightSideContent = `${hotelLocationInput.value}`;
 
             if (hotelAreaInput.value !== '') {
-                rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}`;
+                rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}\n`;
             } else {
-                rightSideContent += ` - ${hotelNameInput.value}`;
+                rightSideContent += ` - ${hotelNameInput.value}\n`;
             }
 
-            rightSideContent += `\nمن ${checkInDateInput.value} الى ${checkOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionTextArea.value}`;
+            rightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionTextArea.value}`;
             if (breakfastCheckbox.checked) {
                 rightSideContent += ` شامل الإفطار`;
             }
@@ -256,8 +275,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_location_input_id').value = '';
             document.getElementById('hotel_area_input_id').value = '';
             document.getElementById('hotel_name_input_id').value = '';
-            document.getElementById('check_in_date_input_id').value = '';
-            document.getElementById('check_out_date_input_id').value = '';
+            document.getElementById('check_in_check_out_date_input_id').value = '';
             document.getElementById('total_nights_input_id').value = '';
             document.getElementById('room_description_textarea_id').value = '';
             document.getElementById('breakfast_checkbox').checked = false;
@@ -737,3 +755,4 @@ downloadPdfWithCustomName = function (pdfName) {
         });
     }
 };
+
