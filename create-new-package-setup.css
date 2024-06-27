@@ -366,7 +366,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* Center items vertically */
     justify-content: center;
     /* Center items horizontally */
-    margin-top: 10px;
+    margin: 10px;
 }
 
 .custom_checkbox input[type="checkbox"] {
