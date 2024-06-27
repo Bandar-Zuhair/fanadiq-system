@@ -647,6 +647,7 @@ checkThePdfNameToDownload = function () {
 }
 
 
+/* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
     let section1 = document.getElementById('inserted_package_data_section_1');
@@ -676,7 +677,7 @@ downloadPdfWithCustomName = function (pdfName) {
         pdf.setFillColor(172, 209, 235);
         pdf.rect(0, 0, imgWidth, pageHeight, 'F');
 
-        let imgData = canvas.toDataURL('image/jpeg', 0.7); // Use JPEG format with 70% quality for smaller file size
+        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
         let imgHeight = canvas.height * imgWidth / canvas.width;
 
         // Calculate vertical and horizontal offset to center the image on the PDF for the first page
@@ -685,6 +686,24 @@ downloadPdfWithCustomName = function (pdfName) {
 
         // Add scaled image to PDF with compression and center it
         pdf.addImage(imgData, 'JPEG', imgXOffset, imgYOffset, imgWidth, imgHeight, '', 'FAST');
+    };
+
+    // Function to add HTML content as vector-based text
+    let addHTMLToPDF = function (pdf, element, yOffset) {
+        pdf.html(element, {
+            callback: function (pdf) {
+                if (yOffset) {
+                    pdf.setPage(2);
+                    pdf.html(element, {
+                        x: 0,
+                        y: yOffset,
+                    });
+                }
+            },
+            x: 0,
+            y: yOffset || 0,
+            html2canvas: { scale: 2 }
+        });
     };
 
     // Check if the package data div contains elements
@@ -697,6 +716,10 @@ downloadPdfWithCustomName = function (pdfName) {
             html2canvas(section2, { scale: 2 }).then(canvas2 => {
                 addContentToPDF(canvas2, false);
 
+                // Add HTML content for vector-based text
+                addHTMLToPDF(pdf, section1, 0);
+                addHTMLToPDF(pdf, section2, pageHeight);
+
                 // Save the PDF
                 pdf.save(pdfName);
             });
@@ -705,6 +728,9 @@ downloadPdfWithCustomName = function (pdfName) {
         // Only generate PDF with the first section
         html2canvas(section1, { scale: 2 }).then(canvas1 => {
             addContentToPDF(canvas1, true);
+
+            // Add HTML content for vector-based text
+            addHTMLToPDF(pdf, section1, 0);
 
             // Save the PDF
             pdf.save(pdfName);
