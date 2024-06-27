@@ -9,8 +9,7 @@
 .inserted_company_name_logo{
     width: 20vw;
     border-radius: 7px;
-    border: 1px solid black;
-    box-shadow: 0 0 2px black;
+    border: 0.5px solid black;
 }
 
 
@@ -25,6 +24,7 @@
 /* Inserted clint data position */
 #inserted_clint_data_position_div {
     background: rgb(172, 209, 235);
+    border-bottom: 0.5px solid black;
 }
 
 .inserted_clint_data_div {
@@ -50,7 +50,6 @@
 /* Inserted hotel data position */
 #inserted_hotel_data_position_div {
     background: rgb(215, 232, 244);
-    border: 1px solid black;
 }
 
 .inserted_hotel_data_div {
@@ -60,7 +59,7 @@
     justify-content: space-between;
     align-items: center;
     transition: transform 0.1s ease, opacity 0.1s ease;
-    border-bottom: 1px solid black;
+    border-bottom: 0.5px solid black;
     /* Add a thin horizontal line */
 }
 
@@ -102,8 +101,7 @@
 .left_side_hotel_data_div img {
     width: 15vw;
     border-radius: 7px;
-    border: 1px solid black;
-    box-shadow: 0 0 2px black;
+    border: 0.5px solid black;
 }
 
 
@@ -124,10 +122,10 @@
 /* Inserted package data position */
 #inserted_package_data_position_div {
     background: rgb(172, 209, 235);
+    border-top: 0.5px solid black;
 }
 
 .inserted_package_data_div {
-    margin-top: 5px 0 5px;
     padding: 5px;
     display: flex;
     flex-direction: column;
@@ -422,11 +420,9 @@
 
     .left_side_hotel_data_div img {
         width: 23vw;
-        box-shadow: 0 0 0 black;
     }
 
     .inserted_package_data_div {
-        margin-top: 3px;
         padding: 3px;
     }
 
@@ -475,10 +471,6 @@
 
     .left_side_hotel_data_div img {
         width: 26vw;
-    }
-
-    .inserted_package_data_div {
-        margin-top: 3px;
     }
 
     .inserted_package_data_div h6 {
