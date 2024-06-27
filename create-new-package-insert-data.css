@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 0.5px solid black;
 }
 
 .inserted_company_name_logo{
@@ -51,6 +52,7 @@
 /* Inserted hotel data position */
 #inserted_hotel_data_position_div {
     background: rgb(215, 232, 244);
+    border-bottom: 0.5px solid black;
 }
 
 .inserted_hotel_data_div {
@@ -335,23 +337,23 @@
 /* 950px */
 @media(max-width:950px) {
     .inserted_company_name_logo{
-        width: 23vw;
+        width: 25vw;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 3vw;
+        font-size: 3.2vw;
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 3vw;
+        font-size: 3.2vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 20vw;
+        width: 22vw;
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2.2vw;
+        font-size: 2.4vw;
     }
 
     #package_total_price_h6_id {
@@ -359,24 +361,24 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 4vw;
+        font-size: 4.2vw;
         padding: 4px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 4vw;
+        font-size: 4.2vw;
     }
 
     #name_pdf_file_div span {
-        font-size: 6vw;
+        font-size: 6.2vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 4vw;
+        font-size: 4.2vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 3.5vw;
+        font-size: 3.7vw;
     }
 }
 
@@ -393,12 +395,12 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 5vw;
+        font-size: 5.2vw;
         padding: 3px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 5vw;
+        font-size: 5.2vw;
     }
 }
 
@@ -406,12 +408,11 @@
 /* 580px */
 @media(max-width:580px) {
     .inserted_company_name_logo{
-        width: 26vw;
-        box-shadow: 0 0 0 black;
+        width: 28vw;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 3.5vw;
+        font-size: 3.7vw;
     }
 
     .inserted_hotel_data_div {
@@ -419,11 +420,11 @@
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 3.5vw;
+        font-size: 3.7vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 23vw;
+        width: 25vw;
     }
 
     .inserted_package_data_div {
@@ -431,7 +432,7 @@
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2.7vw;
+        font-size: 2.9vw;
     }
 
     #package_total_price_h6_id {
@@ -439,15 +440,15 @@
     }
 
     #name_pdf_file_div span {
-        font-size: 7vw;
+        font-size: 7.2vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 5vw;
+        font-size: 5.2vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 4.5vw;
+        font-size: 4.7vw;
         padding: 1px 5px;
     }
 }
@@ -458,27 +459,27 @@
 /* 400px */
 @media(max-width:400px) {
     .inserted_company_name_logo{
-        width: 29vw;
+        width: 31vw;
     }
 
     .inserted_clint_data_div {
-        padding: 3px;
+        padding: 3.2px;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 4vw;
+        font-size: 4.2vw;
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 4vw;
+        font-size: 4.2vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 26vw;
+        width: 28vw;
     }
 
     .inserted_package_data_div h6 {
-        font-size: 3.2vw;
+        font-size: 3.4vw;
     }
 
     #package_total_price_h6_id {
@@ -490,24 +491,24 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 6vw;
+        font-size: 6.2vw;
         padding: 2px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 6vw;
+        font-size: 6.2vw;
     }
 
     #name_pdf_file_div span {
-        font-size: 8vw;
+        font-size: 8.2vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 6vw;
+        font-size: 6.2vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 5.5vw;
+        font-size: 5.7vw;
         padding: 1px 3px;
     }
 }
