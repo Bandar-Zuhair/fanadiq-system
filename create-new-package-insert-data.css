@@ -24,7 +24,6 @@
 
 /* Inserted clint data position */
 #inserted_clint_data_position_div {
-    display: none;
     background: rgb(172, 209, 235);
     border-bottom: 0.5px solid black;
 }
@@ -219,7 +218,6 @@
 
 /* Download pdf file */
 #export_package_pdf_div_id {
-    display: none;
     width: 100%;
 }
 
