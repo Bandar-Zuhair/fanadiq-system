@@ -172,8 +172,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_clint_data_position_div').innerHTML = '';
             document.getElementById('inserted_clint_data_position_div').appendChild(insertedClintDataDiv);
 
-
-            document.getElementById('inserted_clint_data_position_div').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_1' section */
+            document.getElementById('inserted_package_data_section_1').style.display = 'block';
         }
 
 
@@ -272,6 +272,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Append the new hotel data div
             document.getElementById('inserted_hotel_data_position_div').appendChild(insertedHotelDataDiv);
 
+            /* Show up the 'inserted_package_data_section_1' section */
+            document.getElementById('inserted_package_data_section_1').style.display = 'block';
 
 
 
@@ -359,34 +361,37 @@ checkInputsToInsertData = function (clickedButtonId) {
                     });
                 };
 
-
                 // Event listener for the drop zone (inserted_hotel_data_position_div)
                 let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
 
                 // Function to handle mouse down event
                 function mouseDown(event) {
-                    event.preventDefault(); // Prevent default behavior
-                    let draggingElement = event.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
-                    draggingElement.classList.add('dragging'); // Add dragging class for styling
-                    draggingElement.dataset.startY = event.clientY; // Store initial mouse position
-                    document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
-                    document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
+                    if (event.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
+                        event.preventDefault(); // Prevent default behavior
+                        let draggingElement = event.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
+                        draggingElement.classList.add('dragging'); // Add dragging class for styling
+                        draggingElement.dataset.startY = event.clientY; // Store initial mouse position
+                        document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
+                        document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
 
-                    // Disable scrolling
-                    document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                        // Disable scrolling
+                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                    }
                 }
 
                 // Function to handle touch start event
                 function touchStart(event) {
                     let touch = event.touches[0]; // Get the first touch
-                    let draggingElement = event.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
-                    draggingElement.classList.add('dragging'); // Add dragging class for styling
-                    draggingElement.dataset.startY = touch.clientY; // Store initial touch position
-                    document.addEventListener('touchmove', touchMove); // Listen for touch move events
-                    document.addEventListener('touchend', touchEnd); // Listen for touch end events
+                    if (touch.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
+                        let draggingElement = touch.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
+                        draggingElement.classList.add('dragging'); // Add dragging class for styling
+                        draggingElement.dataset.startY = touch.clientY; // Store initial touch position
+                        document.addEventListener('touchmove', touchMove); // Listen for touch move events
+                        document.addEventListener('touchend', touchEnd); // Listen for touch end events
 
-                    // Disable scrolling
-                    document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                        // Disable scrolling
+                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                    }
                 }
 
                 // Function to handle mouse move event
@@ -502,7 +507,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.body.style.overflow = ''; // Re-enable page scrolling
                 }
 
-
                 // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
                 let insertedHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
                 insertedHotelDataDivs.forEach((div) => {
@@ -513,6 +517,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Call the initializeDragAndDrop function to set up delete and drag-and-drop functionality
             initializeDragAndDrop();
+
         }
 
 
@@ -588,6 +593,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             }
             document.getElementById('inserted_package_data_position_div').innerHTML = '';
             document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
+
+            /* Show up the 'inserted_package_data_section_2' section */
+            document.getElementById('inserted_package_data_section_2').style.display = 'block';
         }
 
 
