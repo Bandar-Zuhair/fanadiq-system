@@ -618,6 +618,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 /* Function to open choosing pdf file name box */
+
 async function downloadPdfWithCustomName(pdfName) {
     let section1 = document.getElementById('inserted_package_data_section_page_1');
     let section2 = document.getElementById('inserted_package_data_section_page_2');
