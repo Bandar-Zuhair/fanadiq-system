@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 40px 0;
 }
 
 .section_title_text_div {
@@ -17,7 +16,7 @@
     color: white;
     width: 100%;
     font-size: 3vw;
-    padding: 10px 20px;
+    padding: 10px 0;
     text-align: center;
     border: 0.5px solid black;
     line-height: 1.5;
@@ -34,6 +33,7 @@
 }
 
 .voucher_info_input_div input {
+    direction: ltr;
     width: 85vw;
     font-size: 2.5vw;
     margin: 5px 0;
@@ -64,6 +64,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
+.submit_voucher_data_div {
+    direction: ltr;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.submit_voucher_data_div button {
+    background: white;
+    font-size: 3vw;
+    padding: 1px 30px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 0.5px solid black;
+    transition: all 0.2s ease-in-out;
+}
+
 
 
 
@@ -77,9 +95,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 /* Company input */
-/* Filter compant names div */
-/* Company names dropdown container */
-.company_names_dropdown_class {
+/* Filter company names div */
+.searchable_names_dropdown_class {
     z-index: 1000;
     background: rgb(0, 191, 234);
     width: 100%;
@@ -93,7 +110,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     overflow-y: auto;
     transform: translateY(100%);
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out; /* Add height transition */
+}
+
+/* Visible state for the dropdown */
+.searchable_names_dropdown_class.show {
+    transform: translateY(0);
 }
 
 /* Search bar container */
@@ -104,7 +126,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Search bar input */
-#company_name_search_bar {
+.company_name_search_bar_class {
     width: 100%;
     font-size: 2vw;
     padding: 10px;
@@ -139,9 +161,138 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex: 1 1 auto;
 }
 
-/* Visible state for the dropdown */
-.company_names_dropdown_class.show {
-    transform: translateY(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inserted pdf file data elements */
+#voucher_pdf_file_structure_section{
+    background: rgb(223, 232, 237);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#voucher_pdf_file_structure_section *{
+    direction: ltr;
+}
+
+#voucher_company_logo_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#voucher_company_logo_div img{
+    width: 35vw;
+    border: 0.5px solid black;
+    border-radius: 7px;
+}
+
+
+
+.voucher_details_title_div{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.voucher_details_title_div h5{
+    background: rgb(215, 232, 244);
+    width: 100%;
+    font-size: 2.5vw;
+    font-weight: bolder;
+    padding: 20px 0 10px 100px;
+    border: 0.5px solid black;
+}
+
+#voucher_booking_details_div{
+    background: rgb(108, 125, 136);
+    width: 60%;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-right: 0.5px solid black;
+    border-left: 0.5px solid black;
+}
+
+.booking_detail_div {
+    background: rgb(215, 232, 244);
+    width: 100%;
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 0.5px solid black;
+}
+
+.booking_detail_div *{
+    font-size: 2.5vw;
+    font-weight: 500;
+}
+
+
+
+
+#voucher_customer_details_div{
+    background: rgb(108, 125, 136);
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 0.5px solid black;
+    border-left: 0.5px solid black;
+}
+
+#voucher_customer_details_div h5{
+    font-size: 2.5vw;
+}
+
+
+
+
+#voucher_property_image_div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#voucher_property_image_div img{
+    width: 25vw;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#voucher_property_image_div h6{
+    font-size: 2.5vw;
+    font-weight: bolder;
 }
 
 
@@ -153,6 +304,92 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+
+
+
+
+
+
+
+
+
+/* Download pdf file */
+#export_package_pdf_div_id {
+    width: 100%;
+}
+
+#export_package_pdf_div_id button {
+    width: 100%;
+    font-size: 3vw;
+    text-align: center;
+    cursor: pointer;
+    border: 0.5px solid black;
+    border-radius: 0;
+    box-shadow: 0 0 0 black;
+    transition: all 0.2s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+/* Name pdf file box */
+#name_pdf_file_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 5px black;
+    border: 1px solid black;
+    transform: translate(-50%, -100vh);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 95%;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+
+#name_pdf_file_div span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 4vw;
+    color: #888;
+}
+
+#name_pdf_file_div input{
+    direction: ltr;
+    width: 90%;
+    font-size: 3vw;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#name_pdf_file_div button{
+    font-size: 2.5vw;
+    margin-top: 10px;
+    padding: 1px 10px;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid black;
+    transition: all 0.1s ease-in-out;
+}
 
 
 
@@ -204,11 +441,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 5px;
     }
 
-    .company_name_search_bar_div {
-        padding: 5px;
-    }
-
-    #company_name_search_bar {
+    .company_name_search_bar_class {
         font-size: 3vw;
         padding: 5px;
     }
@@ -220,6 +453,68 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .company_names_options_dropdown_class h3 {
         font-size: 4vw;
         padding: 5px 9px;
+    }
+    
+    .submit_voucher_data_div button {
+        font-size: 4vw;
+        padding: 1px 15px;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 4vw;
+    }
+
+    #name_pdf_file_div span {
+        font-size: 6vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 4vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 3.5vw;
+    }
+
+
+
+
+
+
+
+    /* Inserted pdf voucher data */
+    #voucher_company_logo_div img{
+        width: 38vw;
+    }
+
+    .voucher_details_title_div h5{
+        font-size: 3vw;
+        padding: 15px 0 5px 60px;
+    }
+
+    #voucher_booking_details_div{
+        width: 65%;
+        margin-bottom: 80px;
+    }
+
+    .booking_detail_div *{
+        font-size: 3vw;
+    }
+
+    #voucher_customer_details_div{
+        width: 65%;
+    }
+
+    #voucher_customer_details_div h5{
+        font-size: 3vw;
+    }
+
+    #voucher_property_image_div img{
+        width: 28vw;
+    }
+    
+    #voucher_property_image_div h6{
+        font-size: 3vw;
     }
 }
 
@@ -260,11 +555,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 4px;
     }
 
-    .company_name_search_bar_div {
-        padding: 4px;
-    }
-
-    #company_name_search_bar {
+    .company_name_search_bar_class {
         font-size: 4vw;
         padding: 4px;
     }
@@ -278,11 +569,71 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         margin: 4px;
         padding: 4px;
     }
+
+    .submit_voucher_data_div button {
+        font-size: 5vw;
+        padding: 1px 10px;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 5vw;
+    }
+
+
+    
+
+
+    /* Inserted pdf voucher data */
+    #voucher_company_logo_div img{
+        width: 41vw;
+    }
+
+    .voucher_details_title_div h5{
+        font-size: 3.5vw;
+        padding: 15px 0 5px 40px;
+    }
+
+    #voucher_booking_details_div{
+        width: 80%;
+        margin-bottom: 60px;
+    }
+
+    .booking_detail_div *{
+        font-size: 3.5vw;
+    }
+
+    #voucher_customer_details_div{
+        width: 70%;
+    }
+
+    #voucher_customer_details_div h5{
+        font-size: 3.5vw;
+    }
+
+    #voucher_property_image_div img{
+        width: 31vw;
+    }
+    
+    #voucher_property_image_div h6{
+        font-size: 3.5vw;
+    }
 }
 
 
 /* 580px */
 @media(max-width:580px) {
+    #name_pdf_file_div span {
+        font-size: 7vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 5vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 4.5vw;
+        padding: 1px 5px;
+    }
 }
 
 /* 500px */
@@ -311,11 +662,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 3px;
     }
 
-    .company_name_search_bar_div {
-        padding: 3px;
-    }
-
-    #company_name_search_bar {
+    .company_name_search_bar_class {
         font-size: 5vw;
         padding: 3px;
     }
@@ -324,6 +671,67 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 6.5vw;
         margin: 3px;
         padding: 1px;
+    }
+
+    .submit_voucher_data_div button {
+        font-size: 7.5vw;
+    }
+
+    #export_package_pdf_div_id button {
+        font-size: 6vw;
+    }
+
+    #name_pdf_file_div span {
+        font-size: 8vw;
+    }
+    
+    #name_pdf_file_div input{
+        font-size: 6vw;
+    }
+    
+    #name_pdf_file_div button{
+        font-size: 5.5vw;
+        padding: 1px 3px;
+    }
+
+
+
+
+
+
+    /* Inserted pdf voucher data */
+    #voucher_company_logo_div img{
+        width: 44vw;
+    }
+
+    .voucher_details_title_div h5{
+        font-size: 4vw;
+        padding: 15px 0 10px 20px;
+    }
+
+    #voucher_booking_details_div{
+        width: 90%;
+        margin-bottom: 40px;
+    }
+
+    .booking_detail_div *{
+        font-size: 4vw;
+    }
+
+    #voucher_customer_details_div{
+        width: 75%;
+    }
+
+    #voucher_customer_details_div h5{
+        font-size: 4vw;
+    }
+
+    #voucher_property_image_div img{
+        width: 34vw;
+    }
+    
+    #voucher_property_image_div h6{
+        font-size: 4vw;
     }
 }
 
