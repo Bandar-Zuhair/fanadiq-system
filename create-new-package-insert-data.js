@@ -618,9 +618,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 /* Function to open choosing pdf file name box */
-import { PDFDocument, rgb } from 'pdf-lib';
-import html2canvas from 'html2canvas';
-
 async function downloadPdfWithCustomName(pdfName) {
     let section1 = document.getElementById('inserted_package_data_section_page_1');
     let section2 = document.getElementById('inserted_package_data_section_page_2');
