@@ -307,7 +307,7 @@ body {
     color: white;
     width: 100%;
     font-size: 3vw;
-    padding: 10px 20px;
+    padding: 10px 0;
     text-align: center;
     border: 0.5px solid black;
     line-height: 1.5;
@@ -583,7 +583,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-/* Filter compant names div */
+/* Filter company names div */
 /* Company names dropdown container */
 .company_names_dropdown_class {
     z-index: 1000;
@@ -599,7 +599,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     overflow-y: auto;
     transform: translateY(100%);
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out; /* Add height transition */
+}
+
+/* Visible state for the dropdown */
+.company_names_dropdown_class.show {
+    transform: translateY(0);
 }
 
 /* Search bar container */
@@ -645,10 +650,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex: 1 1 auto;
 }
 
-/* Visible state for the dropdown */
-.company_names_dropdown_class.show {
-    transform: translateY(0);
-}
 
 
 
