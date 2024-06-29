@@ -1,10 +1,10 @@
 /* Inserted clint data position */
 #inserted_company_name_image_position_div{
     background: rgb(172, 209, 235);
+    padding-top: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 0.5px solid black;
 }
 
 .inserted_company_name_logo{
@@ -134,7 +134,7 @@
 }
 
 .inserted_package_data_div h6 {
-    font-size: 1.7vw;
+    font-size: 1.8vw;
 }
 
 #package_total_price_h6_id {
@@ -334,24 +334,28 @@
 
 /* 950px */
 @media(max-width:950px) {
+    #inserted_company_name_image_position_div{
+        padding-top: 20px;
+    }
+
     .inserted_company_name_logo{
-        width: 25vw;
+        width: 23vw;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 3.2vw;
+        font-size: 2.5vw;
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 3.2vw;
+        font-size: 2.5vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 22vw;
+        width: 18vw;
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2.4vw;
+        font-size: 2.3vw;
     }
 
     #package_total_price_h6_id {
@@ -359,24 +363,24 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 4.2vw;
+        font-size: 4vw;
         padding: 4px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 4.2vw;
+        font-size: 4vw;
     }
 
     #name_pdf_file_div span {
-        font-size: 6.2vw;
+        font-size: 6vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 4.2vw;
+        font-size: 4vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 3.7vw;
+        font-size: 3.5vw;
     }
 }
 
@@ -388,17 +392,21 @@
 
 /* 650px */
 @media(max-width:650px) {
+    #inserted_company_name_image_position_div{
+        padding-top: 15px;
+    }
+
     .ensure_your_delete_action {
         padding: 10px;
     }
 
     .ensure_your_delete_action button {
-        font-size: 5.2vw;
+        font-size: 5vw;
         padding: 3px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 5.2vw;
+        font-size: 5vw;
     }
 }
 
@@ -406,11 +414,11 @@
 /* 580px */
 @media(max-width:580px) {
     .inserted_company_name_logo{
-        width: 28vw;
+        width: 26vw;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 3.7vw;
+        font-size: 3vw;
     }
 
     .inserted_hotel_data_div {
@@ -418,11 +426,11 @@
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 3.7vw;
+        font-size: 3vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 25vw;
+        width: 21vw;
     }
 
     .inserted_package_data_div {
@@ -430,7 +438,7 @@
     }
 
     .inserted_package_data_div h6 {
-        font-size: 2.9vw;
+        font-size: 2.8vw;
     }
 
     #package_total_price_h6_id {
@@ -438,15 +446,15 @@
     }
 
     #name_pdf_file_div span {
-        font-size: 7.2vw;
+        font-size: 7vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 5.2vw;
+        font-size: 5vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 4.7vw;
+        font-size: 4.5vw;
         padding: 1px 5px;
     }
 }
@@ -457,27 +465,27 @@
 /* 400px */
 @media(max-width:400px) {
     .inserted_company_name_logo{
-        width: 31vw;
+        width: 29vw;
     }
 
     .inserted_clint_data_div {
-        padding: 3.2px;
+        padding: 3px;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 4.2vw;
+        font-size: 3.5vw;
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 4.2vw;
+        font-size: 3.5vw;
     }
 
     .left_side_hotel_data_div img {
-        width: 28vw;
+        width: 24vw;
     }
 
     .inserted_package_data_div h6 {
-        font-size: 3.4vw;
+        font-size: 3.3vw;
     }
 
     #package_total_price_h6_id {
@@ -489,24 +497,24 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 6.2vw;
+        font-size: 6vw;
         padding: 2px;
     }
 
     #export_package_pdf_div_id button {
-        font-size: 6.2vw;
+        font-size: 6vw;
     }
 
     #name_pdf_file_div span {
-        font-size: 8.2vw;
+        font-size: 8vw;
     }
     
     #name_pdf_file_div input{
-        font-size: 6.2vw;
+        font-size: 6vw;
     }
     
     #name_pdf_file_div button{
-        font-size: 5.7vw;
+        font-size: 5.5vw;
         padding: 1px 3px;
     }
 }
