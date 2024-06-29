@@ -696,24 +696,35 @@ downloadPdfWithCustomName = function (pdfName) {
     // Create a new jsPDF instance with A4 dimensions
     let pdf = new jsPDF('p', 'mm', 'a4');
 
+    // Set the background color for the PDF
+    let imgWidth = pdf.internal.pageSize.width;
+    let pageHeight = pdf.internal.pageSize.height;
+
     // Function to add content to the PDF
     let addContentToPDF = function (canvas, isFirstPage) {
         if (!isFirstPage) {
             pdf.addPage();
         }
 
-        let imgWidth = pdf.internal.pageSize.width;
-        let imgHeight = canvas.height * imgWidth / canvas.width;
-        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
+        // Set background color
+        pdf.setFillColor(172, 209, 235);
+        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
 
-        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+
+        // Set vertical offset to 0 for both pages
+        let imgYOffset = 0;
+
+        // Add scaled image to PDF with compression and top alignment
+        pdf.addImage(imgData, 'JPEG', 0, imgYOffset, imgWidth, imgHeight, '', 'FAST');
     };
 
     // Function to add HTML content as vector-based text
     let addHTMLToPDF = function (pdf, element, pageNumber) {
         pdf.setPage(pageNumber);
         pdf.html(element, {
-            callback: function () {
+            callback: function (pdf) {
                 if (pageNumber > 1) {
                     pdf.setPage(pageNumber);
                 }
