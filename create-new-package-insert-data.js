@@ -172,8 +172,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_clint_data_position_div').innerHTML = '';
             document.getElementById('inserted_clint_data_position_div').appendChild(insertedClintDataDiv);
 
-            /* Show up the 'inserted_package_data_section_1' section */
-            document.getElementById('inserted_package_data_section_1').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_page_1' section */
+            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
         }
 
 
@@ -257,6 +257,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             rightSideDiv.appendChild(rightSideH6);
 
             // Arrange content for the left side
+            /* First convert all spaces with - and make all letters toLowerCase */
             let hotelImgSrcReadyText = hotelNameInput.value.toLowerCase().replace(/\s+/g, '-');
 
             // Create img element for left side content
@@ -272,8 +273,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Append the new hotel data div
             document.getElementById('inserted_hotel_data_position_div').appendChild(insertedHotelDataDiv);
 
-            /* Show up the 'inserted_package_data_section_1' section */
-            document.getElementById('inserted_package_data_section_1').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_page_1' section */
+            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
 
 
 
@@ -594,8 +595,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_package_data_position_div').innerHTML = '';
             document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
 
-            /* Show up the 'inserted_package_data_section_2' section */
-            document.getElementById('inserted_package_data_section_2').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_page_2' section */
+            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
         }
 
 
@@ -623,17 +624,20 @@ openPdfDownloadBox = function () {
     overlayLayer.className = 'black_overlay';
     document.body.appendChild(overlayLayer);
 
-    // get the name pdf file box
-    let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
-
-    // Slide to the center of the screen
-    namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
 
     // Show overlay layer with smooth opacity transition
     setTimeout(() => {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+        
+        // Slide to the center of the screen
+        namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
     }, 100);
 
+
+
+    
+    // get the name pdf file box
+    let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
 
 
     /* Function to hide the name pdf file box */
@@ -682,8 +686,8 @@ checkThePdfNameToDownload = function () {
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
-    let section1 = document.getElementById('inserted_package_data_section_1');
-    let section2 = document.getElementById('inserted_package_data_section_2');
+    let section1 = document.getElementById('inserted_package_data_section_page_1');
+    let section2 = document.getElementById('inserted_package_data_section_page_2');
     let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
     let packageDataDiv = document.getElementById('inserted_package_data_position_div');
 
@@ -712,45 +716,41 @@ downloadPdfWithCustomName = function (pdfName) {
         let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
         let imgHeight = canvas.height * imgWidth / canvas.width;
 
-        // Calculate vertical and horizontal offset to center the image on the PDF for the first page
-        let imgXOffset = (imgWidth - imgWidth) / 2;
-        let imgYOffset = isFirstPage ? (pageHeight - imgHeight) / 2 : 0; // Center for the first page, start from the top for the second page
+        // Set vertical offset to 0 for both pages
+        let imgYOffset = 0;
 
-        // Add scaled image to PDF with compression and center it
-        pdf.addImage(imgData, 'JPEG', imgXOffset, imgYOffset, imgWidth, imgHeight, '', 'FAST');
+        // Add scaled image to PDF with compression and top alignment
+        pdf.addImage(imgData, 'JPEG', 0, imgYOffset, imgWidth, imgHeight, '', 'FAST');
     };
 
     // Function to add HTML content as vector-based text
-    let addHTMLToPDF = function (pdf, element, yOffset) {
+    let addHTMLToPDF = function (pdf, element, pageNumber) {
+        pdf.setPage(pageNumber);
         pdf.html(element, {
             callback: function (pdf) {
-                if (yOffset) {
-                    pdf.setPage(2);
-                    pdf.html(element, {
-                        x: 0,
-                        y: yOffset,
-                    });
+                if (pageNumber > 1) {
+                    pdf.setPage(pageNumber);
                 }
             },
             x: 0,
-            y: yOffset || 0,
+            y: 0,
             html2canvas: { scale: 2 }
         });
     };
 
     // Check if the package data div contains elements
     if (hasElements(hotelDataDiv) && hasElements(packageDataDiv)) {
-        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_1)
+        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_page_1)
         html2canvas(section1, { scale: 2 }).then(canvas1 => {
             addContentToPDF(canvas1, true);
 
-            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_2)
+            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_page_2)
             html2canvas(section2, { scale: 2 }).then(canvas2 => {
                 addContentToPDF(canvas2, false);
 
                 // Add HTML content for vector-based text
-                addHTMLToPDF(pdf, section1, 0);
-                addHTMLToPDF(pdf, section2, pageHeight);
+                addHTMLToPDF(pdf, section1, 1);
+                addHTMLToPDF(pdf, section2, 2);
 
                 // Save the PDF
                 pdf.save(pdfName);
@@ -762,11 +762,10 @@ downloadPdfWithCustomName = function (pdfName) {
             addContentToPDF(canvas1, true);
 
             // Add HTML content for vector-based text
-            addHTMLToPDF(pdf, section1, 0);
+            addHTMLToPDF(pdf, section1, 1);
 
             // Save the PDF
             pdf.save(pdfName);
         });
     }
 };
-
