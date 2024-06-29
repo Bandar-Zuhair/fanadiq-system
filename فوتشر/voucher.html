@@ -69,13 +69,36 @@
     <section id="create_new_voucher_section">
 
         <div class="section_title_text_div">
-            <h1 class="section_title_text_class" title="فنادق اندونيسيا">فوتشر جديد</h1>
+            <h1 class="section_title_text_class" title="فنادق اندونيسيا">New Voucher</h1>
         </div>
 
         <div class="voucher_info_input_div">
 
-            <input type="text" id="clint_company_name_input_id" placeholder="شركة..؟" readonly autocomplete="off">
+            <input type="text" id="company_logo_input_id" placeholder="Logo..?" readonly autocomplete="off">
 
+            <input type="text" id="confirmation_number_input_id" placeholder="Confirmation Number" autocomplete="off">
+
+            <input type="text" id="property_name_input_id" placeholder="Property Name" readonly autocomplete="off">
+
+            <input type="text" id="total_room_input_id" placeholder="Total Room" autocomplete="off">
+
+            <input type="text" id="room_type_input_id" placeholder="Room Type" autocomplete="off">
+
+            <input type="text" id="bed_type_input_id" placeholder="Bed Type" autocomplete="off">
+
+            <input type="text" id="check_in_input_id" placeholder="Check In" autocomplete="off">
+
+            <input type="text" id="check_out_input_id" placeholder="Check Out" autocomplete="off">
+
+            <input type="text" id="meal_plan_input_id" placeholder="Meal Plan" autocomplete="off">
+
+            <input type="text" id="customer_name_input_id" placeholder="Clint Name?" autocomplete="off">
+
+        </div>
+
+
+        <div class="submit_voucher_data_div">
+            <button id="enter_voucher_data_button_id" onclick="enterVoucherData()">Download</button>
         </div>
 
     </section>
@@ -96,18 +119,72 @@
 
 
 
-    <!-- Company Names Suggestions -->
-    <div id="company_names_dropdown" class="company_names_dropdown_class">
+    <!-- Company Names Logo -->
+    <div id="company_names_dropdown" class="searchable_names_dropdown_class">
         <div class="company_name_search_bar_div">
-            <input type="text" id="company_name_search_bar" placeholder="بحث..">
+            <input type="text" id="company_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.." autocomplete="off">
         </div>
         <div class="company_names_options_dropdown_class">
-            <h3>فييد</h3>
-            <h3>عين ماليزيا</h3>
-            <h3>ترافيل جيت</h3>
-            <h3>هالو بونشاك</h3>
-            <h3>حجوزات كوم</h3>
-            <h3>انجاز الاتحاد</h3>
+            <h3>Vid</h3>
+            <h3>Eye of Malaysia Toure</h3>
+            <h3>Travel Gate</h3>
+            <h3>Halo Puncak</h3>
+            <h3>Hojuzat Com</h3>
+            <h3>Enjaz Al Etihad</h3>
+            <h3>Ajwaa Sky Travel</h3>
+            <h3>Classic</h3>
+            <h3>travel Care</h3>
+            <h3>Mwakeb Travel </h3>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- All Hotel Names -->
+    <div id="property_names_dropdown" class="searchable_names_dropdown_class">
+        <div class="company_name_search_bar_div">
+            <input type="text" id="property_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.." autocomplete="off">
+        </div>
+        <div class="company_names_options_dropdown_class">
+            <h3>Komaneka Keramas</h3>
+            <h3>Komaneka Tanggayuda</h3>
+            <h3>Samsara Ubud</h3>
+            <h3>Tejaprana</h3>
+            <h3>Ulaman Eco Luxury</h3>
+            <h3>Ulu Segara</h3>
+            <h3>Merusaka Nusa Dua</h3>
+            <h3>Apurva Kempinski</h3>
+            <h3>Merusaka</h3>
+            <h3>Hilton Bali</h3>
+            <h3>The Nest</h3>
+            <h3>Agranusa Signature Villa</h3>
+            <h3>The Trans Bali</h3>
+            <h3>Indigo Bali</h3>
+            <h3>Sini Vie Villa</h3>
+            <h3>Mamaka By Ovolo</h3>
+            <h3>Aryaduta Kuta Bali</h3>
+            <h3>Tribe</h3>
+            <h3>Movenpick Jimbaran</h3>
+            <h3>Umana Bali</h3>
+            <h3>Ascott Jakarta</h3>
+            <h3>Citadines Sudirman</h3>
+            <h3>Somerset Sudirman</h3>
+            <h3>Parkroyal Serviced Suites</h3>
+            <h3>Aloft Wahied Hasiem</h3>
+            <h3>Grand Aston</h3>
+            <h3>Le Eminence</h3>
+            <h3>Courtyard Bandung</h3>
+            <h3>The Trans Luxury</h3>
+            <h3>Kalandara</h3>
         </div>
     </div>
 
@@ -126,24 +203,48 @@
 
 
 
-    
 
 
 
+
+
+
+
+    <h1 class="section_title_text" title="فنادق اندونيسيا"
+        style="text-align: center; background: white; color: black; box-shadow: 0 0 0 0.5px black; margin: 0; cursor: text; padding: 15px 0 10px;"><ion-icon name="arrow-down-circle-outline"></ion-icon> Example</h1>
 
     <!-- Choose Hotel Location Section -->
-    <section id="voucher_pdf_file_structure_section" class="main_sections">
+    <section id="voucher_pdf_file_structure_section">
 
-        <div id="voucher_pdf_file_structure_div">
-
-        </div>
+        <!-- Dynamic JS Code Here -->
 
     </section>
 
+    
+
+
+    <div id="export_package_pdf_div_id" style="display: none;">
+        <button onclick="openPdfDownloadBox()">Download</button>
+    </div>
 
 
 
 
+    <!-- Choose pdf file name box -->
+    <div id="name_pdf_file_div">
+        <span onclick="closeDownloadPdfBox()">&times;</span>
+        <input type="text" id="pdf_file_name_input_id" placeholder="File Name..?" autocomplete="off">
+        <button id="check_pdf_name_button" onclick="checkThePdfNameToDownload()">Download</button>
+    </div>
+
+
+
+
+
+
+    <!-- Download PDF Link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 
 
