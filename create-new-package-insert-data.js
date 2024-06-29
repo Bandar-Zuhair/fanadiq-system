@@ -1,612 +1,22 @@
-/* Function for checking if ready or no to insert the data */
-// Function to check if all inputs have values
-checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-    // Check if the clicked button is the 'clint_inputs_submit_button'
-    if (clickedButtonId === 'clint_inputs_submit_button') {
 
-
-        // Get the input elements for person amount and dates
-        let personAmountInput = document.getElementById('hotel_person_amount_input_id');
-        let firstLastCheckInCheckOutDateInput = document.getElementById('first_last_clint_check_in_check_out_date_input_id');
-        let allTotalNightsInput = document.getElementById('all_total_nights_input_id');
-        let clintCompanyNameInput = document.getElementById('clint_company_name_input_id');
-        let childAgeInputs = document.querySelectorAll('.child_age_input');
-        let honeymoonCheckbox = document.getElementById('honeymoon_checkbox');
-
-        // Check if any of the input values are empty
-        if (personAmountInput.value === '' || firstLastCheckInCheckOutDateInput.value === '') {
-            // Change the button color to red to indicate error
-            clint_inputs_submit_button.style.backgroundColor = 'red';
-            // Reset the button color after 1 second
-            setTimeout(() => {
-                clint_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-        } else {
-            // Change the button color to green to indicate success
-            clint_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Reset the button color after 1 second
-            setTimeout(() => {
-                clint_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-
-
-
-            if (clintCompanyNameInput.value !== '') {
-                // Create a new image element for the company logo
-                let insertedCompanyNameLogo = document.createElement('img');
-                // Replace spaces with dashes in the company name
-                let companyNameWithoutSpaces = clintCompanyNameInput.value.replace(/\s+/g, '-');
-                insertedCompanyNameLogo.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
-                insertedCompanyNameLogo.classList.add('inserted_company_name_logo');
-                insertedCompanyNameLogo.onclick = function () {
-                    event.preventDefault(); // Prevent the default behavior of the click event
-                    event.stopPropagation(); // Stop the event from propagating further
-
-
-                    // Create overlay layer
-                    let overlayLayer = document.createElement('div');
-                    overlayLayer.className = 'black_overlay';
-                    overlayLayer.id = 'black_overlay_id';
-                    document.body.appendChild(overlayLayer);
-
-                    // Show overlay layer with smooth opacity transition
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                    }, 100);
-
-                    // Slide in delete box options div
-                    let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
-
-                    // Smoothly slide to the middle of the screen
-                    setTimeout(() => {
-                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                    }, 50); // Adjust timing as needed
-
-                    // Event listener to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        // Hide delete box options div
-                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                        // Hide overlay layer with opacity transition
-                        overlayLayer.style.opacity = '0';
-
-                        // Remove overlay and delete box div from DOM after transition
-                        setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
-                };
-
-                // Clear previous company logo and insert the new logo div
-                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-                document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogo);
-            }
-
-
-            /* Function to delete company logo */
-            deleteClickedCompanyLogo = function () {
-
-                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-
-                // Slide in delete box options div
-                let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
-
-                // Event listener to close overlay and delete box div on click outside
-                // Hide delete box div
-                editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                let overlayLayer = document.getElementById('black_overlay_id')
-
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and delete box div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-            }
-
-
-
-
-
-            // Create a new div element to insert client data
-            let insertedClintDataDiv = document.createElement('div');
-            insertedClintDataDiv.classList.add('inserted_clint_data_div');
-
-
-            // Praper the person amount text
-            let personAmountText = `عدد الأشخاص: ${personAmountInput.value}`;
-
-            // Check if there are any child age inputs
-            if (childAgeInputs.length > 0) {
-                // Append each child's age in brackets inside the 'personAmountText' value
-                childAgeInputs.forEach((input) => {
-                    personAmountText += ` (${input.value})`;
-                });
-            }
-
-
-
-
-            if (clintCompanyNameInput.value === '') {
-
-                /* If شهر عشل checkbox is checked then iclude the text in the content */
-                if (honeymoonCheckbox.checked) {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                } else {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                }
-
-            } else {
-
-                /* If شهر عشل checkbox is checked then iclude the text in the content */
-                if (honeymoonCheckbox.checked) {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝 - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                } else {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-                }
-            }
-
-
-            // Clear previous client data and insert the new data div
-            document.getElementById('inserted_clint_data_position_div').innerHTML = '';
-            document.getElementById('inserted_clint_data_position_div').appendChild(insertedClintDataDiv);
-
-            /* Show up the 'inserted_package_data_section_page_1' section */
-            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
-        }
-
-
-
-
-
-
-
-
-
-
-        /* Check if all hotel data inputs are filled */
-    } else if (clickedButtonId === 'hotel_inputs_submit_button') {
-
-        // Get references to all input elements and the ensure text element
-        let hotelLocationInput = document.getElementById('hotel_location_input_id'); // Hotel location input element
-        let hotelAreaInput = document.getElementById('hotel_area_input_id'); // Hotel area input element
-        let hotelNameInput = document.getElementById('hotel_name_input_id'); // Hotel name input element
-        let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id'); // Check-in date input element
-        let totalNightsInput = document.getElementById('total_nights_input_id'); // Check-out date input element
-        let roomDescriptionInput = document.getElementById('room_description_input_id'); // Room description input element
-        let breakfastCheckbox = document.getElementById('breakfast_checkbox');
-        let roomExtraInfoTextArea = document.getElementById('room_extra_info_textarea_id'); // Room description input element
-
-
-        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionInput.value === '') {
-
-            hotel_inputs_submit_button.style.backgroundColor = 'red';
-
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                hotel_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-        } else {
-            // Change the button color to green to indicate success
-            hotel_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Reset the button color after 1 second
-            setTimeout(() => {
-                hotel_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-            // Create a new div element to insert hotel data
-            let insertedHotelDataDiv = document.createElement('div');
-            let uniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
-            insertedHotelDataDiv.id = uniqueId; // Assign the unique ID to the div
-            insertedHotelDataDiv.classList.add('inserted_hotel_data_div');
-
-            // Right side content div
-            let rightSideDiv = document.createElement('div');
-            rightSideDiv.classList.add('right_side_hotel_data_div');
-
-            // Left side content div
-            let leftSideDiv = document.createElement('div');
-            leftSideDiv.classList.add('left_side_hotel_data_div');
-
-            // Arrange content for the right side
-            let rightSideContent = `${hotelLocationInput.value}`;
-
-            if (hotelAreaInput.value !== '') {
-                rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}\n`;
-            } else {
-                rightSideContent += ` - ${hotelNameInput.value}\n`;
-            }
-
-            rightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionInput.value}`;
-            if (breakfastCheckbox.checked) {
-                rightSideContent += ` شامل الإفطار`;
-            }
-
-            if (roomExtraInfoTextArea.value !== '') {
-                rightSideContent += `\n${roomExtraInfoTextArea.value}`;
-            }
-
-            // Create h6 element for right side content
-            let rightSideH6 = document.createElement('h6');
-            rightSideH6.innerText = rightSideContent;
-            rightSideDiv.appendChild(rightSideH6);
-
-            // Arrange content for the left side
-            /* First convert all spaces with - and make all letters toLowerCase */
-            let hotelImgSrcReadyText = hotelNameInput.value.toLowerCase().replace(/\s+/g, '-');
-
-            // Create img element for left side content
-            let hotelImg = document.createElement('img');
-
-            hotelImg.src = `صور-الفنادق/${hotelImgSrcReadyText}.jpg`;
-            leftSideDiv.appendChild(hotelImg);
-
-            // Append left and right side content to insertedHotelDataDiv
-            insertedHotelDataDiv.appendChild(rightSideDiv);
-            insertedHotelDataDiv.appendChild(leftSideDiv);
-
-            // Append the new hotel data div
-            document.getElementById('inserted_hotel_data_position_div').appendChild(insertedHotelDataDiv);
-
-            /* Show up the 'inserted_package_data_section_page_1' section */
-            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
-
-
-
-
-            // Get references to all input elements and the ensure text element
-            document.getElementById('hotel_location_input_id').value = '';
-            document.getElementById('hotel_area_input_id').value = '';
-            document.getElementById('hotel_name_input_id').value = '';
-            document.getElementById('check_in_check_out_date_input_id').value = '';
-            document.getElementById('total_nights_input_id').value = '';
-            document.getElementById('room_description_input_id').value = '';
-            document.getElementById('breakfast_checkbox').checked = false;
-            document.getElementById('room_extra_info_textarea_id').value = '';
-
-            // Disable the hotel_area_input_id and hotel_name_input_id inputs
-            document.getElementById('hotel_area_input_id').disabled = true;
-            document.getElementById('hotel_name_input_id').disabled = true;
-
-
-
-
-
-
-
-            // Define a global variable to store the reference
-            let currentHotelDataDiv;
-
-            // Function to handle delete clicked hotel data
-            deleteClickedHotelData = function () {
-                let overlayLayer = document.querySelector('.black_overlay');
-
-                // Delete the corresponding inserted hotel data div
-                currentHotelDataDiv.remove();
-
-                // Hide edit/delete options div
-                let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
-                editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Clear currentHotelDataDiv reference
-                currentHotelDataDiv = null;
-            }
-
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-            function initializeDragAndDrop() {
-
-                // Function to show edit or delete the inserted hotel data
-                hotelImg.onclick = (event) => {
-                    let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
-                    currentHotelDataDiv = event.target.closest('.inserted_hotel_data_div');
-
-                    // Create an overlay layer for better visual effect
-                    let overlayLayer = document.createElement('div');
-                    overlayLayer.classList.add('black_overlay');
-                    document.body.appendChild(overlayLayer);
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                    }, 50);
-
-                    // Click handler to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        // Hide delete box options div
-                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                        // Hide overlay layer with opacity transition
-                        overlayLayer.style.opacity = '0';
-
-                        // Remove overlay and delete box div from DOM after transition
-                        setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
-
-                    // Prevent overlayLayer click propagation to avoid immediate closure
-                    overlayLayer.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Prevent immediate closure of overlay on click
-                    });
-                };
-
-                // Event listener for the drop zone (inserted_hotel_data_position_div)
-                let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
-
-                // Function to handle mouse down event
-                function mouseDown(event) {
-                    if (event.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        event.preventDefault(); // Prevent default behavior
-                        let draggingElement = event.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = event.clientY; // Store initial mouse position
-                        document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
-                        document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
-
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
-                    }
-                }
-
-                // Function to handle touch start event
-                function touchStart(event) {
-                    let touch = event.touches[0]; // Get the first touch
-                    if (touch.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        let draggingElement = touch.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = touch.clientY; // Store initial touch position
-                        document.addEventListener('touchmove', touchMove); // Listen for touch move events
-                        document.addEventListener('touchend', touchEnd); // Listen for touch end events
-
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
-                    }
-                }
-
-                // Function to handle mouse move event
-                function mouseMove(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial mouse position
-                    let deltaY = event.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
-
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
-
-                    // Determine the target index based on the position
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
-                        if (i !== currentIndex && event.clientY > rect.top && event.clientY < rect.bottom) {
-                            if (deltaY > 0 && event.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
-                            } else if (deltaY < 0 && event.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
-                            }
-                            break;
-                        }
-                    }
-
-                    // Adjust the elements when dragged between others
-                    if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
-                    }
-                }
-
-                // Function to handle touch move event
-                function touchMove(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let touch = event.touches[0]; // Get the first touch
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial touch position
-                    let deltaY = touch.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
-
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
-
-                    // Determine the target index based on the position
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
-                        if (i !== currentIndex && touch.clientY > rect.top && touch.clientY < rect.bottom) {
-                            if (deltaY > 0 && touch.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
-                            } else if (deltaY < 0 && touch.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
-                            }
-                            break;
-                        }
-                    }
-
-                    // Adjust the elements when dragged between others
-                    if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
-                    }
-                }
-
-                // Function to handle mouse up event
-                function mouseUp(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-
-                    // Check if draggingElement exists before proceeding
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
-
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
-                    }
-
-                    document.removeEventListener('mousemove', mouseMove); // Stop listening for mouse move events
-                    document.removeEventListener('mouseup', mouseUp); // Stop listening for mouse up events
-
-                    // Enable scrolling
-                    document.body.style.overflow = ''; // Re-enable page scrolling
-                }
-
-                // Function to handle touch end event
-                function touchEnd(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-
-                    // Check if draggingElement exists before proceeding
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
-
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
-                    }
-
-                    document.removeEventListener('touchmove', touchMove); // Stop listening for touch move events
-                    document.removeEventListener('touchend', touchEnd); // Stop listening for touch end events
-
-                    // Enable scrolling
-                    document.body.style.overflow = ''; // Re-enable page scrolling
-                }
-
-                // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
-                let insertedHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
-                insertedHotelDataDivs.forEach((div) => {
-                    div.addEventListener('mousedown', mouseDown);
-                    div.addEventListener('touchstart', touchStart);
-                });
-            }
-
-            // Call the initializeDragAndDrop function to set up delete and drag-and-drop functionality
-            initializeDragAndDrop();
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /* Check if all package data inputs are filled */
+/* Header Nav Bar */
+function toggleLinks(id) {
+    var links = document.getElementById(id);
+    if (links.style.maxHeight) {
+        links.style.maxHeight = null;
     } else {
-
-        // Get references to all input elements and the ensure text element
-        let packageDetailsTextArea = document.getElementById('package_details_textarea_id'); // Person amount input element
-        let packageTotalPriceInput = document.getElementById('package_totla_price_input_id'); // Person amount input element
-
-        // If Not All Inputs Are Valid, Show The Error Message
-        if (packageDetailsTextArea.value === '' || packageTotalPriceInput.value === '') {
-            package_inputs_submit_button.style.backgroundColor = 'red';
-
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                package_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-
-
-            /* if all inputs are filled then insert the data in the table */
-        } else {
-            /* Change the 'تم' button color */
-            package_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                package_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-
-            // Create a new div element to insert client data
-            let insertedPackageDataDiv = document.createElement('div');
-            insertedPackageDataDiv.classList.add('inserted_package_data_div');
-
-            let packageDetailsReayText = packageDetailsTextArea.value;
-            let packageTotalPriceReayText = packageTotalPriceInput.value;
-
-            // Replace multiple consecutive new line characters with a single new line character
-            packageDetailsReayText = packageDetailsReayText.replace(/\n\s*\n/g, '\n');
-
-            // Replace new line characters with <br> tags
-            let packageDetailsWithBreaks = packageDetailsReayText.replace(/\n/g, '<br>');
-
-            let packageDetailsH6_1 = document.createElement('h6');
-            packageDetailsH6_1.innerHTML = `${packageDetailsWithBreaks}`;
-
-            let packageDetailsH6_2 = document.createElement('h6');
-            packageDetailsH6_2.innerHTML = `إجمالي السعر ${packageTotalPriceReayText}`;
-            packageDetailsH6_2.id = 'package_total_price_h6_id';
-
-            insertedPackageDataDiv.appendChild(packageDetailsH6_1);
-            insertedPackageDataDiv.appendChild(packageDetailsH6_2);
-
-            // Show the div and clear previous package data and append the new data div
-            if (document.getElementById('inserted_package_data_position_div').style.display === 'none') {
-                document.getElementById('inserted_package_data_position_div').style.display = 'block';
-            }
-            document.getElementById('inserted_package_data_position_div').innerHTML = '';
-            document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
-
-            /* Show up the 'inserted_package_data_section_page_2' section */
-            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
-        }
-
-
+        links.style.maxHeight = links.scrollHeight + "px";
     }
-
-
-
 }
 
 
+/* Page Load Header Fade Animation */
+setTimeout(function () {
+    document.getElementById('body').style.opacity = "1";
+}, 100);
 
 
 
@@ -617,155 +27,685 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-/* Function to open choosing pdf file name box */
-openPdfDownloadBox = function () {
-    // Create overlay layer
-    let overlayLayer = document.createElement('div');
-    overlayLayer.className = 'black_overlay';
-    document.body.appendChild(overlayLayer);
-
-
-    // Show overlay layer with smooth opacity transition
-    setTimeout(() => {
-        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-        
-        // Slide to the center of the screen
-        namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
-    }, 100);
 
 
 
-    
-    // get the name pdf file box
-    let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
 
 
-    /* Function to hide the name pdf file box */
-    closeDownloadPdfBox = function () {
-        // Hide edit/delete options div
-        namePdfBoxDiv.style.transform = 'translate(-50%, -100vh)';
 
-        // Hide overlay layer with opacity transition
-        overlayLayer.style.opacity = '0';
-
-        // Remove overlay and edit/delete div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-    }
-
-};
-
-
-/* Function to check if the 'pdf_file_name_input_id' input contain value or no */
-checkThePdfNameToDownload = function () {
-
-    /* If there is no value then change the 'check_pdf_name_button' color */
-    if (document.getElementById('pdf_file_name_input_id').value === '') {
-        document.getElementById('check_pdf_name_button').style.backgroundColor = 'red';
-        setTimeout(() => {
-            document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
-        }, 200);
-
-
-        /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
-    } else {
-        document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(0, 255, 0)';
-        setTimeout(() => {
-            document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
-        }, 200);
-
-
-        let pdfNameReadyText = document.getElementById('pdf_file_name_input_id').value;
-        downloadPdfWithCustomName(`${pdfNameReadyText}`);
-    }
-
+/* Function To Drop Down The Clint Detail Elements */
+function toggleDropdownContent(toggleButtonId, dropdownContentId) {
+    let toggleButton = document.getElementById(toggleButtonId);
+    let dropdownContent = document.getElementById(dropdownContentId);
+    toggleButton.addEventListener('click', function () {
+        dropdownContent.style.maxHeight = dropdownContent.style.maxHeight ? null : dropdownContent.scrollHeight + 'px';
+    });
 }
 
+// Initialize dropdown toggles for client, hotel, and package details
+toggleDropdownContent('toggle_clint_elements', 'dropdown_clint_content');
+toggleDropdownContent('toggle_hotel_elements', 'dropdown_hotel_content');
+toggleDropdownContent('toggle_package_elements', 'dropdown_package_content');
 
-/* Download the pdf file with the given name */
-downloadPdfWithCustomName = function (pdfName) {
-    let { jsPDF } = window.jspdf;
-    let section1 = document.getElementById('inserted_package_data_section_page_1');
-    let section2 = document.getElementById('inserted_package_data_section_page_2');
-    let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
-    let packageDataDiv = document.getElementById('inserted_package_data_position_div');
 
-    // Function to check if a div has any child elements
-    let hasElements = function (div) {
-        return div && div.children.length > 0;
-    };
 
-    // Create a new jsPDF instance with A4 dimensions
-    let pdf = new jsPDF('p', 'mm', 'a4');
 
-    // Set the background color for the PDF
-    let imgWidth = pdf.internal.pageSize.width;
-    let pageHeight = pdf.internal.pageSize.height;
 
-    // Function to add content to the PDF
-    let addContentToPDF = function (canvas, isFirstPage) {
-        if (!isFirstPage) {
-            pdf.addPage();
+
+
+
+
+
+
+
+
+
+
+/* Functions to run the company names search bar and drop down functionality */
+// Get elements
+let companyNameInput = document.getElementById('clint_company_name_input_id');
+let companyNamesDiv = document.getElementById('company_names_dropdown');
+let companyNameSearchBar = document.getElementById('company_name_search_bar');
+
+// Function to show the dropdown and overlay
+function showDropdown() {
+    companyNamesDiv.classList.add('show');
+    companyNamesDiv.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
+    showOverlay();
+}
+
+// Function to hide the dropdown and overlay
+function hideDropdown() {
+    companyNamesDiv.classList.remove('show');
+    companyNamesDiv.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
+    hideOverlay();
+}
+
+// Event listener to toggle dropdown visibility on input click
+companyNameInput.addEventListener('click', () => {
+    showDropdown();
+});
+
+// Event listener to expand dropdown on search bar click
+companyNameSearchBar.addEventListener('click', () => {
+    companyNamesDiv.style.height = '90vh'; // Set height to 90vh when search bar is clicked
+    companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
+});
+
+// Event listener to handle selection of company names
+companyNamesDiv.querySelectorAll('h3').forEach(option => {
+    option.addEventListener('click', () => {
+        companyNameInput.value = option.textContent;
+        hideDropdown();
+        companyNamesDiv.style.height = 'auto'; // Reset height to auto when hiding dropdown
+        companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
+    });
+});
+
+// Event listener to filter company names based on search bar input
+companyNameSearchBar.addEventListener('input', () => {
+    let filter = companyNameSearchBar.value.trim().toLowerCase();
+    let options = companyNamesDiv.querySelectorAll('h3');
+    let visibleCount = 0;
+
+    options.forEach(option => {
+        let companyName = option.textContent.trim().toLowerCase();
+        if (filter === '' && visibleCount < 6) {
+            option.style.display = 'block';
+            visibleCount++;
+        } else if (companyName.includes(filter)) {
+            option.style.display = 'block';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+});
+
+// Initial setup to show only the first 6 elements
+document.addEventListener('DOMContentLoaded', () => {
+    let options = companyNamesDiv.querySelectorAll('h3');
+    options.forEach((option, index) => {
+        if (index < 6) {
+            option.style.display = 'block';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Get the following elements for later use
+let hotelLocationInput = document.getElementById('hotel_location_input_id');
+let hotelAreaInput = document.getElementById('hotel_area_input_id');
+let hotelNameInput = document.getElementById('hotel_name_input_id');
+
+// Get the dropdown elements
+let hotelLocationDropdown = document.getElementById('hotel_location_dropdown');
+let hotelAreaDropdown = document.getElementById('hotel_bali_area_dropdown');
+
+// Get the options within the dropdowns
+let hotelLocationOptions = hotelLocationDropdown.querySelectorAll('h3');
+let hotelAreaOptions = hotelAreaDropdown.querySelectorAll('h3');
+
+// Initialize overlay layer variable
+let overlayLayer = null;
+
+// Function to show the hotel area input if the location is "بالي"
+function checkHotelLocation() {
+    // If the selected location is not "بالي"
+    if (hotelLocationInput.value.trim() != "بالي") {
+        hotelAreaInput.style.display = 'none'; // Hide the hotel area input
+    } else {
+        hotelAreaInput.style.display = 'block'; // Show the hotel area input
+    }
+}
+
+// Function to check if inputs should be clickable
+function checkInputClickability() {
+    if (hotelLocationInput.value.trim() === '') {
+        hotelAreaInput.disabled = true; // Disable hotel area input
+        hotelNameInput.disabled = true; // Disable hotel name input
+    } else {
+        hotelAreaInput.disabled = false; // Enable hotel area input
+        if (hotelAreaInput.style.display === 'block' && hotelAreaInput.value.trim() === '') {
+            hotelNameInput.disabled = true; // Disable hotel name input if hotel area input is visible and empty
+        } else {
+            hotelNameInput.disabled = false; // Enable hotel name input
+        }
+    }
+}
+
+// Add an event listener to check the hotel location input value on change
+hotelLocationInput.addEventListener('input', () => {
+    checkHotelLocation();
+    checkInputClickability();
+});
+
+// Add event listener for each location option in the dropdown
+hotelLocationOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        hotelLocationInput.value = option.textContent; // Set input value to selected option
+        checkHotelLocation(); // Check the hotel location after setting the value
+        hotelAreaInput.value = ''; // Clear the hotel area input
+        hotelNameInput.value = ''; // Clear the hotel name input
+        hotelLocationDropdown.classList.remove('show'); // Hide dropdown after selection
+        hideOverlay(); // Hide overlay after selection
+        checkInputClickability(); // Check input clickability after setting the value
+    });
+});
+
+// Add event listeners for each area option in the dropdown
+hotelAreaOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        hotelAreaInput.value = option.textContent; // Set input value to selected option
+        hotelNameInput.value = ''; // Clear the hotel name input
+        hotelAreaDropdown.classList.remove('show'); // Hide dropdown after selection
+        hideOverlay(); // Hide overlay after selection
+        checkInputClickability(); // Check input clickability after setting the value
+    });
+});
+
+// Toggle dropdown visibility on hotel location input click
+hotelLocationInput.addEventListener('click', (event) => {
+    if (!hotelLocationInput.disabled) { // Check if input is not disabled
+        event.stopPropagation(); // Prevent the click event from propagating to the document
+        hotelLocationDropdown.classList.toggle('show'); // Toggle visibility of dropdown
+        if (hotelLocationDropdown.classList.contains('show')) {
+            showOverlay(); // Show overlay if dropdown is visible
+        } else {
+            hideOverlay(); // Hide overlay if dropdown is not visible
+        }
+    }
+});
+
+// Toggle dropdown visibility on hotel area input click
+hotelAreaInput.addEventListener('click', (event) => {
+    if (!hotelAreaInput.disabled) { // Check if input is not disabled
+        event.stopPropagation(); // Prevent the click event from propagating to the document
+        hotelAreaDropdown.classList.toggle('show'); // Toggle visibility of dropdown
+        if (hotelAreaDropdown.classList.contains('show')) {
+            showOverlay(); // Show overlay if dropdown is visible
+        } else {
+            hideOverlay(); // Hide overlay if dropdown is not visible
+        }
+    }
+});
+
+// Function to toggle visibility of the correct hotel name dropdown
+function toggleHotelNameDropdown() {
+    let location = hotelLocationInput.value.trim(); // Get the current location value
+    let area = hotelAreaInput.value.trim(); // Get the current area value
+    let dropdownToShow = null; // Initialize variable for the dropdown to show
+
+    // Determine which dropdown to show based on location input or area input values
+    switch (location) {
+        case "جاكرتا":
+            dropdownToShow = document.getElementById('jakarta_hotel_dropdown');
+            break;
+        case "باندونج":
+            dropdownToShow = document.getElementById('bandung_hotel_dropdown');
+            break;
+        case "لومبوك":
+            dropdownToShow = document.getElementById('lombok_hotel_dropdown');
+            break;
+        case "بونشاك":
+            dropdownToShow = document.getElementById('puncak_hotel_dropdown');
+            break;
+        case "بالي":
+            switch (area) {
+                case "كيراماس":
+                    dropdownToShow = document.getElementById('keramas_hotel_dropdown');
+                    break;
+                case "اوبود":
+                    dropdownToShow = document.getElementById('ubud_hotel_dropdown');
+                    break;
+                case "نوسا دوا":
+                    dropdownToShow = document.getElementById('nusa_dua_hotel_dropdown');
+                    break;
+                case "سيمنياك":
+                    dropdownToShow = document.getElementById('seminyak_hotel_dropdown');
+                    break;
+                case "كوتا":
+                    dropdownToShow = document.getElementById('kuta_hotel_dropdown');
+                    break;
+                case "جيمباران":
+                    dropdownToShow = document.getElementById('jimbaran_hotel_dropdown');
+                    break;
+                case "اولواتو":
+                    dropdownToShow = document.getElementById('uluwatu_hotel_dropdown');
+                    break;
+            }
+            break;
+    }
+
+    if (dropdownToShow) {
+        dropdownToShow.classList.toggle('show'); // Toggle visibility of the determined dropdown
+        if (dropdownToShow.classList.contains('show')) {
+            showOverlay(); // Show overlay if dropdown is visible
+        } else {
+            hideOverlay(); // Hide overlay if dropdown is not visible
         }
 
-        // Set background color
-        pdf.setFillColor(172, 209, 235);
-        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
-
-        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
-        let imgHeight = canvas.height * imgWidth / canvas.width;
-
-        // Set vertical offset to 0 for both pages
-        let imgYOffset = 0;
-
-        // Add scaled image to PDF with compression and top alignment
-        pdf.addImage(imgData, 'JPEG', 0, imgYOffset, imgWidth, imgHeight, '', 'FAST');
-    };
-
-    // Function to add HTML content as vector-based text
-    let addHTMLToPDF = function (pdf, element, pageNumber) {
-        pdf.setPage(pageNumber);
-        pdf.html(element, {
-            callback: function (pdf) {
-                if (pageNumber > 1) {
-                    pdf.setPage(pageNumber);
-                }
-            },
-            x: 0,
-            y: 0,
-            html2canvas: { scale: 2 }
-        });
-    };
-
-    // Check if the package data div contains elements
-    if (hasElements(hotelDataDiv) && hasElements(packageDataDiv)) {
-        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_page_1)
-        html2canvas(section1, { scale: 2 }).then(canvas1 => {
-            addContentToPDF(canvas1, true);
-
-            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_page_2)
-            html2canvas(section2, { scale: 2 }).then(canvas2 => {
-                addContentToPDF(canvas2, false);
-
-                // Add HTML content for vector-based text
-                addHTMLToPDF(pdf, section1, 1);
-                addHTMLToPDF(pdf, section2, 2);
-
-                // Save the PDF
-                pdf.save(pdfName);
+        // Add event listeners for each hotel name option in the dropdown
+        let hotelNameOptions = dropdownToShow.querySelectorAll('h3');
+        hotelNameOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                hotelNameInput.value = option.textContent; // Set input value to selected option
+                dropdownToShow.classList.remove('show'); // Hide dropdown after selection
+                hideOverlay(); // Hide overlay after selection
             });
         });
-    } else if (hasElements(hotelDataDiv)) {
-        // Only generate PDF with the first section
-        html2canvas(section1, { scale: 2 }).then(canvas1 => {
-            addContentToPDF(canvas1, true);
-
-            // Add HTML content for vector-based text
-            addHTMLToPDF(pdf, section1, 1);
-
-            // Save the PDF
-            pdf.save(pdfName);
-        });
     }
+}
+
+// Add an event listener to toggle the correct hotel name dropdown on click
+hotelNameInput.addEventListener('click', (event) => {
+    if (!hotelNameInput.disabled) { // Check if input is not disabled
+        event.stopPropagation(); // Prevent the click event from propagating to the document
+        toggleHotelNameDropdown(); // Toggle the correct hotel name dropdown
+    }
+});
+
+// Prevent clicks inside any hotel dropdown from hiding the overlay
+document.querySelectorAll('.hotel_data_options_dropdown_class').forEach(dropdown => {
+    dropdown.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events inside the dropdown
+    });
+});
+
+// Function to show the overlay
+function showOverlay() {
+    overlayLayer = document.createElement('div'); // Create a new overlay element
+    overlayLayer.className = 'black_overlay'; // Set the class name for styling
+    overlayLayer.onclick = hideOverlay; // Set the click event listener to hide the overlay when clicked outside
+    document.body.appendChild(overlayLayer); // Append overlay to the document body
+
+
+    setTimeout(() => {
+        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+    }, 100);
+}
+
+// Function to hide the overlay and any visible dropdown
+function hideOverlay() {
+
+    // Check if any dropdown with the class name 'hotel_data_options_dropdown_class'is visible and hide it
+    let visibleDropdown_1 = document.querySelector('.hotel_data_options_dropdown_class.show');
+    if (visibleDropdown_1) {
+        visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
+    }
+
+    // Check if any dropdown with the class name 'company_names_dropdown_class' is visible and hide it
+    let visibleDropdown_2 = document.querySelector('.company_names_dropdown_class.show');
+    if (visibleDropdown_2) {
+        visibleDropdown_2.classList.remove('show'); // Remove 'show' class to hide dropdown
+        companyNamesDiv.style.height = '50vh'; // Set height to 90vh when search bar is clicked
+    }
+
+    // Check if any dropdown with the class name 'person_amount_dropdown' is visible and hide it
+    let visibleDropdown_3 = document.getElementById('person_amount_dropdown');
+    if (visibleDropdown_3) {
+        visibleDropdown_3.classList.remove('show'); // Remove 'show' class to hide dropdown
+    }
+
+    // Hide the overlay if it exists
+    if (overlayLayer) {
+        overlayLayer.style.opacity = '0'; // Set opacity to 0 for smooth disappearance
+
+        setTimeout(() => {
+            if (overlayLayer) {
+                document.body.removeChild(overlayLayer); // Remove overlay from DOM
+                overlayLayer = null; // Reset overlay variable
+            }
+        }, 200); // Assuming 200ms is the duration of your opacity transition
+    }
+}
+
+
+
+// Check which input element should be clickable or unclickable based on the value of the 'hotel_location_input_id'
+checkInputClickability();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function For Counting People Amount */
+// Variables for person amount input and dropdown
+let personAmountInput = document.getElementById('hotel_person_amount_input_id');
+let personAmountDropdown = document.getElementById('person_amount_dropdown');
+let filterPersonAmountSubmitButton = document.getElementById('filter_person_amount_submit_button');
+let childAgeInputsContainer = document.getElementById('child_age_inputs_container');
+
+// Variable to store the last saved counter values and child ages
+let lastSavedCounters = {
+    adult: 1,
+    child: 0
 };
+let lastSavedChildAges = [];
+
+// Function to add a new child age input
+function addChildAgeInput(value = '', index) {
+    let inputCount = childAgeInputsContainer.children.length + 1;
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'child_age_input';
+    input.placeholder = `عمر الطفل ${index || inputCount}`;
+    input.value = value;
+    input.required = true;
+    input.addEventListener('input', checkEmptyInputs); // Add event listener to check for empty inputs
+
+    /* Append the child age input to the 'child_age_inputs_container' div */
+    childAgeInputsContainer.appendChild(input);
+    checkEmptyInputs(); // Check inputs after adding a new one
+}
+
+// Function to remove the last child age input
+function removeChildAgeInput() {
+    let inputs = childAgeInputsContainer.querySelectorAll('.child_age_input');
+    if (inputs.length > 0) {
+        childAgeInputsContainer.removeChild(inputs[inputs.length - 1]);
+    }
+    checkEmptyInputs(); // Check inputs after removing one
+}
+
+// Function to update the counter display
+function updateCounterDisplay(counterDiv, value) {
+    counterDiv.querySelector('.count').textContent = value; // Update counter display with value
+}
+
+// Function to save the current counter values inside the 'hotel_person_amount_input_id' input
+function saveCounterValues() {
+    let counters = document.querySelectorAll('.counter_div');
+    lastSavedCounters.adult = parseInt(counters[0].querySelector('.count').textContent, 10); // Save adult count
+    lastSavedCounters.child = parseInt(counters[1].querySelector('.count').textContent, 10); // Save child count
+
+    // Save child ages
+    lastSavedChildAges = [];
+    document.querySelectorAll('.child_age_input').forEach((input, index) => {
+        lastSavedChildAges[index] = input.value;
+    });
+
+    // Update the input field with the saved values
+    if (lastSavedCounters.child === 0) {
+        personAmountInput.value = `${lastSavedCounters.adult} بالغ`;
+    } else {
+        personAmountInput.value = `${lastSavedCounters.adult} بالغ + ${lastSavedCounters.child} طفل`;
+    }
+}
+
+// Function to reset the counter values to the last saved values
+function resetCounterValues() {
+    let counters = document.querySelectorAll('.counter_div');
+    updateCounterDisplay(counters[0], lastSavedCounters.adult); // Reset adult counter display
+    updateCounterDisplay(counters[1], lastSavedCounters.child); // Reset child counter display
+
+    // Reset child age inputs
+    childAgeInputsContainer.innerHTML = ''; // Clear all current inputs
+    for (let i = 0; i < lastSavedCounters.child; i++) {
+        addChildAgeInput(lastSavedChildAges[i] || '', i + 1);
+    }
+}
+
+// Function to check if any child age input is empty
+function checkEmptyInputs() {
+    let inputs = document.querySelectorAll('.child_age_input');
+    let hasEmpty = Array.from(inputs).some(input => input.value.trim() === '');
+    if (hasEmpty) {
+        filterPersonAmountSubmitButton.classList.add('hidden'); // Hide the submit button if there are empty inputs
+    } else {
+        filterPersonAmountSubmitButton.classList.remove('hidden'); // Show the submit button if all inputs are filled
+    }
+}
+
+
+
+
+
+// Toggle dropdown visibility on person amount input click
+personAmountInput.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent the click event from propagating to the document
+    personAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
+    if (personAmountDropdown.classList.contains('show')) {
+        showOverlay(); // Show overlay if dropdown is visible
+        resetCounterValues(); // Reset values to the last saved state
+    } else {
+        hideOverlay(); // Hide overlay if dropdown is not visible
+    }
+});
+
+// Prevent clicks inside the person amount dropdown from hiding the overlay
+personAmountDropdown.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent propagation of click events inside the dropdown
+});
+
+// Add event listener for buttons inside the person amount dropdown
+personAmountDropdown.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        // Do not hide dropdown and overlay on button click
+    });
+});
+
+// Add event listener to the submit button to save counter values and hide dropdown and overlay
+filterPersonAmountSubmitButton.addEventListener('click', () => {
+    saveCounterValues(); // Save current counter values
+    personAmountDropdown.classList.remove('show'); // Hide dropdown
+    hideOverlay(); // Hide overlay
+});
+
+
+
+
+// Get all counter controls
+let counterControls = document.querySelectorAll('.counter_controls');
+
+// Function to update the count display and apply minimum constraints
+function updateCount(countDisplay, count, minCount) {
+    countDisplay.textContent = count < minCount ? minCount : count; // Update count with minimum constraint
+}
+
+// Add event listeners to each counter controls
+counterControls.forEach((counter, index) => {
+    let minusBtn = counter.querySelector('.minus');
+    let plusBtn = counter.querySelector('.plus');
+    let countDisplay = counter.querySelector('.count');
+
+    // Set the first value (number) based on minimum constraint
+    let minCount = (index === 0) ? 1 : 0; // "بالغ" should have a minimum of 1
+
+    // Event listener for minus button
+    minusBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        let count = parseInt(countDisplay.textContent, 10);
+        if (count > minCount) {
+            count--; // Decrease count if greater than minimum
+            updateCount(countDisplay, count, minCount); // Update count display
+            if (index === 1) { // If it's the "طفل" counter
+                removeChildAgeInput(); // Remove a child age input
+            }
+        }
+    });
+
+    // Event listener for plus button
+    plusBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        let count = parseInt(countDisplay.textContent, 10);
+        count++; // Increase count
+        updateCount(countDisplay, count, minCount); // Update count display
+        if (index === 1) { // If it's the "طفل" counter
+            addChildAgeInput('', count); // Add a child age input
+        }
+    });
+
+    // Prevent propagation of click events inside the counter div
+    counter.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+    });
+});
+
+// Set the first counter values
+resetCounterValues(); // Prepare counters with last saved values
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function for textarea auto resize */
+// Function to toggle full-screen mode for a textarea by ID
+function toggleFullscreen(textAreaId) {
+    let textarea = document.getElementById(textAreaId);
+    let body = document.body;
+
+    // Disable scrolling
+    body.style.overflow = 'hidden';
+
+    // Save the original styles to restore when exiting full-screen
+    let originalStyles = {
+        width: textarea.style.width,
+        height: textarea.style.height,
+        zIndex: textarea.style.zIndex,
+        position: textarea.style.position,
+        top: textarea.style.top,
+        left: textarea.style.left,
+        transform: textarea.style.transform // Save the transform style
+    };
+
+    // Set textarea to full-screen size and center it
+    textarea.style.width = '90vw';
+    textarea.style.height = '90vh';
+    textarea.style.zIndex = '1000';
+    textarea.style.position = 'fixed';
+    textarea.style.top = '50%'; // Center vertically
+    textarea.style.left = '50%'; // Center horizontally
+    textarea.style.transform = 'translate(-50%, -50%)'; // Adjust position to center
+
+    // Create an overlay layer for better visual effect
+    let overlayLayer = document.createElement('div');
+    overlayLayer.classList.add('black_overlay');
+    document.body.appendChild(overlayLayer);
+    setTimeout(() => {
+        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+    }, 50);
+
+    // Create an exit button
+    let exitButton = document.createElement('button');
+    exitButton.classList.add('exit_full_screen_button');
+    exitButton.textContent = 'تصغير';
+    exitButton.onclick = function () {
+        // Restore original styles
+        textarea.style.width = originalStyles.width;
+        textarea.style.height = originalStyles.height;
+        textarea.style.zIndex = originalStyles.zIndex;
+        textarea.style.position = originalStyles.position;
+        textarea.style.top = originalStyles.top;
+        textarea.style.left = originalStyles.left;
+        textarea.style.transform = originalStyles.transform; // Restore the transform style
+
+        // Remove overlay from DOM
+        overlayLayer.parentNode.removeChild(overlayLayer);
+        overlayLayer = null; // Reset overlay variable
+
+        // Re-enable scrolling
+        body.style.overflow = 'auto';
+
+        // Remove exit button
+        exitButton.remove();
+    };
+
+    // Append exit button to body
+    document.body.appendChild(exitButton);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Create and append script for 'Ionicons' Website Icons (Module Script)
+let ioniconsModuleScript = document.createElement('script');
+ioniconsModuleScript.type = 'module';
+ioniconsModuleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
+document.body.appendChild(ioniconsModuleScript);
+
+// Create and append script for 'Ionicons' Website Icons (Module Script)
+let ioniconsNomoduleScript = document.createElement('script');
+ioniconsNomoduleScript.setAttribute('nomodule', '');
+ioniconsNomoduleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js';
+document.body.appendChild(ioniconsNomoduleScript);
