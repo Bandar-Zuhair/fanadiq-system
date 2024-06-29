@@ -1,18 +1,3 @@
-/* How To Manage This Website? */
-/* There Are 3 Places You Must Pay Attention When Addng New Data in Any Array:
-    1- The Hotel Location Data (Bali , Jakarta , Puncak and Etc..)
-    2- The Hotel Area Data (Keramas , Ubud , Kuta and Etc..)
-    3- The Hotel Data (Komaneka Keramas , Samsara Ubud , Tejaprana and Etc..)
-    
-    Also Pay Attention To The Data That Be Inside Each Object in Any Array (Must Be The Same Spelling)
-*/
-
-
-
-
-
-
-
 
 
 
@@ -82,17 +67,17 @@ let companyNameInput = document.getElementById('clint_company_name_input_id');
 let companyNamesDiv = document.getElementById('company_names_dropdown');
 let companyNameSearchBar = document.getElementById('company_name_search_bar');
 
-
-
 // Function to show the dropdown and overlay
 function showDropdown() {
     companyNamesDiv.classList.add('show');
+    companyNamesDiv.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
     showOverlay();
 }
 
 // Function to hide the dropdown and overlay
 function hideDropdown() {
     companyNamesDiv.classList.remove('show');
+    companyNamesDiv.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
     hideOverlay();
 }
 
@@ -101,26 +86,53 @@ companyNameInput.addEventListener('click', () => {
     showDropdown();
 });
 
+// Event listener to expand dropdown on search bar click
+companyNameSearchBar.addEventListener('click', () => {
+    companyNamesDiv.style.height = '90vh'; // Set height to 90vh when search bar is clicked
+    companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
+});
+
 // Event listener to handle selection of company names
 companyNamesDiv.querySelectorAll('h3').forEach(option => {
     option.addEventListener('click', () => {
         companyNameInput.value = option.textContent;
         hideDropdown();
+        companyNamesDiv.style.height = 'auto'; // Reset height to auto when hiding dropdown
+        companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
     });
 });
 
 // Event listener to filter company names based on search bar input
 companyNameSearchBar.addEventListener('input', () => {
     let filter = companyNameSearchBar.value.trim().toLowerCase();
-    companyNamesDiv.querySelectorAll('h3').forEach(option => {
+    let options = companyNamesDiv.querySelectorAll('h3');
+    let visibleCount = 0;
+
+    options.forEach(option => {
         let companyName = option.textContent.trim().toLowerCase();
-        if (companyName.includes(filter)) {
+        if (filter === '' && visibleCount < 6) {
+            option.style.display = 'block';
+            visibleCount++;
+        } else if (companyName.includes(filter)) {
             option.style.display = 'block';
         } else {
             option.style.display = 'none';
         }
     });
 });
+
+// Initial setup to show only the first 6 elements
+document.addEventListener('DOMContentLoaded', () => {
+    let options = companyNamesDiv.querySelectorAll('h3');
+    options.forEach((option, index) => {
+        if (index < 6) {
+            option.style.display = 'block';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+});
+
 
 
 
@@ -342,6 +354,7 @@ function hideOverlay() {
     let visibleDropdown_2 = document.querySelector('.company_names_dropdown_class.show');
     if (visibleDropdown_2) {
         visibleDropdown_2.classList.remove('show'); // Remove 'show' class to hide dropdown
+        companyNamesDiv.style.height = '50vh'; // Set height to 90vh when search bar is clicked
     }
 
     // Check if any dropdown with the class name 'person_amount_dropdown' is visible and hide it
