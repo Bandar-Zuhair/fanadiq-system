@@ -88,7 +88,7 @@ companyNameInput.addEventListener('click', () => {
 
 // Event listener to expand dropdown on search bar click
 companyNameSearchBar.addEventListener('click', () => {
-    companyNamesDiv.style.height = '90vh'; // Set height to 90vh when search bar is clicked
+    companyNamesDiv.style.height = '60vh'; // Set height to 90vh when search bar is clicked
     companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
 });
 
