@@ -614,96 +614,31 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-
-
-
 /* Function to open choosing pdf file name box */
-
-async function downloadPdfWithCustomName(pdfName) {
-    let section1 = document.getElementById('inserted_package_data_section_page_1');
-    let section2 = document.getElementById('inserted_package_data_section_page_2');
-    let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
-    let packageDataDiv = document.getElementById('inserted_package_data_position_div');
-
-    // Function to check if a div has any child elements
-    let hasElements = function (div) {
-        return div && div.children.length > 0;
-    };
-
-    // Create a new PDFDocument
-    const pdfDoc = await PDFDocument.create();
-
-    const addSectionToPdf = async (section) => {
-        // Convert the section to an image
-        const canvas = await html2canvas(section, { scale: 2 });
-        const imgData = canvas.toDataURL('image/png');
-        const imgBytes = await fetch(imgData).then(res => res.arrayBuffer());
-
-        // Add a page to the PDF
-        const page = pdfDoc.addPage();
-        const { width, height } = page.getSize();
-
-        // Embed the image in the PDF
-        const image = await pdfDoc.embedPng(imgBytes);
-        const imgWidth = width;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        // Draw the image on the page
-        page.drawImage(image, {
-            x: 0,
-            y: height - imgHeight,
-            width: imgWidth,
-            height: imgHeight,
-        });
-
-        // Add the text separately as vector-based text
-        page.drawText(section.innerText, {
-            x: 10,
-            y: height - imgHeight - 20,
-            size: 12,
-            color: rgb(0, 0, 0),
-        });
-    };
-
-    // Add sections to the PDF
-    if (hasElements(hotelDataDiv)) {
-        await addSectionToPdf(section1);
-        if (hasElements(packageDataDiv)) {
-            await addSectionToPdf(section2);
-        }
-    }
-
-    // Serialize the PDFDocument to bytes
-    const pdfBytes = await pdfDoc.save();
-
-    // Trigger download
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = pdfName;
-    link.click();
-}
-
-/* Function to open choosing pdf file name box */
-function openPdfDownloadBox() {
+openPdfDownloadBox = function () {
     // Create overlay layer
     let overlayLayer = document.createElement('div');
     overlayLayer.className = 'black_overlay';
     document.body.appendChild(overlayLayer);
 
+
     // Show overlay layer with smooth opacity transition
     setTimeout(() => {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-
+        
         // Slide to the center of the screen
         namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
     }, 100);
 
+
+
+    
     // get the name pdf file box
     let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
 
+
     /* Function to hide the name pdf file box */
-    function closeDownloadPdfBox() {
+    closeDownloadPdfBox = function () {
         // Hide edit/delete options div
         namePdfBoxDiv.style.transform = 'translate(-50%, -100vh)';
 
@@ -716,17 +651,19 @@ function openPdfDownloadBox() {
         }, 300); // Match transition duration in CSS
     }
 
-    document.querySelector('#name_pdf_file_div span').onclick = closeDownloadPdfBox;
-}
+};
+
 
 /* Function to check if the 'pdf_file_name_input_id' input contain value or no */
-function checkThePdfNameToDownload() {
+checkThePdfNameToDownload = function () {
+
     /* If there is no value then change the 'check_pdf_name_button' color */
     if (document.getElementById('pdf_file_name_input_id').value === '') {
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'red';
         setTimeout(() => {
             document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
         }, 200);
+
 
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
     } else {
@@ -735,7 +672,86 @@ function checkThePdfNameToDownload() {
             document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
         }, 200);
 
+
         let pdfNameReadyText = document.getElementById('pdf_file_name_input_id').value;
         downloadPdfWithCustomName(`${pdfNameReadyText}`);
     }
+
 }
+
+
+/* Download the pdf file with the given name */
+downloadPdfWithCustomName = function (pdfName) {
+    let { jsPDF } = window.jspdf;
+    let section1 = document.getElementById('inserted_package_data_section_page_1');
+    let section2 = document.getElementById('inserted_package_data_section_page_2');
+    let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
+    let packageDataDiv = document.getElementById('inserted_package_data_position_div');
+
+    // Function to check if a div has any child elements
+    let hasElements = function (div) {
+        return div && div.children.length > 0;
+    };
+
+    // Create a new jsPDF instance with A4 dimensions
+    let pdf = new jsPDF('p', 'mm', 'a4');
+
+    // Function to add content to the PDF
+    let addContentToPDF = function (canvas, isFirstPage) {
+        if (!isFirstPage) {
+            pdf.addPage();
+        }
+
+        let imgWidth = pdf.internal.pageSize.width;
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+    };
+
+    // Function to add HTML content as vector-based text
+    let addHTMLToPDF = function (pdf, element, pageNumber) {
+        pdf.setPage(pageNumber);
+        pdf.html(element, {
+            callback: function () {
+                if (pageNumber > 1) {
+                    pdf.setPage(pageNumber);
+                }
+            },
+            x: 0,
+            y: 0,
+            html2canvas: { scale: 2 }
+        });
+    };
+
+    // Check if the package data div contains elements
+    if (hasElements(hotelDataDiv) && hasElements(packageDataDiv)) {
+        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_page_1)
+        html2canvas(section1, { scale: 2 }).then(canvas1 => {
+            addContentToPDF(canvas1, true);
+
+            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_page_2)
+            html2canvas(section2, { scale: 2 }).then(canvas2 => {
+                addContentToPDF(canvas2, false);
+
+                // Add HTML content for vector-based text
+                addHTMLToPDF(pdf, section1, 1);
+                addHTMLToPDF(pdf, section2, 2);
+
+                // Save the PDF
+                pdf.save(pdfName);
+            });
+        });
+    } else if (hasElements(hotelDataDiv)) {
+        // Only generate PDF with the first section
+        html2canvas(section1, { scale: 2 }).then(canvas1 => {
+            addContentToPDF(canvas1, true);
+
+            // Add HTML content for vector-based text
+            addHTMLToPDF(pdf, section1, 1);
+
+            // Save the PDF
+            pdf.save(pdfName);
+        });
+    }
+};
