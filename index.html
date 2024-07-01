@@ -33,7 +33,7 @@
             <h1>Fanadiq Indonesia</h1>
         </div>
 
-        <div class="header_navbar_section" onclick="toggleLinks('support-links')">
+        <div class="header_navbar_section" onclick="toggleLinks('other_pages')">
 
 
             <div class="header_navbar_header">
@@ -42,7 +42,7 @@
             </div>
 
 
-            <div class="header_navbar_links" id="support-links">
+            <div class="header_navbar_links" id="other_pages">
                 <a href="فوتشر/voucher.html">Create New Voucher</a>
                 <a href="#">Create New Invoice</a>
                 <a href="#">Create New Clint Movements</a>
@@ -79,22 +79,58 @@
 
 
 
+
+
+
+
+
+
+    <div class="header_navbar_section" onclick="toggleLinks('package_type')">
+
+
+        <div class="header_navbar_header">
+            <span class="header_navbar_title">انواع البكجات</span>
+            <ion-icon name="caret-down-outline"></ion-icon>
+        </div>
+
+
+        <div class="header_navbar_links" id="package_type" style="text-align: left;">
+            <a onclick="showPackageTypeSection('hotel')">Hotel</a>
+            <a onclick="showPackageTypeSection('flight')">Flight</a>
+            <a onclick="showPackageTypeSection('transportation')">Transportation</a>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Create New Package Section -->
-    <section id="create_new_package_section">
+    <section id="create_new_hotel_package_section">
 
 
-        <div class="section_title_text_div" id="toggle_clint_elements">
+        <div class="section_title_text_div" id="toggle_hotel_clint_elements">
             <h1 class="section_title_text">تفاصيل العميل</h1>
         </div>
 
-        <div id="dropdown_clint_content" class="dropdown_content_div_class">
+        <div id="hotel_dropdown_clint_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
 
-                <input type="text" id="hotel_person_amount_input_id" placeholder="عدد الاشخاص" readonly autocomplete="off">
+                <input type="text" id="hotel_person_amount_input_id" placeholder="عدد الاشخاص" readonly
+                    autocomplete="off">
 
 
-                <input type="text" id="first_last_clint_check_in_check_out_date_input_id" placeholder="مدة البرنامج" autocomplete="off">
+                <input type="text" id="first_last_clint_check_in_check_out_date_input_id" placeholder="مدة البرنامج"
+                    autocomplete="off">
                 <input type="text" id="all_total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
 
 
@@ -338,27 +374,27 @@
 
 
         <!-- Dropdown Div For Person Amount -->
-        <div id="person_amount_dropdown">
-            <div class="counter_div">
+        <div id="hotel_person_amount_dropdown" class="person_amount_dropdown_class">
+            <div class="hotel_counter_div">
                 <div class="counter_label">بالغ:</div>
-                <div class="counter_controls">
+                <div class="hotel_counter_controls">
                     <button class="counter_btn minus">-</button>
-                    <span class="count">1</span>
+                    <span class="hotel_count">1</span>
                     <button class="counter_btn plus">+</button>
                 </div>
             </div>
-            <div class="counter_div">
+            <div class="hotel_counter_div">
                 <div class="counter_label">طفل:</div>
-                <div class="counter_controls">
+                <div class="hotel_counter_controls">
                     <button class="counter_btn minus">-</button>
-                    <span class="count">0</span>
+                    <span class="hotel_count">0</span>
                     <button class="counter_btn plus">+</button>
                 </div>
             </div>
-            <div id="child_age_inputs_container"></div>
+            <div id="hotel_child_age_inputs_container"></div>
 
             <div class="submit_package_pdf_div">
-                <button id="filter_person_amount_submit_button">تم</button>
+                <button id="hotel_person_amount_submit_button">تم</button>
             </div>
         </div>
 
@@ -399,6 +435,140 @@
 
 
 
+
+
+
+
+
+
+
+
+    <section id="create_new_flight_package_section" style="display: none;">
+
+
+        <div class="section_title_text_div" id="toggle_clint_flight_elements">
+            <h1 class="section_title_text">تفاصيل الطياران</h1>
+        </div>
+
+
+        <div id="flight_dropdown_content" class="dropdown_content_div_class">
+
+            <div class="package_info_input_div">
+
+
+                <input type="text" id="flight_date_input_id" placeholder="تاريخ الرحلة" autocomplete="off">
+
+
+                <textarea id="from_airport_to_airport_textarea_id" class="package_details_input_class"
+                    placeholder="من مطار - الى مطار"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('from_airport_to_airport_input_id')">تكبير</button>
+
+
+                <input type="text" id="flight_person_amount_input_id" placeholder="عدد المسافرين" readonly
+                    autocomplete="off">
+
+
+                <textarea id="flight_extra_details_textarea_id" class="package_details_input_class"
+                    placeholder="معلومات اكثر؟"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('flight_extra_details_textarea_id')">تكبير</button>
+
+
+                <div class="submit_package_pdf_div">
+                    <button id="clint_flight_inputs_submit_button"
+                        onclick="checkInputsToInsertData('clint_flight_inputs_submit_button')">تم</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Dropdown Div For Person Amount -->
+        <div id="flight_person_amount_dropdown" class="person_amount_dropdown_class">
+            <div class="flight_counter_div">
+                <div class="counter_label">بالغ:</div>
+                <div class="flight_counter_controls">
+                    <button class="counter_btn minus">-</button>
+                    <span class="flight_count">1</span>
+                    <button class="counter_btn plus">+</button>
+                </div>
+            </div>
+            <div class="flight_counter_div">
+                <div class="counter_label">رضيع:</div>
+                <div class="flight_counter_controls">
+                    <button class="counter_btn minus">-</button>
+                    <span class="flight_count">0</span>
+                    <button class="counter_btn plus">+</button>
+                </div>
+            </div>
+
+            <div class="submit_package_pdf_div">
+                <button id="flight_person_amount_submit_button">تم</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- Create New Package Insert Data Section -->
     <!-- Create New Package Insert Data Section -->
     <!-- Create New Package Insert Data Section -->
@@ -416,9 +586,14 @@
 
     <div class="section_title_text_div" style="cursor: default;">
         <h1 class="section_title_text"
-            style="text-align: right; background: white; color: black; box-shadow: 0 0 0 0.5px black; margin: 0; cursor: text;">البكج <ion-icon
-                name="arrow-down-circle-outline"></ion-icon></h1>
+            style="text-align: right; background: white; color: black; box-shadow: 0 0 0 0.5px black; margin: 0; cursor: text;">
+            البكج <ion-icon name="arrow-down-circle-outline"></ion-icon></h1>
     </div>
+
+
+
+
+
 
     <section id="inserted_package_data_section_page_1" style="display: none;">
 
@@ -427,9 +602,20 @@
             <!-- Dynamic JS Code Here -->
         </div>
 
-
         <div id="inserted_clint_data_position_div">
             <!-- Dynamic JS Code Here -->
+        </div>
+
+
+    </section>
+
+
+    <section id="inserted_package_data_section_page_2" style="display: none;">
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="bed"></ion-icon>
+            <h6>حجز الفنادق</h6>
         </div>
 
 
@@ -443,8 +629,38 @@
 
 
 
-    <section id="inserted_package_data_section_page_2" style="display: none;">
+    
 
+
+
+
+
+    <section id="inserted_package_data_section_page_3" style="display: none;">
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="airplane-outline"></ion-icon>
+            <h6>حجز الطيارن</h6>
+        </div>
+
+
+        <div id="inserted_flight_data_position_div">
+            <!-- Dynamic JS Code Here -->
+        </div>
+
+
+    </section>
+
+
+
+
+    <section id="inserted_package_data_section_page_4" style="display: none;">
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="bed"></ion-icon>
+            <h6>معلومات مهمة جدا</h6>
+        </div>
 
         <div id="inserted_package_data_position_div">
             <!-- Dynamic JS Code Here -->
@@ -452,6 +668,8 @@
 
 
     </section>
+
+
 
 
     <div id="export_package_pdf_div_id" style="display: none;">
@@ -470,7 +688,6 @@
 
 
 
-
     <!-- Download PDF Link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -480,6 +697,11 @@
     <script src="create-new-package-insert-data.js"></script>
     <script src="create-new-package-setup.js"></script>
 
+
+
+    <!-- Ionicons Append -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
