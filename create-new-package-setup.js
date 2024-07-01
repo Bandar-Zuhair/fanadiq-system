@@ -1,4 +1,17 @@
+showPackageTypeSection = function (packageType) {
 
+    if (packageType === 'hotel') {
+        create_new_flight_package_section.style.display = 'none';
+        create_new_hotel_package_section.style.display = 'flex';
+
+    } else if (packageType === 'flight') {
+        create_new_hotel_package_section.style.display = 'none';
+        create_new_flight_package_section.style.display = 'flex';
+
+    } else {
+
+    }
+}
 
 
 
@@ -43,10 +56,14 @@ function toggleDropdownContent(toggleButtonId, dropdownContentId) {
 }
 
 // Initialize dropdown toggles for client, hotel, and package details
-toggleDropdownContent('toggle_clint_elements', 'dropdown_clint_content');
+toggleDropdownContent('toggle_hotel_clint_elements', 'hotel_dropdown_clint_content');
 toggleDropdownContent('toggle_hotel_elements', 'dropdown_hotel_content');
 toggleDropdownContent('toggle_package_elements', 'dropdown_package_content');
 
+
+
+
+toggleDropdownContent('toggle_clint_flight_elements', 'flight_dropdown_content');
 
 
 
@@ -88,7 +105,7 @@ companyNameInput.addEventListener('click', () => {
 
 // Event listener to expand dropdown on search bar click
 companyNameSearchBar.addEventListener('click', () => {
-    companyNamesDiv.style.height = '60vh'; // Set height to 90vh when search bar is clicked
+    companyNamesDiv.style.height = '80vh'; // Set height to 90vh when search bar is clicked
     companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
 });
 
@@ -357,8 +374,8 @@ function hideOverlay() {
         companyNamesDiv.style.height = '50vh'; // Set height to 90vh when search bar is clicked
     }
 
-    // Check if any dropdown with the class name 'person_amount_dropdown' is visible and hide it
-    let visibleDropdown_3 = document.getElementById('person_amount_dropdown');
+    // Check if any dropdown with the class name 'person_amount_dropdown_class' is visible and hide it
+    let visibleDropdown_3 = document.querySelector('.person_amount_dropdown_class.show');
     if (visibleDropdown_3) {
         visibleDropdown_3.classList.remove('show'); // Remove 'show' class to hide dropdown
     }
@@ -418,91 +435,91 @@ checkInputClickability();
 
 
 
-/* Function For Counting People Amount */
+/* Function For Counting Hotel People Amount */
 // Variables for person amount input and dropdown
-let personAmountInput = document.getElementById('hotel_person_amount_input_id');
-let personAmountDropdown = document.getElementById('person_amount_dropdown');
-let filterPersonAmountSubmitButton = document.getElementById('filter_person_amount_submit_button');
-let childAgeInputsContainer = document.getElementById('child_age_inputs_container');
+let hotelPersonAmountInput = document.getElementById('hotel_person_amount_input_id');
+let hotelPersonAmountDropdown = document.getElementById('hotel_person_amount_dropdown');
+let hotelPersonAmountSubmitButton = document.getElementById('hotel_person_amount_submit_button');
+let hotelChildAgeInputsContainer = document.getElementById('hotel_child_age_inputs_container');
 
 // Variable to store the last saved counter values and child ages
-let lastSavedCounters = {
+let lastSavedHotelCounters = {
     adult: 1,
     child: 0
 };
-let lastSavedChildAges = [];
+let lastSavedHotelChildAges = [];
 
 // Function to add a new child age input
-function addChildAgeInput(value = '', index) {
-    let inputCount = childAgeInputsContainer.children.length + 1;
+function addHotelChildAgeInput(value = '', index) {
+    let inputCount = hotelChildAgeInputsContainer.children.length + 1;
     let input = document.createElement('input');
     input.type = 'text';
     input.className = 'child_age_input';
     input.placeholder = `عمر الطفل ${index || inputCount}`;
     input.value = value;
     input.required = true;
-    input.addEventListener('input', checkEmptyInputs); // Add event listener to check for empty inputs
+    input.addEventListener('input', checkEmptyHotelChildAgeInputs); // Add event listener to check for empty inputs
 
-    /* Append the child age input to the 'child_age_inputs_container' div */
-    childAgeInputsContainer.appendChild(input);
-    checkEmptyInputs(); // Check inputs after adding a new one
+    /* Append the child age input to the 'hotel_child_age_inputs_container' div */
+    hotelChildAgeInputsContainer.appendChild(input);
+    checkEmptyHotelChildAgeInputs(); // Check inputs after adding a new one
 }
 
 // Function to remove the last child age input
-function removeChildAgeInput() {
-    let inputs = childAgeInputsContainer.querySelectorAll('.child_age_input');
+function removeHotelChildAgeInput() {
+    let inputs = hotelChildAgeInputsContainer.querySelectorAll('.child_age_input');
     if (inputs.length > 0) {
-        childAgeInputsContainer.removeChild(inputs[inputs.length - 1]);
+        hotelChildAgeInputsContainer.removeChild(inputs[inputs.length - 1]);
     }
-    checkEmptyInputs(); // Check inputs after removing one
+    checkEmptyHotelChildAgeInputs(); // Check inputs after removing one
 }
 
 // Function to update the counter display
-function updateCounterDisplay(counterDiv, value) {
-    counterDiv.querySelector('.count').textContent = value; // Update counter display with value
+function updateHotelCounterDisplay(counterDiv, value) {
+    counterDiv.querySelector('.hotel_count').textContent = value; // Update counter display with value
 }
 
 // Function to save the current counter values inside the 'hotel_person_amount_input_id' input
-function saveCounterValues() {
-    let counters = document.querySelectorAll('.counter_div');
-    lastSavedCounters.adult = parseInt(counters[0].querySelector('.count').textContent, 10); // Save adult count
-    lastSavedCounters.child = parseInt(counters[1].querySelector('.count').textContent, 10); // Save child count
+function saveHotelCounterValues() {
+    let counters = document.querySelectorAll('.hotel_counter_div');
+    lastSavedHotelCounters.adult = parseInt(counters[0].querySelector('.hotel_count').textContent, 10); // Save adult count
+    lastSavedHotelCounters.child = parseInt(counters[1].querySelector('.hotel_count').textContent, 10); // Save child count
 
     // Save child ages
-    lastSavedChildAges = [];
+    lastSavedHotelChildAges = [];
     document.querySelectorAll('.child_age_input').forEach((input, index) => {
-        lastSavedChildAges[index] = input.value;
+        lastSavedHotelChildAges[index] = input.value;
     });
 
     // Update the input field with the saved values
-    if (lastSavedCounters.child === 0) {
-        personAmountInput.value = `${lastSavedCounters.adult} بالغ`;
+    if (lastSavedHotelCounters.child === 0) {
+        hotelPersonAmountInput.value = `${lastSavedHotelCounters.adult} بالغ`;
     } else {
-        personAmountInput.value = `${lastSavedCounters.adult} بالغ + ${lastSavedCounters.child} طفل`;
+        hotelPersonAmountInput.value = `${lastSavedHotelCounters.adult} بالغ + ${lastSavedHotelCounters.child} طفل`;
     }
 }
 
 // Function to reset the counter values to the last saved values
-function resetCounterValues() {
-    let counters = document.querySelectorAll('.counter_div');
-    updateCounterDisplay(counters[0], lastSavedCounters.adult); // Reset adult counter display
-    updateCounterDisplay(counters[1], lastSavedCounters.child); // Reset child counter display
+function resetHotelCounterValues() {
+    let counters = document.querySelectorAll('.hotel_counter_div');
+    updateHotelCounterDisplay(counters[0], lastSavedHotelCounters.adult); // Reset adult counter display
+    updateHotelCounterDisplay(counters[1], lastSavedHotelCounters.child); // Reset child counter display
 
     // Reset child age inputs
-    childAgeInputsContainer.innerHTML = ''; // Clear all current inputs
-    for (let i = 0; i < lastSavedCounters.child; i++) {
-        addChildAgeInput(lastSavedChildAges[i] || '', i + 1);
+    hotelChildAgeInputsContainer.innerHTML = ''; // Clear all current inputs
+    for (let i = 0; i < lastSavedHotelCounters.child; i++) {
+        addHotelChildAgeInput(lastSavedHotelChildAges[i] || '', i + 1);
     }
 }
 
 // Function to check if any child age input is empty
-function checkEmptyInputs() {
+function checkEmptyHotelChildAgeInputs() {
     let inputs = document.querySelectorAll('.child_age_input');
     let hasEmpty = Array.from(inputs).some(input => input.value.trim() === '');
     if (hasEmpty) {
-        filterPersonAmountSubmitButton.classList.add('hidden'); // Hide the submit button if there are empty inputs
+        hotelPersonAmountSubmitButton.classList.add('hidden'); // Hide the submit button if there are empty inputs
     } else {
-        filterPersonAmountSubmitButton.classList.remove('hidden'); // Show the submit button if all inputs are filled
+        hotelPersonAmountSubmitButton.classList.remove('hidden'); // Show the submit button if all inputs are filled
     }
 }
 
@@ -511,24 +528,24 @@ function checkEmptyInputs() {
 
 
 // Toggle dropdown visibility on person amount input click
-personAmountInput.addEventListener('click', (event) => {
+hotelPersonAmountInput.addEventListener('click', (event) => {
     event.stopPropagation(); // Prevent the click event from propagating to the document
-    personAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
-    if (personAmountDropdown.classList.contains('show')) {
+    hotelPersonAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
+    if (hotelPersonAmountDropdown.classList.contains('show')) {
         showOverlay(); // Show overlay if dropdown is visible
-        resetCounterValues(); // Reset values to the last saved state
+        resetHotelCounterValues(); // Reset values to the last saved state
     } else {
         hideOverlay(); // Hide overlay if dropdown is not visible
     }
 });
 
 // Prevent clicks inside the person amount dropdown from hiding the overlay
-personAmountDropdown.addEventListener('click', (event) => {
+hotelPersonAmountDropdown.addEventListener('click', (event) => {
     event.stopPropagation(); // Prevent propagation of click events inside the dropdown
 });
 
 // Add event listener for buttons inside the person amount dropdown
-personAmountDropdown.querySelectorAll('button').forEach(button => {
+hotelPersonAmountDropdown.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', (event) => {
         event.stopPropagation(); // Prevent propagation of click events
         // Do not hide dropdown and overlay on button click
@@ -536,9 +553,9 @@ personAmountDropdown.querySelectorAll('button').forEach(button => {
 });
 
 // Add event listener to the submit button to save counter values and hide dropdown and overlay
-filterPersonAmountSubmitButton.addEventListener('click', () => {
-    saveCounterValues(); // Save current counter values
-    personAmountDropdown.classList.remove('show'); // Hide dropdown
+hotelPersonAmountSubmitButton.addEventListener('click', () => {
+    saveHotelCounterValues(); // Save current counter values
+    hotelPersonAmountDropdown.classList.remove('show'); // Hide dropdown
     hideOverlay(); // Hide overlay
 });
 
@@ -546,18 +563,18 @@ filterPersonAmountSubmitButton.addEventListener('click', () => {
 
 
 // Get all counter controls
-let counterControls = document.querySelectorAll('.counter_controls');
+let hotelCounterControls = document.querySelectorAll('.hotel_counter_controls');
 
 // Function to update the count display and apply minimum constraints
-function updateCount(countDisplay, count, minCount) {
+function updateHotelCount(countDisplay, count, minCount) {
     countDisplay.textContent = count < minCount ? minCount : count; // Update count with minimum constraint
 }
 
 // Add event listeners to each counter controls
-counterControls.forEach((counter, index) => {
+hotelCounterControls.forEach((counter, index) => {
     let minusBtn = counter.querySelector('.minus');
     let plusBtn = counter.querySelector('.plus');
-    let countDisplay = counter.querySelector('.count');
+    let countDisplay = counter.querySelector('.hotel_count');
 
     // Set the first value (number) based on minimum constraint
     let minCount = (index === 0) ? 1 : 0; // "بالغ" should have a minimum of 1
@@ -568,9 +585,9 @@ counterControls.forEach((counter, index) => {
         let count = parseInt(countDisplay.textContent, 10);
         if (count > minCount) {
             count--; // Decrease count if greater than minimum
-            updateCount(countDisplay, count, minCount); // Update count display
+            updateHotelCount(countDisplay, count, minCount); // Update count display
             if (index === 1) { // If it's the "طفل" counter
-                removeChildAgeInput(); // Remove a child age input
+                removeHotelChildAgeInput(); // Remove a child age input
             }
         }
     });
@@ -580,9 +597,9 @@ counterControls.forEach((counter, index) => {
         event.stopPropagation(); // Prevent propagation of click events
         let count = parseInt(countDisplay.textContent, 10);
         count++; // Increase count
-        updateCount(countDisplay, count, minCount); // Update count display
+        updateHotelCount(countDisplay, count, minCount); // Update count display
         if (index === 1) { // If it's the "طفل" counter
-            addChildAgeInput('', count); // Add a child age input
+            addHotelChildAgeInput('', count); // Add a child age input
         }
     });
 
@@ -593,7 +610,7 @@ counterControls.forEach((counter, index) => {
 });
 
 // Set the first counter values
-resetCounterValues(); // Prepare counters with last saved values
+resetHotelCounterValues(); // Prepare counters with last saved values
 
 
 
@@ -698,14 +715,160 @@ function toggleFullscreen(textAreaId) {
 
 
 
-// Create and append script for 'Ionicons' Website Icons (Module Script)
-let ioniconsModuleScript = document.createElement('script');
-ioniconsModuleScript.type = 'module';
-ioniconsModuleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
-document.body.appendChild(ioniconsModuleScript);
 
-// Create and append script for 'Ionicons' Website Icons (Module Script)
-let ioniconsNomoduleScript = document.createElement('script');
-ioniconsNomoduleScript.setAttribute('nomodule', '');
-ioniconsNomoduleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js';
-document.body.appendChild(ioniconsNomoduleScript);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function For Counting Flight People Amount */
+// Variables for person amount input and dropdown
+let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id');
+let flightPersonAmountDropdown = document.getElementById('flight_person_amount_dropdown');
+let flightPersonAmountSubmitButton = document.getElementById('flight_person_amount_submit_button');
+
+// Variable to store the last saved counter values
+let lastSavedFlightCounters = {
+    adult: 1,
+    infat: 0
+};
+
+
+// Function to update the counter display
+function updateFlightCounterDisplay(counterDiv, value) {
+    counterDiv.querySelector('.flight_count').textContent = value; // Update counter display with value
+}
+
+// Function to save the current counter values inside the 'hotel_person_amount_input_id' input
+function saveFlightCounterValues() {
+    let counters = document.querySelectorAll('.flight_counter_div');
+    lastSavedFlightCounters.adult = parseInt(counters[0].querySelector('.flight_count').textContent, 10); // Save adult count
+    lastSavedFlightCounters.infat = parseInt(counters[1].querySelector('.flight_count').textContent, 10); // Save infat count
+
+
+    // Update the input field with the saved values
+    if (lastSavedFlightCounters.infat === 0) {
+        flightPersonAmountInput.value = `${lastSavedFlightCounters.adult} بالغ`;
+    } else {
+        flightPersonAmountInput.value = `${lastSavedFlightCounters.adult} بالغ + ${lastSavedFlightCounters.infat} رضيع`;
+    }
+}
+
+// Function to reset the counter values to the last saved values
+function resetFlightCounterValues() {
+    let counters = document.querySelectorAll('.flight_counter_div');
+    updateFlightCounterDisplay(counters[0], lastSavedFlightCounters.adult); // Reset adult counter display
+    updateFlightCounterDisplay(counters[1], lastSavedFlightCounters.infat); // Reset infat counter display
+}
+
+
+
+
+// Toggle dropdown visibility on person amount input click
+flightPersonAmountInput.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent the click event from propagating to the document
+    flightPersonAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
+    if (flightPersonAmountDropdown.classList.contains('show')) {
+        showOverlay(); // Show overlay if dropdown is visible
+        resetFlightCounterValues(); // Reset values to the last saved state
+    } else {
+        hideOverlay(); // Hide overlay if dropdown is not visible
+    }
+});
+
+// Prevent clicks inside the person amount dropdown from hiding the overlay
+flightPersonAmountDropdown.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevent propagation of click events inside the dropdown
+});
+
+// Add event listener for buttons inside the person amount dropdown
+flightPersonAmountDropdown.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        // Do not hide dropdown and overlay on button click
+    });
+});
+
+// Add event listener to the submit button to save counter values and hide dropdown and overlay
+flightPersonAmountSubmitButton.addEventListener('click', () => {
+    saveFlightCounterValues(); // Save current counter values
+    flightPersonAmountDropdown.classList.remove('show'); // Hide dropdown
+    hideOverlay(); // Hide overlay
+});
+
+
+
+
+// Get all counter controls
+let flightCounterControls = document.querySelectorAll('.flight_counter_controls');
+
+// Function to update the count display and apply minimum constraints
+function updateFlightCount(countDisplay, count, minCount) {
+    countDisplay.textContent = count < minCount ? minCount : count; // Update count with minimum constraint
+}
+
+// Add event listeners to each counter controls
+flightCounterControls.forEach((counter, index) => {
+    let minusBtn = counter.querySelector('.minus');
+    let plusBtn = counter.querySelector('.plus');
+    let countDisplay = counter.querySelector('.flight_count');
+
+    // Set the first value (number) based on minimum constraint
+    let minCount = (index === 0) ? 1 : 0; // "بالغ" should have a minimum of 1
+
+    // Event listener for minus button
+    minusBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        let count = parseInt(countDisplay.textContent, 10);
+        if (count > minCount) {
+            count--; // Decrease count if greater than minimum
+            updateFlightCount(countDisplay, count, minCount); // Update count display
+        }
+    });
+
+    // Event listener for plus button
+    plusBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+        let count = parseInt(countDisplay.textContent, 10);
+        count++; // Increase count
+        updateFlightCount(countDisplay, count, minCount); // Update count display
+    });
+
+    // Prevent propagation of click events inside the counter div
+    counter.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent propagation of click events
+    });
+});
+
+// Set the first counter values
+resetFlightCounterValues(); // Prepare counters with last saved values
+
+
+
