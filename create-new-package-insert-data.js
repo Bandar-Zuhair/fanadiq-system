@@ -706,7 +706,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             /* Flight right side h6 element */
-            let flightRightSideContent = `${flightDateValue}\n${flightPersonAmountValue}`;
+            let flightRightSideContent = `تاريخ الرحلة:\n${flightDateValue}\nالمسافرين: ${flightPersonAmountValue}`;
 
             if (flightExtraDetailsValue !== '') {
                 flightRightSideContent += `\n${flightExtraDetailsValue}`;
@@ -851,15 +851,14 @@ downloadPdfWithCustomName = function (pdfName) {
         let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
         let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
 
-        // Add scaled image to PDF
+        // Add scaled image to PDF with transparency
         pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
-    // Function to capture the canvas with white background
+    // Function to capture the canvas without specifying background color
     let captureCanvas = function (section, isFirstPage) {
         return html2canvas(section, {
             scale: 4, // Increase scale for higher quality
-            backgroundColor: '#FFFFFF',
             useCORS: true // Enable cross-origin resource sharing if needed
         }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
@@ -896,13 +895,6 @@ downloadPdfWithCustomName = function (pdfName) {
         processNextSection();
     };
 
-    // Function to add text as vector
-    let addTextAsVector = function (pdf) {
-        // Example: Add text in vector format
-        pdf.setFontSize(16);
-        pdf.text('Your Text Here', 10, 10);
-    };
-
     // Find all sections with the ID pattern and store them in an array
     let sections = [];
     let i = 1;
@@ -923,17 +915,4 @@ downloadPdfWithCustomName = function (pdfName) {
 
     // Process the sections
     processSections(sections);
-
-    // Add vector text (if needed)
-    addTextAsVector(pdf);
 };
-
-
-
-
-
-
-
-
-
-
