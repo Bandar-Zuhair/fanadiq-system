@@ -1,3 +1,8 @@
+/* Variable to save a number for counting functionality (Ex: Flight Number..?) */
+let flightNumberCounter = 1;
+
+
+
 /* Function for checking if ready or no to insert the data */
 // Function to check if all inputs have values
 checkInputsToInsertData = function (clickedButtonId) {
@@ -8,7 +13,7 @@ checkInputsToInsertData = function (clickedButtonId) {
     if (clickedButtonId === 'clint_inputs_submit_button') {
 
 
-        // Get the input elements for person amount and dates
+        // Get references to all input elements for later use
         let personAmountInput = document.getElementById('hotel_person_amount_input_id');
         let firstLastCheckInCheckOutDateInput = document.getElementById('first_last_clint_check_in_check_out_date_input_id');
         let allTotalNightsInput = document.getElementById('all_total_nights_input_id');
@@ -188,15 +193,15 @@ checkInputsToInsertData = function (clickedButtonId) {
         /* Check if all hotel data inputs are filled */
     } else if (clickedButtonId === 'hotel_inputs_submit_button') {
 
-        // Get references to all input elements and the ensure text element
-        let hotelLocationInput = document.getElementById('hotel_location_input_id'); // Hotel location input element
-        let hotelAreaInput = document.getElementById('hotel_area_input_id'); // Hotel area input element
-        let hotelNameInput = document.getElementById('hotel_name_input_id'); // Hotel name input element
-        let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id'); // Check-in date input element
-        let totalNightsInput = document.getElementById('total_nights_input_id'); // Check-out date input element
-        let roomDescriptionInput = document.getElementById('room_description_input_id'); // Room description input element
+        // Get references to all input elements for later use
+        let hotelLocationInput = document.getElementById('hotel_location_input_id');
+        let hotelAreaInput = document.getElementById('hotel_area_input_id');
+        let hotelNameInput = document.getElementById('hotel_name_input_id');
+        let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id');
+        let totalNightsInput = document.getElementById('total_nights_input_id');
+        let roomDescriptionInput = document.getElementById('room_description_input_id');
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
-        let roomExtraInfoTextArea = document.getElementById('room_extra_info_textarea_id'); // Room description input element
+        let roomExtraInfoTextArea = document.getElementById('room_extra_info_textarea_id');
 
 
         if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionInput.value === '') {
@@ -221,40 +226,47 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Create a new div element to insert hotel data
             let insertedHotelDataDiv = document.createElement('div');
-            let uniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
-            insertedHotelDataDiv.id = uniqueId; // Assign the unique ID to the div
+            let hotelUniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
+            insertedHotelDataDiv.id = hotelUniqueId; // Assign the unique ID to the div
             insertedHotelDataDiv.classList.add('inserted_hotel_data_div');
 
             // Right side content div
-            let rightSideDiv = document.createElement('div');
-            rightSideDiv.classList.add('right_side_hotel_data_div');
+            let hotelRightSideDiv = document.createElement('div');
+            hotelRightSideDiv.classList.add('hotel_right_side_hotel_data_div');
 
             // Left side content div
-            let leftSideDiv = document.createElement('div');
-            leftSideDiv.classList.add('left_side_hotel_data_div');
+            let hotelLeftSideDiv = document.createElement('div');
+            hotelLeftSideDiv.classList.add('hotel_left_side_hotel_data_div');
 
             // Arrange content for the right side
-            let rightSideContent = `${hotelLocationInput.value}`;
+            let hotelRightSideContent = `${hotelLocationInput.value}`;
 
             if (hotelAreaInput.value !== '') {
-                rightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}\n`;
+                hotelRightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}\n`;
             } else {
-                rightSideContent += ` - ${hotelNameInput.value}\n`;
+                hotelRightSideContent += ` - ${hotelNameInput.value}\n`;
             }
 
-            rightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionInput.value}`;
+            hotelRightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionInput.value}`;
             if (breakfastCheckbox.checked) {
-                rightSideContent += ` شامل الإفطار`;
-            }
-
-            if (roomExtraInfoTextArea.value !== '') {
-                rightSideContent += `\n${roomExtraInfoTextArea.value}`;
+                hotelRightSideContent += ` شامل الإفطار`;
             }
 
             // Create h6 element for right side content
             let rightSideH6 = document.createElement('h6');
-            rightSideH6.innerText = rightSideContent;
-            rightSideDiv.appendChild(rightSideH6);
+            rightSideH6.innerText = hotelRightSideContent;
+            hotelRightSideDiv.appendChild(rightSideH6);
+
+
+            if (roomExtraInfoTextArea.value !== '') {
+                hotelRightSideContent += `\n${roomExtraInfoTextArea.value}`;
+
+                // Create h6 element for right side content
+                let rightSideExtraHotelInfoH6 = document.createElement('h6');
+                rightSideExtraHotelInfoH6.id = 'hotel_extra_info_h6';
+                rightSideExtraHotelInfoH6.innerText = `${roomExtraInfoTextArea.value}`;
+                hotelRightSideDiv.appendChild(rightSideExtraHotelInfoH6);
+            }
 
             // Arrange content for the left side
             /* First convert all spaces with - and make all letters toLowerCase */
@@ -264,17 +276,17 @@ checkInputsToInsertData = function (clickedButtonId) {
             let hotelImg = document.createElement('img');
 
             hotelImg.src = `صور-الفنادق/${hotelImgSrcReadyText}.jpg`;
-            leftSideDiv.appendChild(hotelImg);
+            hotelLeftSideDiv.appendChild(hotelImg);
 
             // Append left and right side content to insertedHotelDataDiv
-            insertedHotelDataDiv.appendChild(rightSideDiv);
-            insertedHotelDataDiv.appendChild(leftSideDiv);
+            insertedHotelDataDiv.appendChild(hotelRightSideDiv);
+            insertedHotelDataDiv.appendChild(hotelLeftSideDiv);
 
             // Append the new hotel data div
             document.getElementById('inserted_hotel_data_position_div').appendChild(insertedHotelDataDiv);
 
             /* Show up the 'inserted_package_data_section_page_1' section */
-            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
+            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
 
 
 
@@ -538,11 +550,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         /* Check if all package data inputs are filled */
-    } else {
+    } else if (clickedButtonId === 'package_inputs_submit_button') {
 
-        // Get references to all input elements and the ensure text element
-        let packageDetailsTextArea = document.getElementById('package_details_textarea_id'); // Person amount input element
-        let packageTotalPriceInput = document.getElementById('package_totla_price_input_id'); // Person amount input element
+        // Get references to all input elements for later use
+        let packageDetailsTextArea = document.getElementById('package_details_textarea_id');
+        let packageTotalPriceInput = document.getElementById('package_totla_price_input_id');
 
         // If Not All Inputs Are Valid, Show The Error Message
         if (packageDetailsTextArea.value === '' || packageTotalPriceInput.value === '') {
@@ -578,15 +590,15 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Replace new line characters with <br> tags
             let packageDetailsWithBreaks = packageDetailsReayText.replace(/\n/g, '<br>');
 
-            let packageDetailsH6_1 = document.createElement('h6');
-            packageDetailsH6_1.innerHTML = `${packageDetailsWithBreaks}`;
+            let packageDetailsH6 = document.createElement('h6');
+            packageDetailsH6.innerHTML = `${packageDetailsWithBreaks}`;
 
-            let packageDetailsH6_2 = document.createElement('h6');
-            packageDetailsH6_2.innerHTML = `إجمالي السعر ${packageTotalPriceReayText}`;
-            packageDetailsH6_2.id = 'package_total_price_h6_id';
+            let packageTotalPriceH6 = document.createElement('h6');
+            packageTotalPriceH6.innerHTML = `إجمالي السعر ${packageTotalPriceReayText}`;
+            packageTotalPriceH6.id = 'package_total_price_h6_id';
 
-            insertedPackageDataDiv.appendChild(packageDetailsH6_1);
-            insertedPackageDataDiv.appendChild(packageDetailsH6_2);
+            insertedPackageDataDiv.appendChild(packageDetailsH6);
+            insertedPackageDataDiv.appendChild(packageTotalPriceH6);
 
             // Show the div and clear previous package data and append the new data div
             if (document.getElementById('inserted_package_data_position_div').style.display === 'none') {
@@ -596,15 +608,121 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
 
             /* Show up the 'inserted_package_data_section_page_2' section */
-            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+            document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
         }
 
 
+    } else if (clickedButtonId === 'clint_flight_inputs_submit_button') {
+        // Get references to all input elements for later use
+        let flightDateInput = document.getElementById('flight_date_input_id');
+        let fromAirportToAirportTextArea = document.getElementById('from_airport_to_airport_textarea_id');
+        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id');
+        let flightExtraDetailsTextArea = document.getElementById('flight_extra_details_textarea_id');
+
+
+
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (flightDateInput.value === '' || fromAirportToAirportTextArea.value === '' || flightPersonAmountInput.value === '') {
+            clint_flight_inputs_submit_button.style.backgroundColor = 'red';
+
+            // Hide ensure text after 2 seconds
+            setTimeout(() => {
+                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
+            }, 500);
+
+
+        } else {
+            /* Change the 'تم' button color */
+            clint_flight_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
+            // Hide ensure text after 2 seconds
+            setTimeout(() => {
+                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
+            }, 2000);
+
+
+
+            /* Retrieve the values from the input elements */
+            let flightDateValue = flightDateInput.value;
+            let flightPersonAmountValue = flightPersonAmountInput.value;
+            let flightExtraDetailsValue = flightExtraDetailsTextArea.value;
+            let fromAirportToAirportValue = fromAirportToAirportTextArea.value;
+
+
+
+            // Create a new div element to insert client data
+            let insertedPackageDataDiv = document.createElement('div');
+            let flightUniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
+            insertedPackageDataDiv.id = flightUniqueId; // Assign the unique ID to the div
+            insertedPackageDataDiv.classList.add('inserted_clint_flight_data_div');
+
+
+
+
+            // Flight number side content div
+            let flightNumberSideDiv = document.createElement('div');
+            flightNumberSideDiv.classList.add('flight_right_side_hotel_data_div');
+
+            let flightNumberSideH6 = document.createElement('h6');
+            flightNumberSideH6.innerText = `رحلة رقم ${flightNumberCounter}`;
+            flightNumberSideDiv.appendChild(flightNumberSideH6);
+            flightNumberCounter++;
+
+
+
+            // Right side content div
+            let flightRightSideDiv = document.createElement('div');
+            flightRightSideDiv.classList.add('flight_middle_side_hotel_data_div');
+
+            // Left side content div
+            let flightLeftSideDiv = document.createElement('div');
+            flightLeftSideDiv.classList.add('flight_left_side_hotel_data_div');
+
+
+
+            /* Flight right side h6 element */
+            let flightRightSideContent = `${flightDateValue}\n${flightPersonAmountValue}`;
+
+            if (flightExtraDetailsValue !== '') {
+                flightRightSideContent += `\n${flightExtraDetailsValue}`;
+            }
+
+            flightRightSideContent += `\nالأمتعة: 20 كيلو للشخص`
+
+            let flightRightSideH6 = document.createElement('h6');
+            flightRightSideH6.innerText = flightRightSideContent;
+
+            flightRightSideDiv.appendChild(flightRightSideH6); // Append the h6 element to the right side div
+
+            /* Flight left side h6 element */
+            let flightLeftSideH6 = document.createElement('h6');
+            flightLeftSideH6.innerText = `${fromAirportToAirportValue}`;
+
+            flightLeftSideDiv.appendChild(flightLeftSideH6); // Append the h6 element to the left side div
+
+            /* Append all created h6 elements (right side and left side) in one div */
+            insertedPackageDataDiv.appendChild(flightNumberSideDiv);
+            insertedPackageDataDiv.appendChild(flightRightSideDiv);
+            insertedPackageDataDiv.appendChild(flightLeftSideDiv);
+
+            // Show and append the new flight data div
+            document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
+            document.getElementById('inserted_flight_data_position_div').appendChild(insertedPackageDataDiv);
+        }
+
+
+
+    } else if (clickedButtonId === 'clint_movements_inputs_submit_button') {
+
     }
-
-
-
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -625,14 +743,14 @@ openPdfDownloadBox = function () {
     // Show overlay layer with smooth opacity transition
     setTimeout(() => {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-        
+
         // Slide to the center of the screen
         namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
     }, 100);
 
 
 
-    
+
     // get the name pdf file box
     let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
 
@@ -652,7 +770,6 @@ openPdfDownloadBox = function () {
     }
 
 };
-
 
 /* Function to check if the 'pdf_file_name_input_id' input contain value or no */
 checkThePdfNameToDownload = function () {
@@ -679,14 +796,9 @@ checkThePdfNameToDownload = function () {
 
 }
 
-
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
-    let section1 = document.getElementById('inserted_package_data_section_page_1');
-    let section2 = document.getElementById('inserted_package_data_section_page_2');
-    let hotelDataDiv = document.getElementById('inserted_hotel_data_position_div');
-    let packageDataDiv = document.getElementById('inserted_package_data_position_div');
 
     // Function to check if a div has any child elements
     let hasElements = function (div) {
@@ -696,9 +808,9 @@ downloadPdfWithCustomName = function (pdfName) {
     // Create a new jsPDF instance with A4 dimensions
     let pdf = new jsPDF('p', 'mm', 'a4');
 
-    // Set the background color for the PDF
-    let imgWidth = pdf.internal.pageSize.width;
-    let pageHeight = pdf.internal.pageSize.height;
+    // Set the background image for the PDF pages
+    let backgroundImage = new Image();
+    backgroundImage.src = 'test.jpg'; // Background image for all PDF pages
 
     // Function to add content to the PDF
     let addContentToPDF = function (canvas, isFirstPage) {
@@ -706,18 +818,19 @@ downloadPdfWithCustomName = function (pdfName) {
             pdf.addPage();
         }
 
-        // Set background color
-        pdf.setFillColor(172, 209, 235);
-        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
+        // Set background image
+        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
 
-        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
-        let imgHeight = canvas.height * imgWidth / canvas.width;
+        let imgData = canvas.toDataURL('image/png', 1.0); // Use PNG format with highest quality
+        let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
 
-        // Set vertical offset to 0 for both pages
-        let imgYOffset = 0;
+        let yPos = 0;
+        if (isFirstPage) {
+            yPos = 0;
+        }
 
         // Add scaled image to PDF with compression and top alignment
-        pdf.addImage(imgData, 'JPEG', 0, imgYOffset, imgWidth, imgHeight, '', 'FAST');
+        pdf.addImage(imgData, 'PNG', 0, yPos, pdf.internal.pageSize.width, imgHeight, '', 'FAST');
     };
 
     // Function to add HTML content as vector-based text
@@ -731,38 +844,74 @@ downloadPdfWithCustomName = function (pdfName) {
             },
             x: 0,
             y: 0,
-            html2canvas: { scale: 2 }
+            html2canvas: { scale: 2, backgroundColor: null }
         });
     };
 
-    // Check if the package data div contains elements
-    if (hasElements(hotelDataDiv) && hasElements(packageDataDiv)) {
-        // Use html2canvas to create a canvas of the first section (inserted_package_data_section_page_1)
-        html2canvas(section1, { scale: 2 }).then(canvas1 => {
-            addContentToPDF(canvas1, true);
+    // Function to temporarily set the background color of an element
+    let setBackgroundColor = function (element, color) {
+        let originalBackground = element.style.backgroundColor;
+        element.style.backgroundColor = color;
+        return originalBackground;
+    };
 
-            // Use html2canvas to create a canvas of the second section (inserted_package_data_section_page_2)
-            html2canvas(section2, { scale: 2 }).then(canvas2 => {
-                addContentToPDF(canvas2, false);
+    // Function to capture the canvas with transparent background
+    let captureCanvas = function (section, isFirstPage) {
+        let originalBackground = setBackgroundColor(section, 'transparent');
+        return html2canvas(section, { scale: 2, backgroundColor: null }).then(canvas => {
+            setBackgroundColor(section, originalBackground);
+            addContentToPDF(canvas, isFirstPage);
+        });
+    };
 
-                // Add HTML content for vector-based text
-                addHTMLToPDF(pdf, section1, 1);
-                addHTMLToPDF(pdf, section2, 2);
+    // Function to check if an element is visible
+    let isVisible = function (element) {
+        return element && element.style.display !== 'none' && element.offsetParent !== null;
+    };
 
-                // Save the PDF
+    // Function to process each section and add to PDF
+    let processSections = function (sections) {
+        let index = 0;
+
+        let processNextSection = function () {
+            if (index < sections.length) {
+                let isFirstPage = (index === 0);
+                captureCanvas(sections[index], isFirstPage).then(() => {
+                    index++;
+                    processNextSection();
+                });
+            } else {
+                // Save the PDF after all sections are processed
                 pdf.save(pdfName);
-            });
-        });
-    } else if (hasElements(hotelDataDiv)) {
-        // Only generate PDF with the first section
-        html2canvas(section1, { scale: 2 }).then(canvas1 => {
-            addContentToPDF(canvas1, true);
+            }
+        };
 
-            // Add HTML content for vector-based text
-            addHTMLToPDF(pdf, section1, 1);
+        processNextSection();
+    };
 
-            // Save the PDF
-            pdf.save(pdfName);
-        });
+    // Find all sections with the ID pattern and store them in an array
+    let sections = [];
+    let i = 1;
+    while (true) {
+        let section = document.getElementById(`inserted_package_data_section_page_${i}`);
+        if (section) {
+            if (isVisible(section)) {
+                sections.push(section);
+            }
+        } else {
+            break;
+        }
+        i++;
     }
+
+    // Log the total number of visible sections found
+    console.log(`Total visible sections found: ${sections.length}`);
+
+    // Process the sections
+    processSections(sections);
 };
+
+
+
+
+
