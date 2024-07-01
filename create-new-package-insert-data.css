@@ -117,14 +117,12 @@
     align-items: center;
     transition: transform 0.1s ease, opacity 0.1s ease;
     border: 0.5px solid black;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
     /* Add a thin horizontal line */
 }
 
 .inserted_hotel_data_div:last-child {
-    border-bottom: none;
-    /* Remove the border from the last item */
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 
 .inserted_hotel_data_div.dragging {
@@ -242,6 +240,9 @@
     justify-content: space-between;
     align-items: center;
     border: 0.5px solid black;
+}
+
+.inserted_clint_flight_data_div:last-child {
     border-bottom-right-radius: 7px;
     border-bottom-left-radius: 7px;
 }
