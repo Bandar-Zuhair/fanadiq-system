@@ -221,8 +221,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 hotel_inputs_submit_button.style.backgroundColor = 'white';
             }, 500);
 
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
 
             // Create a new div element to insert hotel data
             let insertedHotelDataDiv = document.createElement('div');
@@ -288,6 +287,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Show up the 'inserted_package_data_section_page_1' section */
             document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
 
+            /* Show the download button */
+            document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
 
 
 
@@ -335,6 +337,17 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Clear currentHotelDataDiv reference
                 currentHotelDataDiv = null;
+
+
+                // Check if there are any remaining inserted hotel data divs
+                let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
+
+                if (remainingHotelDataDivs.length === 0) {
+                    // Hide section with id 'inserted_package_data_section_page_2'
+                    document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+                    /* Hide the download button */
+                    document.getElementById('export_package_pdf_div_id').style.display = 'none';
+                }
             }
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
@@ -349,18 +362,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let overlayLayer = document.createElement('div');
                     overlayLayer.classList.add('black_overlay');
                     document.body.appendChild(overlayLayer);
+
+                    // Delayed opacity transition for smooth appearance
                     setTimeout(() => {
-                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                        overlayLayer.style.opacity = '1';
+                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Center div
                     }, 50);
 
                     // Click handler to close overlay and delete box div on click outside
                     overlayLayer.onclick = () => {
-                        // Hide delete box options div
-                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
-
-                        // Hide overlay layer with opacity transition
-                        overlayLayer.style.opacity = '0';
+                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                        overlayLayer.style.opacity = '0'; // Hide overlay
 
                         // Remove overlay and delete box div from DOM after transition
                         setTimeout(() => {
@@ -373,6 +385,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         event.stopPropagation(); // Prevent immediate closure of overlay on click
                     });
                 };
+
 
                 // Event listener for the drop zone (inserted_hotel_data_position_div)
                 let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
@@ -612,6 +625,19 @@ checkInputsToInsertData = function (clickedButtonId) {
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     } else if (clickedButtonId === 'clint_flight_inputs_submit_button') {
         // Get references to all input elements for later use
         let flightDateInput = document.getElementById('flight_date_input_id');
@@ -800,11 +826,6 @@ checkThePdfNameToDownload = function () {
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
 
-    // Function to check if a div has any child elements
-    let hasElements = function (div) {
-        return div && div.children.length > 0;
-    };
-
     // Create a new jsPDF instance with A4 dimensions
     let pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -818,49 +839,31 @@ downloadPdfWithCustomName = function (pdfName) {
             pdf.addPage();
         }
 
-        // Set background image
-        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height);
+        // Set background image with optimized quality
+        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
-        let imgData = canvas.toDataURL('image/png', 1.0); // Use PNG format with highest quality
+        // Convert canvas to image data URL with optimized compression
+        let imgData = canvas.toDataURL('image/png', 0.8); // Adjust quality factor
+
         let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
-
         let yPos = 0;
         if (isFirstPage) {
-            yPos = 0;
+            yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically on the first page
         }
 
-        // Add scaled image to PDF with compression and top alignment
-        pdf.addImage(imgData, 'PNG', 0, yPos, pdf.internal.pageSize.width, imgHeight, '', 'FAST');
-    };
-
-    // Function to add HTML content as vector-based text
-    let addHTMLToPDF = function (pdf, element, pageNumber) {
-        pdf.setPage(pageNumber);
-        pdf.html(element, {
-            callback: function (pdf) {
-                if (pageNumber > 1) {
-                    pdf.setPage(pageNumber);
-                }
-            },
-            x: 0,
-            y: 0,
-            html2canvas: { scale: 2, backgroundColor: null }
-        });
-    };
-
-    // Function to temporarily set the background color of an element
-    let setBackgroundColor = function (element, color) {
-        let originalBackground = element.style.backgroundColor;
-        element.style.backgroundColor = color;
-        return originalBackground;
+        // Add scaled image to PDF
+        pdf.addImage(imgData, 'PNG', 0, yPos, pdf.internal.pageSize.width, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
     // Function to capture the canvas with transparent background
     let captureCanvas = function (section, isFirstPage) {
-        let originalBackground = setBackgroundColor(section, 'transparent');
         return html2canvas(section, { scale: 2, backgroundColor: null }).then(canvas => {
-            setBackgroundColor(section, originalBackground);
-            addContentToPDF(canvas, isFirstPage);
+            if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
+                // Center the content vertically on the first page
+                addContentToPDF(canvas, true);
+            } else {
+                addContentToPDF(canvas, isFirstPage);
+            }
         });
     };
 
@@ -910,6 +913,9 @@ downloadPdfWithCustomName = function (pdfName) {
     // Process the sections
     processSections(sections);
 };
+
+
+
 
 
 
