@@ -843,21 +843,21 @@ downloadPdfWithCustomName = function (pdfName) {
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
         // Convert canvas to image data URL with optimized compression
-        let imgData = canvas.toDataURL('image/png', 0.8); // Adjust quality factor
+        let imgData = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality factor and use JPEG for better compression
 
-        let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
-        let yPos = 0;
-        if (isFirstPage) {
-            yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically on the first page
-        }
+        let imgWidth = pdf.internal.pageSize.width;
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+
+        let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
+        let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
 
         // Add scaled image to PDF
-        pdf.addImage(imgData, 'PNG', 0, yPos, pdf.internal.pageSize.width, imgHeight, '', 'FAST'); // Adjust compression type
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
-    // Function to capture the canvas with transparent background
+    // Function to capture the canvas with white background
     let captureCanvas = function (section, isFirstPage) {
-        return html2canvas(section, { scale: 2, backgroundColor: null }).then(canvas => {
+        return html2canvas(section, { scale: 2, backgroundColor: '#FFFFFF' }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
                 // Center the content vertically on the first page
                 addContentToPDF(canvas, true);
@@ -913,6 +913,8 @@ downloadPdfWithCustomName = function (pdfName) {
     // Process the sections
     processSections(sections);
 };
+
+
 
 
 
