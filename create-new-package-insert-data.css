@@ -65,23 +65,26 @@
     margin: auto;
     padding: 10px;
     border: 0.5px solid black;
-}
-
-.pdf_section_title_div_class * {
-    margin: 0 20px;
+    position: relative; /* Add this to position the icon absolutely */
 }
 
 .pdf_section_title_div_class h6 {
     color: white;
     font-size: 2vw;
     font-weight: bolder;
+    flex: 1; /* Add this to make h6 take the remaining space */
+    text-align: center; /* Center the text horizontally */
 }
 
 .pdf_section_title_div_class ion-icon {
     color: white;
     font-size: 3.5vw;
-    margin-right: 5px;
+    position: absolute; /* Position the icon absolutely */
+    right: 10px; /* Position the icon 10px from the right */
+    top: 50%; /* Position the icon vertically in the center */
+    transform: translateY(-50%); /* Adjust vertical alignment */
 }
+
 
 
 
@@ -497,10 +500,6 @@
         padding: 6px;
     }
 
-    .pdf_section_title_div_class * {
-        margin: 0 15px;
-    }
-
     .pdf_section_title_div_class h6 {
         font-size: 2.2vw;
     }
@@ -642,10 +641,6 @@
     .pdf_section_title_div_class {
         width: 75%;
         padding: 4px;
-    }
-
-    .pdf_section_title_div_class * {
-        margin: 0 10px;
     }
 
     .pdf_section_title_div_class h6 {
