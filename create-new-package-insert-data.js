@@ -843,24 +843,21 @@ downloadPdfWithCustomName = function (pdfName) {
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
         // Convert canvas to image data URL with optimized compression
-        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Adjust quality factor and use JPEG for better compression
+        let imgData = canvas.toDataURL('image/png', 0.8); // Adjust quality factor
 
         let imgWidth = pdf.internal.pageSize.width;
-        let imgHeight = canvas.height * imgWidth / canvas.width;
+        let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
 
         let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
         let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
 
-        // Add scaled image to PDF with transparency
-        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
+        // Add scaled image to PDF
+        pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
-    // Function to capture the canvas without specifying background color
+    // Function to capture the canvas with transparent background
     let captureCanvas = function (section, isFirstPage) {
-        return html2canvas(section, {
-            scale: 4, // Increase scale for higher quality
-            useCORS: true // Enable cross-origin resource sharing if needed
-        }).then(canvas => {
+        return html2canvas(section, { scale: 2, backgroundColor: null }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
                 // Center the content vertically on the first page
                 addContentToPDF(canvas, true);
