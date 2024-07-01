@@ -1,15 +1,18 @@
 /* Inserted clint data position */
-#inserted_company_name_image_position_div{
-    background: rgb(172, 209, 235);
-    padding-top: 25px;
+#inserted_company_name_image_position_div {
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.inserted_company_name_logo{
-    width: 20vw;
-    border-radius: 7px;
+.inserted_company_name_logo {
+    background: white;
+    padding-bottom: 15px;
+    z-index: 1;
+    width: 40vw;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
     border: 0.5px solid black;
 }
 
@@ -22,19 +25,67 @@
 
 
 
+
 /* Inserted clint data position */
 #inserted_clint_data_position_div {
-    background: rgb(172, 209, 235);
-    border-bottom: 0.5px solid black;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .inserted_clint_data_div {
-    padding: 5px;
+    background: white;
+    padding: 15px 15px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px solid black;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 
 .inserted_clint_data_div h6 {
-    font-size: 2vw;
+    font-size: 3vw;
+    text-align: center;
 }
+
+
+
+
+
+
+
+.pdf_section_title_div_class {
+    background: rgb(63, 0, 209);
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 10px;
+    border: 0.5px solid black;
+}
+
+.pdf_section_title_div_class * {
+    margin: 0 20px;
+}
+
+.pdf_section_title_div_class h6 {
+    color: white;
+    font-size: 2vw;
+    font-weight: bolder;
+}
+
+.pdf_section_title_div_class ion-icon {
+    color: white;
+    font-size: 3.5vw;
+    margin-right: 5px;
+}
+
+
+
+
 
 
 
@@ -50,18 +101,24 @@
 
 /* Inserted hotel data position */
 #inserted_hotel_data_position_div {
-    background: rgb(215, 232, 244);
-    border-bottom: 0.5px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .inserted_hotel_data_div {
-    padding: 10px 5px;
+    background: white;
+    width: 60%;
+    padding: 5px 15px;
     /* Add some padding to create space between content and border */
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: transform 0.1s ease, opacity 0.1s ease;
-    border-bottom: 0.5px solid black;
+    border: 0.5px solid black;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
     /* Add a thin horizontal line */
 }
 
@@ -85,22 +142,23 @@
     font-size: 2vw;
 }
 
-.right_side_hotel_data_div {
+.hotel_right_side_hotel_data_div {
     width: 100%;
 }
 
-.left_side_hotel_data_div {
+#hotel_extra_info_h6 {
+    font-size: 1.5vw;
+    font-weight: 300;
+}
+
+.hotel_left_side_hotel_data_div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
 }
 
-.left_side_hotel_data_div h6 {
-    text-align: end;
-}
-
-.left_side_hotel_data_div img {
+.hotel_left_side_hotel_data_div img {
     width: 15vw;
     border-radius: 7px;
     border: 0.5px solid black;
@@ -123,14 +181,22 @@
 
 /* Inserted package data position */
 #inserted_package_data_position_div {
-    background: rgb(172, 209, 235);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .inserted_package_data_div {
-    padding: 15px 15px 0;
+    background: white;
+    width: 60%;
+    padding: 5px 5px 0 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: 0.5px solid black;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 
 .inserted_package_data_div h6 {
@@ -140,12 +206,83 @@
 #package_total_price_h6_id {
     background: white;
     color: rgb(27, 0, 125);
-    width: fit-content;
+    width: 100%;
+    text-align: center;
     padding: 3px 5px;
-    margin: 40px 50px 10px 0;
     border-radius: 7px;
-    border: 1px solid black;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inserted clint flight data positioon */
+#inserted_flight_data_position_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inserted_clint_flight_data_div {
+    background: white;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0.5px solid black;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.inserted_clint_flight_data_div h6{
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+}
+
+.flight_right_side_hotel_data_div {
+    background: white;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.flight_middle_side_hotel_data_div {
+    background: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 0.5px solid black;
+    border-left: 0.5px solid black;
+}
+
+
+.flight_left_side_hotel_data_div {
+    background: white;
+    width: 100%;
+}
+
+
+
+
+
+
+
 
 
 
@@ -275,7 +412,7 @@
     color: #888;
 }
 
-#name_pdf_file_div input{
+#name_pdf_file_div input {
     width: 90%;
     font-size: 3vw;
     text-align: center;
@@ -283,7 +420,7 @@
     border-radius: 7px;
 }
 
-#name_pdf_file_div button{
+#name_pdf_file_div button {
     font-size: 2.5vw;
     margin-top: 10px;
     padding: 1px 10px;
@@ -334,33 +471,105 @@
 
 /* 950px */
 @media(max-width:950px) {
-    #inserted_company_name_image_position_div{
-        padding-top: 20px;
+    .inserted_company_name_logo {
+        width: 45vw;
     }
 
-    .inserted_company_name_logo{
-        width: 23vw;
-    }
+
+
+
 
     .inserted_clint_data_div h6 {
-        font-size: 2.5vw;
+        font-size: 3.5vw;
+    }
+
+
+
+
+
+
+
+
+    .pdf_section_title_div_class {
+        width: 70%;
+        padding: 6px;
+    }
+
+    .pdf_section_title_div_class * {
+        margin: 0 15px;
+    }
+
+    .pdf_section_title_div_class h6 {
+        font-size: 2.2vw;
+    }
+
+    .pdf_section_title_div_class ion-icon {
+        font-size: 4.5vw;
+    }
+
+
+
+
+
+
+    .inserted_hotel_data_div {
+        width: 70%;
+        padding: 5px 10px;
     }
 
     .inserted_hotel_data_div h6 {
-        font-size: 2.5vw;
+        font-size: 2.2vw;
     }
 
-    .left_side_hotel_data_div img {
-        width: 18vw;
+    #hotel_extra_info_h6 {
+        font-size: 1.7vw;
     }
 
+    .hotel_left_side_hotel_data_div img {
+        width: 17vw;
+    }
+
+
+
+
+
+
+
+
+
+
+    .inserted_package_data_div {
+        width: 70%;
+    }
+    
     .inserted_package_data_div h6 {
-        font-size: 2.3vw;
+        font-size: 2vw;
     }
 
-    #package_total_price_h6_id {
-        margin: 30px 40px 10px 0;
+
+
+
+
+
+
+
+
+
+
+    .inserted_clint_flight_data_div {
+        width: 70%;
     }
+    
+    .inserted_clint_flight_data_div h6{
+        font-size: 2.2vw;
+    }
+
+
+
+
+
+
+
 
     .ensure_your_delete_action button {
         font-size: 4vw;
@@ -374,12 +583,12 @@
     #name_pdf_file_div span {
         font-size: 6vw;
     }
-    
-    #name_pdf_file_div input{
+
+    #name_pdf_file_div input {
         font-size: 4vw;
     }
-    
-    #name_pdf_file_div button{
+
+    #name_pdf_file_div button {
         font-size: 3.5vw;
     }
 }
@@ -392,10 +601,6 @@
 
 /* 650px */
 @media(max-width:650px) {
-    #inserted_company_name_image_position_div{
-        padding-top: 15px;
-    }
-
     .ensure_your_delete_action {
         padding: 10px;
     }
@@ -413,47 +618,109 @@
 
 /* 580px */
 @media(max-width:580px) {
-    .inserted_company_name_logo{
-        width: 26vw;
+    .inserted_company_name_logo {
+        width: 50vw;
     }
 
+
+
+
     .inserted_clint_data_div h6 {
+        font-size: 4vw;
+    }
+
+    .inserted_clint_data_div {
+        padding: 6px;
+    }
+
+
+
+
+
+    .pdf_section_title_div_class {
+        width: 75%;
+        padding: 4px;
+    }
+
+    .pdf_section_title_div_class * {
+        margin: 0 10px;
+    }
+
+    .pdf_section_title_div_class h6 {
         font-size: 3vw;
     }
 
+    .pdf_section_title_div_class ion-icon {
+        font-size: 5.5vw;
+    }
+
+
+
+
+
     .inserted_hotel_data_div {
-        padding: 3px;
+        width: 75%;
+        padding: 4px;
     }
 
     .inserted_hotel_data_div h6 {
+        font-size: 2.7vw;
+    }
+
+    #hotel_extra_info_h6 {
+        font-size: 2.2vw;
+    }
+
+    .hotel_left_side_hotel_data_div img {
+        width: 20vw;
+    }
+
+
+
+
+
+
+
+
+
+    .inserted_package_data_div {
+        width: 75%;
+    }
+    
+    .inserted_package_data_div h6 {
+        font-size: 2.3vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    .inserted_clint_flight_data_div {
+        width: 75%;
+    }
+    .inserted_clint_flight_data_div h6{
         font-size: 3vw;
     }
 
-    .left_side_hotel_data_div img {
-        width: 21vw;
-    }
 
-    .inserted_package_data_div {
-        padding: 10px 10px 0;
-    }
 
-    .inserted_package_data_div h6 {
-        font-size: 2.8vw;
-    }
 
-    #package_total_price_h6_id {
-        margin: 20px 30px 10px 0;
-    }
 
     #name_pdf_file_div span {
         font-size: 7vw;
     }
-    
-    #name_pdf_file_div input{
+
+    #name_pdf_file_div input {
         font-size: 5vw;
     }
-    
-    #name_pdf_file_div button{
+
+    #name_pdf_file_div button {
         font-size: 4.5vw;
         padding: 1px 5px;
     }
@@ -464,33 +731,29 @@
 
 /* 400px */
 @media(max-width:400px) {
-    .inserted_company_name_logo{
-        width: 29vw;
-    }
-
-    .inserted_clint_data_div {
-        padding: 3px;
+    .inserted_company_name_logo {
+        width: 55vw;
     }
 
     .inserted_clint_data_div h6 {
-        font-size: 3.5vw;
+        font-size: 4.5vw;
     }
 
-    .inserted_hotel_data_div h6 {
-        font-size: 3.5vw;
-    }
 
-    .left_side_hotel_data_div img {
-        width: 24vw;
-    }
 
+
+
+
+    
     .inserted_package_data_div h6 {
-        font-size: 3.3vw;
+        font-size: 2.7vw;
     }
 
-    #package_total_price_h6_id {
-        margin: 15px 20px 10px 0;
-    }
+
+
+
+
+
 
     .ensure_your_delete_action {
         padding: 5px;
@@ -508,12 +771,12 @@
     #name_pdf_file_div span {
         font-size: 8vw;
     }
-    
-    #name_pdf_file_div input{
+
+    #name_pdf_file_div input {
         font-size: 6vw;
     }
-    
-    #name_pdf_file_div button{
+
+    #name_pdf_file_div button {
         font-size: 5.5vw;
         padding: 1px 3px;
     }
