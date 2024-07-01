@@ -827,7 +827,7 @@ downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
 
     // Create a new jsPDF instance with A4 dimensions
-    let pdf = new jsPDF('p', 'mm', 'a4', true);
+    let pdf = new jsPDF('p', 'mm', 'a4');
 
     // Set the background image for the PDF pages
     let backgroundImage = new Image();
@@ -842,24 +842,24 @@ downloadPdfWithCustomName = function (pdfName) {
         // Set background image with optimized quality
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
-        // Convert canvas to image data URL with reduced compression
-        let imgData = canvas.toDataURL('image/png', 0.9); // Further reduced quality for smaller file size
+        // Convert canvas to image data URL with optimized compression
+        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Adjust quality factor and use JPEG for better compression
 
         let imgWidth = pdf.internal.pageSize.width;
-        let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
+        let imgHeight = canvas.height * imgWidth / canvas.width;
 
         let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
         let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
 
         // Add scaled image to PDF
-        pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
-    // Function to capture the canvas with transparent background
+    // Function to capture the canvas with white background
     let captureCanvas = function (section, isFirstPage) {
         return html2canvas(section, {
-            scale: 2, // Further reduced scale for smaller size
-            backgroundColor: null,
+            scale: 4, // Increase scale for higher quality
+            backgroundColor: '#FFFFFF',
             useCORS: true // Enable cross-origin resource sharing if needed
         }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
@@ -896,6 +896,13 @@ downloadPdfWithCustomName = function (pdfName) {
         processNextSection();
     };
 
+    // Function to add text as vector
+    let addTextAsVector = function (pdf) {
+        // Example: Add text in vector format
+        pdf.setFontSize(16);
+        pdf.text('Your Text Here', 10, 10);
+    };
+
     // Find all sections with the ID pattern and store them in an array
     let sections = [];
     let i = 1;
@@ -916,4 +923,7 @@ downloadPdfWithCustomName = function (pdfName) {
 
     // Process the sections
     processSections(sections);
+
+    // Add vector text (if needed)
+    addTextAsVector(pdf);
 };
