@@ -825,24 +825,18 @@ checkThePdfNameToDownload = function () {
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
-
-    // Create a new jsPDF instance with A4 dimensions
     let pdf = new jsPDF('p', 'mm', 'a4');
 
-    // Set the background image for the PDF pages
     let backgroundImage = new Image();
     backgroundImage.src = 'test.jpg'; // Background image for all PDF pages
 
-    // Function to add content to the PDF
     let addContentToPDF = function (canvas, isFirstPage) {
         if (!isFirstPage) {
             pdf.addPage();
         }
 
-        // Set background image with optimized quality
-        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
+        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality
 
-        // Convert canvas to image data URL with optimized compression
         let imgData = canvas.toDataURL('image/png', 0.8); // Adjust quality factor
 
         let imgWidth = pdf.internal.pageSize.width;
@@ -851,15 +845,12 @@ downloadPdfWithCustomName = function (pdfName) {
         let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
         let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
 
-        // Add scaled image to PDF
         pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST'); // Adjust compression type
     };
 
-    // Function to capture the canvas with transparent background
     let captureCanvas = function (section, isFirstPage) {
         return html2canvas(section, { scale: 2, backgroundColor: null }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
-                // Center the content vertically on the first page
                 addContentToPDF(canvas, true);
             } else {
                 addContentToPDF(canvas, isFirstPage);
@@ -867,12 +858,10 @@ downloadPdfWithCustomName = function (pdfName) {
         });
     };
 
-    // Function to check if an element is visible
     let isVisible = function (element) {
         return element && element.style.display !== 'none' && element.offsetParent !== null;
     };
 
-    // Function to process each section and add to PDF
     let processSections = function (sections) {
         let index = 0;
 
@@ -884,7 +873,6 @@ downloadPdfWithCustomName = function (pdfName) {
                     processNextSection();
                 });
             } else {
-                // Save the PDF after all sections are processed
                 pdf.save(pdfName);
             }
         };
@@ -892,7 +880,6 @@ downloadPdfWithCustomName = function (pdfName) {
         processNextSection();
     };
 
-    // Find all sections with the ID pattern and store them in an array
     let sections = [];
     let i = 1;
     while (true) {
@@ -907,9 +894,7 @@ downloadPdfWithCustomName = function (pdfName) {
         i++;
     }
 
-    // Log the total number of visible sections found
     console.log(`Total visible sections found: ${sections.length}`);
 
-    // Process the sections
     processSections(sections);
 };
