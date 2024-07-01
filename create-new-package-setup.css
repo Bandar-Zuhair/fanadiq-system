@@ -288,8 +288,8 @@ body {
 
 
 
-/* Create New Package Section */
-#create_new_package_section {
+/* Create New hotel Package Section */
+#create_new_hotel_package_section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -460,7 +460,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Ensure the dropdown takes the bottom half of the screen */
-#person_amount_dropdown {
+.person_amount_dropdown_class {
     background: rgb(0, 191, 234);
     width: 100%;
     min-height: 50vh;
@@ -480,17 +480,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* Visible state for the dropdown */
-#person_amount_dropdown.show {
+.person_amount_dropdown_class.show {
     transform: translateY(0);
     /* Slide up into view */
 }
 
 /* Dropdown Div For Person And Rooms Amount */
-#person_amount_dropdown {
+.person_amount_dropdown_class {
     margin-top: 10px;
 }
 
-#person_amount_dropdown .counter_div {
+.person_amount_dropdown_class .hotel_counter_div {
     background-color: #ffffff;
     width: 100%;
     color: #000000;
@@ -503,16 +503,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: background-color 0.3s;
 }
 
-#person_amount_dropdown .counter_div div {
+.person_amount_dropdown_class .hotel_counter_div div {
     margin: 0 10px;
 }
 
-#person_amount_dropdown .counter_label {
+.person_amount_dropdown_class .flight_counter_div {
+    background-color: #ffffff;
+    width: 100%;
+    color: #000000;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.person_amount_dropdown_class .flight_counter_div div {
+    margin: 0 10px;
+}
+
+.person_amount_dropdown_class .counter_label {
     font-size: 2.5vw;
     font-weight: bold;
 }
 
-#person_amount_dropdown .counter_controls {
+.person_amount_dropdown_class .hotel_counter_controls {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -521,7 +538,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
-#person_amount_dropdown .counter_btn {
+.person_amount_dropdown_class .flight_counter_controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.person_amount_dropdown_class .counter_btn {
     background-color: #ffffff;
     color: black;
     font-size: 3.5vw;
@@ -532,11 +558,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: background-color 0.3s;
 }
 
-#person_amount_dropdown span {
+.person_amount_dropdown_class span {
     font-size: 2.5vw;
 }
 
-#child_age_inputs_container {
+#hotel_child_age_inputs_container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -573,7 +599,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* When adding new child input it will make تم' button disappear */
-#filter_person_amount_submit_button.hidden {
+#hotel_person_amount_submit_button.hidden {
     opacity: 0;
     visibility: hidden;
 }
@@ -661,6 +687,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+
+
+
+
+
+
+
+
+
+/* Create new flight package section */
+#create_new_flight_package_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 
 
@@ -787,15 +829,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 1px 10px;
     }
 
-    #person_amount_dropdown .counter_label {
+    .person_amount_dropdown_class .counter_label {
         font-size: 4.5vw;
     }
 
-    #person_amount_dropdown .counter_btn {
+    .person_amount_dropdown_class .counter_btn {
         font-size: 5.5vw;
     }
 
-    #person_amount_dropdown span {
+    .person_amount_dropdown_class span {
         font-size: 4.5vw;
     }
 
@@ -930,15 +972,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 1px 5px;
     }
 
-    #person_amount_dropdown .counter_label {
+    .person_amount_dropdown_class .counter_label {
         font-size: 5.5vw;
     }
 
-    #person_amount_dropdown .counter_btn {
+    .person_amount_dropdown_class .counter_btn {
         font-size: 6.5vw;
     }
 
-    #person_amount_dropdown span {
+    .person_amount_dropdown_class span {
         font-size: 5.5vw;
     }
 
@@ -1062,15 +1104,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 3px;
     }
 
-    #person_amount_dropdown .counter_label {
+    .person_amount_dropdown_class .counter_label {
         font-size: 6.5vw;
     }
 
-    #person_amount_dropdown .counter_btn {
+    .person_amount_dropdown_class .counter_btn {
         font-size: 7.5vw;
     }
 
-    #person_amount_dropdown span {
+    .person_amount_dropdown_class span {
         font-size: 6.5vw;
     }
 
