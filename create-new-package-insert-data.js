@@ -843,7 +843,7 @@ downloadPdfWithCustomName = function (pdfName) {
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
         // Convert canvas to image data URL with optimized compression
-        let imgData = canvas.toDataURL('image/jpeg', 0.9); // Adjust quality factor and use JPEG for better compression
+        let imgData = canvas.toDataURL('image/jpeg', 1.0); // Adjust quality factor and use JPEG for better compression
 
         let imgWidth = pdf.internal.pageSize.width;
         let imgHeight = canvas.height * imgWidth / canvas.width;
@@ -858,7 +858,7 @@ downloadPdfWithCustomName = function (pdfName) {
     // Function to capture the canvas with white background
     let captureCanvas = function (section, isFirstPage) {
         return html2canvas(section, {
-            scale: 3, // Increase scale for higher quality
+            scale: 4, // Increase scale for higher quality
             backgroundColor: '#FFFFFF',
             useCORS: true // Enable cross-origin resource sharing if needed
         }).then(canvas => {
@@ -896,6 +896,13 @@ downloadPdfWithCustomName = function (pdfName) {
         processNextSection();
     };
 
+    // Function to add text as vector
+    let addTextAsVector = function (pdf) {
+        // Example: Add text in vector format
+        pdf.setFontSize(16);
+        pdf.text('Your Text Here', 10, 10);
+    };
+
     // Find all sections with the ID pattern and store them in an array
     let sections = [];
     let i = 1;
@@ -916,6 +923,9 @@ downloadPdfWithCustomName = function (pdfName) {
 
     // Process the sections
     processSections(sections);
+
+    // Add vector text (if needed)
+    addTextAsVector(pdf);
 };
 
 
