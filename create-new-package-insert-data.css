@@ -146,7 +146,6 @@
 
 #hotel_extra_info_h6 {
     font-size: 1.5vw;
-    font-weight: 300;
 }
 
 .hotel_left_side_hotel_data_div {
@@ -203,6 +202,7 @@
 
 #package_total_price_h6_id {
     background: white;
+    font-weight: bolder;
     color: rgb(27, 0, 125);
     width: 100%;
     text-align: center;
