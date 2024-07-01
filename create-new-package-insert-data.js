@@ -843,7 +843,7 @@ downloadPdfWithCustomName = function (pdfName) {
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'MEDIUM'); // Adjust quality parameter
 
         // Convert canvas to image data URL with optimized compression
-        let imgData = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality factor and use JPEG for better compression
+        let imgData = canvas.toDataURL('image/jpeg', 0.9); // Adjust quality factor and use JPEG for better compression
 
         let imgWidth = pdf.internal.pageSize.width;
         let imgHeight = canvas.height * imgWidth / canvas.width;
@@ -857,7 +857,11 @@ downloadPdfWithCustomName = function (pdfName) {
 
     // Function to capture the canvas with white background
     let captureCanvas = function (section, isFirstPage) {
-        return html2canvas(section, { scale: 2, backgroundColor: '#FFFFFF' }).then(canvas => {
+        return html2canvas(section, {
+            scale: 3, // Increase scale for higher quality
+            backgroundColor: '#FFFFFF',
+            useCORS: true // Enable cross-origin resource sharing if needed
+        }).then(canvas => {
             if (isFirstPage && section.id === 'inserted_package_data_section_page_1') {
                 // Center the content vertically on the first page
                 addContentToPDF(canvas, true);
