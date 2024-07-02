@@ -139,39 +139,21 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            if (clintCompanyNameInput.value === '') {
-
-                /* If شهر عشل checkbox is checked then iclude the text in the content */
-                if (honeymoonCheckbox.checked) {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                } else {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                }
+            /* If شهر عشل checkbox is checked then iclude the text in the content */
+            if (honeymoonCheckbox.checked) {
+                // If the years are the same, display both dates in a single h6 element
+                let h6CheckInSameYears = document.createElement('h6');
+                h6CheckInSameYears.innerText = `بكج شهر عسل 💝\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                insertedClintDataDiv.appendChild(h6CheckInSameYears);
 
             } else {
+                // If the years are the same, display both dates in a single h6 element
+                let h6CheckInSameYears = document.createElement('h6');
+                h6CheckInSameYears.innerText = `بكج جديد\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
+                insertedClintDataDiv.appendChild(h6CheckInSameYears);
 
-                /* If شهر عشل checkbox is checked then iclude the text in the content */
-                if (honeymoonCheckbox.checked) {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج شهر عسل 💝 - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-
-                } else {
-                    // If the years are the same, display both dates in a single h6 element
-                    let h6CheckInSameYears = document.createElement('h6');
-                    h6CheckInSameYears.innerText = `بكج جديد - ${clintCompanyNameInput.value}\n${personAmountText}\n${firstLastCheckInCheckOutDateInput.value}\nمجموع الليالي ${allTotalNightsInput.value}`;
-                    insertedClintDataDiv.appendChild(h6CheckInSameYears);
-                }
             }
+
 
 
             // Clear previous client data and insert the new data div
@@ -237,14 +219,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            // Replace line breaks with <br> tags for HTML display
-            let checkInCheckOutDateReadyTextHTML = checkInCheckOutDateTextArea.value.replace(/\r?\n/g, '<br><br>');
+            // Replace line breaks with <br> tags followed by a span for the red text
+            let checkInCheckOutDateReadyTextHTML = checkInCheckOutDateTextArea.value.replace(/\r?\n/g, '<br><p class="red-text">');
 
 
             // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
             let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
-            
+
             // Concatenate the room description with a breakfast note if the checkbox is checked
             let roomDescription = roomDescriptionInput.value + (breakfastCheckbox.checked ? ' شامل الإفطار' : '');
 
@@ -261,12 +243,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Create a new div element to hold the hotel row
             let hotelRowTableDiv = document.createElement('div');
+            hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`; // Set a unique ID for the hotel row div
+            hotelRowTableDiv.classList.add('hotel_row_class'); // Add a class to the div for styling
+            insertedHotelDataDivUniqueId++;
 
-            // Set a unique ID for the hotel row div
-            hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`;
-
-            // Add a class to the div for styling
-            hotelRowTableDiv.classList.add('hotel_row_class');
 
             // Insert the HTML content into the newly created div
             hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
