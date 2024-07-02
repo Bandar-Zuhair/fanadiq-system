@@ -1,6 +1,5 @@
 /* Inserted clint data position */
 #inserted_company_name_image_position_div {
-    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +27,6 @@
 
 /* Inserted clint data position */
 #inserted_clint_data_position_div {
-    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,32 +56,41 @@
 
 .pdf_section_title_div_class {
     background: rgb(63, 0, 209);
-    width: 60%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
     padding: 10px;
     border: 0.5px solid black;
-    position: relative; /* Add this to position the icon absolutely */
+    position: relative;
+    /* Add this to position the icon absolutely */
 }
 
 .pdf_section_title_div_class h6 {
     color: white;
     font-size: 2vw;
     font-weight: bolder;
-    flex: 1; /* Add this to make h6 take the remaining space */
-    text-align: center; /* Center the text horizontally */
+    flex: 1;
+    /* Add this to make h6 take the remaining space */
+    text-align: center;
+    /* Center the text horizontally */
 }
 
 .pdf_section_title_div_class ion-icon {
     color: white;
     font-size: 3.5vw;
-    position: absolute; /* Position the icon absolutely */
-    right: 10px; /* Position the icon 10px from the right */
-    top: 50%; /* Position the icon vertically in the center */
-    transform: translateY(-50%); /* Adjust vertical alignment */
+    position: absolute;
+    /* Position the icon absolutely */
+    right: 10px;
+    /* Position the icon 10px from the right */
+    top: 50%;
+    /* Position the icon vertically in the center */
+    transform: translateY(-50%);
+    /* Adjust vertical alignment */
 }
+
+
 
 
 
@@ -103,66 +110,85 @@
 
 
 /* Inserted hotel data position */
-#inserted_hotel_data_position_div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.inserted_hotel_data_div {
+.hotel_row_class {
     background: white;
-    width: 60%;
-    padding: 5px 15px;
-    /* Add some padding to create space between content and border */
     display: flex;
     justify-content: space-between;
+    align-items: stretch;
+    /* Ensure all items stretch to match the tallest one */
+    border-bottom: 0.5px solid black;
+    /* Horizontal line between rows */
+}
+
+.header {
+    background: darkred;
+    color: white;
+}
+
+.hotel_row_class div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    transition: transform 0.1s ease, opacity 0.1s ease;
+    justify-content: center;
+    border-left: 0.5px solid black;
+    /* Vertical line between columns */
+}
+
+.hotel_row_class div * {
+    text-align: center;
+    /* Center align text */
+}
+
+.hotel_row_class div:first-child {
+    border-right: 0.5px solid black;
+    /* Remove left border for the first column */
+    flex-grow: 0.9;
+    /* Half the width compared to other cells */
+}
+
+.hotel_row_class div:last-child img {
+    width: 90%;
     border: 0.5px solid black;
-    /* Add a thin horizontal line */
+    border-radius: 7px;
 }
 
-.inserted_hotel_data_div:last-child {
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
+.hotel_row_class h6,
+.hotel_row_class p {
+    font-size: 2.5vw;
 }
 
-.inserted_hotel_data_div.dragging {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    opacity: 0.8;
-    position: relative;
-}
-
-.inserted_hotel_data_div.drop-transition {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.inserted_hotel_data_div h6 {
-    font-size: 2vw;
-}
-
-.hotel_right_side_hotel_data_div {
-    width: 100%;
-}
-
-#hotel_extra_info_h6 {
+.hotel_row_class span {
     font-size: 1.5vw;
 }
 
-.hotel_left_side_hotel_data_div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
+/* Specific styling for the description cell to take more width */
+.hotel_row_class .description-cell {
+    flex-grow: 1.5;
+    /* Double the width compared to other cells */
 }
 
-.hotel_left_side_hotel_data_div img {
-    width: 15vw;
-    border-radius: 7px;
-    border: 0.5px solid black;
+/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+.hotel_row_class div:nth-child(3) {
+    /* "عدد الليالي" cell */
+    flex-grow: 0.4;
+    /* Half the width compared to other cells */
 }
+
+/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+.hotel_row_class div:nth-child(5) {
+    /* "المدينة" cell */
+    flex-grow: 0.6;
+    /* Half the width compared to other cells */
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -189,7 +215,7 @@
 
 .inserted_package_data_div {
     background: white;
-    width: 60%;
+    width: 100%;
     padding: 5px 5px 0 0;
     display: flex;
     flex-direction: column;
@@ -229,7 +255,7 @@
 
 
 /* Inserted clint flight data positioon */
-#inserted_flight_data_position_div{
+#inserted_flight_data_position_div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -238,7 +264,7 @@
 
 .inserted_clint_flight_data_div {
     background: white;
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -250,7 +276,7 @@
     border-bottom-left-radius: 7px;
 }
 
-.inserted_clint_flight_data_div h6{
+.inserted_clint_flight_data_div h6 {
     width: 100%;
     font-size: 2vw;
     text-align: center;
@@ -496,7 +522,6 @@
 
 
     .pdf_section_title_div_class {
-        width: 70%;
         padding: 6px;
     }
 
@@ -513,22 +538,6 @@
 
 
 
-    .inserted_hotel_data_div {
-        width: 70%;
-        padding: 5px 10px;
-    }
-
-    .inserted_hotel_data_div h6 {
-        font-size: 2.2vw;
-    }
-
-    #hotel_extra_info_h6 {
-        font-size: 1.7vw;
-    }
-
-    .hotel_left_side_hotel_data_div img {
-        width: 17vw;
-    }
 
 
 
@@ -539,10 +548,7 @@
 
 
 
-    .inserted_package_data_div {
-        width: 70%;
-    }
-    
+
     .inserted_package_data_div h6 {
         font-size: 2vw;
     }
@@ -557,11 +563,8 @@
 
 
 
-    .inserted_clint_flight_data_div {
-        width: 70%;
-    }
-    
-    .inserted_clint_flight_data_div h6{
+
+    .inserted_clint_flight_data_div h6 {
         font-size: 2.2vw;
     }
 
@@ -639,7 +642,6 @@
 
 
     .pdf_section_title_div_class {
-        width: 75%;
         padding: 4px;
     }
 
@@ -655,21 +657,23 @@
 
 
 
-    .inserted_hotel_data_div {
-        width: 75%;
-        padding: 4px;
+
+
+
+
+
+
+    .hotel_row_class div:last-child img {
+        width: 95%;
     }
 
-    .inserted_hotel_data_div h6 {
-        font-size: 2.7vw;
+    .hotel_row_class h6,
+    .hotel_row_class p {
+        font-size: 3vw;
     }
 
-    #hotel_extra_info_h6 {
-        font-size: 2.2vw;
-    }
-
-    .hotel_left_side_hotel_data_div img {
-        width: 20vw;
+    .hotel_row_class span {
+        font-size: 2vw;
     }
 
 
@@ -680,10 +684,8 @@
 
 
 
-    .inserted_package_data_div {
-        width: 75%;
-    }
-    
+
+
     .inserted_package_data_div h6 {
         font-size: 2.3vw;
     }
@@ -698,10 +700,7 @@
 
 
 
-    .inserted_clint_flight_data_div {
-        width: 75%;
-    }
-    .inserted_clint_flight_data_div h6{
+    .inserted_clint_flight_data_div h6 {
         font-size: 3vw;
     }
 
@@ -741,7 +740,21 @@
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .inserted_package_data_div h6 {
         font-size: 2.7vw;
     }
