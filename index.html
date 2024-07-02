@@ -164,7 +164,9 @@
                 <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off">
 
 
-                <input type="text" id="check_in_check_out_date_input_id" placeholder="تاريخ الحجز" autocomplete="off">
+                <textarea id="check_in_check_out_date_textarea_id" class="package_details_input_class"
+                    placeholder="تاريخ الحجز" autocomplete="off"></textarea>
+                    
                 <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
 
 
@@ -178,7 +180,7 @@
 
 
                 <textarea id="room_extra_info_textarea_id" class="package_details_input_class"
-                    placeholder="معلومات اكثر؟"></textarea>
+                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                 <button class="fullscreenToggleBtn_class"
                     onclick="toggleFullscreen('room_extra_info_textarea_id')">تكبير</button>
 
@@ -206,7 +208,7 @@
         <div id="dropdown_package_content" class="dropdown_content_div_class">
             <div class="package_info_input_div">
                 <textarea id="package_details_textarea_id" class="package_details_input_class"
-                    placeholder="العرض شامل..؟"></textarea>
+                    placeholder="العرض شامل..؟" autocomplete="off"></textarea>
                 <button class="fullscreenToggleBtn_class"
                     onclick="toggleFullscreen('package_details_textarea_id')">تكبير</button>
 
@@ -416,7 +418,7 @@
 
         <!-- Delete the clicked inserted hotel data -->
         <div id="ensure_delete_hotel_data_div" class="ensure_your_delete_action">
-            <button onclick="deleteClickedHotelData()">حذف</button>
+            <button onclick="runDeleteClickedHotelDataFunction()">حذف</button>
         </div>
 
 
@@ -460,7 +462,7 @@
 
 
                 <textarea id="from_airport_to_airport_textarea_id" class="package_details_input_class"
-                    placeholder="من مطار - الى مطار"></textarea>
+                    placeholder="من مطار - الى مطار" autocomplete="off"></textarea>
                 <button class="fullscreenToggleBtn_class"
                     onclick="toggleFullscreen('from_airport_to_airport_input_id')">تكبير</button>
 
@@ -470,7 +472,7 @@
 
 
                 <textarea id="flight_extra_details_textarea_id" class="package_details_input_class"
-                    placeholder="معلومات اكثر؟"></textarea>
+                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                 <button class="fullscreenToggleBtn_class"
                     onclick="toggleFullscreen('flight_extra_details_textarea_id')">تكبير</button>
 
@@ -619,8 +621,34 @@
         </div>
 
 
+        <div class="hotel_row_class" style="background: darkred; color: white;">
+            <div>
+                <h6>اسم الفندق/<br>فيلا</h6>
+            </div>
+            <div>
+                <h6>تاريخ الحجز</h6>
+            </div>
+            <div>
+                <h6>عدد الليالي</h6>
+            </div>
+            <div class="description-cell">
+                <h6>الوصف</h6>
+            </div>
+            <div>
+                <h6>المدينة</h6>
+            </div>
+            <div>
+                <h6>صورة</h6>
+            </div>
+        </div>
+
+
+
+
         <div id="inserted_hotel_data_position_div">
             <!-- Dynamic JS Code Here -->
+
+
         </div>
 
 
@@ -629,7 +657,7 @@
 
 
 
-    
+
 
 
 
