@@ -175,16 +175,17 @@
     /* Half the width compared to other cells */
 }
 
-/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+/* Reduce the width of "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
     /* "المدينة" cell */
     flex-grow: 0.6;
-    /* Half the width compared to other cells */
+    border-left: none;
 }
 
-
-
-
+/* Styling for red text */
+.red-text {
+    color: red;
+}
 
 
 
