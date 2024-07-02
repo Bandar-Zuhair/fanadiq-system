@@ -837,7 +837,7 @@ downloadPdfWithCustomName = function (pdfName) {
 
         pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'SLOW');
 
-        let imgData = canvas.toDataURL('image/png', 0.8); // Highest quality
+        let imgData = canvas.toDataURL('image/png', 1.0); // Highest quality
 
         let imgWidth = pdf.internal.pageSize.width;
         let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
@@ -851,7 +851,7 @@ downloadPdfWithCustomName = function (pdfName) {
     let captureCanvas = async function (section, isFirstPage) {
         try {
             let canvas = await html2canvas(section, {
-                scale: 2, // Higher scale for better quality
+                scale: 4, // Higher scale for better quality
                 backgroundColor: null,
                 scrollY: 0 // Ensure capturing starts from the top of the element
             });
