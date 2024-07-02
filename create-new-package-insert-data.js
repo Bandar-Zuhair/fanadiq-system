@@ -1,5 +1,6 @@
 /* Variable to save a number for counting functionality (Ex: Flight Number..?) */
 let flightNumberCounter = 1;
+let insertedHotelDataDivUniqueId = 1;
 
 
 
@@ -64,17 +65,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }, 100);
 
                     // Slide in delete box options div
-                    let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
+                    let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
 
                     // Smoothly slide to the middle of the screen
                     setTimeout(() => {
-                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                        deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
                     }, 50); // Adjust timing as needed
 
                     // Event listener to close overlay and delete box div on click outside
                     overlayLayer.onclick = () => {
                         // Hide delete box options div
-                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
+                        deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
 
                         // Hide overlay layer with opacity transition
                         overlayLayer.style.opacity = '0';
@@ -98,11 +99,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
 
                 // Slide in delete box options div
-                let editDeleteDiv = document.getElementById('ensure_delete_company_logo_div');
+                let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
 
                 // Event listener to close overlay and delete box div on click outside
                 // Hide delete box div
-                editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
+                deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
                 let overlayLayer = document.getElementById('black_overlay_id')
@@ -197,14 +198,24 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelLocationInput = document.getElementById('hotel_location_input_id');
         let hotelAreaInput = document.getElementById('hotel_area_input_id');
         let hotelNameInput = document.getElementById('hotel_name_input_id');
-        let checkInCheckOutDateInput = document.getElementById('check_in_check_out_date_input_id');
+        let checkInCheckOutDateTextArea = document.getElementById('check_in_check_out_date_textarea_id');
         let totalNightsInput = document.getElementById('total_nights_input_id');
         let roomDescriptionInput = document.getElementById('room_description_input_id');
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
         let roomExtraInfoTextArea = document.getElementById('room_extra_info_textarea_id');
 
 
-        if (hotelLocationInput.value === '' || hotelNameInput.value === '' || checkInCheckOutDateInput.value === '' || roomDescriptionInput.value === '') {
+        // Get references to all input (Values) for later use
+        let hotelLocationReadyText = hotelLocationInput.value;
+        let hotelAreaReadyText = hotelAreaInput.value;
+        let hotelNameReadyText = hotelNameInput.value;
+        let checkInCheckOutDateReadyText = checkInCheckOutDateTextArea.value;
+        let totalNightsReadyText = totalNightsInput.value;
+        let roomExtraInfoReadyText = roomExtraInfoTextArea.value;
+
+
+
+        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || checkInCheckOutDateReadyText === '' || totalNightsReadyText === '' || roomDescriptionInput.value === '') {
 
             hotel_inputs_submit_button.style.backgroundColor = 'red';
 
@@ -223,66 +234,51 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            // Create a new div element to insert hotel data
-            let insertedHotelDataDiv = document.createElement('div');
-            let hotelUniqueId = `hotel_data_${new Date().getTime()}`; // Generate unique ID based on timestamp
-            insertedHotelDataDiv.id = hotelUniqueId; // Assign the unique ID to the div
-            insertedHotelDataDiv.classList.add('inserted_hotel_data_div');
-
-            // Right side content div
-            let hotelRightSideDiv = document.createElement('div');
-            hotelRightSideDiv.classList.add('hotel_right_side_hotel_data_div');
-
-            // Left side content div
-            let hotelLeftSideDiv = document.createElement('div');
-            hotelLeftSideDiv.classList.add('hotel_left_side_hotel_data_div');
-
-            // Arrange content for the right side
-            let hotelRightSideContent = `${hotelLocationInput.value}`;
-
-            if (hotelAreaInput.value !== '') {
-                hotelRightSideContent += ` - ${hotelAreaInput.value} - ${hotelNameInput.value}\n`;
-            } else {
-                hotelRightSideContent += ` - ${hotelNameInput.value}\n`;
-            }
-
-            hotelRightSideContent += `${checkInCheckOutDateInput.value}\nمجموع الليالي ${totalNightsInput.value}\n${roomDescriptionInput.value}`;
-            if (breakfastCheckbox.checked) {
-                hotelRightSideContent += ` شامل الإفطار`;
-            }
-
-            // Create h6 element for right side content
-            let rightSideH6 = document.createElement('h6');
-            rightSideH6.innerText = hotelRightSideContent;
-            hotelRightSideDiv.appendChild(rightSideH6);
 
 
-            if (roomExtraInfoTextArea.value !== '') {
-                hotelRightSideContent += `\n${roomExtraInfoTextArea.value}`;
 
-                // Create h6 element for right side content
-                let rightSideExtraHotelInfoH6 = document.createElement('h6');
-                rightSideExtraHotelInfoH6.id = 'hotel_extra_info_h6';
-                rightSideExtraHotelInfoH6.innerText = `${roomExtraInfoTextArea.value}`;
-                hotelRightSideDiv.appendChild(rightSideExtraHotelInfoH6);
-            }
+            // Replace line breaks with <br> tags for HTML display
+            let checkInCheckOutDateReadyTextHTML = checkInCheckOutDateTextArea.value.replace(/\r?\n/g, '<br><br>');
 
-            // Arrange content for the left side
-            /* First convert all spaces with - and make all letters toLowerCase */
-            let hotelImgSrcReadyText = hotelNameInput.value.toLowerCase().replace(/\s+/g, '-');
 
-            // Create img element for left side content
-            let hotelImg = document.createElement('img');
+            // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
+            let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
-            hotelImg.src = `صور-الفنادق/${hotelImgSrcReadyText}.jpg`;
-            hotelLeftSideDiv.appendChild(hotelImg);
+            
+            // Concatenate the room description with a breakfast note if the checkbox is checked
+            let roomDescription = roomDescriptionInput.value + (breakfastCheckbox.checked ? ' شامل الإفطار' : '');
 
-            // Append left and right side content to insertedHotelDataDiv
-            insertedHotelDataDiv.appendChild(hotelRightSideDiv);
-            insertedHotelDataDiv.appendChild(hotelLeftSideDiv);
+            // Create the HTML content for a new hotel row, including the hotel name, dates, total nights, room description, location, and image
+            let hotelRowTableDivContent = `
+                <div><p>${hotelNameReadyText}</p></div>
+                <div><p>${checkInCheckOutDateReadyTextHTML}</p></div>
+                <div><p>${totalNightsReadyText}</p></div>
+                <div class="description-cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
+                <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
+                <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_card_image"></div>
+            `;
 
-            // Append the new hotel data div
-            document.getElementById('inserted_hotel_data_position_div').appendChild(insertedHotelDataDiv);
+
+            // Create a new div element to hold the hotel row
+            let hotelRowTableDiv = document.createElement('div');
+
+            // Set a unique ID for the hotel row div
+            hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`;
+
+            // Add a class to the div for styling
+            hotelRowTableDiv.classList.add('hotel_row_class');
+
+            // Insert the HTML content into the newly created div
+            hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
+
+
+            // Get the dynamically created hotelImg element
+            let hotelImg = hotelRowTableDiv.querySelector('.hotel_card_image');
+
+
+            // Append the new hotel row div to the parent div that holds all inserted hotel data
+            document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
+
 
             /* Show up the 'inserted_package_data_section_page_1' section */
             document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
@@ -297,7 +293,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_location_input_id').value = '';
             document.getElementById('hotel_area_input_id').value = '';
             document.getElementById('hotel_name_input_id').value = '';
-            document.getElementById('check_in_check_out_date_input_id').value = '';
+            document.getElementById('check_in_check_out_date_textarea_id').value = '';
             document.getElementById('total_nights_input_id').value = '';
             document.getElementById('room_description_input_id').value = '';
             document.getElementById('breakfast_checkbox').checked = false;
@@ -313,19 +309,22 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
             // Define a global variable to store the reference
-            let currentHotelDataDiv;
+            let currentHotelDataDivId;
 
             // Function to handle delete clicked hotel data
-            deleteClickedHotelData = function () {
+            deleteClickedHotelData = function (clickedHotelCardIdName) {
                 let overlayLayer = document.querySelector('.black_overlay');
 
-                // Delete the corresponding inserted hotel data div
-                currentHotelDataDiv.remove();
+                let clickedHotelCardElement = document.getElementById(clickedHotelCardIdName);
+                if (clickedHotelCardElement) {
+                    clickedHotelCardElement.remove();
+                }
 
                 // Hide edit/delete options div
-                let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
-                editDeleteDiv.style.transform = 'translate(-50%, -100vh)';
+                let deleteHotelCardDiv = document.getElementById('ensure_delete_hotel_data_div');
+                deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
                 overlayLayer.style.opacity = '0';
@@ -335,55 +334,58 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.body.removeChild(overlayLayer);
                 }, 300); // Match transition duration in CSS
 
-                // Clear currentHotelDataDiv reference
-                currentHotelDataDiv = null;
-
-
                 // Check if there are any remaining inserted hotel data divs
-                let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
-
+                let remainingHotelDataDivs = document.querySelectorAll('.hotel_row_class');
                 if (remainingHotelDataDivs.length === 0) {
                     // Hide section with id 'inserted_package_data_section_page_2'
                     document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
-                    /* Hide the download button */
+                    // Hide the download button
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
-            }
+            };
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function initializeDragAndDrop() {
 
                 // Function to show edit or delete the inserted hotel data
                 hotelImg.onclick = (event) => {
-                    let editDeleteDiv = document.getElementById('ensure_delete_hotel_data_div');
-                    currentHotelDataDiv = event.target.closest('.inserted_hotel_data_div');
+                    let deleteHotelCardDiv = document.getElementById('ensure_delete_hotel_data_div');
+                    let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
 
-                    // Create an overlay layer for better visual effect
-                    let overlayLayer = document.createElement('div');
-                    overlayLayer.classList.add('black_overlay');
-                    document.body.appendChild(overlayLayer);
+                    if (clickedHotelDataDiv) {
+                        currentHotelDataDivId = clickedHotelDataDiv.id;
 
-                    // Delayed opacity transition for smooth appearance
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = '1';
-                        editDeleteDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                    }, 50);
+                        // Create an overlay layer for better visual effect
+                        let overlayLayer = document.createElement('div');
+                        overlayLayer.classList.add('black_overlay');
+                        document.body.appendChild(overlayLayer);
 
-                    // Click handler to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        editDeleteDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                        overlayLayer.style.opacity = '0'; // Hide overlay
-
-                        // Remove overlay and delete box div from DOM after transition
+                        // Delayed opacity transition for smooth appearance
                         setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
+                            overlayLayer.style.opacity = '1';
+                            deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                        }, 50);
 
-                    // Prevent overlayLayer click propagation to avoid immediate closure
-                    overlayLayer.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Prevent immediate closure of overlay on click
-                    });
+                        runDeleteClickedHotelDataFunction = function () {
+                            deleteClickedHotelData(currentHotelDataDivId);
+                        }
+
+                        // Click handler to close overlay and delete box div on click outside
+                        overlayLayer.onclick = () => {
+                            deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                            overlayLayer.style.opacity = '0'; // Hide overlay
+
+                            // Remove overlay and delete box div from DOM after transition
+                            setTimeout(() => {
+                                document.body.removeChild(overlayLayer);
+                            }, 300); // Match transition duration in CSS
+                        };
+
+                        // Prevent overlayLayer click propagation to avoid immediate closure
+                        overlayLayer.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Prevent immediate closure of overlay on click
+                        });
+                    }
                 };
 
 
@@ -394,7 +396,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 function mouseDown(event) {
                     if (event.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
                         event.preventDefault(); // Prevent default behavior
-                        let draggingElement = event.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
+                        let draggingElement = event.target.closest('.hotel_row_class'); // Get the parent div being dragged
                         draggingElement.classList.add('dragging'); // Add dragging class for styling
                         draggingElement.dataset.startY = event.clientY; // Store initial mouse position
                         document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
@@ -409,7 +411,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 function touchStart(event) {
                     let touch = event.touches[0]; // Get the first touch
                     if (touch.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        let draggingElement = touch.target.closest('.inserted_hotel_data_div'); // Get the parent div being dragged
+                        let draggingElement = touch.target.closest('.hotel_row_class'); // Get the parent div being dragged
                         draggingElement.classList.add('dragging'); // Add dragging class for styling
                         draggingElement.dataset.startY = touch.clientY; // Store initial touch position
                         document.addEventListener('touchmove', touchMove); // Listen for touch move events
@@ -534,7 +536,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }
 
                 // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
-                let insertedHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_div');
+                let insertedHotelDataDivs = document.querySelectorAll('.hotel_row_class');
                 insertedHotelDataDivs.forEach((div) => {
                     div.addEventListener('mousedown', mouseDown);
                     div.addEventListener('touchstart', touchStart);
@@ -901,3 +903,24 @@ downloadPdfWithCustomName = function (pdfName) {
 
     processSections(sections);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
