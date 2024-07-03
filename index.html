@@ -113,9 +113,27 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p>حفظ</p>
-        <p>استعادة</p>
+        <p style="user-select: none;">حفظ</p>
+        <p style="user-select: none;">إستعادة</p>
     </div>
+
+
+    <!-- Delete the clicked inserted hotel data -->
+    <div id="ensure_localstorage_save_website_data_div" class="ensure_your_delete_action">
+        <button onclick="runDeleteClickedHotelDataFunction()">حفظ</button>
+    </div>
+
+    <!-- Delete the clicked inserted hotel data -->
+    <div id="ensure_imoprt_saveed_website_data_div" class="ensure_your_delete_action">
+        <button onclick="runDeleteClickedHotelDataFunction()">إستعادة</button>
+    </div>
+
+
+
+
+
+
+
 
 
 
@@ -140,9 +158,10 @@
                 <input type="text" id="hotel_person_amount_input_id" placeholder="عدد الاشخاص" autocomplete="off">
 
 
-                <input type="text" id="package_start_date_input_id" placeholder="من" autocomplete="off">
+                <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج"
+                    autocomplete="off">
 
-                <input type="text" id="package_end_date_input_id" placeholder="الى" autocomplete="off">
+                <input type="text" id="package_end_date_input_id" placeholder="تاريخ نهاية البرنامج" autocomplete="off">
 
                 <input type="text" id="package_total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
 
@@ -485,39 +504,34 @@
 
 
 
-
-
-
-
-
-        <!-- Delete the clicked company logo -->
-        <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
-            <button onclick="deleteClickedCompanyLogo()">حذف</button>
-        </div>
-
-
-
-
-
-        <!-- Delete the clicked inserted hotel data -->
-        <div id="ensure_delete_hotel_data_div" class="ensure_your_delete_action">
-            <button onclick="runDeleteClickedHotelDataFunction()">حذف</button>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
     </section>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Delete the clicked company logo -->
+    <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
+        <button onclick="deleteClickedCompanyLogo()">حذف</button>
+    </div>
+
+
+
+
+
+    <!-- Delete the clicked inserted hotel data -->
+    <div id="ensure_delete_hotel_data_div" class="ensure_your_delete_action">
+        <button onclick="runDeleteClickedHotelDataFunction()">حذف</button>
+    </div>
 
 
 
@@ -572,25 +586,27 @@
 
         </div>
 
-
-
-
-
-
-
-
-
-
-
-        <!-- Delete the clicked inserted flight data -->
-        <div id="ensure_delete_flight_data_div" class="ensure_your_delete_action">
-            <button onclick="runDeleteClickedFlightDataFunction()">حذف</button>
-        </div>
-
-
     </section>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Delete the clicked inserted flight data -->
+    <div id="ensure_delete_flight_data_div" class="ensure_your_delete_action">
+        <button onclick="runDeleteClickedFlightDataFunction()">حذف</button>
+    </div>
 
 
 
@@ -865,14 +881,14 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="bed"></ion-icon>
+            <ion-icon name="map-outline"></ion-icon>
             <h6>خط سير البرنامج</h6>
         </div>
 
 
         <div class="transportation_plan_row_class" style="background: darkred; color: white;">
             <div>
-                <p>تاريخ</p>
+                <p>التاريخ</p>
             </div>
             <div>
                 <p>البرنامج والجولات المقترحة</p>
@@ -963,7 +979,7 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="bed"></ion-icon>
+            <ion-icon name="megaphone-outline"></ion-icon>
             <h6>معلومات مهمة جدا</h6>
         </div>
 
