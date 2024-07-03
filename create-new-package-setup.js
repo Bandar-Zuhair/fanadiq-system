@@ -73,7 +73,6 @@ toggleDropdownContent('toggle_clint_flight_elements', 'flight_dropdown_content')
 
 
 // Prepare dropdown toggles for transportation plane details
-toggleDropdownContent('toggle_clint_transportation_plan_date_elements', 'transportation_plan_date_dropdown_content');
 toggleDropdownContent('toggle_clint_transportation_plan_details_elements', 'transportation_plan_details_dropdown_content');
 
 
