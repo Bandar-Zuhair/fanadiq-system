@@ -111,6 +111,18 @@
 
 
 
+    <!-- LocalStorage data controller div -->
+    <div id="localstorage_data_controller_div">
+        <p>حفظ</p>
+        <p>استعادة</p>
+    </div>
+
+
+
+
+
+
+
 
 
     <!-- Create New Package Section -->
@@ -177,10 +189,12 @@
         <div id="dropdown_hotel_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
-                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly
-                    style="cursor: pointer;" autocomplete="off" onclick="showOverlay('hotel_location_dropdown')">
-                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off">
-                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off">
+                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_location_dropdown')" style="cursor: pointer;">
+                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off"
+                    style="cursor: pointer;">
+                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
+                    style="cursor: pointer;">
 
 
                 <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" autocomplete="off">
@@ -599,33 +613,6 @@
     <!-- Create transportation plane data section -->
     <section id="create_new_transportation_paln_section">
 
-        <div class="section_title_text_div" id="toggle_clint_transportation_plan_date_elements">
-            <h1 class="section_title_text">مدة خط سير البرنامج</h1>
-        </div>
-
-
-        <div id="transportation_plan_date_dropdown_content" class="dropdown_content_div_class">
-
-            <div class="package_info_input_div">
-
-
-                <input type="text" id="transportation_plan_first_day_date_input_id" placeholder="اول يوم" readonly
-                    autocomplete="off">
-                <input type="text" id="transportation_plan_last_day_date_input_id" placeholder="اخر يوم" readonly
-                    autocomplete="off">
-
-
-                <div class="submit_package_pdf_div">
-                    <button id="clint_transportation_plane_period_inputs_submit_button"
-                        onclick="checkInputsToInsertData('clint_transportation_plane_period_inputs_submit_button')">تم</button>
-                </div>
-
-            </div>
-
-        </div>
-
-
-
 
         <div class="section_title_text_div" id="toggle_clint_transportation_plan_details_elements">
             <h1 class="section_title_text">تفاصيل خط سير البرنامج</h1>
@@ -638,10 +625,25 @@
 
 
 
-                <input type="text" id="transportation_plan_details_input_id" placeholder="خط السير" autocomplete="off">
+                <input type="text" id="transportation_plan_first_day_date_input_id" placeholder="اول يوم" readonly
+                    autocomplete="off">
+                <input type="text" id="transportation_plan_last_day_date_input_id" placeholder="اخر يوم" readonly
+                    autocomplete="off">
+
+
+                <textarea id="transportation_plan_details_input_id" class="package_details_input_class"
+                    placeholder="خط السير" autocomplete="off"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('transportation_plan_details_input_id')">تكبير</button>
+
 
                 <input type="text" id="transportation_plan_city_input_id" placeholder="المدينة" autocomplete="off">
 
+
+                <textarea id="transportation_plan_rules_input_id" class="package_details_input_class"
+                    placeholder="تغيير في القوانين؟" autocomplete="off"></textarea>
+                <button class="fullscreenToggleBtn_class"
+                    onclick="toggleFullscreen('transportation_plan_rules_input_id')">تكبير</button>
 
 
 
@@ -650,6 +652,8 @@
                     <button id="clint_transportation_plane_details_inputs_submit_button"
                         onclick="checkInputsToInsertData('clint_transportation_plane_details_inputs_submit_button')">تم</button>
                 </div>
+
+
 
             </div>
 
@@ -852,13 +856,117 @@
 
 
 
-    <section id="inserted_package_data_section_page_4" style="display: none;">
+
+
+
+
+
+    <section id="inserted_package_data_section_page_4">
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="bed"></ion-icon>
+            <h6>خط سير البرنامج</h6>
+        </div>
+
+
+        <div class="transportation_plan_row_class" style="background: darkred; color: white;">
+            <div>
+                <p>تاريخ</p>
+            </div>
+            <div>
+                <p>البرنامج والجولات المقترحة</p>
+            </div>
+            <div>
+                <p>المدينة</p>
+            </div>
+        </div>
+
+
+        <div id="inserted_transportation_plan_data_position_div">
+            <!-- Dynamic JS Code Here -->
+
+
+            <div class="transportation_plan_row_class">
+                <div>
+                    <p>08-jul</p>
+                </div>
+                <div>
+                    <p>الاستقبال في مطار جاكرتا + الذهاب الى تسجيل الدخول في فندق اسكوت جاكرتا</p>
+                </div>
+                <div>
+                    <p>جاكرتا</p>
+                </div>
+            </div>
+
+            <div class="transportation_plan_row_class">
+                <div>
+                    <p>09-jul</p>
+                </div>
+                <div>
+                    <p>تسجيل الخروج من المنتجع + الدبابات الرباعية وسط الطبيعة + شلال تيغينونغان الجميل + منتزة Aloha
+                        مراجيح الهواء + سنتر اوبود للغداء حسب الرغبة</p>
+                </div>
+                <div>
+                    <p>بونشاك</p>
+                </div>
+            </div>
+
+            <div class="transportation_plan_row_class">
+                <div>
+                    <p>09-jul</p>
+                </div>
+                <div>
+                    <p>تسجيل الخروج من المنتجع + الدبابات الرباعية وسط الطبيعة + شلال تيغينونغان الجميل + منتزة Aloha
+                        مراجيح الهواء + سنتر اوبود للغداء حسب الرغبة</p>
+                </div>
+                <div>
+                    <p>بونشاك - بالي</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="transportation_plan_rules_div">
+
+            <p>وقت الدخول للفنادق الساعة 2 / 3 ظهراً ووقت الخروج 12 ظهرا
+                <br>
+                الغرف عبارة عن سرائر مزدوجة او منفصلة لشخصين فقط، ويمكن اضافة سرائر اضافية بمبالغ اضافية
+                <br>
+                غرف الفنادق غير متصلة، والفنادق التي توفر غرف متصلة يعتمد على التوافر في الفندق
+                <br>
+                يفضل دفع مبلغ التامين نقد عند دخول الفنادق او الفيلل
+                <br>
+                سوف يستقبلكم مندوب الشركة في صالة الوصول بالمطار وسوف تكون هناك لوحة باسمكم لذلك يرجى االنتباه
+                <br>
+                خط سير البرنامج يطبق كما تم اعتماده سابقاً وال يحق للعميل تغيير خط سير البرنامج وفي حالة التغيير يترتب
+                على ذلك مبالغ اضافية
+                <br>
+                مدة الجوالت 8 ساعات يومياً من بداية صعود العميل مع السائق
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <section id="inserted_package_data_section_page_5" style="display: none;">
 
 
         <div class="pdf_section_title_div_class">
             <ion-icon name="bed"></ion-icon>
             <h6>معلومات مهمة جدا</h6>
         </div>
+
 
         <div id="inserted_package_data_position_div">
             <!-- Dynamic JS Code Here -->
