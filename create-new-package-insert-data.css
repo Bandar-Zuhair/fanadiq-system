@@ -334,6 +334,68 @@
 
 
 
+/* Inserted transportation_plan data position */
+.transportation_plan_row_class {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 0.5px solid black;
+}
+
+.transportation_plan_row_class div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 0.5px solid black;
+}
+
+.transportation_plan_row_class div * {
+    text-align: center;
+}
+
+.transportation_plan_row_class div:first-child {
+    flex-grow: 0.9;
+}
+
+.transportation_plan_row_class p {
+    font-size: 2vw;
+}
+
+/* Reduce the width of "من" cell */
+.transportation_plan_row_class div:nth-child(1) {
+    flex-grow: 0.2;
+}
+
+/* Reduce the width of "الى" cell */
+.transportation_plan_row_class div:nth-child(3) {
+    flex-grow: 0.3;
+}
+
+#transportation_plan_rules_div{
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#transportation_plan_rules_div p{
+    font-size: 1.5vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -733,6 +795,29 @@
 
 
 
+    .transportation_plan_row_class p {
+        font-size: 2.5vw;
+    }
+    #transportation_plan_rules_div{
+        padding-top: 5px;
+    }
+    
+    #transportation_plan_rules_div p{
+        font-size: 2vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     .inserted_package_data_div h6 {
         font-size: 2.3vw;
@@ -794,6 +879,24 @@
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    #transportation_plan_rules_div{
+        padding-top: 2px;
+    }
+    
+    #transportation_plan_rules_div p{
+        font-size: 2.5vw;
+    }
 
 
 
