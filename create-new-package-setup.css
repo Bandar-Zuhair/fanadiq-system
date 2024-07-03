@@ -286,6 +286,43 @@ body {
 
 
 
+/*  */
+#localstorage_data_controller_div{
+    width: 100%;
+    padding: 10px 0 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#localstorage_data_controller_div p{
+    background: white;
+    font-size: 2.5vw;
+    margin-left: 10px;
+    padding: 1px 5px;
+    cursor: pointer;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    transition: all 0.2s ease-in-out;
+}
+
+#localstorage_data_controller_div p:hover{
+    transform: scale(1.015);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Create New hotel Package Section */
@@ -628,6 +665,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 8px 14px;
     }
 
+    #localstorage_data_controller_div p{
+        font-size: 3vw;
+    }
+
     .package_info_input_div {
         padding: 5px;
     }
@@ -731,6 +772,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .header_navbar_links a {
         font-size: 3.5vw;
+    }
+
+    #localstorage_data_controller_div p{
+        font-size: 3.5vw;
+        padding: 1px 2px;
     }
 
     .section_title_text_div {
@@ -847,6 +893,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .header_navbar_links a {
         font-size: 4.5vw;
+    }
+
+    #localstorage_data_controller_div p{
+        font-size: 4vw;
     }
 
     .section_title_text {
