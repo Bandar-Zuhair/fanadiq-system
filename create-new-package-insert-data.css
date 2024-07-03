@@ -25,35 +25,66 @@
 
 
 
+
+
 /* Inserted clint data position */
-#inserted_clint_data_position_div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.inserted_clint_data_div {
+.clint_data_row_class {
     background: white;
-    padding: 15px 15px 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 0.5px solid black;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 0.5px solid black;
 }
 
-.inserted_clint_data_div h6 {
-    font-size: 3vw;
+.clint_data_row_class div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 0.5px solid black;
+}
+
+.clint_data_row_class div * {
     text-align: center;
 }
 
+.clint_data_row_class div:first-child {
+    flex-grow: 0.9;
+}
+
+.clint_data_row_class p {
+    font-size: 2.5vw;
+}
+
+/* Reduce the width of "المدينة" cells */
+.clint_data_row_class div:nth-child(2),
+.clint_data_row_class div:nth-child(3),
+.clint_data_row_class div:nth-child(4) {
+    flex-grow: 0.4;
+}
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Pdf section title */
 .pdf_section_title_div_class {
     background: rgb(63, 0, 209);
     width: 100%;
@@ -115,14 +146,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    /* Ensure all items stretch to match the tallest one */
     border-bottom: 0.5px solid black;
-    /* Horizontal line between rows */
-}
-
-.header {
-    background: darkred;
-    color: white;
 }
 
 .hotel_row_class div {
@@ -132,19 +156,15 @@
     align-items: center;
     justify-content: center;
     border-left: 0.5px solid black;
-    /* Vertical line between columns */
 }
 
 .hotel_row_class div * {
     text-align: center;
-    /* Center align text */
 }
 
 .hotel_row_class div:first-child {
     border-right: 0.5px solid black;
-    /* Remove left border for the first column */
     flex-grow: 0.9;
-    /* Half the width compared to other cells */
 }
 
 .hotel_row_class div:last-child img {
@@ -153,7 +173,6 @@
     border-radius: 7px;
 }
 
-.hotel_row_class h6,
 .hotel_row_class p {
     font-size: 2.5vw;
 }
@@ -163,29 +182,22 @@
 }
 
 /* Specific styling for the description cell to take more width */
-.hotel_row_class .description-cell {
+.hotel_row_class .description_cell {
     flex-grow: 1.5;
-    /* Double the width compared to other cells */
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
 .hotel_row_class div:nth-child(3) {
     /* "عدد الليالي" cell */
     flex-grow: 0.4;
-    /* Half the width compared to other cells */
 }
 
 /* Reduce the width of "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
-    /* "المدينة" cell */
     flex-grow: 0.6;
     border-left: none;
 }
 
-/* Styling for red text */
-.red-text {
-    color: red;
-}
 
 
 
@@ -255,58 +267,80 @@
 
 
 
-/* Inserted clint flight data positioon */
-#inserted_flight_data_position_div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.inserted_clint_flight_data_div {
+
+
+
+
+
+
+
+
+
+
+/* Inserted flight data position */
+.flight_row_class {
     background: white;
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border: 0.5px solid black;
+    align-items: stretch;
+    border-bottom: 0.5px solid black;
 }
 
-.inserted_clint_flight_data_div:last-child {
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
-}
-
-.inserted_clint_flight_data_div h6 {
-    width: 100%;
-    font-size: 2vw;
-    text-align: center;
-}
-
-.flight_right_side_hotel_data_div {
-    background: white;
-    width: 50%;
+.flight_row_class div {
+    flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-}
-
-
-.flight_middle_side_hotel_data_div {
-    background: white;
-    width: 100%;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    border-right: 0.5px solid black;
     border-left: 0.5px solid black;
 }
 
-
-.flight_left_side_hotel_data_div {
-    background: white;
-    width: 100%;
+.flight_row_class div * {
+    text-align: center;
 }
+
+.flight_row_class div:first-child {
+    flex-grow: 0.9;
+}
+
+.flight_row_class p {
+    font-size: 2.5vw;
+}
+
+/* Reduce the width of "من" and "الى" cells */
+.flight_row_class div:nth-child(4),
+.flight_row_class div:nth-child(5) {
+    flex-grow: 0.6;
+}
+
+/* Reduce the width of "عدد الأشخاص" cell */
+.flight_row_class div:nth-child(2),
+.flight_row_class div:nth-child(7),
+.flight_row_class div:nth-child(8) {
+    flex-grow: 0.7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -341,7 +375,8 @@
     top: 50%;
     left: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     border-radius: 7px;
     text-align: center;
     box-shadow: 0 0 5px black;
@@ -511,9 +546,6 @@
 
 
 
-    .inserted_clint_data_div h6 {
-        font-size: 3.5vw;
-    }
 
 
 
@@ -565,9 +597,6 @@
 
 
 
-    .inserted_clint_flight_data_div h6 {
-        font-size: 2.2vw;
-    }
 
 
 
@@ -630,13 +659,15 @@
 
 
 
-    .inserted_clint_data_div h6 {
-        font-size: 4vw;
+
+
+
+
+    .clint_data_row_class p {
+        font-size: 3.5vw;
     }
 
-    .inserted_clint_data_div {
-        padding: 6px;
-    }
+
 
 
 
@@ -668,7 +699,6 @@
         width: 95%;
     }
 
-    .hotel_row_class h6,
     .hotel_row_class p {
         font-size: 3vw;
     }
@@ -676,6 +706,23 @@
     .hotel_row_class span {
         font-size: 2vw;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    .flight_row_class p {
+        font-size: 3vw;
+    }
+
+
 
 
 
@@ -701,9 +748,6 @@
 
 
 
-    .inserted_clint_flight_data_div h6 {
-        font-size: 3vw;
-    }
 
 
 
@@ -732,9 +776,6 @@
         width: 55vw;
     }
 
-    .inserted_clint_data_div h6 {
-        font-size: 4.5vw;
-    }
 
 
 
@@ -742,7 +783,7 @@
 
 
 
-    
+
 
 
 
