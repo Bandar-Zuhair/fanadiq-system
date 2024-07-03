@@ -1,14 +1,19 @@
 showPackageTypeSection = function (packageType) {
 
     if (packageType === 'hotel') {
-        create_new_flight_package_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'flex';
+        create_new_flight_package_section.style.display = 'none';
+        create_new_transportation_paln_section.style.display = 'none';
 
     } else if (packageType === 'flight') {
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'flex';
+        create_new_transportation_paln_section.style.display = 'none';
 
     } else {
+        create_new_hotel_package_section.style.display = 'none';
+        create_new_flight_package_section.style.display = 'none';
+        create_new_transportation_paln_section.style.display = 'flex';
 
     }
 }
@@ -55,15 +60,21 @@ function toggleDropdownContent(toggleButtonId, dropdownContentId) {
     });
 }
 
-// Initialize dropdown toggles for client, hotel, and package details
+// Prepare dropdown toggles for client, hotel, and package details
 toggleDropdownContent('toggle_hotel_clint_elements', 'hotel_dropdown_clint_content');
 toggleDropdownContent('toggle_hotel_elements', 'dropdown_hotel_content');
 toggleDropdownContent('toggle_package_elements', 'dropdown_package_content');
 
 
 
-
+// Prepare dropdown toggles for flight package details
 toggleDropdownContent('toggle_clint_flight_elements', 'flight_dropdown_content');
+
+
+
+// Prepare dropdown toggles for transportation plane details
+toggleDropdownContent('toggle_clint_transportation_plan_date_elements', 'transportation_plan_date_dropdown_content');
+toggleDropdownContent('toggle_clint_transportation_plan_details_elements', 'transportation_plan_details_dropdown_content');
 
 
 
@@ -82,7 +93,6 @@ toggleDropdownContent('toggle_clint_flight_elements', 'flight_dropdown_content')
 // Get elements
 let companyNameInput = document.getElementById('clint_company_name_input_id');
 let companyNamesDiv = document.getElementById('company_names_dropdown');
-let companyNameSearchBar = document.getElementById('company_name_search_bar');
 
 // Function to show the dropdown and overlay
 function showDropdown() {
@@ -98,56 +108,37 @@ function hideDropdown() {
     hideOverlay();
 }
 
-// Event listener to toggle dropdown visibility on input click
-companyNameInput.addEventListener('click', () => {
-    showDropdown();
-});
 
 // Event listener to expand dropdown on search bar click
-companyNameSearchBar.addEventListener('click', () => {
+/* companyNameSearchBar.addEventListener('click', () => {
     companyNamesDiv.style.height = '80vh'; // Set height to 90vh when search bar is clicked
     companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
-});
+}); */
 
 // Event listener to handle selection of company names
 companyNamesDiv.querySelectorAll('h3').forEach(option => {
     option.addEventListener('click', () => {
         companyNameInput.value = option.textContent;
         hideDropdown();
-        companyNamesDiv.style.height = 'auto'; // Reset height to auto when hiding dropdown
-        companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
     });
 });
 
-// Event listener to filter company names based on search bar input
-companyNameSearchBar.addEventListener('input', () => {
-    let filter = companyNameSearchBar.value.trim().toLowerCase();
-    let options = companyNamesDiv.querySelectorAll('h3');
-    let visibleCount = 0;
 
-    options.forEach(option => {
-        let companyName = option.textContent.trim().toLowerCase();
-        if (filter === '' && visibleCount < 6) {
-            option.style.display = 'block';
-            visibleCount++;
-        } else if (companyName.includes(filter)) {
-            option.style.display = 'block';
-        } else {
-            option.style.display = 'none';
+
+// Function to handle package type checkbox click (only one checkbox is allowed)
+function handleCheckboxClick(event) {
+    let checkboxes = document.querySelectorAll('input[name="package_type"]');
+    checkboxes.forEach((checkbox) => {
+        if (checkbox !== event.target) {
+            checkbox.checked = false;
         }
     });
-});
+}
 
-// Initial setup to show only the first 6 elements
-document.addEventListener('DOMContentLoaded', () => {
-    let options = companyNamesDiv.querySelectorAll('h3');
-    options.forEach((option, index) => {
-        if (index < 6) {
-            option.style.display = 'block';
-        } else {
-            option.style.display = 'none';
-        }
-    });
+// Add event listeners to each checkbox
+let checkboxes = document.querySelectorAll('input[name="package_type"]');
+checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', handleCheckboxClick);
 });
 
 
@@ -237,29 +228,11 @@ hotelAreaOptions.forEach(option => {
     });
 });
 
-// Toggle dropdown visibility on hotel location input click
-hotelLocationInput.addEventListener('click', (event) => {
-    if (!hotelLocationInput.disabled) { // Check if input is not disabled
-        event.stopPropagation(); // Prevent the click event from propagating to the document
-        hotelLocationDropdown.classList.toggle('show'); // Toggle visibility of dropdown
-        if (hotelLocationDropdown.classList.contains('show')) {
-            showOverlay(); // Show overlay if dropdown is visible
-        } else {
-            hideOverlay(); // Hide overlay if dropdown is not visible
-        }
-    }
-});
 
 // Toggle dropdown visibility on hotel area input click
 hotelAreaInput.addEventListener('click', (event) => {
     if (!hotelAreaInput.disabled) { // Check if input is not disabled
-        event.stopPropagation(); // Prevent the click event from propagating to the document
-        hotelAreaDropdown.classList.toggle('show'); // Toggle visibility of dropdown
-        if (hotelAreaDropdown.classList.contains('show')) {
-            showOverlay(); // Show overlay if dropdown is visible
-        } else {
-            hideOverlay(); // Hide overlay if dropdown is not visible
-        }
+        showOverlay('hotel_bali_area_dropdown');
     }
 });
 
@@ -272,62 +245,56 @@ function toggleHotelNameDropdown() {
     // Determine which dropdown to show based on location input or area input values
     switch (location) {
         case "جاكرتا":
-            dropdownToShow = document.getElementById('jakarta_hotel_dropdown');
+            dropdownToShow = 'jakarta_hotel_dropdown';
             break;
         case "باندونج":
-            dropdownToShow = document.getElementById('bandung_hotel_dropdown');
+            dropdownToShow = 'bandung_hotel_dropdown';
             break;
         case "لومبوك":
-            dropdownToShow = document.getElementById('lombok_hotel_dropdown');
+            dropdownToShow = 'lombok_hotel_dropdown';
             break;
         case "بونشاك":
-            dropdownToShow = document.getElementById('puncak_hotel_dropdown');
+            dropdownToShow = 'puncak_hotel_dropdown';
             break;
         case "بالي":
             switch (area) {
                 case "كيراماس":
-                    dropdownToShow = document.getElementById('keramas_hotel_dropdown');
+                    dropdownToShow = 'keramas_hotel_dropdown';
                     break;
                 case "اوبود":
-                    dropdownToShow = document.getElementById('ubud_hotel_dropdown');
+                    dropdownToShow = 'ubud_hotel_dropdown';
                     break;
                 case "نوسا دوا":
-                    dropdownToShow = document.getElementById('nusa_dua_hotel_dropdown');
+                    dropdownToShow = 'nusa_dua_hotel_dropdown';
                     break;
                 case "سيمنياك":
-                    dropdownToShow = document.getElementById('seminyak_hotel_dropdown');
+                    dropdownToShow = 'seminyak_hotel_dropdown';
                     break;
                 case "كوتا":
-                    dropdownToShow = document.getElementById('kuta_hotel_dropdown');
+                    dropdownToShow = 'kuta_hotel_dropdown';
                     break;
                 case "جيمباران":
-                    dropdownToShow = document.getElementById('jimbaran_hotel_dropdown');
+                    dropdownToShow = 'jimbaran_hotel_dropdown';
                     break;
                 case "اولواتو":
-                    dropdownToShow = document.getElementById('uluwatu_hotel_dropdown');
+                    dropdownToShow = 'uluwatu_hotel_dropdown';
                     break;
             }
             break;
     }
 
-    if (dropdownToShow) {
-        dropdownToShow.classList.toggle('show'); // Toggle visibility of the determined dropdown
-        if (dropdownToShow.classList.contains('show')) {
-            showOverlay(); // Show overlay if dropdown is visible
-        } else {
-            hideOverlay(); // Hide overlay if dropdown is not visible
-        }
+    /* Pass the 'dropdownToShow' value to the 'showOverlay' function */
+    showOverlay(dropdownToShow);
 
-        // Add event listeners for each hotel name option in the dropdown
-        let hotelNameOptions = dropdownToShow.querySelectorAll('h3');
-        hotelNameOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                hotelNameInput.value = option.textContent; // Set input value to selected option
-                dropdownToShow.classList.remove('show'); // Hide dropdown after selection
-                hideOverlay(); // Hide overlay after selection
-            });
+
+    // Add event listeners for each hotel name option in the dropdown
+    let dropdownHotelOptions = document.getElementById(`${dropdownToShow}`).querySelectorAll('h3');
+    dropdownHotelOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            hotelNameInput.value = option.textContent; // Set input value to selected option
+            hideOverlay(); // Hide overlay after selection
         });
-    }
+    });
 }
 
 // Add an event listener to toggle the correct hotel name dropdown on click
@@ -338,15 +305,171 @@ hotelNameInput.addEventListener('click', (event) => {
     }
 });
 
-// Prevent clicks inside any hotel dropdown from hiding the overlay
-document.querySelectorAll('.hotel_data_options_dropdown_class').forEach(dropdown => {
-    dropdown.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events inside the dropdown
+
+
+// Function to filter options based on search bar input
+function filterOptions(inputId, dropdownId) {
+    let searchBar = document.getElementById(inputId);
+    let filter = searchBar.value.trim().toLowerCase();
+    let options = document.getElementById(dropdownId).querySelectorAll('h3');
+
+    options.forEach(option => {
+        let optionText = option.textContent.trim().toLowerCase();
+        if (optionText.includes(filter)) {
+            option.style.display = 'block';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+
+
+}
+
+
+// Select all elements with the class 'search_bar_input_class'
+let searchBarInputElements = document.querySelectorAll('.search_bar_input_class');
+
+// Add event listeners to each search bar input element
+searchBarInputElements.forEach(input => {
+
+    // Add a click event listener to the input element
+    input.addEventListener('click', () => {
+        console.log('Good'); // Log 'Good' to the console when input is clicked
+
+        // Find the closest parent element with the class 'dropdown_div_class'
+        let dropdownDiv = input.closest('.dropdown_div_class'); 
+
+        // Set a smooth transition for the height property
+        dropdownDiv.style.transition = 'height 0.2s ease-in-out'; 
+
+        // Set the height of the dropdown div to 80vh when the search bar is clicked
+        dropdownDiv.style.height = '80vh'; 
+    });
+
+    // Add an input event listener to the input element
+    input.addEventListener('input', () => {
+        // Get the trimmed and lowercased value of the input element
+        let filter = input.value.trim().toLowerCase(); 
+
+        // Find the closest parent element with the class 'dropdown_div_class'
+        let dropdownDiv = input.closest('.dropdown_div_class'); 
+
+        // Select all <h3> elements within the same dropdown div
+        let options = dropdownDiv.querySelectorAll('h3'); 
+
+        // Initialize a counter for the number of visible options
+        let visibleCount = 0;
+
+        // Loop through each option in the dropdown
+        options.forEach(option => {
+            // Get the trimmed and lowercased text content of the option
+            let optionText = option.textContent.trim().toLowerCase(); 
+
+            // If the filter is empty and less than 6 options are visible, show the option
+            if (filter === '' && visibleCount < 6) {
+                option.style.display = 'block'; // Display the option
+                visibleCount++; // Increment the visible options count
+            } 
+            // If the option text includes the filter, show the option
+            else if (optionText.includes(filter)) {
+                option.style.display = 'block'; // Display the option
+            } 
+            // Otherwise, hide the option
+            else {
+                option.style.display = 'none'; // Hide the option
+            }
+        });
     });
 });
 
+
+
+
+// Event listeners for filtering h3 elements based on letteres inserted in the search bar input
+/* (Input id name & the same input dropdown div id name ) */
+document.getElementById('company_names_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('company_names_search_bar_input_id', 'company_names_dropdown');
+    console.log('Correct')
+});
+
+document.getElementById('hotel_location_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('hotel_location_search_bar_input_id', 'hotel_location_dropdown');
+    console.log('Correct')
+});
+
+document.getElementById('hotel_bali_area_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('hotel_bali_area_search_bar_input_id', 'hotel_bali_area_dropdown');
+});
+
+document.getElementById('keramas_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('keramas_hotel_search_bar_input_id', 'keramas_hotel_dropdown');
+});
+
+document.getElementById('ubud_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('ubud_hotel_search_bar_input_id', 'ubud_hotel_dropdown');
+});
+
+// Event listeners for search bar inputs
+document.getElementById('nusa_dua_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('nusa_dua_hotel_search_bar_input_id', 'nusa_dua_hotel_dropdown');
+});
+
+document.getElementById('seminyak_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('seminyak_hotel_search_bar_input_id', 'seminyak_hotel_dropdown');
+});
+
+// Event listeners for search bar inputs
+document.getElementById('kuta_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('kuta_hotel_search_bar_input_id', 'kuta_hotel_dropdown');
+});
+
+document.getElementById('jimbaran_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('jimbaran_hotel_search_bar_input_id', 'jimbaran_hotel_dropdown');
+});
+
+document.getElementById('uluwatu_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('uluwatu_hotel_search_bar_input_id', 'uluwatu_hotel_dropdown');
+});
+
+document.getElementById('jakarta_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('jakarta_hotel_search_bar_input_id', 'jakarta_hotel_dropdown');
+});
+
+document.getElementById('puncak_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('puncak_hotel_search_bar_input_id', 'puncak_hotel_dropdown');
+});
+
+document.getElementById('bandung_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('bandung_hotel_search_bar_input_id', 'bandung_hotel_dropdown');
+});
+
+document.getElementById('lombok_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('lombok_hotel_search_bar_input_id', 'lombok_hotel_dropdown');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Function to show the overlay
-function showOverlay() {
+function showOverlay(clickedInputDropdownIdName) {
+
+    let clickedInputDropdown = document.getElementById(clickedInputDropdownIdName);
+
+
+    clickedInputDropdown.classList.add('show');
+    clickedInputDropdown.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
+
+
     overlayLayer = document.createElement('div'); // Create a new overlay element
     overlayLayer.className = 'black_overlay'; // Set the class name for styling
     overlayLayer.onclick = hideOverlay; // Set the click event listener to hide the overlay when clicked outside
@@ -361,24 +484,21 @@ function showOverlay() {
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
 
-    // Check if any dropdown with the class name 'hotel_data_options_dropdown_class'is visible and hide it
-    let visibleDropdown_1 = document.querySelector('.hotel_data_options_dropdown_class.show');
+    // Check if any dropdown with the class name 'company_names_dropdown_class' is visible and hide it
+    let visibleDropdown_1 = document.querySelector('.dropdown_div_class.show');
     if (visibleDropdown_1) {
         visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
-    }
-
-    // Check if any dropdown with the class name 'company_names_dropdown_class' is visible and hide it
-    let visibleDropdown_2 = document.querySelector('.company_names_dropdown_class.show');
-    if (visibleDropdown_2) {
-        visibleDropdown_2.classList.remove('show'); // Remove 'show' class to hide dropdown
         companyNamesDiv.style.height = '50vh'; // Set height to 90vh when search bar is clicked
     }
 
-    // Check if any dropdown with the class name 'person_amount_dropdown_class' is visible and hide it
-    let visibleDropdown_3 = document.querySelector('.person_amount_dropdown_class.show');
-    if (visibleDropdown_3) {
-        visibleDropdown_3.classList.remove('show'); // Remove 'show' class to hide dropdown
-    }
+
+    // Reset all dropdown_div_class elements back to their default styling
+    let dropdownDivElements = document.querySelectorAll('.dropdown_div_class');
+    dropdownDivElements.forEach(dropdown => {
+        dropdown.style.height = ''; // Reset height to default
+        dropdown.style.transition = ''; // Reset transition to default
+    });
+
 
     // Hide the overlay if it exists
     if (overlayLayer) {
@@ -435,182 +555,38 @@ checkInputClickability();
 
 
 
-/* Function For Counting Hotel People Amount */
-// Variables for person amount input and dropdown
-let hotelPersonAmountInput = document.getElementById('hotel_person_amount_input_id');
-let hotelPersonAmountDropdown = document.getElementById('hotel_person_amount_dropdown');
-let hotelPersonAmountSubmitButton = document.getElementById('hotel_person_amount_submit_button');
-let hotelChildAgeInputsContainer = document.getElementById('hotel_child_age_inputs_container');
-
-// Variable to store the last saved counter values and child ages
-let lastSavedHotelCounters = {
-    adult: 1,
-    child: 0
-};
-let lastSavedHotelChildAges = [];
-
-// Function to add a new child age input
-function addHotelChildAgeInput(value = '', index) {
-    let inputCount = hotelChildAgeInputsContainer.children.length + 1;
-    let input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'child_age_input';
-    input.placeholder = `عمر الطفل ${index || inputCount}`;
-    input.value = value;
-    input.required = true;
-    input.addEventListener('input', checkEmptyHotelChildAgeInputs); // Add event listener to check for empty inputs
-
-    /* Append the child age input to the 'hotel_child_age_inputs_container' div */
-    hotelChildAgeInputsContainer.appendChild(input);
-    checkEmptyHotelChildAgeInputs(); // Check inputs after adding a new one
-}
-
-// Function to remove the last child age input
-function removeHotelChildAgeInput() {
-    let inputs = hotelChildAgeInputsContainer.querySelectorAll('.child_age_input');
-    if (inputs.length > 0) {
-        hotelChildAgeInputsContainer.removeChild(inputs[inputs.length - 1]);
-    }
-    checkEmptyHotelChildAgeInputs(); // Check inputs after removing one
-}
-
-// Function to update the counter display
-function updateHotelCounterDisplay(counterDiv, value) {
-    counterDiv.querySelector('.hotel_count').textContent = value; // Update counter display with value
-}
-
-// Function to save the current counter values inside the 'hotel_person_amount_input_id' input
-function saveHotelCounterValues() {
-    let counters = document.querySelectorAll('.hotel_counter_div');
-    lastSavedHotelCounters.adult = parseInt(counters[0].querySelector('.hotel_count').textContent, 10); // Save adult count
-    lastSavedHotelCounters.child = parseInt(counters[1].querySelector('.hotel_count').textContent, 10); // Save child count
-
-    // Save child ages
-    lastSavedHotelChildAges = [];
-    document.querySelectorAll('.child_age_input').forEach((input, index) => {
-        lastSavedHotelChildAges[index] = input.value;
-    });
-
-    // Update the input field with the saved values
-    if (lastSavedHotelCounters.child === 0) {
-        hotelPersonAmountInput.value = `${lastSavedHotelCounters.adult} بالغ`;
-    } else {
-        hotelPersonAmountInput.value = `${lastSavedHotelCounters.adult} بالغ + ${lastSavedHotelCounters.child} طفل`;
-    }
-}
-
-// Function to reset the counter values to the last saved values
-function resetHotelCounterValues() {
-    let counters = document.querySelectorAll('.hotel_counter_div');
-    updateHotelCounterDisplay(counters[0], lastSavedHotelCounters.adult); // Reset adult counter display
-    updateHotelCounterDisplay(counters[1], lastSavedHotelCounters.child); // Reset child counter display
-
-    // Reset child age inputs
-    hotelChildAgeInputsContainer.innerHTML = ''; // Clear all current inputs
-    for (let i = 0; i < lastSavedHotelCounters.child; i++) {
-        addHotelChildAgeInput(lastSavedHotelChildAges[i] || '', i + 1);
-    }
-}
-
-// Function to check if any child age input is empty
-function checkEmptyHotelChildAgeInputs() {
-    let inputs = document.querySelectorAll('.child_age_input');
-    let hasEmpty = Array.from(inputs).some(input => input.value.trim() === '');
-    if (hasEmpty) {
-        hotelPersonAmountSubmitButton.classList.add('hidden'); // Hide the submit button if there are empty inputs
-    } else {
-        hotelPersonAmountSubmitButton.classList.remove('hidden'); // Show the submit button if all inputs are filled
-    }
-}
 
 
 
 
-
-// Toggle dropdown visibility on person amount input click
-hotelPersonAmountInput.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent the click event from propagating to the document
-    hotelPersonAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
-    if (hotelPersonAmountDropdown.classList.contains('show')) {
-        showOverlay(); // Show overlay if dropdown is visible
-        resetHotelCounterValues(); // Reset values to the last saved state
-    } else {
-        hideOverlay(); // Hide overlay if dropdown is not visible
-    }
-});
-
-// Prevent clicks inside the person amount dropdown from hiding the overlay
-hotelPersonAmountDropdown.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent propagation of click events inside the dropdown
-});
-
-// Add event listener for buttons inside the person amount dropdown
-hotelPersonAmountDropdown.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        // Do not hide dropdown and overlay on button click
-    });
-});
-
-// Add event listener to the submit button to save counter values and hide dropdown and overlay
-hotelPersonAmountSubmitButton.addEventListener('click', () => {
-    saveHotelCounterValues(); // Save current counter values
-    hotelPersonAmountDropdown.classList.remove('show'); // Hide dropdown
-    hideOverlay(); // Hide overlay
-});
-
-
-
-
-// Get all counter controls
-let hotelCounterControls = document.querySelectorAll('.hotel_counter_controls');
-
-// Function to update the count display and apply minimum constraints
-function updateHotelCount(countDisplay, count, minCount) {
-    countDisplay.textContent = count < minCount ? minCount : count; // Update count with minimum constraint
-}
-
-// Add event listeners to each counter controls
-hotelCounterControls.forEach((counter, index) => {
-    let minusBtn = counter.querySelector('.minus');
-    let plusBtn = counter.querySelector('.plus');
-    let countDisplay = counter.querySelector('.hotel_count');
-
-    // Set the first value (number) based on minimum constraint
-    let minCount = (index === 0) ? 1 : 0; // "بالغ" should have a minimum of 1
-
-    // Event listener for minus button
-    minusBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        let count = parseInt(countDisplay.textContent, 10);
-        if (count > minCount) {
-            count--; // Decrease count if greater than minimum
-            updateHotelCount(countDisplay, count, minCount); // Update count display
-            if (index === 1) { // If it's the "طفل" counter
-                removeHotelChildAgeInput(); // Remove a child age input
-            }
+/* Function to pick the dates */
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Pikaday for the first day input
+    var firstDayPicker = new Pikaday({
+        field: document.getElementById('transportation_plan_first_day_date_input_id'),
+        format: 'YYYY-MM-DD', // Adjust the format as needed
+        onSelect: function(date) {
+            // Do something when the date is selected
+            console.log('Selected date: ' + date.toISOString().substring(0, 10));
         }
     });
 
-    // Event listener for plus button
-    plusBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        let count = parseInt(countDisplay.textContent, 10);
-        count++; // Increase count
-        updateHotelCount(countDisplay, count, minCount); // Update count display
-        if (index === 1) { // If it's the "طفل" counter
-            addHotelChildAgeInput('', count); // Add a child age input
+    // Initialize Pikaday for the last day input
+    var lastDayPicker = new Pikaday({
+        field: document.getElementById('transportation_plan_last_day_date_input_id'),
+        format: 'YYYY-MM-DD', // Adjust the format as needed
+        onSelect: function(date) {
+            // Do something when the date is selected
+            console.log('Selected date: ' + date.toISOString().substring(0, 10));
         }
-    });
-
-    // Prevent propagation of click events inside the counter div
-    counter.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
     });
 });
 
-// Set the first counter values
-resetHotelCounterValues(); // Prepare counters with last saved values
+
+
+
+
+
 
 
 
@@ -747,128 +723,6 @@ function toggleFullscreen(textAreaId) {
 
 
 
-
-/* Function For Counting Flight People Amount */
-// Variables for person amount input and dropdown
-let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id');
-let flightPersonAmountDropdown = document.getElementById('flight_person_amount_dropdown');
-let flightPersonAmountSubmitButton = document.getElementById('flight_person_amount_submit_button');
-
-// Variable to store the last saved counter values
-let lastSavedFlightCounters = {
-    adult: 1,
-    infat: 0
-};
-
-
-// Function to update the counter display
-function updateFlightCounterDisplay(counterDiv, value) {
-    counterDiv.querySelector('.flight_count').textContent = value; // Update counter display with value
-}
-
-// Function to save the current counter values inside the 'hotel_person_amount_input_id' input
-function saveFlightCounterValues() {
-    let counters = document.querySelectorAll('.flight_counter_div');
-    lastSavedFlightCounters.adult = parseInt(counters[0].querySelector('.flight_count').textContent, 10); // Save adult count
-    lastSavedFlightCounters.infat = parseInt(counters[1].querySelector('.flight_count').textContent, 10); // Save infat count
-
-
-    // Update the input field with the saved values
-    if (lastSavedFlightCounters.infat === 0) {
-        flightPersonAmountInput.value = `${lastSavedFlightCounters.adult} بالغ`;
-    } else {
-        flightPersonAmountInput.value = `${lastSavedFlightCounters.adult} بالغ + ${lastSavedFlightCounters.infat} رضيع`;
-    }
-}
-
-// Function to reset the counter values to the last saved values
-function resetFlightCounterValues() {
-    let counters = document.querySelectorAll('.flight_counter_div');
-    updateFlightCounterDisplay(counters[0], lastSavedFlightCounters.adult); // Reset adult counter display
-    updateFlightCounterDisplay(counters[1], lastSavedFlightCounters.infat); // Reset infat counter display
-}
-
-
-
-
-// Toggle dropdown visibility on person amount input click
-flightPersonAmountInput.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent the click event from propagating to the document
-    flightPersonAmountDropdown.classList.toggle('show'); // Toggle visibility of dropdown
-    if (flightPersonAmountDropdown.classList.contains('show')) {
-        showOverlay(); // Show overlay if dropdown is visible
-        resetFlightCounterValues(); // Reset values to the last saved state
-    } else {
-        hideOverlay(); // Hide overlay if dropdown is not visible
-    }
-});
-
-// Prevent clicks inside the person amount dropdown from hiding the overlay
-flightPersonAmountDropdown.addEventListener('click', (event) => {
-    event.stopPropagation(); // Prevent propagation of click events inside the dropdown
-});
-
-// Add event listener for buttons inside the person amount dropdown
-flightPersonAmountDropdown.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        // Do not hide dropdown and overlay on button click
-    });
-});
-
-// Add event listener to the submit button to save counter values and hide dropdown and overlay
-flightPersonAmountSubmitButton.addEventListener('click', () => {
-    saveFlightCounterValues(); // Save current counter values
-    flightPersonAmountDropdown.classList.remove('show'); // Hide dropdown
-    hideOverlay(); // Hide overlay
-});
-
-
-
-
-// Get all counter controls
-let flightCounterControls = document.querySelectorAll('.flight_counter_controls');
-
-// Function to update the count display and apply minimum constraints
-function updateFlightCount(countDisplay, count, minCount) {
-    countDisplay.textContent = count < minCount ? minCount : count; // Update count with minimum constraint
-}
-
-// Add event listeners to each counter controls
-flightCounterControls.forEach((counter, index) => {
-    let minusBtn = counter.querySelector('.minus');
-    let plusBtn = counter.querySelector('.plus');
-    let countDisplay = counter.querySelector('.flight_count');
-
-    // Set the first value (number) based on minimum constraint
-    let minCount = (index === 0) ? 1 : 0; // "بالغ" should have a minimum of 1
-
-    // Event listener for minus button
-    minusBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        let count = parseInt(countDisplay.textContent, 10);
-        if (count > minCount) {
-            count--; // Decrease count if greater than minimum
-            updateFlightCount(countDisplay, count, minCount); // Update count display
-        }
-    });
-
-    // Event listener for plus button
-    plusBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-        let count = parseInt(countDisplay.textContent, 10);
-        count++; // Increase count
-        updateFlightCount(countDisplay, count, minCount); // Update count display
-    });
-
-    // Prevent propagation of click events inside the counter div
-    counter.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent propagation of click events
-    });
-});
-
-// Set the first counter values
-resetFlightCounterValues(); // Prepare counters with last saved values
 
 
 
