@@ -560,7 +560,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let packageTotalPriceReayText = document.getElementById('package_totla_price_input_id').value;
 
         // If Not All Inputs Are Valid, Show The Error Message
-        if (packageDetailsTextArea.value === '' || packageTotalPriceInput.value === '') {
+        if (packageDetailsReayText === '' || packageTotalPriceReayText === '') {
             package_inputs_submit_button.style.backgroundColor = 'red';
 
             // Hide ensure text after 2 seconds
@@ -609,7 +609,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
 
             /* Show up the 'inserted_package_data_section_page_2' section */
-            document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
+            document.getElementById('inserted_package_data_section_page_5').style.display = 'block';
         }
 
 
@@ -920,6 +920,32 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
     } else if (clickedButtonId === 'clint_movements_inputs_submit_button') {
+        // Get references to all input elements for later use
+        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
+        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id').value;
+        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
+        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
+        let flightDateInput = document.getElementById('flight_date_input_id').value;
+        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
+        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+
+
+
+
+
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (flightAirLineInput === '' || flightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '' || flightFlyAwayTimeInput === '' || flightArrivalTimeInput === '') {
+            clint_flight_inputs_submit_button.style.backgroundColor = 'red';
+
+            // Hide ensure text after 2 seconds
+            setTimeout(() => {
+                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
+            }, 500);
+
+
+        }else{
+            
+        }
 
     }
 }
