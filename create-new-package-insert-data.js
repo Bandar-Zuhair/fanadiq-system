@@ -237,7 +237,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
                 <div><p>${hotelNameReadyText}</p></div>
-                <div><p>${hotelCheckInReadyText}</p><br><p style="color: red">${hotelCheckOutReadyText}</p></div>
+                <div><p>من ${hotelCheckInReadyText}</p><p style="color: red">الى ${hotelCheckOutReadyText}</p></div>
                 <div><p>${totalNightsReadyText}</p></div>
                 <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
                 <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
@@ -674,7 +674,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><p>${flightToCityInput}</p></div>
                 <div><p>${flightDateInput}</p></div>
                 <div><p>${flightFlyAwayTimeInput}</p></div>
-                <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer; user-select: none"><p class="flight_row_air_line_controller" style="cursor: pointer; user-select: none">${flightArrivalTimeInput}</p></div>
+                <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller" style="cursor: pointer;">${flightArrivalTimeInput}</p></div>
             `;
 
 
