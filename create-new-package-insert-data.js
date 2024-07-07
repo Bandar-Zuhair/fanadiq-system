@@ -1,7 +1,7 @@
 /* Variable to save a number for counting functionality (Ex: hotel row table unique id..?) */
 let insertedHotelDataDivUniqueId = 1;
 let insertedFlightDataDivUniqueId = 1;
-
+let insertedClintMovementsRowDivUniqueId = 1;
 
 
 /* Function for checking if ready or no to insert the data */
@@ -10,8 +10,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-    // Check if the clicked button is the 'clint_inputs_submit_button'
-    if (clickedButtonId === 'clint_inputs_submit_button') {
+    // Check if the clicked button is the 'clint_inputs_submit_icon'
+    if (clickedButtonId === 'clint_inputs_submit_icon') {
 
 
         // Get references to all input elements for later use
@@ -25,73 +25,74 @@ checkInputsToInsertData = function (clickedButtonId) {
         let familyCheckbox = document.getElementById('family_checkbox');
 
         // Check if any of the input values are empty
-        if (personAmountInput.value === '' || packageStartDateInput.value === '' || packageEndDateInput.value === '' || packageTotalNightsInput.value === '' || clintCompanyNameInput.value === '') {
-            // Change the button color to red to indicate error
-            clint_inputs_submit_button.style.backgroundColor = 'red';
-            // Reset the button color after 1 second
+        if (personAmountInput === '' || packageStartDateInput === '' || packageEndDateInput === '' || packageTotalNightsInput === '') {
+            // Change the submit icon color to red to indicate error
+            clint_inputs_submit_icon.style.backgroundColor = 'red';
+            // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_inputs_submit_button.style.backgroundColor = 'white';
+                clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
         } else {
-            // Change the button color to green to indicate success
-            clint_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Reset the button color after 1 second
+            // Change the submit icon color to green to indicate success
+            clint_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+            // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_inputs_submit_button.style.backgroundColor = 'white';
+                clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
 
 
 
-            // Create a new image element for the company logo
-            let insertedCompanyNameLogoImage = document.createElement('img');
-            // Replace spaces with dashes in the company name
-            let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, '-');
-            insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
-            insertedCompanyNameLogoImage.classList.add('inserted_company_name_logo');
-            insertedCompanyNameLogoImage.onclick = function () {
-                event.preventDefault(); // Prevent the default behavior of the click event
-                event.stopPropagation(); // Stop the event from propagating further
+            if (clintCompanyNameInput !== '') {
+                // Create a new image element for the company logo
+                let insertedCompanyNameLogoImage = document.createElement('img');
+                // Replace spaces with dashes in the company name
+                let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, '-');
+                insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
+                insertedCompanyNameLogoImage.classList.add('inserted_company_name_logo');
+                insertedCompanyNameLogoImage.onclick = function () {
+                    event.preventDefault(); // Prevent the default behavior of the click event
+                    event.stopPropagation(); // Stop the event from propagating further
 
 
-                // Create overlay layer
-                let overlayLayer = document.createElement('div');
-                overlayLayer.className = 'black_overlay';
-                overlayLayer.id = 'black_overlay_id';
-                document.body.appendChild(overlayLayer);
+                    // Create overlay layer
+                    let overlayLayer = document.createElement('div');
+                    overlayLayer.className = 'black_overlay';
+                    overlayLayer.id = 'black_overlay_id';
+                    document.body.appendChild(overlayLayer);
 
-                // Show overlay layer with smooth opacity transition
-                setTimeout(() => {
-                    overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                }, 100);
-
-                // Slide in delete box options div
-                let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
-
-                // Smoothly slide to the middle of the screen
-                setTimeout(() => {
-                    deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                }, 50); // Adjust timing as needed
-
-                // Event listener to close overlay and delete box div on click outside
-                overlayLayer.onclick = () => {
-                    // Hide delete box options div
-                    deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
-
-                    // Hide overlay layer with opacity transition
-                    overlayLayer.style.opacity = '0';
-
-                    // Remove overlay and delete box div from DOM after transition
+                    // Show overlay layer with smooth opacity transition
                     setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
+                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+                    }, 100);
+
+                    // Slide in delete box options div
+                    let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
+
+                    // Smoothly slide to the middle of the screen
+                    setTimeout(() => {
+                        deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                    }, 50); // Adjust timing as needed
+
+                    // Event listener to close overlay and delete box div on click outside
+                    overlayLayer.onclick = () => {
+                        // Hide delete box options div
+                        deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
+
+                        // Hide overlay layer with opacity transition
+                        overlayLayer.style.opacity = '0';
+
+                        // Remove overlay and delete box div from DOM after transition
+                        setTimeout(() => {
+                            document.body.removeChild(overlayLayer);
+                        }, 300); // Match transition duration in CSS
+                    };
                 };
-            };
 
-            // Clear previous company logo and insert the new logo div
-            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-            document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
-
+                // Clear previous company logo and insert the new logo div
+                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+                document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
+            }
 
 
 
@@ -128,7 +129,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             let clintPackageTypeH6 = document.getElementById('clint_package_type_h6');
 
-            /* If شهر عشل checkbox is checked then iclude the text in the content */
+            /* Ckeck which checkbox is checkced then iclude the text in the content */
             if (honeymoonCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج شهر عسل 💝';
 
@@ -185,8 +186,332 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         /* Check if all hotel data inputs are filled */
-    } else if (clickedButtonId === 'hotel_inputs_submit_button') {
+    } else if (clickedButtonId === 'clint_flight_inputs_submit_icon') {
 
+        // Get references to all input elements for later use
+        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
+        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id').value;
+        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
+        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
+        let flightDateInput = document.getElementById('flight_date_input_id').value;
+        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
+        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+
+
+
+
+
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (flightAirLineInput === '' || flightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '' || flightFlyAwayTimeInput === '' || flightArrivalTimeInput === '') {
+
+            /* Chnage the sumbit icon background color */
+            clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            }, 500);
+
+
+        } else {
+
+            /* in case if the two city inputs were the same then dont continue the process */
+            if (flightFromCityInput === flightToCityInput) {
+                /* Chnage the sumbit icon background color */
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
+
+                // Set the background color of the submit icon back to default color
+                setTimeout(() => {
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                }, 500);
+
+            } else {
+                /* Change the 'تم' button color */
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+                // Set the background color of the submit icon back to default color
+                setTimeout(() => {
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                }, 2000);
+
+
+
+
+
+
+
+
+                // Create the HTML content for a new hotel row
+                let flightRowTableDivContent = `
+                    <div><p>${flightAirLineInput}</p></div>
+                    <div><p>${flightPersonAmountInput}</p></div>
+                    <div><p>20 كيلو لكل شخص</p></div>
+                    <div><p>${flightFromCityInput}</p></div>
+                    <div><p>${flightToCityInput}</p></div>
+                    <div><p>${flightDateInput}</p></div>
+                    <div><p>${flightFlyAwayTimeInput}</p></div>
+                    <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller" style="cursor: pointer;">${flightArrivalTimeInput}</p></div>
+                `;
+
+
+
+
+
+
+
+                // Create a new div element to hold the flight row
+                let flightRowTableDiv = document.createElement('div');
+                flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`; // Set a unique ID for the hotel row div
+                flightRowTableDiv.classList.add('flight_row_class'); // Add a class to the div for styling
+                insertedFlightDataDivUniqueId++;
+
+
+
+
+                // Insert the HTML content into the newly created div
+                flightRowTableDiv.innerHTML = flightRowTableDivContent;
+
+
+
+                // Get the dynamically created 'flightRowAirLineController' element
+                let flightRowAirLineController = flightRowTableDiv.querySelector('.flight_row_air_line_controller');
+
+
+
+                // Show and append the new flight data div
+                document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+                document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
+
+
+                /* Show the download button */
+                document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+
+                // Get references to all input elements and reset their values thier
+                document.getElementById('flight_air_line_input_id').value = '';
+                document.getElementById('flight_person_amount_input_id').value = '';
+                document.getElementById('flight_from_city_input_id').value = '';
+                document.getElementById('flight_to_city_input_id').value = '';
+                document.getElementById('flight_date_input_id').value = '';
+                document.getElementById('flight_fly_away_time_input_id').value = '';
+                document.getElementById('flight_arrival_time_input_id').value = '';
+
+
+
+
+
+                // Define a global variable to store the reference
+                let currentFlightDataDivId;
+
+                // Function to handle delete clicked hotel data
+                deleteClickedFlightData = function (clickedFlightDataDivId) {
+
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
+
+                    if (clickedFlightDataElement) {
+                        clickedFlightDataElement.remove();
+                    }
+
+                    // Hide edit/delete options div
+                    let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+                    deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = '0';
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Check if there are any remaining inserted flight data div (Searching by the second image class name)
+                    let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
+                    if (remainingFlightDataDivs.length === 0) {
+                        // Hide section with id 'inserted_package_data_section_page_2'
+                        document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+
+                        // Hide the download button if there are no other important data sections visible
+                        if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' && document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                            document.getElementById('export_package_pdf_div_id').style.display = 'none';
+                        }
+                    }
+                }
+
+
+
+                // Initialize drag-and-drop functionality for the newly added flight row
+                initializeDragAndDrop();
+
+                // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+                function initializeDragAndDrop() {
+
+                    // Function to show edit or delete the inserted flight data
+                    flightRowAirLineController.onclick = (event) => {
+                        let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+                        let clickedFlightDataDiv = event.target.closest('.flight_row_class');
+
+
+                        runDeleteClickedFlightDataFunction = function () {
+                            deleteClickedFlightData(currentFlightDataDivId);
+                        }
+
+
+                        if (clickedFlightDataDiv) {
+                            currentFlightDataDivId = clickedFlightDataDiv.id;
+
+                            let overlayLayer = document.createElement('div');
+                            overlayLayer.classList.add('black_overlay');
+                            document.body.appendChild(overlayLayer);
+
+                            setTimeout(() => {
+                                overlayLayer.style.opacity = '1';
+                                deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
+                            }, 50);
+
+                            overlayLayer.onclick = () => {
+                                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+                                overlayLayer.style.opacity = '0';
+                                setTimeout(() => {
+                                    document.body.removeChild(overlayLayer);
+                                }, 300);
+                            };
+
+                            overlayLayer.addEventListener('click', (event) => {
+                                event.stopPropagation();
+                            });
+                        }
+                    };
+
+
+
+                    // Common function to handle dragging logic
+                    function handleDrag(event, touch = false) {
+                        if (event.target.classList.contains('flight_row_air_line_controller')) {
+                            event.preventDefault();
+                            let draggingElement = event.target.closest('.flight_row_class');
+                            draggingElement.classList.add('dragging');
+                            draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
+                            document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                            document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
+
+                            // Disable scrolling
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+
+                    // Event listener for the drop zone
+                    let flightDropZone = document.getElementById('inserted_flight_data_position_div');
+
+                    // Function to handle mouse down event
+                    function mouseDown(event) {
+                        handleDrag(event, false);
+                    }
+
+                    // Function to handle touch start event
+                    function touchStart(event) {
+                        handleDrag(event, true);
+                    }
+
+                    // Function to handle move event
+                    function move(event, touch = false) {
+                        let draggingElement = document.querySelector('.dragging');
+                        let startY = parseInt(draggingElement.dataset.startY || 0);
+                        let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
+                        draggingElement.style.transform = `translateY(${deltaY}px)`;
+
+                        let dropElements = Array.from(flightDropZone.children);
+                        let currentIndex = dropElements.indexOf(draggingElement);
+
+                        let targetIndex = currentIndex;
+                        for (let i = 0; i < dropElements.length; i++) {
+                            let element = dropElements[i];
+                            let rect = element.getBoundingClientRect();
+                            if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
+                                if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
+                                    targetIndex = i + 1;
+                                } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
+                                    targetIndex = i;
+                                }
+                                break;
+                            }
+                        }
+
+                        if (targetIndex !== currentIndex) {
+                            flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                        }
+                    }
+
+                    // Function to handle mouse move event
+                    function mouseMove(event) {
+                        move(event, false);
+                    }
+
+                    // Function to handle touch move event
+                    function touchMove(event) {
+                        move(event, true);
+                    }
+
+                    // Function to handle end event
+                    function end(event, touch = false) {
+                        let draggingElement = document.querySelector('.dragging');
+
+                        if (draggingElement) {
+                            draggingElement.classList.remove('dragging');
+                            draggingElement.style.transform = '';
+                            draggingElement.removeAttribute('data-start-y');
+
+                            draggingElement.classList.add('drop-transition');
+                            setTimeout(() => {
+                                draggingElement.classList.remove('drop-transition');
+                            }, 300);
+                        }
+
+                        document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                        document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
+
+                        document.body.style.overflow = '';
+                    }
+
+                    // Function to handle mouse up event
+                    function mouseUp(event) {
+                        end(event, false);
+                    }
+
+                    // Function to handle touch end event
+                    function touchEnd(event) {
+                        end(event, true);
+                    }
+
+                    // Add event listeners for each insertedFlightDataDiv element
+                    let insertedFlightDataDivs = document.querySelectorAll('.flight_row_class');
+
+                    insertedFlightDataDivs.forEach((div) => {
+                        div.addEventListener('mousedown', mouseDown);
+                        div.addEventListener('touchstart', touchStart);
+                    });
+                }
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Check if all package data inputs are filled */
+    } else if (clickedButtonId === 'hotel_inputs_submit_icon') {
         // Get references to all input elements for later use
         let hotelLocationReadyText = document.getElementById('hotel_location_input_id').value;
         let hotelAreaReadyText = document.getElementById('hotel_area_input_id').value;
@@ -204,19 +529,20 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || totalNightsReadyText === '' || roomDescriptionInput === '') {
 
-            hotel_inputs_submit_button.style.backgroundColor = 'red';
+            // Change the sumbit icon background color
+            hotel_inputs_submit_icon.style.backgroundColor = 'red';
 
-            // Hide ensure text after 2 seconds
+            // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_button.style.backgroundColor = 'white';
+                hotel_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
         } else {
-            // Change the button color to green to indicate success
-            hotel_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Reset the button color after 1 second
+            // Change the sumbit icon background color
+            hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+            // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_button.style.backgroundColor = 'white';
+                hotel_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
 
@@ -241,7 +567,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><p>${totalNightsReadyText}</p></div>
                 <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
                 <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
-                <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row"></div>
+                <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style"cursor: pointer"></div>
             `;
 
 
@@ -264,8 +590,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
 
 
-            /* Show up the 'inserted_package_data_section_page_1' section */
-            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_page_3' section */
+            document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
 
             /* Show the download button */
             document.getElementById('export_package_pdf_div_id').style.display = 'block';
@@ -307,7 +633,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     clickedHotelCardElement.remove();
                 }
 
-                // Hide edit/delete options div
+                // Hide delete button div
                 let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
                 deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
 
@@ -322,11 +648,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
-                    // Hide section with id 'inserted_package_data_section_page_2'
-                    document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+                    // Hide section with id 'inserted_package_data_section_page_3'
+                    document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
 
-                    // Hide the download button
-                    if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none') {
+                    // Hide the download button if there are no other important data sections visible
+                    if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' && document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
                         document.getElementById('export_package_pdf_div_id').style.display = 'none';
                     }
                 }
@@ -550,10 +876,424 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+    } else if (clickedButtonId === 'clint_movements_details_inputs_submit_icon') {
+        // Get references to all input elements for later use
+        let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
+        let clintMovementsCurrentCityInput = document.getElementById('clint_movements_current_city_input_id').value;
+        let clintMovementsNewCheckOutInput = document.getElementById('clint_movements_new_check_out_input_id').value;
+        let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id').value;
+        let clintMovementsDetailsInput = document.getElementById('clint_movements_details_input_id').value;
+        let clintMovementsNextCityInput = document.getElementById('clint_movements_next_city_input_id').value;
+        let clintMovementsNewCheckInInput = document.getElementById('clint_movements_new_check_in_input_id').value;
 
 
-        /* Check if all package data inputs are filled */
-    } else if (clickedButtonId === 'package_inputs_submit_button') {
+
+
+
+
+
+
+
+
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (clintMovementsCurrentDayDateInput === '' || clintMovementsCurrentCityInput === '') {
+
+            // Change the sumbit icon background color
+            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            }, 500);
+
+
+
+
+
+
+
+
+        } else {
+
+            // In case all 'استقبال في المطار', 'تسجيل خروج', 'تسجيل دخول', 'الذهاب لمدينة جديدة' inputs are empty then stop the process
+            if (clintMovementsNewCheckOutInput === '' && clintMovementsAirportWelcomeInput === '' && clintMovementsDetailsInput === '' && clintMovementsNextCityInput === '' && clintMovementsNewCheckInInput === '') {
+                // Change the submit icon background color
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                // Set the background color of the submit icon back to default color
+                setTimeout(() => {
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                }, 500);
+
+            } else {
+                // Get the current day date from the input field
+                let currentDayDate = new Date(clintMovementsCurrentDayDateInput.split('-').reverse().join('-'));
+
+                // Get the last day date from the input field
+                let clintMovementsLastDayDateInput = document.getElementById('clint_movements_last_day_date_input_id').value;
+                let lastDayDate = new Date(clintMovementsLastDayDateInput.split('-').reverse().join('-'));
+
+                if (currentDayDate > lastDayDate) {
+                    // Change the submit icon background color
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                    // Set the background color of the submit icon back to default color
+                    setTimeout(() => {
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                    }, 500);
+
+                } else {
+                    // Change the submit icon background color
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+                    // Set the background color of the submit icon back to default color
+                    setTimeout(() => {
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                    }, 500);
+
+                    // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
+                    currentDayDate.setDate(currentDayDate.getDate() + 1);
+                    let newDayDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
+                    document.getElementById('clint_movements_current_day_date_input_id').value = newDayDate;
+
+
+
+
+
+
+                    // Create an array of non-empty inputs
+                    let nonEmptyInputs = [
+                        clintMovementsNewCheckOutInput,
+                        clintMovementsAirportWelcomeInput,
+                        clintMovementsDetailsInput,
+                        clintMovementsNextCityInput,
+                        clintMovementsNewCheckInInput
+                    ].filter(input => input !== '');
+
+                    // Join the non-empty inputs with ' + ' separator
+                    let mixedInputsWithValue = nonEmptyInputs.join(' + ');
+
+
+                    let clintMovementsRowTableDivContent;
+
+                    if (storeClintMovementsNextCityInput !== null) {
+                        // Create the HTML content for a new hotel row
+                        clintMovementsRowTableDivContent = `
+                            <div><p>${clintMovementsCurrentDayDateInput}</p></div>
+                            <div><p>${mixedInputsWithValue}</p></div>
+                            <div class="clint_movements_row_controller inserted_clint_movements_data_row controller_elements_cursor_pointer"><p>${clintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}</p></div>
+                        `;
+
+                        /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable */
+                        storeClintMovementsNextCityInput = null;
+
+                    } else {
+                        // Create the HTML content for a new hotel row
+                        clintMovementsRowTableDivContent = `
+                            <div><p>${clintMovementsCurrentDayDateInput}</p></div>
+                            <div><p>${mixedInputsWithValue}</p></div>
+                            <div class="clint_movements_row_controller inserted_clint_movements_data_row controller_elements_cursor_pointer"><p>${clintMovementsCurrentCityInput}</p></div>
+                        `;
+                    }
+
+
+                    // Create a new div element to hold the hotel row
+                    let clintMovementsRowTableDiv = document.createElement('div');
+                    clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
+                    clintMovementsRowTableDiv.classList.add('clint_movements_row_class'); // Add a class to the div for styling
+                    insertedClintMovementsRowDivUniqueId++;
+
+
+                    // Insert the HTML content into the newly created div
+                    clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
+
+
+
+
+                    // Append the new hotel row div to the parent div that holds all inserted hotel data
+                    document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
+
+
+                    /* Show up the 'inserted_package_data_section_page_4' section */
+                    document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
+
+                    /* Show the download button */
+                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+
+
+
+                    // Get references to all input elements and reset their values
+                    document.getElementById('clint_movements_current_city_input_id').value = '';
+                    document.getElementById('clint_movements_new_check_out_input_id').value = '';
+                    document.getElementById('clint_movements_airport_welcome_input_id').value = '';
+                    document.getElementById('clint_movements_details_input_id').value = '';
+                    document.getElementById('clint_movements_next_city_input_id').value = '';
+                    document.getElementById('clint_movements_new_check_in_input_id').value = '';
+
+                    
+                    /* Hide all the clint movements places names */
+                    bali_clint_movements_places_div.style.display = 'none';
+                    jakarta_clint_movements_places_div.style.display = 'none';
+                    puncak_clint_movements_places_div.style.display = 'none';
+                    bandung_clint_movements_places_div.style.display = 'none';
+                }
+
+
+
+
+
+
+
+
+
+                // Define a global variable to store the reference
+                let currentClintMovementsDataDivId;
+
+                // Function to handle delete clicked clint movements data
+                deleteClickedClintMovementsData = function (clickedHotelCardIdName) {
+                    // Select the overlay layer element
+                    let overlayLayer = document.querySelector('.black_overlay');
+
+                    // Get the clicked element by its ID
+                    let clickedHotelCardElement = document.getElementById(clickedHotelCardIdName);
+                    if (clickedHotelCardElement) {
+                        // Remove the clicked element from the DOM
+                        clickedHotelCardElement.remove();
+                    }
+
+                    // Hide the delete confirmation div by translating it out of view
+                    let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+                    deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                    // Reduce the opacity of the overlay layer to 0 (for fade-out effect)
+                    overlayLayer.style.opacity = '0';
+
+                    // Remove overlay and edit/delete div from DOM after transition (300ms delay)
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Update dates after deleting a row
+                    updateClintMovementsDates();
+
+                    // Reduce the date of clint_movements_current_day_date_input_id by one day
+                    // Get the current day input element by its ID
+                    let currentDayInput = document.getElementById('clint_movements_current_day_date_input_id');
+                    // Convert the date string to a Date object
+                    let currentDayDate = new Date(currentDayInput.value.split('-').reverse().join('-'));
+                    // Reduce the date by one day
+                    currentDayDate.setDate(currentDayDate.getDate() - 1);
+                    // Format the new date in 'DD-MMM' format
+                    let formattedDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
+                    // Set the new date value to the input element
+                    currentDayInput.value = formattedDate;
+
+                    // Check if there are any remaining clint movements data divs
+                    let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
+                    if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
+                        // Hide section with id 'inserted_package_data_section_page_4'
+                        document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+
+                        // Hide the download button if there are no other important data sections visible
+                        if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' &&
+                            document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
+                            document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                            document.getElementById('export_package_pdf_div_id').style.display = 'none';
+                        }
+                    }
+                };
+
+
+
+
+                // Function to update dates in clint_movements_row_class divs starting from the second element
+                function updateClintMovementsDates() {
+                    // Select all elements with class 'clint_movements_row_class'
+                    let clintMovementsRows = document.querySelectorAll('.clint_movements_row_class');
+                    // Get the starting date input value and convert it to a Date object
+                    let startingDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+                    let currentDayDate = new Date(startingDateInput.split('-').reverse().join('-'));
+
+                    // Skip the first element and start from the second one
+                    for (let index = 1; index < clintMovementsRows.length; index++) {
+                        let row = clintMovementsRows[index]; // Get the current row
+                        // Find the first 'div' element containing a 'p' tag within the row
+                        let dateDiv = row.querySelector('div:first-child p');
+                        if (dateDiv) {
+                            let newDayDate = new Date(currentDayDate); // Create a new Date object
+                            // Adjust the date by adding (index - 1) days
+                            newDayDate.setDate(currentDayDate.getDate() + index - 1);
+                            // Format the new date in 'DD-MMM' format
+                            let formattedDate = newDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
+                            // Set the formatted date as the inner text of the 'p' tag
+                            dateDiv.innerText = formattedDate;
+                        }
+                    }
+                }
+
+                // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
+                function initializeClintMovementsDragAndDrop() {
+                    // Loop through each ID to initialize drag and drop functionality
+                    for (let i = 0; i < insertedClintMovementsRowDivUniqueId; i++) {
+                        // Get the clint movements row div by its ID
+                        let clintMovementsRowTableDiv = document.getElementById(`clint_movements_row_id_${i}`);
+                        if (clintMovementsRowTableDiv) {
+                            // Get the row controller element within the row
+                            let clintMovementsRowController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
+
+                            // Handle click on 'clint_movements_row_class' elements
+                            clintMovementsRowController.onclick = (event) => {
+                                // Get the delete confirmation div
+                                let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+                                // Find the closest 'clint_movements_row_class' element to the clicked element
+                                let clickedClintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
+
+                                if (clickedClintMovementsDataDiv) {
+                                    // Store the ID of the clicked element in the global variable
+                                    currentClintMovementsDataDivId = clickedClintMovementsDataDiv.id;
+
+                                    // Create an overlay layer for better visual effect
+                                    let overlayLayer = document.createElement('div');
+                                    overlayLayer.classList.add('black_overlay');
+                                    document.body.appendChild(overlayLayer);
+
+                                    // Delayed opacity transition for smooth appearance
+                                    setTimeout(() => {
+                                        overlayLayer.style.opacity = '1';
+                                        deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                                    }, 50);
+
+                                    // Define the function to delete the clicked clint movements data
+                                    runDeleteClickedClintMovementsDataFunction = function () {
+                                        deleteClickedClintMovementsData(currentClintMovementsDataDivId);
+                                    }
+
+                                    // Click handler to close overlay and delete box div on click outside
+                                    overlayLayer.onclick = () => {
+                                        deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                                        overlayLayer.style.opacity = '0'; // Hide overlay
+
+                                        // Remove overlay and delete box div from DOM after transition
+                                        setTimeout(() => {
+                                            document.body.removeChild(overlayLayer);
+                                        }, 300); // Match transition duration in CSS
+                                    };
+
+                                    // Prevent overlayLayer click propagation to avoid immediate closure
+                                    overlayLayer.addEventListener('click', (event) => {
+                                        event.stopPropagation(); // Prevent immediate closure of overlay on click
+                                    });
+                                }
+                            };
+
+                            // Handle drag and drop functionality
+                            clintMovementsRowController.addEventListener('mousedown', handleDrag);
+                            clintMovementsRowController.addEventListener('touchstart', handleDrag);
+                        }
+                    }
+
+                    // Common function to handle dragging logic
+                    function handleDrag(event) {
+                        if (event.target.classList.contains('clint_movements_row_controller')) {
+                            event.preventDefault();
+                            // Find the closest 'clint_movements_row_class' element to the dragged element
+                            let draggingElement = event.target.closest('.clint_movements_row_class');
+                            draggingElement.classList.add('dragging'); // Add 'dragging' class
+                            // Store the starting Y position in the data attribute
+                            draggingElement.dataset.startY = event.clientY || event.touches[0].clientY;
+                            // Add event listeners for move and end events
+                            document.addEventListener('mousemove', move);
+                            document.addEventListener('touchmove', move);
+                            document.addEventListener('mouseup', end);
+                            document.addEventListener('touchend', end);
+
+                            // Disable scrolling
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+
+                    // Function to handle move event
+                    function move(event) {
+                        let draggingElement = document.querySelector('.dragging');
+                        if (draggingElement) {
+                            // Get the starting Y position
+                            let startY = parseInt(draggingElement.dataset.startY || 0);
+                            // Calculate the change in Y position
+                            let deltaY = (event.clientY || event.touches[0].clientY) - startY;
+                            // Apply the transformation to the dragged element
+                            draggingElement.style.transform = `translateY(${deltaY}px)`;
+
+                            // Get all elements with class 'clint_movements_row_class'
+                            let dropElements = Array.from(document.querySelectorAll('.clint_movements_row_class'));
+                            let currentIndex = dropElements.indexOf(draggingElement); // Get the index of the dragged element
+
+                            let targetIndex = currentIndex; // Initialize the target index
+                            for (let i = 0; i < dropElements.length; i++) {
+                                let element = dropElements[i];
+                                let rect = element.getBoundingClientRect(); // Get the bounding rectangle of the element
+                                // Check if the current position is within the bounds of the element
+                                if (i !== currentIndex && (event.clientY || event.touches[0].clientY) > rect.top && (event.clientY || event.touches[0].clientY) < rect.bottom) {
+                                    // Update the target index based on the direction of the drag
+                                    if (deltaY > 0 && (event.clientY || event.touches[0].clientY) > rect.bottom - 20) {
+                                        targetIndex = i + 1;
+                                    } else if (deltaY < 0 && (event.clientY || event.touches[0].clientY) < rect.top + 20) {
+                                        targetIndex = i;
+                                    }
+                                    break;
+                                }
+                            }
+
+                            // Move the dragged element to the target position
+                            if (targetIndex !== currentIndex) {
+                                let dropZone = document.getElementById('inserted_clint_movements_data_position_div');
+                                dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                            }
+                        }
+                    }
+
+                    // Function to handle end event
+                    function end(event) {
+                        let draggingElement = document.querySelector('.dragging');
+                        if (draggingElement) {
+                            draggingElement.classList.remove('dragging'); // Remove 'dragging' class
+                            draggingElement.style.transform = ''; // Reset the transformation
+                            draggingElement.removeAttribute('data-start-y'); // Remove the data attribute
+                            draggingElement.classList.add('drop-transition'); // Add 'drop-transition' class
+                            // Remove 'drop-transition' class after 300ms
+                            setTimeout(() => {
+                                draggingElement.classList.remove('drop-transition');
+                                updateClintMovementsDates(); // Update dates after drag-and-drop
+                            }, 300);
+                        }
+
+                        // Remove event listeners for move and end events
+                        document.removeEventListener('mousemove', move);
+                        document.removeEventListener('touchmove', move);
+                        document.removeEventListener('mouseup', end);
+                        document.removeEventListener('touchend', end);
+                        document.body.style.overflow = ''; // Enable scrolling
+                    }
+                }
+
+                // Initialize drag and drop functionality
+                initializeClintMovementsDragAndDrop();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    } else if (clickedButtonId === 'package_inputs_submit_icon') {
 
         // Get references to all input elements for later use
         let packageDetailsReayText = document.getElementById('package_details_textarea_id').value;
@@ -561,11 +1301,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         // If Not All Inputs Are Valid, Show The Error Message
         if (packageDetailsReayText === '' || packageTotalPriceReayText === '') {
-            package_inputs_submit_button.style.backgroundColor = 'red';
+            package_inputs_submit_icon.style.backgroundColor = 'red';
 
-            // Hide ensure text after 2 seconds
+            // Set the background color of the submit icon back to default color after 2 seconds
             setTimeout(() => {
-                package_inputs_submit_button.style.backgroundColor = 'white';
+                package_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
 
@@ -573,10 +1313,10 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* if all inputs are filled then insert the data in the table */
         } else {
             /* Change the 'تم' button color */
-            package_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Hide ensure text after 2 seconds
+            package_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+            // Set the background color of the submit icon back to default color after 2 seconds
             setTimeout(() => {
-                package_inputs_submit_button.style.backgroundColor = 'white';
+                package_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
 
@@ -608,351 +1348,77 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_package_data_position_div').innerHTML = '';
             document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
 
-            /* Show up the 'inserted_package_data_section_page_2' section */
+            /* Show up the 'inserted_package_data_section_page_5' section */
             document.getElementById('inserted_package_data_section_page_5').style.display = 'block';
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    } else if (clickedButtonId === 'clint_flight_inputs_submit_button') {
-        // Get references to all input elements for later use
-        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id').value;
-        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-        let flightDateInput = document.getElementById('flight_date_input_id').value;
-        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
-
-
-
-
-
-        // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAirLineInput === '' || flightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '' || flightFlyAwayTimeInput === '' || flightArrivalTimeInput === '') {
-            clint_flight_inputs_submit_button.style.backgroundColor = 'red';
-
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-
-        } else {
-            /* Change the 'تم' button color */
-            clint_flight_inputs_submit_button.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
-            }, 2000);
-
-
-
-
-
-
-
-
-            // Create the HTML content for a new hotel row
-            let flightRowTableDivContent = `
-                <div><p>${flightAirLineInput}</p></div>
-                <div><p>${flightPersonAmountInput}</p></div>
-                <div><p>20 كيلو لكل شخص</p></div>
-                <div><p>${flightFromCityInput}</p></div>
-                <div><p>${flightToCityInput}</p></div>
-                <div><p>${flightDateInput}</p></div>
-                <div><p>${flightFlyAwayTimeInput}</p></div>
-                <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller" style="cursor: pointer;">${flightArrivalTimeInput}</p></div>
-            `;
-
-
-
-
-
-
-
-            // Create a new div element to hold the flight row
-            let flightRowTableDiv = document.createElement('div');
-            flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`; // Set a unique ID for the hotel row div
-            flightRowTableDiv.classList.add('flight_row_class'); // Add a class to the div for styling
-            insertedFlightDataDivUniqueId++;
-
-
-
-
-            // Insert the HTML content into the newly created div
-            flightRowTableDiv.innerHTML = flightRowTableDivContent;
-
-
-
-            // Get the dynamically created 'flightRowAirLineController' element
-            let flightRowAirLineController = flightRowTableDiv.querySelector('.flight_row_air_line_controller');
-
-
-
-            // Show and append the new flight data div
-            document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
-            document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
-
-
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-
-            // Get references to all input elements and reset their values thier
-            document.getElementById('flight_air_line_input_id').value = '';
-            document.getElementById('flight_person_amount_input_id').value = '';
-            document.getElementById('flight_from_city_input_id').value = '';
-            document.getElementById('flight_to_city_input_id').value = '';
-            document.getElementById('flight_date_input_id').value = '';
-            document.getElementById('flight_fly_away_time_input_id').value = '';
-            document.getElementById('flight_arrival_time_input_id').value = '';
-
-
-
-
-
-            // Define a global variable to store the reference
-            let currentFlightDataDivId;
-
-            // Function to handle delete clicked hotel data
-            deleteClickedFlightData = function (clickedFlightDataDivId) {
-
-                let overlayLayer = document.querySelector('.black_overlay');
-                let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
-
-                if (clickedFlightDataElement) {
-                    clickedFlightDataElement.remove();
-                }
-
-                // Hide edit/delete options div
-                let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
-                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Check if there are any remaining inserted flight data div (Searching by the second image class name)
-                let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
-                if (remainingFlightDataDivs.length === 0) {
-                    // Hide section with id 'inserted_package_data_section_page_3'
-                    document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
-
-                    // Hide the download button if there are no other data sections visible
-                    if (document.getElementById('inserted_package_data_section_page_1').style.display === 'none') {
-                        document.getElementById('export_package_pdf_div_id').style.display = 'none';
-                    }
-                }
-            }
-
-
-
-            // Initialize drag-and-drop functionality for the newly added flight row
-            initializeDragAndDrop();
-
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-            function initializeDragAndDrop() {
-
-                // Function to show edit or delete the inserted flight data
-                flightRowAirLineController.onclick = (event) => {
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
-                    let clickedFlightDataDiv = event.target.closest('.flight_row_class');
-
-
-                    runDeleteClickedFlightDataFunction = function () {
-                        deleteClickedFlightData(currentFlightDataDivId);
-                    }
-
-
-                    if (clickedFlightDataDiv) {
-                        currentFlightDataDivId = clickedFlightDataDiv.id;
-
-                        let overlayLayer = document.createElement('div');
-                        overlayLayer.classList.add('black_overlay');
-                        document.body.appendChild(overlayLayer);
-
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = '1';
-                            deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
-                        }, 50);
-
-                        overlayLayer.onclick = () => {
-                            deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-                            overlayLayer.style.opacity = '0';
-                            setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
-                            }, 300);
-                        };
-
-                        overlayLayer.addEventListener('click', (event) => {
-                            event.stopPropagation();
-                        });
-                    }
-                };
-
-
-
-                // Common function to handle dragging logic
-                function handleDrag(event, touch = false) {
-                    if (event.target.classList.contains('flight_row_air_line_controller')) {
-                        event.preventDefault();
-                        let draggingElement = event.target.closest('.flight_row_class');
-                        draggingElement.classList.add('dragging');
-                        draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
-                        document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                        document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden';
-                    }
-                }
-
-                // Event listener for the drop zone
-                let flightDropZone = document.getElementById('inserted_flight_data_position_div');
-
-                // Function to handle mouse down event
-                function mouseDown(event) {
-                    handleDrag(event, false);
-                }
-
-                // Function to handle touch start event
-                function touchStart(event) {
-                    handleDrag(event, true);
-                }
-
-                // Function to handle move event
-                function move(event, touch = false) {
-                    let draggingElement = document.querySelector('.dragging');
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                    let dropElements = Array.from(flightDropZone.children);
-                    let currentIndex = dropElements.indexOf(draggingElement);
-
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect();
-                        if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
-                            if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
-                        }
-                    }
-
-                    if (targetIndex !== currentIndex) {
-                        flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                    }
-                }
-
-                // Function to handle mouse move event
-                function mouseMove(event) {
-                    move(event, false);
-                }
-
-                // Function to handle touch move event
-                function touchMove(event) {
-                    move(event, true);
-                }
-
-                // Function to handle end event
-                function end(event, touch = false) {
-                    let draggingElement = document.querySelector('.dragging');
-
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging');
-                        draggingElement.style.transform = '';
-                        draggingElement.removeAttribute('data-start-y');
-
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300);
-                    }
-
-                    document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                    document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                    document.body.style.overflow = '';
-                }
-
-                // Function to handle mouse up event
-                function mouseUp(event) {
-                    end(event, false);
-                }
-
-                // Function to handle touch end event
-                function touchEnd(event) {
-                    end(event, true);
-                }
-
-                // Add event listeners for each insertedFlightDataDiv element
-                let insertedFlightDataDivs = document.querySelectorAll('.flight_row_class');
-
-                insertedFlightDataDivs.forEach((div) => {
-                    div.addEventListener('mousedown', mouseDown);
-                    div.addEventListener('touchstart', touchStart);
-                });
-            }
-        }
-
-
-
-    } else if (clickedButtonId === 'clint_movements_inputs_submit_button') {
-        // Get references to all input elements for later use
-        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id').value;
-        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-        let flightDateInput = document.getElementById('flight_date_input_id').value;
-        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
-
-
-
-
-
-        // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAirLineInput === '' || flightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '' || flightFlyAwayTimeInput === '' || flightArrivalTimeInput === '') {
-            clint_flight_inputs_submit_button.style.backgroundColor = 'red';
-
-            // Hide ensure text after 2 seconds
-            setTimeout(() => {
-                clint_flight_inputs_submit_button.style.backgroundColor = 'white';
-            }, 500);
-
-
-        }else{
-            
-        }
-
     }
 }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to handel clicked clint movements rule element */
+runDeleteThisClintMovementsRule = function (clickedRule) {
+
+    // Create an overlay layer for better visual effect
+    let overlayLayer = document.createElement('div');
+    overlayLayer.classList.add('black_overlay');
+    document.body.appendChild(overlayLayer);
+
+
+    /* Function to delete the clint movements rule */
+    deleteClickedClintMovementsRule = function (clickedRule) {
+        clickedRule.remove();
+
+        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    }
+
+
+    // Delayed opacity transition for smooth appearance
+    setTimeout(() => {
+        overlayLayer.style.opacity = '1';
+        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -50%)'; // Center div
+    }, 50);
+
+    /* Function to pass the clicked clint movements rule element */
+    passClickedClintMovementsRule = function () {
+        deleteClickedClintMovementsRule(clickedRule);
+    }
+
+    // Click handler to close overlay and delete box div on click outside
+    overlayLayer.onclick = () => {
+        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    };
+
+    // Prevent overlayLayer click propagation to avoid immediate closure
+    overlayLayer.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent immediate closure of overlay on click
+    });
+}
 
 
 
