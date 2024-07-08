@@ -574,12 +574,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
+#clint_package_type_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .custom_checkbox {
     display: flex;
     align-items: center;
-    /* Center items vertically */
     justify-content: center;
-    /* Center items horizontally */
     margin: 10px;
 }
 
@@ -719,12 +724,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
     cursor: pointer;
     flex: 1 1 auto;
-}
-
-#clint_package_type_div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 
@@ -970,7 +969,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .submit_package_pdf_div ion-icon {
         font-size: 4vw;
-        padding: 1px 15px;
+        padding: 10px;
     }
 
     .custom_checkbox label {
@@ -989,11 +988,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .exit_full_screen_icon {
         font-size: 4vw;
-        padding: 5px;
+        padding: 10px;
     }
 
     .insert_clint_movements_places_icon {
-        font-size: 3.5vw;
+        font-size: 4vw;
         padding: 10px;
     }
 
@@ -1143,8 +1142,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .submit_package_pdf_div ion-icon {
-        font-size: 5vw;
-        padding: 1px 10px;
+        font-size: 6.5vw;
+        padding: 5px;
     }
 
     .custom_checkbox label {
@@ -1161,12 +1160,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .exit_full_screen_icon {
-        font-size: 5vw;
-        padding: 3px;
+        font-size: 7vw;
+        padding: 5px;
     }
 
     .insert_clint_movements_places_icon {
-        font-size: 4.5vw;
+        font-size: 7vw;
         padding: 5px;
     }
 
@@ -1313,7 +1312,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .submit_package_pdf_div ion-icon {
-        font-size: 7.5vw;
+        font-size: 8vw;
     }
 
     .custom_checkbox label {
@@ -1330,11 +1329,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .exit_full_screen_icon {
-        font-size: 6vw;
+        font-size: 9vw;
+        padding: 3px;
     }
 
     .insert_clint_movements_places_icon {
-        font-size: 5vw;
+        font-size: 9vw;
+        padding: 3px;
     }
 
     .search_bar_div_class {
@@ -1361,15 +1362,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .clint_movements_places_full_page_div h5 {
-        font-size: 3.5vw;
+        font-size: 4.5vw;
     }
 
     .clint_movements_places_full_page_div h6 {
-        font-size: 3.5vw;
+        font-size: 4.5vw;
     }
 
     .clint_movements_places_full_page_div p {
-        font-size: 3.5vw;
+        font-size: 4.5vw;
     }
 }
 
