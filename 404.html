@@ -30,7 +30,7 @@
     <header id="header">
 
         <div id="header_div">
-            <img src="فنادق-اندونيسيا/error.jpg" alt="فنادق اندونيسيا">
+            <img src="فنادق-اندونيسيا/error.jpg">
             <h1>Fanadiq Indonesia</h1>
         </div>
 
@@ -44,10 +44,9 @@
 
 
             <div class="header_navbar_links" id="support-links">
-                <a href="#">Create New Voucher</a>
-                <a href="#">Create New Invoice</a>
-                <a href="#">Create New Clint Movements</a>
-                <a href="#">Check Hotel Availability</a>
+                <a href="index.html">Create New Package</a>
+                <a href="فوتشر/voucher.html">Create New Voucher</a>
+                <a href="توافرات-الفنادق/hotel-availability.html">Check Hotel Availability</a>
             </div>
 
         </div>
@@ -75,22 +74,12 @@
             document.getElementById('body').style.opacity = "1";
         }, 100);
 
-
-
-        // Create and append script for 'Ionicons' Website Icons (Module Script)
-        let ioniconsModuleScript = document.createElement('script');
-        ioniconsModuleScript.type = 'module';
-        ioniconsModuleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js';
-        document.body.appendChild(ioniconsModuleScript);
-
-        // Create and append script for 'Ionicons' Website Icons (Module Script)
-        let ioniconsNomoduleScript = document.createElement('script');
-        ioniconsNomoduleScript.setAttribute('nomodule', '');
-        ioniconsNomoduleScript.src = 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js';
-        document.body.appendChild(ioniconsNomoduleScript);
-
     </script>
 
+
+    <!-- Ionicons Append -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
