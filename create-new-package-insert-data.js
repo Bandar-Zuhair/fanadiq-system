@@ -249,7 +249,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     <div><p>${flightToCityInput}</p></div>
                     <div><p>${flightDateInput}</p></div>
                     <div><p>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller" style="cursor: pointer;">${flightArrivalTimeInput}</p></div>
+                    <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller">${flightArrivalTimeInput}</p></div>
                 `;
 
 
@@ -273,7 +273,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 // Get the dynamically created 'flightRowAirLineController' element
-                let flightRowAirLineController = flightRowTableDiv.querySelector('.flight_row_air_line_controller');
+                let flightRowAirLineController = document.querySelector('.flight_row_air_line_controller');
 
 
 
@@ -339,11 +339,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                // Initialize drag-and-drop functionality for the newly added flight row
-                initializeDragAndDrop();
+                // Praper drag-and-drop functionality for the newly added flight row
+                createFlightDragAndDropMood();
 
                 // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-                function initializeDragAndDrop() {
+                function createFlightDragAndDropMood() {
 
                     // Function to show edit or delete the inserted flight data
                     flightRowAirLineController.onclick = (event) => {
@@ -583,7 +583,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             // Get the dynamically created 'hotelRowImageController' element
-            let hotelRowImageController = hotelRowTableDiv.querySelector('.hotel_row_image_controller');
+            let hotelRowImageController = document.querySelector('.hotel_row_image_controller');
 
 
             // Append the new hotel row div to the parent div that holds all inserted hotel data
@@ -659,7 +659,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             };
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-            function initializeDragAndDrop() {
+            function createHotelDragAndDropMood() {
 
                 // Function to show edit or delete the inserted hotel data
                 hotelRowImageController.onclick = (event) => {
@@ -857,8 +857,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                 });
             }
 
-            // Call the initializeDragAndDrop function to set up delete and drag-and-drop functionality
-            initializeDragAndDrop();
+            // Call the createHotelDragAndDropMood function to set up delete and drag-and-drop functionality
+            createHotelDragAndDropMood();
 
         }
 
@@ -1132,7 +1132,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }
 
                 // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
-                function initializeClintMovementsDragAndDrop() {
+                function createClintMovementsDragAndDropMood() {
                     // Loop through each ID to initialize drag and drop functionality
                     for (let i = 0; i < insertedClintMovementsRowDivUniqueId; i++) {
                         // Get the clint movements row div by its ID
@@ -1276,7 +1276,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }
 
                 // Initialize drag and drop functionality
-                initializeClintMovementsDragAndDrop();
+                createClintMovementsDragAndDropMood();
             }
         }
 
@@ -1573,11 +1573,6 @@ downloadPdfWithCustomName = function (pdfName) {
 
     processSections(sections);
 };
-
-
-
-
-
 
 
 
