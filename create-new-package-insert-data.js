@@ -1765,6 +1765,10 @@ downloadPdfWithCustomName = function (pdfName) {
         combinedCanvas.height = totalHeight;
         let context = combinedCanvas.getContext('2d');
 
+        // Fill with default background color (e.g., white)
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
+
         let yOffset = 0;
         canvases.forEach(canvas => {
             context.drawImage(canvas, 0, yOffset);
@@ -1794,9 +1798,22 @@ downloadPdfWithCustomName = function (pdfName) {
 
         pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
+
+        // Hide all elements with the class name after saving the PDF
+        let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
+        images.forEach(img => {
+            img.style.display = 'none';
+        });
+
         inserted_package_data_section_page_6.style.display = 'none'; // Hide the section after saving the PDF
         saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
     };
+
+    // Show all elements with the class name before checking visibility
+    let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
+    images.forEach(img => {
+        img.style.display = 'inline';
+    });
 
     inserted_package_data_section_page_6.style.display = 'block'; // Show the section before checking visibility
 
@@ -1816,6 +1833,9 @@ downloadPdfWithCustomName = function (pdfName) {
 
     processSections(sections);
 };
+
+
+
 
 
 
