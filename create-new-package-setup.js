@@ -144,6 +144,62 @@ checkboxes.forEach(checkbox => {
 
 
 
+/* Dropdown the package including sms cards and inner flight tickets amount */
+// Set lastClickedClintMovementCityInput when the sms card input field is clicked
+document.getElementById('sms_card_with_internet_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
+});
+
+document.getElementById('inner_flight_tickets_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementCityInput = document.getElementById('inner_flight_tickets_amount_input_id');
+});
+
+
+
+// Get all the h3 elements within the dropdown
+let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#sms_card_and_ticket_amount_dropdown h3');
+
+// Add click event listener to each h3 element
+smsCardWithInternetAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        if (lastClickedClintMovementCityInput) { // Check if an input field was clicked before
+            if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
+                lastClickedClintMovementCityInput.value = ''; // Clear the value of the last clicked input field
+            } else { // If the clicked h3 element's inner text is not "حذف"
+                if (lastClickedClintMovementCityInput.id === 'sms_card_with_internet_amount_input_id') {
+                    // Set the value of the sms card input field with the selected option
+                    lastClickedClintMovementCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
+                } else if (lastClickedClintMovementCityInput.id === 'inner_flight_tickets_amount_input_id') {
+                    // Set the value of the inner flight tickets input field with the selected option
+                    lastClickedClintMovementCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+                }
+            }
+            hideOverlay(); // Hide the dropdown overlay after selection
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -448,6 +504,24 @@ document.getElementById('lombok_hotel_search_bar_input_id').addEventListener('in
 
 
 
+
+
+
+/* Package including data sms and tickets amount dropdown */
+document.getElementById('sms_card_and_ticket_amount_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('sms_card_and_ticket_amount_search_bar_input_id', 'sms_card_and_ticket_amount_dropdown');
+});
+
+
+
+
+
+
+
+
+
+
+
 /* flight dropdown info */
 document.getElementById('airport_line_name_search_bar_input_id').addEventListener('input', () => {
     filterOptions('airport_line_name_search_bar_input_id', 'airport_line_name_dropdown');
@@ -457,6 +531,17 @@ document.getElementById('airport_line_name_search_bar_input_id').addEventListene
 
 
 
+
+
+
+
+/* LocalStorage import and delete dropdown */
+document.getElementById('import_localstorage_data_names_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('import_localstorage_data_names_search_bar_input_id', 'import_localstorage_data_names_dropdown');
+});
+document.getElementById('delete_localstorage_data_names_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('delete_localstorage_data_names_search_bar_input_id', 'delete_localstorage_data_names_dropdown');
+});
 
 
 
@@ -553,22 +638,10 @@ document.getElementById('clint_movement_city_search_bar_input_id').addEventListe
 
 
 /* Function to set the clicked input text */
-setClintMovementsInputValue = function (clickedInputName) {
-    let inputElement = document.getElementById(clickedInputName);
+setAutoIntialTextInputValue = function (clickedInputIdName, clickedInputValue) {
+    let clickedInputIdNameIntialValue = document.getElementById(clickedInputIdName);
 
-    if (clickedInputName === 'clint_movements_airport_welcome_input_id') {
-        if (inputElement.value === '') {
-            inputElement.value = 'استقبال في مطار ';
-        }
-    } else if (clickedInputName === 'clint_movements_new_check_out_input_id') {
-        if (inputElement.value === '') {
-            inputElement.value = 'تسجيل الخروج من ';
-        }
-    } else if (clickedInputName === 'clint_movements_new_check_in_input_id') {
-        if (inputElement.value === '') {
-            inputElement.value = 'تسجيل الدخول في ';
-        }
-    }
+    clickedInputIdNameIntialValue.value = clickedInputValue;
 }
 
 
@@ -661,6 +734,7 @@ showClintMovemtsPlacesPage = function () {
 
 
 
+    /* Get the 'clint_movements_places_page_div' element */
     let clintMovementsPlacesPageDiv = document.getElementById('clint_movements_places_page_div');
 
     // Show the clint movements places page div
@@ -787,7 +861,7 @@ setTheClickedClintMovementsPlace = function () {
 }
 
 
-/* Function to set the first and last date of the clint movements plan */
+/* Function to set the first and last date of the clint movements period */
 let initialClintFirstDayDateValue = document.getElementById('clint_movements_first_day_date_input_id').value;
 
 function setTheFirstClintMovemnetsDate() {
