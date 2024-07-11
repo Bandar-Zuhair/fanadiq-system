@@ -12,8 +12,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
     // Check if the clicked button is the 'clint_inputs_submit_icon'
     if (clickedButtonId === 'clint_inputs_submit_icon') {
-
-
         // Get references to all input elements for later use
         let personAmountInput = document.getElementById('hotel_person_amount_input_id').value;
         let packageStartDateInput = document.getElementById('package_start_date_input_id').value;
@@ -41,9 +39,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
 
-
-
-
             if (clintCompanyNameInput !== '') {
                 // Create a new image element for the company logo
                 let insertedCompanyNameLogoImage = document.createElement('img');
@@ -51,10 +46,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, '-');
                 insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
                 insertedCompanyNameLogoImage.classList.add('inserted_company_name_logo');
-                insertedCompanyNameLogoImage.onclick = function () {
+                insertedCompanyNameLogoImage.onclick = function (event) {
                     event.preventDefault(); // Prevent the default behavior of the click event
                     event.stopPropagation(); // Stop the event from propagating further
-
 
                     // Create overlay layer
                     let overlayLayer = document.createElement('div');
@@ -95,10 +89,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
             }
 
-
-
-
-
             /* Function to delete company logo */
             deleteClickedCompanyLogo = function () {
                 document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
@@ -121,34 +111,20 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }, 300); // Match transition duration in CSS
             }
 
-
-
-
-
-
-
-
             let clintPackageTypeH6 = document.getElementById('clint_package_type_h6');
 
-            /* Ckeck which checkbox is checkced then iclude the text in the content */
+            /* Check which checkbox is checked then include the text in the content */
             if (honeymoonCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج شهر عسل 💝';
-
             } else if (guysCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج شباب ✨';
-
             } else if (familyCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج عائلة 👨‍👩‍👧‍👦';
-
             } else if (twoPeopleCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج شخصين ✈️';
-
             } else {
                 clintPackageTypeH6.innerHTML = 'بكج جديد ✨';
-
             }
-
-
 
             let insertedClintDataRowDivContent = `
                 <div>
@@ -165,20 +141,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                 </div>
             `;
 
-
-
             let insertedClintDataRowDiv = document.createElement('div');
             insertedClintDataRowDiv.className = 'clint_data_row_class';
             insertedClintDataRowDiv.innerHTML = insertedClintDataRowDivContent;
 
-
             // Clear previous client data and insert the new data div
-            document.getElementById('inserted_clint_data_position_div').innerHTML = '';
-            document.getElementById('inserted_clint_data_position_div').appendChild(insertedClintDataRowDiv);
+            let insertedClintDataPositionDiv = document.getElementById('inserted_clint_data_position_div');
+            insertedClintDataPositionDiv.innerHTML = ''; // Clear the existing content
+            insertedClintDataPositionDiv.appendChild(insertedClintDataRowDiv);
 
-            /* Show up the 'inserted_package_data_section_page_1' section */
-            document.getElementById('inserted_package_data_section_page_1').style.display = 'block';
+            /* Show up the 'downloaded_pdf_clint_data_page' section */
+            document.getElementById('downloaded_pdf_clint_data_page').style.display = 'block';
         }
+
 
 
 
@@ -307,8 +282,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 insertedPackageIncludingDataDiv.appendChild(h6);
             }
 
-            // Show the 'inserted_package_data_section_page_2'
-            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+
 
             // Append the data to the respective divs
             document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
@@ -316,6 +290,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             document.getElementById('inserted_package_not_icluding_data_position_div').innerHTML = '';
             document.getElementById('inserted_package_not_icluding_data_position_div').appendChild(insertedPackageNotIncludingDataDiv);
+
+
+
+            // Show the 'downloaded_pdf_package_including_data_page'
+            document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'block';
         }
 
     }
@@ -439,7 +418,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 // Show and append the new flight data div
-                document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
+                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'block';
                 document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
 
 
@@ -488,11 +467,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Check if there are any remaining inserted flight data div (Searching by the second image class name)
                     let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
                     if (remainingFlightDataDivs.length === 0) {
-                        // Hide section with id 'inserted_package_data_section_page_3'
-                        document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+                        // Hide section with id 'downloaded_pdf_flight_data_page'
+                        document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
 
                         // Hide the download button if there are no other important data sections visible
-                        if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                        if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                             document.getElementById('export_package_pdf_div_id').style.display = 'none';
                         }
                     }
@@ -772,8 +751,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
 
 
-            /* Show up the 'inserted_package_data_section_page_4' section */
-            document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
+            /* Show up the 'downloaded_pdf_hotel_data_page' section */
+            document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'block';
 
             /* Show the download button */
             document.getElementById('export_package_pdf_div_id').style.display = 'block';
@@ -830,11 +809,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
-                    // Hide section with id 'inserted_package_data_section_page_4'
-                    document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+                    // Hide section with id 'downloaded_pdf_hotel_data_page'
+                    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
 
                     // Hide the download button if there are no other important data sections visible
-                    if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                    if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                         document.getElementById('export_package_pdf_div_id').style.display = 'none';
                     }
                 }
@@ -1243,8 +1222,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
 
 
-                    /* Show up the 'inserted_package_data_section_page_5' section */
-                    document.getElementById('inserted_package_data_section_page_5').style.display = 'block';
+                    /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
+                    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
 
                     /* Show the download button */
                     document.getElementById('export_package_pdf_div_id').style.display = 'block';
@@ -1321,13 +1300,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Check if there are any remaining clint movements data divs
                     let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
                     if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
-                        // Hide section with id 'inserted_package_data_section_page_5'
-                        document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
+                        // Hide section with id 'downloaded_pdf_clint_movements_data_page'
+                        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
 
                         // Hide the download button if there are no other important data sections visible
-                        if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
-                            document.getElementById('inserted_package_data_section_page_4').style.display === 'none' &&
-                            document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                        if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' &&
+                            document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' &&
+                            document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                             document.getElementById('export_package_pdf_div_id').style.display = 'none';
                         }
                     }
@@ -1568,11 +1547,11 @@ runDeleteThisPackageIncludingDataText = function (clickedPackageIncludingDataTex
         }, 300); // Match transition duration in CSS
 
 
-        // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
+        // Check if there are any remaining inserted package including data (Searching by the second class name)
         let remainingPackageIncludingDataText = document.querySelectorAll('.inserted_package_including_data_text');
         if (remainingPackageIncludingDataText.length === 0) {
-            // Hide section with id 'inserted_package_data_section_page_4'
-            document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+            // Hide section with id 'downloaded_pdf_package_including_data_page'
+            document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
         }
     }
 
@@ -1696,11 +1675,11 @@ checkThePdfNameToDownload = function () {
 /* Save the last PDF download data in localStorage */
 saveLastPdfDownloadData = function () {
     let idsToCheck = [
-        'inserted_package_data_section_page_1',
-        'inserted_package_data_section_page_2',
-        'inserted_package_data_section_page_3',
-        'inserted_package_data_section_page_4',
-        'inserted_package_data_section_page_5'
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_clint_movements_data_page'
     ];
 
     let visibleContent = [];
@@ -1740,11 +1719,11 @@ let isVisible = function (element) {
     return element && element.style.display !== 'none' && element.offsetParent !== null;
 };
 
-
 /* Download the pdf file with the given name */
-downloadPdfWithCustomName = function (pdfName) {
+downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
+    /* Function to capture a canvas of a given section */
     let captureCanvas = async function (section) {
         try {
             let canvas = await html2canvas(section, {
@@ -1758,7 +1737,13 @@ downloadPdfWithCustomName = function (pdfName) {
         }
     };
 
+    /* Function to combine multiple canvases into one */
     let combineCanvases = function (canvases) {
+        if (canvases.length === 0) {
+            console.error('No canvases to combine');
+            return null;
+        }
+
         let totalHeight = canvases.reduce((sum, canvas) => sum + canvas.height, 0);
         let combinedCanvas = document.createElement('canvas');
         combinedCanvas.width = canvases[0].width;
@@ -1778,6 +1763,7 @@ downloadPdfWithCustomName = function (pdfName) {
         return combinedCanvas;
     };
 
+    /* Function to process all visible sections and generate the PDF */
     let processSections = async function (sections) {
         let canvases = [];
 
@@ -1788,7 +1774,16 @@ downloadPdfWithCustomName = function (pdfName) {
             }
         }
 
+        if (canvases.length === 0) {
+            console.error('No canvases captured');
+            return;
+        }
+
         let combinedCanvas = combineCanvases(canvases);
+        if (!combinedCanvas) {
+            console.error('Failed to combine canvases');
+            return;
+        }
 
         let pdfWidth = 210; // A4 width in mm
         let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
@@ -1805,7 +1800,7 @@ downloadPdfWithCustomName = function (pdfName) {
             img.style.display = 'none';
         });
 
-        inserted_package_data_section_page_6.style.display = 'none'; // Hide the section after saving the PDF
+        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
         saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
     };
 
@@ -1815,24 +1810,37 @@ downloadPdfWithCustomName = function (pdfName) {
         img.style.display = 'inline';
     });
 
-    inserted_package_data_section_page_6.style.display = 'block'; // Show the section before checking visibility
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block'; // Show the section before checking visibility
+
+    // Define the class names to check
+    let divsIdNames = [
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_important_notes_data_page'
+    ];
 
     let sections = [];
-    let i = 1;
-    while (true) {
-        let section = document.getElementById(`inserted_package_data_section_page_${i}`);
-        if (section) {
-            if (isVisible(section)) {
-                sections.push(section);
-            }
-        } else {
-            break;
+    
+    // Iterate through each class name and check visibility
+    divsIdNames.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
+        if (section && isVisible(section)) { // Check if section exists and is visible
+            sections.push(section); // Add visible section to the array
         }
-        i++;
+    });
+
+    if (sections.length === 0) {
+        console.error('No visible sections found');
+        return;
     }
 
-    processSections(sections);
+    await processSections(sections); // Process visible sections to generate the PDF
 };
+
+
 
 
 
@@ -1880,7 +1888,7 @@ downloadPdfWithCustomName = function (pdfName) {
 
             if (pageType === 'last') {
                 pdf.save(pdfName);
-                inserted_package_data_section_page_6.style.display = 'none'; // Hide the section after saving the PDF
+                downloaded_pdf_important_notes_data_page.style.display = 'none'; // Hide the section after saving the PDF
                 saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
             }
         };
@@ -1923,7 +1931,7 @@ downloadPdfWithCustomName = function (pdfName) {
         processNextSection();
     };
 
-    inserted_package_data_section_page_6.style.display = 'block'; // Show the section before checking visibility
+    downloaded_pdf_important_notes_data_page.style.display = 'block'; // Show the section before checking visibility
 
     let sections = [];
     let i = 1;
