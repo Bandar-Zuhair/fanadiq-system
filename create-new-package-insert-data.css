@@ -96,7 +96,7 @@
 
 /* Inserted package including data position */
 .inserted_package_including_and_not_icluding_data_div_class{
-    background: darkred;
+    background: rgb(207, 233, 242);
     padding-right: 5px;
     display: flex;
     flex-direction: column;
@@ -104,7 +104,6 @@
 }
 
 .inserted_package_including_and_not_icluding_data_div_class p{
-    color: white;
     width: fit-content;
     font-size: 2vw;
     padding: 5px 0;
@@ -113,8 +112,7 @@
 }
 
 .inserted_package_including_and_not_icluding_data_div_class h6{
-    background: rgb(124, 0, 196);
-    color: white;
+    background: rgb(155, 209, 227);
     width: 100%;
     font-size: 2vw;
     padding: 5px 0;
@@ -151,7 +149,7 @@
 
 /* Pdf section title */
 .pdf_section_title_div_class {
-    background: darkorange;
+    background: rgb(210, 210, 210);
     width: 100%;
     display: flex;
     align-items: center;
@@ -164,7 +162,6 @@
 }
 
 .pdf_section_title_div_class h6 {
-    color: white;
     font-size: 2.5vw;
     font-weight: 600;
     flex: 1;
@@ -174,7 +171,6 @@
 }
 
 .pdf_section_title_div_class ion-icon {
-    color: white;
     font-size: 4.5vw;
     position: absolute;
     /* Position the icon absolutely */
@@ -294,13 +290,13 @@
 
 
 
-
+    
 
 
 
 /* Inserted package important note position */
 .inserted_package_important_note_position_div_class {
-    background: darkred;
+    background: rgb(207, 233, 242);
     padding-right: 5px;
     display: flex;
     flex-direction: column;
@@ -308,7 +304,6 @@
 }
 
 .inserted_package_important_note_position_div_class p {
-    color: white;
     width: fit-content;
     font-size: 2vw;
     padding: 5px 0;
