@@ -202,6 +202,7 @@ body {
 
 /* Exported pdf file element */
 .inserted_package_data_section_page_image_class{
+    display: none;
     width: 100%;
     padding: 100px 0;
 }
@@ -1471,7 +1472,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-    
+
 
 
 
