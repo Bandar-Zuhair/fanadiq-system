@@ -207,10 +207,6 @@ body {
     padding: 100px 0;
 }
 
-#last_inserted_package_data_section_page_image_class_id{
-    padding: 100px 0 0 0;
-}
-
 
 
 
@@ -1059,9 +1055,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 50px 0;
     }
     
-    #last_inserted_package_data_section_page_image_class_id{
-        padding: 50px 0 0 0;
-    }
 
 
 
@@ -1263,10 +1256,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .inserted_package_data_section_page_image_class{
         padding: 30px 0;
     }
-    
-    #last_inserted_package_data_section_page_image_class_id{
-        padding: 30px 0 0 0;
-    }
 
 
 
@@ -1466,9 +1455,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 20px 0;
     }
     
-    #last_inserted_package_data_section_page_image_class_id{
-        padding: 20px 0 0 0;
-    }
 
 
 
