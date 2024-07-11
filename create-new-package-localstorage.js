@@ -1,481 +1,447 @@
-localStorageControllerFunction = function (clickedButton) {
+/* Function to save new website localstorage data name */
+saveNewWebsiteLpcalStorageDataName = function () {
+    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
+    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
 
+    if (storeLastClickedLocalstorageDataName.innerText === '') {
+        firstDiv.style.display = 'none';
+    } else {
+        firstDiv.style.display = 'flex';
+    }
 
-    if (clickedButton === 'تخزين') {
+    /* Get the 'localstorage_save_name_input_div' and show it */
+    let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
 
-        /* Get the 'localstorage_save_name_input_div' and show it */
-        let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
+    // Create an overlay layer for better visual effect
+    let overlayLayer = document.createElement('div');
+    overlayLayer.classList.add('black_overlay');
+    document.body.appendChild(overlayLayer);
 
-        // Create an overlay layer for better visual effect
-        let overlayLayer = document.createElement('div');
-        overlayLayer.classList.add('black_overlay');
-        document.body.appendChild(overlayLayer);
+    // Delayed opacity transition for smooth appearance
+    setTimeout(() => {
+        overlayLayer.style.opacity = '1';
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+    }, 50);
 
-        // Delayed opacity transition for smooth appearance
+    // Click handler to close overlay and delete box div on click outside
+    overlayLayer.onclick = () => {
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
         setTimeout(() => {
-            overlayLayer.style.opacity = '1';
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-        }, 50);
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    };
 
-        // Click handler to close overlay and delete box div on click outside
-        overlayLayer.onclick = () => {
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
-
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        };
-
-        // Prevent overlayLayer click propagation to avoid immediate closure
-        overlayLayer.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent immediate closure of overlay on click
-        });
+    // Prevent overlayLayer click propagation to avoid immediate closure
+    overlayLayer.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent immediate closure of overlay on click
+    });
 
 
 
 
+    
 
 
 
-        /* Save new website data to the localstorage */
-        svaeNewWebsiteLocalStorageDataName = function () {
-            let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
-            let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
-        
-            /* If there is no value in the 'localstorage_new_save_data_name_input_id' input, stop the process */
-            if (localStorageNewSaveDataNameInput === '') {
-                // Change the submit icon background color
-                localstorageNewSaveButton.style.backgroundColor = 'red';
-        
-                // Set the background color of the submit icon back to the default color
-                setTimeout(() => {
-                    localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-                }, 500);
-        
-                return;
-            }
-        
-            // Initialize an array in local storage if it doesn't exist
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('savedWebsiteDataArray')) || [];
-        
-            // Create an object to store visible div elements
-            let newObject = {
-                name: localStorageNewSaveDataNameInput,
-                elements: {}
-            };
-        
-            // List of div IDs to check visibility
-            let divIds = [
-                'inserted_package_data_section_page_1',
-                'inserted_package_data_section_page_2',
-                'inserted_package_data_section_page_3',
-                'inserted_package_data_section_page_4',
-                'inserted_package_data_section_page_5'
-            ];
-        
-            // Check visibility of each div and add to the object if visible
-            let isAnyDivVisible = false;
-            divIds.forEach(divId => {
-                let element = document.getElementById(divId);
-                if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                    newObject.elements[divId] = element.outerHTML;
-                    isAnyDivVisible = true;
-                }
-            });
-        
-            // If no visible divs were found, change the submit icon background color and exit
-            if (!isAnyDivVisible) {
-                // Change the submit icon background color
-                localstorageNewSaveButton.style.backgroundColor = 'red';
-        
-                // Set the background color of the submit icon back to the default color
-                setTimeout(() => {
-                    localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-                }, 500);
-        
-                return;
-            }
-        
-            // Change the submit icon background color to green
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-        
+
+    /* Save (New) website data to the localstorage */
+    svaeNewWebsiteLocalStorageDataName = function () {
+        let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
+        let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
+
+        /* If there is no value in the 'localstorage_new_save_data_name_input_id' input, stop the process */
+        if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
+            // Change the submit icon background color
+            localstorageNewSaveButton.style.backgroundColor = 'red';
+
             // Set the background color of the submit icon back to the default color
             setTimeout(() => {
                 localstorageNewSaveButton.style.backgroundColor = 'darkorange';
             }, 500);
-        
+
+            return;
+        }
+
+        // Initialize an array in local storage if it doesn't exist
+        let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+
+        // Create an object to store visible div elements
+        let newObject = {
+            name: localStorageNewSaveDataNameInput,
+            elements: {}
+        };
+
+        // List of div IDs to check visibility
+        let divIds = [
+            'inserted_package_data_section_page_1',
+            'inserted_package_data_section_page_2',
+            'inserted_package_data_section_page_3',
+            'inserted_package_data_section_page_4',
+            'inserted_package_data_section_page_5'
+        ];
+
+        // Check visibility of each div and add to the object if visible
+        let isAnyDivVisible = false;
+        divIds.forEach(divId => {
+            let element = document.getElementById(divId);
+            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+                newObject.elements[divId] = element.outerHTML;
+                isAnyDivVisible = true;
+            }
+        });
+
+        // If no visible divs were found, change the submit icon background color and exit
+        if (!isAnyDivVisible) {
+            // Change the submit icon background color
+            localstorageNewSaveButton.style.backgroundColor = 'red';
+
+            // Set the background color of the submit icon back to the default color
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            return;
+        }
+
+        // Check if an object with the same name already exists
+        let existingObjectIndex = savedWebsiteDataArray.findIndex(item => item.name === localStorageNewSaveDataNameInput);
+
+        if (existingObjectIndex !== -1) {
+            // Replace the existing object with the new data
+            savedWebsiteDataArray[existingObjectIndex] = newObject;
+        } else {
             // Add the new object to the array
             savedWebsiteDataArray.push(newObject);
-        
-            // Save the updated array to local storage
-            localStorage.setItem('savedWebsiteDataArray', JSON.stringify(savedWebsiteDataArray));
-        
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
-        
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        
-            /* Reset the input value after saving a new localStorage website data */
-            localstorage_new_save_data_name_input_id.value = '';
         }
-        
 
+        // Save the updated array to local storage
+        localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
 
+        // Change the submit icon background color to green
+        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
 
-
-
-
-
-
-    } else if (clickedButton === 'إستعادة') {
-
-        /* Get the 'localstorage_save_name_input_div' and show it */
-        let localStorageStoreNewDataDiv = document.getElementById('localstorage_import_stored_data_names_div');
-
-        // Create an overlay layer for better visual effect
-        let overlayLayer = document.createElement('div');
-        overlayLayer.classList.add('black_overlay');
-        document.body.appendChild(overlayLayer);
-
-        // Delayed opacity transition for smooth appearance
+        // Set the background color of the submit icon back to the default color
         setTimeout(() => {
-            overlayLayer.style.opacity = '1';
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-        }, 50);
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
 
-        // Click handler to close overlay and delete box div on click outside
-        overlayLayer.onclick = () => {
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
 
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        };
-
-        // Prevent overlayLayer click propagation to avoid immediate closure
-        overlayLayer.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent immediate closure of overlay on click
-        });
-
-
-
-
-
-
-
-        // Function to update the displayed local storage data names
-        updateLocalStorageDataNames();
-
-        /* Function to update the displayed local storage data names */
-        function updateLocalStorageDataNames() {
-            // Get the 'allLocalstorageStoredDataNamesForImportingDataDiv' div
-            let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_importing_data_div');
-
-            // Clear existing <p> elements
-            allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
-
-            // Get the saved data array from local storage
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('savedWebsiteDataArray')) || [];
-
-            // Create new <p> elements based on the saved data array
-            savedWebsiteDataArray.forEach(data => {
-                let pElement = document.createElement('p');
-                pElement.innerText = data.name;
-                pElement.onclick = function () {
-                    pickThisWebsiteLocalStorageDataName(pElement);
-                };
-                allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
-            });
-        }
-
-
-
-
-
-
-        /* Function to pick only one website localStorage data name */
-        pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
-            // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
-            let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div p');
-
-            // Loop through each <p> element
-            allDataNames.forEach(function (dataName) {
-                // Reset the background color of all <p> elements to the default color
-                if (dataName !== clickedLocalStorageDataName) {
-                    dataName.style.backgroundColor = 'rgb(0, 65, 111)';
-                }
-            });
-
-            // Change the background color of the clicked <p> element based on its current background color
-            if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
-                clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 65, 111)';
-            } else {
-                clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-            }
-        };
-
-
-
-
-
-        /* Function to import the clicked localStorage data name */
-        importWebsiteLocalStorageDataName = function () {
-            // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
-            let allLocalStorageDataNamesDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div p');
-            let found = false;
-
-            // Loop through each <p> element
-            allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
-                // Check if any <p> element has a background color 'rgb(0, 155, 0)'
-                if (clickedLocalStorageDataNameElement.style.backgroundColor === 'rgb(0, 155, 0)') {
-                    found = true;
-
-                    // Change the submit button background color
-                    localstorage_import_saved_localstorage_data_name_button_id.style.backgroundColor = 'rgb(0, 255, 0)';
-                    setTimeout(() => {
-                        localstorage_import_saved_localstorage_data_name_button_id.style.backgroundColor = 'darkorange';
-                    }, 500);
-
-                    // Hide the div element with the overlay on submit
-                    localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-                    overlayLayer.style.opacity = '0'; // Hide overlay
-                    setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
-
-                    // Get the saved data array from local storage
-                    let savedWebsiteDataArray = JSON.parse(localStorage.getItem('savedWebsiteDataArray')) || [];
-
-                    // Find the object with the name matching the clicked <p> element
-                    let clickedDataName = clickedLocalStorageDataNameElement.innerText;
-                    let matchingObject = savedWebsiteDataArray.find(data => data.name === clickedDataName);
-
-                    if (matchingObject && matchingObject.elements) {
-
-                        // Get references to all input elements and reset their values
-                        document.getElementById('inserted_clint_data_position_div').innerHTML = '';
-                        document.getElementById('inserted_flight_data_position_div').innerHTML = '';
-                        document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
-                        document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
-                        document.getElementById('inserted_package_data_position_div').innerHTML = '';
-                        clint_movements_rules_div.innerHTML = `
-                            <p onclick="runDeleteThisClintMovementsRule(this)">وقت الدخول للفنادق الساعة 2 او 3 ظهراً ووقت الخروج 12 ظهرا</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">غرف الفنادق غير متصلة، والفنادق التي توفر غرف متصلة تعتمد على التوافرات لديهم</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">يفضل دفع مبلغ التأمين كاش عند دخول الفندق او الفيلا</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">خط سير البرنامج يتم تطبيقه كما تم اعتماده سابقاً ولا يحق للعميل تغييره، وفي حالة تم التغيير سوف يترتب على ذلك مبالغ اضافية</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">مدة الجولات 8 ساعات يومياً (من بداية صعود العميل مع السائق)</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">تبدا الجولات اليومية من الساعة 8 صباحاً الى 11 مساء</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">الرجاء عدم ترك الاغراض الثمينة داخل السيارة (لا نتحمل اي مسؤولية عن ضياعها)</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">السعر لا يشمل اي دخوليات للحدائق و المنتزهات</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">يتم تغيير السائق في كل مدينة</p>
-                            <p onclick="runDeleteThisClintMovementsRule(this)">السعر يشمل شرائح اتصال، وعند انتهاء باقة النت يتم شحنها من قبلكم</p>
-                        `;
-
-                        // Hide all sections
-                        document.getElementById('inserted_package_data_section_page_1').style.display = 'none';
-                        document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
-                        document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
-                        document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
-                        document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
-
-                        // Show only the divs whose IDs exist in the target object and apply their innerHTML content
-                        for (let divId in matchingObject.elements) {
-                            let htmlSectionPdfPageDiv = document.getElementById(divId);
-                            htmlSectionPdfPageDiv.style.display = 'block';
-                            htmlSectionPdfPageDiv.innerHTML = matchingObject.elements[divId];
-
-
-
-                            /* Run the reActive Drag And Drop Functionlity and pass the found 'inserted_package_data_section_page_' id name */
-                            reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
-                        }
-
-
-
-
-                        /* Hide The 'localstorage_import_stored_data_names_div' with the 'overlayLayer' */
-                        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-                        overlayLayer.style.opacity = '0'; // Hide overlay
-
-
-                    }
-                }
-            });
-
-            // If no <p> element with the 'rgb(0, 155, 0)' is found
-            if (!found) {
-                // Change the submit button background color to red
-                localstorage_import_saved_localstorage_data_name_button_id.style.backgroundColor = 'red';
-                setTimeout(() => {
-                    localstorage_import_saved_localstorage_data_name_button_id.style.backgroundColor = 'darkorange';
-                }, 500);
-
-            }
-        };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    } else if (clickedButton === 'حذف') {
-        /* Get the 'localstorage_save_name_input_div' and show it */
-        let localStorageDeleteWebsiteLocalStorageDataDiv = document.getElementById('localstorage_delete_stored_data_names_div');
-
-        // Create an overlay layer for better visual effect
-        let overlayLayer = document.createElement('div');
-        overlayLayer.classList.add('black_overlay');
-        document.body.appendChild(overlayLayer);
-
-        // Delayed opacity transition for smooth appearance
+        // Remove overlay and delete box div from DOM after transition
         setTimeout(() => {
-            overlayLayer.style.opacity = '1';
-            localStorageDeleteWebsiteLocalStorageDataDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-        }, 50);
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
 
-        // Click handler to close overlay and delete box div on click outside
-        overlayLayer.onclick = () => {
-            localStorageDeleteWebsiteLocalStorageDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
-
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        };
-
-        // Prevent overlayLayer click propagation to avoid immediate closure
-        overlayLayer.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent immediate closure of overlay on click
-        });
-
-
-
-        // Function to update the displayed local storage data names
-        updateLocalStorageDataNames();
-
-        /* Function to update the displayed local storage data names */
-        function updateLocalStorageDataNames() {
-            // Get the 'allLocalstorageStoredDataNamesForDeletingDataDiv' div
-            let allLocalstorageStoredDataNamesForDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
-
-            // Clear existing <p> elements
-            allLocalstorageStoredDataNamesForDeletingDataDiv.innerHTML = '';
-
-            // Get the saved data array from local storage
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('savedWebsiteDataArray')) || [];
-
-            // Create new <p> elements based on the saved data array
-            savedWebsiteDataArray.forEach(data => {
-                let pElement = document.createElement('p');
-                pElement.innerText = data.name;
-                pElement.onclick = function () {
-                    pickThisWebsiteLocalStorageDataName(pElement);
-                };
-                allLocalstorageStoredDataNamesForDeletingDataDiv.appendChild(pElement);
-            });
-        }
-
-
-
-
-
-
-        /* Function to pick only one website localStorage data name */
-        pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
-            // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_deleting_data_div' div
-            let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_deleting_data_div p');
-
-            // Loop through each <p> element
-            allDataNames.forEach(function (dataName) {
-                // Reset the background color of all <p> elements to the default color
-                if (dataName !== clickedLocalStorageDataName) {
-                    dataName.style.backgroundColor = 'rgb(0, 65, 111)';
-                }
-            });
-
-            // Change the background color of the clicked <p> element based on its current background color
-            if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
-                clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 65, 111)';
-            } else {
-                clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-            }
-        };
-
-
-
-
-        /* Function to delete the localstorage data name */
-        deleteWebsiteLocalStorageDataName = function () {
-            // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
-            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
-
-            // Get all p elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
-            let pElements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName('p');
-
-            // Loop through all p elements
-            for (let p of pElements) {
-                // Check the background color
-                let bgColor = window.getComputedStyle(p).backgroundColor;
-                if (bgColor === 'rgb(0, 155, 0)') {
-                    // Print the innerText of the p element
-                    console.log(p.innerText);
-
-                    // Change the submit button background color
-                    localstorage_delete_saved_localstorage_data_name_button_id.style.backgroundColor = 'rgb(0, 255, 0)';
-                    setTimeout(() => {
-                        localstorage_delete_saved_localstorage_data_name_button_id.style.backgroundColor = 'darkorange';
-                    }, 500);
-
-                    // Search and delete the object in localStorage
-                    let savedWebsiteDataArray = JSON.parse(localStorage.getItem('savedWebsiteDataArray')) || [];
-                    savedWebsiteDataArray = savedWebsiteDataArray.filter(item => item.name !== p.innerText);
-                    localStorage.setItem('savedWebsiteDataArray', JSON.stringify(savedWebsiteDataArray));
-
-
-                    /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
-                    localStorageDeleteWebsiteLocalStorageDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-                    overlayLayer.style.opacity = '0'; // Hide overlay
-
-                    // Remove overlay and delete box div from DOM after transition
-                    setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
-
-                } else {
-                    // Change the submit button background color
-                    localstorage_delete_saved_localstorage_data_name_button_id.style.backgroundColor = 'red';
-                    setTimeout(() => {
-                        localstorage_delete_saved_localstorage_data_name_button_id.style.backgroundColor = 'darkorange';
-                    }, 500);
-                }
-            }
-
-
-        }
-
+        /* Reset the input value after saving a new localStorage website data */
+        localstorage_new_save_data_name_input_id.value = '';
     }
 
+
+
+
+
+
+
+
+
+    /* Save (Current) website data to the localstorage */
+    svaeCurrentWebsiteLocalStorageDataName = function () {
+        let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
+        let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
+
+        // Initialize an array in local storage if it doesn't exist
+        let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+
+        // Create an object to store visible div elements
+        let newObject = {
+            name: storeLastClickedLocalstorageDataName,
+            elements: {}
+        };
+
+        // List of div IDs to check visibility
+        let divIds = [
+            'inserted_package_data_section_page_1',
+            'inserted_package_data_section_page_2',
+            'inserted_package_data_section_page_3',
+            'inserted_package_data_section_page_4',
+            'inserted_package_data_section_page_5'
+        ];
+
+        // Check visibility of each div and add to the object if visible
+        let isAnyDivVisible = false;
+        divIds.forEach(divId => {
+            let element = document.getElementById(divId);
+            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+                newObject.elements[divId] = element.outerHTML;
+                isAnyDivVisible = true;
+            }
+        });
+
+        // If no visible divs were found, change the submit icon background color and exit
+        if (!isAnyDivVisible) {
+            // Change the submit icon background color
+            localstorageNewSaveButton.style.backgroundColor = 'red';
+
+            // Set the background color of the submit icon back to the default color
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            return;
+        }
+
+        // Check if an object with the same name already exists
+        let existingObjectIndex = savedWebsiteDataArray.findIndex(item => item.name === storeLastClickedLocalstorageDataName);
+
+        if (existingObjectIndex !== -1) {
+            // Replace the existing object with the new data
+            savedWebsiteDataArray[existingObjectIndex] = newObject;
+        } else {
+            // Add the new object to the array
+            savedWebsiteDataArray.push(newObject);
+        }
+
+        // Save the updated array to local storage
+        localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
+
+        // Change the submit icon background color to green
+        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+
+        // Set the background color of the submit icon back to the default color
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
+
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    }
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to update the displayed local storage data names */
+function updateLocalStorageDataNames(localStorageControllerDivId) {
+
+    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
+
+
+    // Clear existing <p> elements
+    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
+
+    // Get the saved data array from local storage
+    let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+
+    // Create new <p> elements based on the saved data array
+    savedWebsiteDataArray.forEach(data => {
+        let pElement = document.createElement('h3');
+        pElement.innerText = data.name;
+        pElement.onclick = function () {
+            pickThisWebsiteLocalStorageDataName(pElement);
+        };
+        allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+    });
+}
+
+
+
+/* Function to pick only one website localStorage data name */
+pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
+    // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
+    let allDataNames1 = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+    let allDataNames2 = document.querySelectorAll('#all_localstorage_stored_data_names_for_deleting_data_div h3');
+
+    // Loop through each <p> element
+    allDataNames1.forEach(function (dataName) {
+        // Reset the background color of all <p> elements to the default color
+        if (dataName !== clickedLocalStorageDataName) {
+            dataName.style.backgroundColor = 'white';
+            dataName.style.color = 'black';
+        }
+    });
+
+    // Loop through each <p> element
+    allDataNames2.forEach(function (dataName) {
+        // Reset the background color of all <p> elements to the default color
+        if (dataName !== clickedLocalStorageDataName) {
+            dataName.style.backgroundColor = 'white';
+            dataName.style.color = 'black';
+        }
+    });
+
+    // Change the background color of the clicked <p> element based on its current background color
+    if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
+        clickedLocalStorageDataName.style.backgroundColor = 'white';
+        clickedLocalStorageDataName.style.color = 'black';
+    } else {
+        clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+        clickedLocalStorageDataName.style.color = 'white';
+    }
+};
+
+
+
+
+
+function importWebsiteLocalStorageDataName() {
+    let allLocalStorageDataNamesDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+    let found = false;
+
+    allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
+        if (clickedLocalStorageDataNameElement.style.backgroundColor === 'rgb(0, 155, 0)') {
+            found = true;
+
+
+            let dropdownDivElements = document.querySelectorAll('.dropdown_div_class');
+            dropdownDivElements.forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+
+            overlayLayer.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300);
+
+            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+            let clickedDataName = clickedLocalStorageDataNameElement.innerText;
+            let matchingObject = savedWebsiteDataArray.find(data => data.name === clickedDataName);
+
+            if (matchingObject && matchingObject.elements) {
+                document.getElementById('inserted_clint_data_position_div').innerHTML = '';
+                document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
+                document.getElementById('inserted_flight_data_position_div').innerHTML = '';
+                document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
+                document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
+
+                document.getElementById('inserted_package_data_section_page_1').style.display = 'none';
+                document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+                document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+                document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+                document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
+
+                for (let divId in matchingObject.elements) {
+                    let htmlSectionPdfPageDiv = document.getElementById(divId);
+                    htmlSectionPdfPageDiv.style.display = 'block';
+                    htmlSectionPdfPageDiv.innerHTML = matchingObject.elements[divId];
+                    reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                }
+
+
+                /* Store the clicked localstorage data name for later saving refrence */
+                store_last_clicked_localstorage_data_name.innerText = clickedDataName;
+
+
+
+                /* Show the download button */
+                document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+
+                overlayLayer.style.opacity = '0';
+                setTimeout(() => {
+                    overlayLayer.style.display = 'none';
+                }, 300);
+            }
+        }
+    });
+
+    if (!found) {
+        import_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
+        setTimeout(() => {
+            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
+        }, 500);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to delete the saved website localstorage data name */
+deleteWebsiteLocalStorageDataName = function () {
+    // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
+    let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
+
+    // Get all p elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
+    let pElements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName('h3');
+
+    // Loop through all p elements
+    for (let p of pElements) {
+        // Check the background color
+        let bgColor = window.getComputedStyle(p).backgroundColor;
+        if (bgColor === 'rgb(0, 155, 0)') {
+
+
+            // Search and delete the object in localStorage
+            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+            savedWebsiteDataArray = savedWebsiteDataArray.filter(item => item.name !== p.innerText);
+            localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
+
+
+            /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
+            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.dropdown_div_class');
+            allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+
+            overlayLayer.style.opacity = '0'; // Hide overlay
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+
+        } else {
+            // Change the submit button background color
+            delete_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
+            setTimeout(() => {
+                delete_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
+            }, 500);
+        }
+    }
+
+
+}
 
 
 
@@ -504,31 +470,95 @@ localStorageControllerFunction = function (clickedButton) {
 /* Function to re-active the drag and drop functionality (copied code for the main inserted daa js code) */
 reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
-    if (visiableDivIdName === 'inserted_package_data_section_page_2') {
-
-        // Get the dynamically created 'flightRowAirLineController' element
-        let flightRowAirLineController = document.querySelector('.flight_row_air_line_controller');
+    if (visiableDivIdName === 'inserted_package_data_section_page_3') {
 
 
-        // Praoer drag-and-drop functionality for the newly added flight row
-        createFlightDragAndDropMood();
+        // Get all elements with the class name 'flight_row_class'
+        let hotelRowTableDivs = document.querySelectorAll('.flight_row_class');
 
-        // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-        function createFlightDragAndDropMood() {
+        // Loop through each 'flight_row_class' element
+        hotelRowTableDivs.forEach(hotelRowTableDiv => {
+            // Get the 'flight_row_air_line_controller' elements inside each 'flight_row_class' element
+            let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
 
-            // Function to show edit or delete the inserted flight data
-            flightRowAirLineController.onclick = (event) => {
-                let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
-                let clickedFlightDataDiv = event.target.closest('.flight_row_class');
+            // Loop through each 'flight_row_air_line_controller' element
+            hotelRowImageControllers.forEach(hotelRowImageController => {
+                /* Pass the div of the clicked 'flight_row_flight_arrival_time_controller' */
+                hotelRowImageController.onclick = function (event) {
+                    flightRowAirLineControllerFunction(event);
+                };
+            });
+        });
 
+
+
+
+
+
+
+
+
+
+
+        // Define a global variable to store the reference
+        let currentFlightDataDivId;
+
+        // Function to handle delete clicked hotel data
+        deleteClickedFlightData = function (clickedFlightDataDivId) {
+
+            let overlayLayer = document.querySelector('.black_overlay');
+            let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
+
+            if (clickedFlightDataElement) {
+                clickedFlightDataElement.remove();
+            }
+
+            // Hide edit/delete options div
+            let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+            deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+            // Hide overlay layer with opacity transition
+            overlayLayer.style.opacity = '0';
+
+            // Remove overlay and edit/delete div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+
+            // Check if there are any remaining inserted flight data div (Searching by the second image class name)
+            let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
+            if (remainingFlightDataDivs.length === 0) {
+                // Hide section with id 'inserted_package_data_section_page_3'
+                document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+
+                // Hide the download button if there are no other important data sections visible
+                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                    document.getElementById('export_package_pdf_div_id').style.display = 'none';
+                }
+            }
+        }
+
+
+
+
+
+
+        // Function to show delete the inserted flight data
+        flightRowAirLineControllerFunction = function (event) {
+            let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+            let clickedFlightDataDiv = event.target.closest('.flight_row_class');
+
+            if (clickedFlightDataDiv) {
+                currentFlightDataDivId = clickedFlightDataDiv.id;
 
                 runDeleteClickedFlightDataFunction = function () {
                     deleteClickedFlightData(currentFlightDataDivId);
                 }
 
 
-                if (clickedFlightDataDiv) {
-                    currentFlightDataDivId = clickedFlightDataDiv.id;
+                // Check if the overlay already exists
+                let overlayLayer = document.querySelector('.black_overlay');
+                if (!overlayLayer) {
 
                     let overlayLayer = document.createElement('div');
                     overlayLayer.classList.add('black_overlay');
@@ -551,13 +581,25 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         event.stopPropagation();
                     });
                 }
-            };
+            }
+        };
 
+
+
+
+
+
+
+        // Praper drag-and-drop functionality for the newly added flight row
+        createFlightDragAndDropMood();
+
+        // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+        function createFlightDragAndDropMood() {
 
 
             // Common function to handle dragging logic
             function handleDrag(event, touch = false) {
-                if (event.target.classList.contains('flight_row_air_line_controller')) {
+                if (event.target.classList.contains('flight_row_flight_arrival_time_controller')) {
                     event.preventDefault();
                     let draggingElement = event.target.closest('.flight_row_class');
                     draggingElement.classList.add('dragging');
@@ -670,12 +712,36 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
+    } else if (visiableDivIdName === 'inserted_package_data_section_page_4') {
 
-    } else if (visiableDivIdName === 'inserted_package_data_section_page_3') {
+
+        // Get all elements with the class name 'hotel_row_class'
+        let hotelRowTableDivs = document.querySelectorAll('.hotel_row_class');
+
+        // Loop through each 'hotel_row_class' element
+        hotelRowTableDivs.forEach(hotelRowTableDiv => {
+            // Get the 'hotel_row_image_controller' elements inside each 'hotel_row_class' element
+            let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll('.hotel_row_image_controller');
+
+            // Loop through each 'hotel_row_image_controller' element
+            hotelRowImageControllers.forEach(hotelRowImageController => {
+                /* Pass the div of the clicked 'hotel_row_image_controller' */
+                hotelRowImageController.onclick = function (event) {
+                    hotelRowImageControllerFunction(event);
+                };
+            });
+        });
 
 
-        // Get the dynamically created 'hotelRowImageController' element
-        let hotelRowImageController = document.querySelector('.hotel_row_image_controller');
+
+
+
+
+
+
+
+
+
 
 
         // Define a global variable to store the reference
@@ -705,59 +771,68 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
             let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
             if (remainingHotelDataDivs.length === 0) {
-                // Hide section with id 'inserted_package_data_section_page_3'
-                document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+                // Hide section with id 'inserted_package_data_section_page_4'
+                document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
 
                 // Hide the download button if there are no other important data sections visible
-                if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' && document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
             }
         };
 
+
+
+
+
+        // Function to show delete the inserted hotel data
+        hotelRowImageControllerFunction = function (event) {
+            let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
+            let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
+
+            if (clickedHotelDataDiv) {
+                currentHotelDataDivId = clickedHotelDataDiv.id;
+
+                // Create an overlay layer for better visual effect
+                let overlayLayer = document.createElement('div');
+                overlayLayer.classList.add('black_overlay');
+                document.body.appendChild(overlayLayer);
+
+                // Delayed opacity transition for smooth appearance
+                setTimeout(() => {
+                    overlayLayer.style.opacity = '1';
+                    deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                }, 50);
+
+                runDeleteClickedHotelDataFunction = function () {
+                    deleteClickedHotelData(currentHotelDataDivId);
+                }
+
+                // Click handler to close overlay and delete box div on click outside
+                overlayLayer.onclick = () => {
+                    deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                    overlayLayer.style.opacity = '0'; // Hide overlay
+
+                    // Remove overlay and delete box div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+                };
+
+                // Prevent overlayLayer click propagation to avoid immediate closure
+                overlayLayer.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent immediate closure of overlay on click
+                });
+            }
+        };
+
+
+
+
+
+
         // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
         function createHotelDragAndDropMood() {
-
-            // Function to show edit or delete the inserted hotel data
-            hotelRowImageController.onclick = (event) => {
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
-                let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
-
-                if (clickedHotelDataDiv) {
-                    currentHotelDataDivId = clickedHotelDataDiv.id;
-
-                    // Create an overlay layer for better visual effect
-                    let overlayLayer = document.createElement('div');
-                    overlayLayer.classList.add('black_overlay');
-                    document.body.appendChild(overlayLayer);
-
-                    // Delayed opacity transition for smooth appearance
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = '1';
-                        deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                    }, 50);
-
-                    runDeleteClickedHotelDataFunction = function () {
-                        deleteClickedHotelData(currentHotelDataDivId);
-                    }
-
-                    // Click handler to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                        overlayLayer.style.opacity = '0'; // Hide overlay
-
-                        // Remove overlay and delete box div from DOM after transition
-                        setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
-
-                    // Prevent overlayLayer click propagation to avoid immediate closure
-                    overlayLayer.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Prevent immediate closure of overlay on click
-                    });
-                }
-            };
 
 
             // Event listener for the drop zone (inserted_hotel_data_position_div)
@@ -928,7 +1003,35 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-    } else if (visiableDivIdName === 'inserted_package_data_section_page_4') {
+
+
+    } else if (visiableDivIdName === 'inserted_package_data_section_page_5') {
+
+
+        // Get all elements with the class name 'flight_row_class'
+        let clintMovementsRowTableDiv = document.querySelectorAll('.clint_movements_row_class');
+
+        // Loop through each 'flight_row_class' element
+        clintMovementsRowTableDiv.forEach(clintMovementsRowTableDiv => {
+            // Get the 'flight_row_air_line_controller' elements inside each 'flight_row_class' element
+            let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
+
+            // Loop through each 'flight_row_air_line_controller' element
+            clintMovementsRowImageControllers.forEach(clintMovementsRowImageController => {
+                /* Pass the div of the clicked 'clint_movements_row_controller' */
+                clintMovementsRowImageController.onclick = function (event) {
+                    clintMovementsRowFlightArrivalTimeFunction(event);
+                };
+            });
+        });
+
+
+
+
+
+
+
+
 
         // Define a global variable to store the reference
         let currentClintMovementsDataDivId;
@@ -975,13 +1078,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if there are any remaining clint movements data divs
             let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
             if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
-                // Hide section with id 'inserted_package_data_section_page_4'
-                document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+                // Hide section with id 'inserted_package_data_section_page_5'
+                document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
 
                 // Hide the download button if there are no other important data sections visible
-                if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' &&
-                    document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
-                    document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
+                    document.getElementById('inserted_package_data_section_page_4').style.display === 'none' &&
+                    document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
             }
@@ -995,7 +1098,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Select all elements with class 'clint_movements_row_class'
             let clintMovementsRows = document.querySelectorAll('.clint_movements_row_class');
             // Get the starting date input value and convert it to a Date object
-            let startingDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+            let startingDateInput = document.getElementById('store_first_clint_movments_date').innerText;
             let currentDayDate = new Date(startingDateInput.split('-').reverse().join('-'));
 
             // Skip the first element and start from the second one
@@ -1015,148 +1118,166 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             }
         }
 
+
+
+        /* Function to handel clint movements row div click */
+        clintMovementsRowFlightArrivalTimeFunction = function (event) {
+            let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+            let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
+
+
+            if (clickedclintMovementsDataDiv) {
+                currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
+
+
+                // Create an overlay layer for better visual effect
+                let overlayLayer = document.createElement('div');
+                overlayLayer.classList.add('black_overlay');
+                document.body.appendChild(overlayLayer);
+
+                // Delayed opacity transition for smooth appearance
+                setTimeout(() => {
+                    overlayLayer.style.opacity = '1';
+                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                }, 50);
+
+                runDeleteClickedClintMovementsDataFunction = function () {
+                    deleteClickedClintMovementsData(currentClintMovementsDataDivId);
+                }
+
+                // Click handler to close overlay and delete box div on click outside
+                overlayLayer.onclick = () => {
+                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                    overlayLayer.style.opacity = '0'; // Hide overlay
+
+                    // Remove overlay and delete box div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+                };
+
+                // Prevent overlayLayer click propagation to avoid immediate closure
+                overlayLayer.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent immediate closure of overlay on click
+                });
+            }
+        }
+
+
+
+
         // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
         function createClintMovementsDragAndDropMood() {
-            // Loop through each ID to initialize drag and drop functionality
-            for (let i = 0; i < insertedClintMovementsRowDivUniqueId; i++) {
-                // Get the clint movements row div by its ID
-                let clintMovementsRowTableDiv = document.getElementById(`clint_movements_row_id_${i}`);
-                if (clintMovementsRowTableDiv) {
-                    // Get the row controller element within the row
-                    let clintMovementsRowController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
-
-                    // Handle click on 'clint_movements_row_class' elements
-                    clintMovementsRowController.onclick = (event) => {
-                        // Get the delete confirmation div
-                        let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
-                        // Find the closest 'clint_movements_row_class' element to the clicked element
-                        let clickedClintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
-
-                        if (clickedClintMovementsDataDiv) {
-                            // Store the ID of the clicked element in the global variable
-                            currentClintMovementsDataDivId = clickedClintMovementsDataDiv.id;
-
-                            // Create an overlay layer for better visual effect
-                            let overlayLayer = document.createElement('div');
-                            overlayLayer.classList.add('black_overlay');
-                            document.body.appendChild(overlayLayer);
-
-                            // Delayed opacity transition for smooth appearance
-                            setTimeout(() => {
-                                overlayLayer.style.opacity = '1';
-                                deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                            }, 50);
-
-                            // Define the function to delete the clicked clint movements data
-                            runDeleteClickedClintMovementsDataFunction = function () {
-                                deleteClickedClintMovementsData(currentClintMovementsDataDivId);
-                            }
-
-                            // Click handler to close overlay and delete box div on click outside
-                            overlayLayer.onclick = () => {
-                                deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                                overlayLayer.style.opacity = '0'; // Hide overlay
-
-                                // Remove overlay and delete box div from DOM after transition
-                                setTimeout(() => {
-                                    document.body.removeChild(overlayLayer);
-                                }, 300); // Match transition duration in CSS
-                            };
-
-                            // Prevent overlayLayer click propagation to avoid immediate closure
-                            overlayLayer.addEventListener('click', (event) => {
-                                event.stopPropagation(); // Prevent immediate closure of overlay on click
-                            });
-                        }
-                    };
-
-                    // Handle drag and drop functionality
-                    clintMovementsRowController.addEventListener('mousedown', handleDrag);
-                    clintMovementsRowController.addEventListener('touchstart', handleDrag);
-                }
-            }
 
             // Common function to handle dragging logic
-            function handleDrag(event) {
+            function handleDrag(event, touch = false) {
                 if (event.target.classList.contains('clint_movements_row_controller')) {
                     event.preventDefault();
-                    // Find the closest 'clint_movements_row_class' element to the dragged element
                     let draggingElement = event.target.closest('.clint_movements_row_class');
-                    draggingElement.classList.add('dragging'); // Add 'dragging' class
-                    // Store the starting Y position in the data attribute
-                    draggingElement.dataset.startY = event.clientY || event.touches[0].clientY;
-                    // Add event listeners for move and end events
-                    document.addEventListener('mousemove', move);
-                    document.addEventListener('touchmove', move);
-                    document.addEventListener('mouseup', end);
-                    document.addEventListener('touchend', end);
+                    draggingElement.classList.add('dragging');
+                    draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
+                    document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                    document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
                     // Disable scrolling
                     document.body.style.overflow = 'hidden';
                 }
             }
 
+            // Event listener for the drop zone
+            let flightDropZone = document.getElementById('inserted_clint_movements_data_position_div');
+
+            // Function to handle mouse down event
+            function mouseDown(event) {
+                handleDrag(event, false);
+            }
+
+            // Function to handle touch start event
+            function touchStart(event) {
+                handleDrag(event, true);
+            }
+
             // Function to handle move event
-            function move(event) {
+            function move(event, touch = false) {
                 let draggingElement = document.querySelector('.dragging');
-                if (draggingElement) {
-                    // Get the starting Y position
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    // Calculate the change in Y position
-                    let deltaY = (event.clientY || event.touches[0].clientY) - startY;
-                    // Apply the transformation to the dragged element
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
+                let startY = parseInt(draggingElement.dataset.startY || 0);
+                let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
+                draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                    // Get all elements with class 'clint_movements_row_class'
-                    let dropElements = Array.from(document.querySelectorAll('.clint_movements_row_class'));
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get the index of the dragged element
+                let dropElements = Array.from(flightDropZone.children);
+                let currentIndex = dropElements.indexOf(draggingElement);
 
-                    let targetIndex = currentIndex; // Initialize the target index
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get the bounding rectangle of the element
-                        // Check if the current position is within the bounds of the element
-                        if (i !== currentIndex && (event.clientY || event.touches[0].clientY) > rect.top && (event.clientY || event.touches[0].clientY) < rect.bottom) {
-                            // Update the target index based on the direction of the drag
-                            if (deltaY > 0 && (event.clientY || event.touches[0].clientY) > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && (event.clientY || event.touches[0].clientY) < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
+                let targetIndex = currentIndex;
+                for (let i = 0; i < dropElements.length; i++) {
+                    let element = dropElements[i];
+                    let rect = element.getBoundingClientRect();
+                    if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
+                        if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
+                            targetIndex = i + 1;
+                        } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
+                            targetIndex = i;
                         }
-                    }
-
-                    // Move the dragged element to the target position
-                    if (targetIndex !== currentIndex) {
-                        let dropZone = document.getElementById('inserted_clint_movements_data_position_div');
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                        break;
                     }
                 }
+
+                if (targetIndex !== currentIndex) {
+                    flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+
+                    /* Update the date arrangment in every drag and drop action */
+                    updateClintMovementsDates();
+                }
+            }
+
+            // Function to handle mouse move event
+            function mouseMove(event) {
+                move(event, false);
+            }
+
+            // Function to handle touch move event
+            function touchMove(event) {
+                move(event, true);
             }
 
             // Function to handle end event
-            function end(event) {
+            function end(event, touch = false) {
                 let draggingElement = document.querySelector('.dragging');
+
                 if (draggingElement) {
-                    draggingElement.classList.remove('dragging'); // Remove 'dragging' class
-                    draggingElement.style.transform = ''; // Reset the transformation
-                    draggingElement.removeAttribute('data-start-y'); // Remove the data attribute
-                    draggingElement.classList.add('drop-transition'); // Add 'drop-transition' class
-                    // Remove 'drop-transition' class after 300ms
+                    draggingElement.classList.remove('dragging');
+                    draggingElement.style.transform = '';
+                    draggingElement.removeAttribute('data-start-y');
+
+                    draggingElement.classList.add('drop-transition');
                     setTimeout(() => {
                         draggingElement.classList.remove('drop-transition');
-                        updateClintMovementsDates(); // Update dates after drag-and-drop
                     }, 300);
                 }
 
-                // Remove event listeners for move and end events
-                document.removeEventListener('mousemove', move);
-                document.removeEventListener('touchmove', move);
-                document.removeEventListener('mouseup', end);
-                document.removeEventListener('touchend', end);
-                document.body.style.overflow = ''; // Enable scrolling
+                document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
+
+                document.body.style.overflow = '';
             }
+
+            // Function to handle mouse up event
+            function mouseUp(event) {
+                end(event, false);
+            }
+
+            // Function to handle touch end event
+            function touchEnd(event) {
+                end(event, true);
+            }
+
+            // Add event listeners for each insertedFlightDataDiv element
+            let insertedFlightDataDivs = document.querySelectorAll('.clint_movements_row_class');
+
+            insertedFlightDataDivs.forEach((div) => {
+                div.addEventListener('mousedown', mouseDown);
+                div.addEventListener('touchstart', touchStart);
+            });
+
         }
 
         // Initialize drag and drop functionality
