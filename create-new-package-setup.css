@@ -75,20 +75,15 @@ body {
     height: 4vw;
     text-align: center;
     resize: none;
-    border-radius: 8px;
     outline: none;
-    position: relative;
     border: 1px solid black;
+    border-radius: 8px;
     transition: border-color 0.3s ease;
 }
 
 .package_details_input_class::placeholder {
     font-size: 2.5vw;
     text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 
