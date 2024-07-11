@@ -111,9 +111,13 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p style="user-select: none;" onclick="localStorageControllerFunction('تخزين')">تخزين</p>
-        <p style="user-select: none;" onclick="localStorageControllerFunction('إستعادة')">إستعادة</p>
-        <p style="user-select: none;" onclick="localStorageControllerFunction('حذف')">حذف</p>
+        <p style="user-select: none;" onclick="saveNewWebsiteLpcalStorageDataName()">تخزين</p>
+        <p style="user-select: none;"
+            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateLocalStorageDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
+            إستعادة</p>
+        <p style="user-select: none;"
+            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateLocalStorageDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
+            حذف</p>
     </div>
 
 
@@ -121,41 +125,120 @@
 
 
 
-    <div id="localstorage_save_name_input_div" class="localstorage_controller_div_class">
-        <h6>تخزين جديد</h6>
-        <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين" autocomplete="off">
-        <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button" onclick="svaeNewWebsiteLocalStorageDataName()">حفظ</p>
+    <div id="localstorage_save_name_input_div">
+        <div id="first_div_in_localstorage_save_name_input_div">
+            <p onclick="svaeCurrentWebsiteLocalStorageDataName()">حفظ التقدم</p>
+        </div>
+        <div>
+            <h6>تخزين جديد</h6>
+            <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
+                autocomplete="off">
+            <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
+                onclick="svaeNewWebsiteLocalStorageDataName()">تخزين جديد</p>
+        </div>
     </div>
 
+    <p id="store_last_clicked_localstorage_data_name" style="display: none;"></p>
 
 
 
 
-    <div id="localstorage_import_stored_data_names_div" class="localstorage_controller_div_class">
+
+
+
+
+
+
+    <!-- Dropdown Div For Hotel Locations -->
+    <div id="import_localstorage_data_names_dropdown" class="dropdown_div_class localstorage_dropdown_div_class">
         <h6>إستعادة البيانات</h6>
 
 
-        <div id="all_localstorage_stored_data_names_for_importing_data_div" class="all_localstorage_stored_data_names_div_class">
-            <!-- JS  Dynamic JS Code Here -->
+        <div class="search_bar_div_class">
+            <input type="text" id="import_localstorage_data_names_search_bar_input_id"
+                placeholder="بحث.." autocomplete="off">
         </div>
 
 
-        <p id="localstorage_import_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button" onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
+
+        <p id="import_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
+            onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
+
+
+        <div id="all_localstorage_stored_data_names_for_importing_data_div"
+            class="company_names_options_dropdown_class">
+            <!-- Dynamic JS Code Here -->
+        </div>
     </div>
 
 
 
 
-    <div id="localstorage_delete_stored_data_names_div" class="localstorage_controller_div_class">
+    <!-- Dropdown Div For Hotel Locations -->
+    <div id="delete_localstorage_data_names_dropdown" class="dropdown_div_class localstorage_dropdown_div_class">
         <h6>حذف البيانات</h6>
 
 
-        <div id="all_localstorage_stored_data_names_for_deleting_data_div" class="all_localstorage_stored_data_names_div_class">
+        <div class="search_bar_div_class">
+            <input type="text" id="delete_localstorage_data_names_search_bar_input_id"
+                placeholder="بحث.." autocomplete="off">
+        </div>
+
+
+
+        <p id="delete_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
+            onclick="deleteWebsiteLocalStorageDataName()">حذف</p>
+
+
+        <div id="all_localstorage_stored_data_names_for_deleting_data_div" class="company_names_options_dropdown_class">
+            <!-- Dynamic JS Code Here -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="localstorage_delete_stored_data_names_div" class="localstorage_controller_import_and_delete_div_class"
+        style="display: none;">
+        <h6>حذف البيانات</h6>
+
+
+
+        <input type="text" id="localstorage_names_search_bar_input_id" placeholder="بحث.." autocomplete="off">
+
+        <p id="localstorage_import_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button"
+            onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
+
+
+
+        <div id="all_localstorage_stored_data_names_for_deleting_data_div"
+            class="all_localstorage_stored_data_names_div_class">
             <!-- JS  Dynamic JS Code Here -->
         </div>
 
 
-        <p id="localstorage_delete_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button" onclick="deleteWebsiteLocalStorageDataName()">حذف</p>
+        <p id="localstorage_delete_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button"
+            onclick="deleteWebsiteLocalStorageDataName()">حذف</p>
     </div>
 
 
@@ -213,6 +296,11 @@
                         <input type="checkbox" id="family_checkbox" name="package_type">
                         <label for="family_checkbox">عائلة؟</label>
                     </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="two_people_checkbox" name="package_type">
+                        <label for="two_people_checkbox">شخصين؟</label>
+                    </div>
                 </div>
 
 
@@ -226,6 +314,178 @@
             </div>
 
         </div>
+
+
+
+
+
+
+
+        <div class="section_title_text_div" id="toggle_package_elements">
+            <h1 class="section_title_text">البرنامج يشمل..؟</h1>
+        </div>
+
+
+
+
+        <div id="dropdown_package_content" class="dropdown_content_div_class">
+            <div class="package_info_input_div">
+
+
+
+                <div id="package_including_details_div">
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox"
+                            name="package_type" checked>
+                        <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة مع سائق طوال مدة
+                            الرحلة</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="hotel_booking_with_breakfast_checkbox" name="package_type" checked>
+                        <label for="hotel_booking_with_breakfast_checkbox">حجوزات الفنادق مع وجبات الإفطار (لشخصين فقط
+                            لكل غرفة)</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="pertol_and_driver_living_cost_checkbox" name="package_type" checked>
+                        <label for="pertol_and_driver_living_cost_checkbox">تكاليف البنزين ومصاريف السواق</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="welcome_goodbye_hotel_delivery_checkbox" name="package_type" checked>
+                        <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="going_around_with_car_checkbox" name="package_type" checked>
+                        <label for="going_around_with_car_checkbox">الجولات السياحيه بسيارة متوسطة وكذلك
+                            التنقلات</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="customer_service_24_hour_checkbox" name="package_type" checked>
+                        <label for="customer_service_24_hour_checkbox">خدمة عملاء 24 ساعة يتحدث العربية</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="sms_card_with_internet_checkbox" name="package_type" checked>
+                        <label for="sms_card_with_internet_checkbox">شرايح اتصال مع نت مفتوح</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="all_taxes_covered_but_only_for_bali_no_checkbox" name="package_type"
+                            checked>
+                        <label for="all_taxes_covered_but_only_for_bali_no_checkbox">جميع الضرائب الحكومية بإستثناء
+                            ضريبة دخول بالي</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="inner_flight_tickets_checkbox" name="package_type" checked>
+                        <label for="inner_flight_tickets_checkbox">تذاكر الطيران الداخلي</label>
+                    </div>
+
+                    <div class="custom_checkbox">
+                        <input type="checkbox" id="placese_visiting_cost_checkbox" name="package_type" checked>
+                        <label for="placese_visiting_cost_checkbox">تكاليف دخوليات الحدائق و المنتزهات</label>
+                    </div>
+                </div>
+
+
+
+                <input type="text" id="sms_card_with_internet_amount_input_id" placeholder="عدد شرائح الإتصال؟" readonly
+                    autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
+
+
+
+                <input type="text" id="inner_flight_tickets_amount_input_id" placeholder="عدد تذاكر الطياران الداخلي؟"
+                    readonly autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
+
+
+
+                <textarea id="package_details_textarea_id" class="package_details_input_class"
+                    placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
+                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                    onclick="toggleFullscreen('package_details_textarea_id')"></ion-icon>
+
+
+                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
+
+
+
+
+                <!-- Button for exiting full-screen mode -->
+                <div class="submit_package_pdf_div">
+                    <ion-icon name="send" id="package_including_data_inputs_submit_icon"
+                        onclick="checkInputsToInsertData('package_including_data_inputs_submit_icon')"></ion-icon>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Delete the clicked inserted flight data -->
+        <div id="ensure_delete_package_including_data_text_div" class="ensure_your_delete_action">
+            <button onclick="passClickedPackageIncludingDataText()">حذف</button>
+        </div>
+
+
+
+
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="sms_card_and_ticket_amount_dropdown" class="dropdown_div_class">
+            <div class="search_bar_div_class">
+                <input type="text" id="sms_card_and_ticket_amount_search_bar_input_id" class="search_bar_input_class"
+                    placeholder="بحث.." autocomplete="off">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>شخص واحد</h3>
+                <h3>شخصين</h3>
+                <h3>ثلاثة اشخاص</h3>
+                <h3>اربعة اشخاص</h3>
+                <h3>خمسة اشخاص</h3>
+                <h3>ستة اشخاص</h3>
+                <h3>سبعة اشخاص</h3>
+                <h3>ثمانية اشخاص</h3>
+                <h3>تسعة اشخاص</h3>
+                <h3>عشر اشخاص</h3>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <div class="section_title_text_div" id="toggle_hotel_elements">
@@ -281,41 +541,6 @@
 
 
 
-        <div class="section_title_text_div" id="toggle_package_elements">
-            <h1 class="section_title_text">تفاصيل العرض</h1>
-        </div>
-
-        <div id="dropdown_package_content" class="dropdown_content_div_class">
-            <div class="package_info_input_div">
-                <textarea id="package_details_textarea_id" class="package_details_input_class"
-                    placeholder="العرض شامل..؟" autocomplete="off"></textarea>
-                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('package_details_textarea_id')"></ion-icon>
-
-                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
-
-                <!-- Button for exiting full-screen mode -->
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="package_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('package_inputs_submit_icon')"></ion-icon>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -326,16 +551,81 @@
                     placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
-                <h3>فييد</h3>
-                <h3>عين ماليزيا</h3>
-                <h3>ترافيل جيت</h3>
-                <h3>هالو بونشاك</h3>
-                <h3>حجوزات كوم</h3>
-                <h3>انجاز الاتحاد</h3>
+                <h3>gv</h3>
+                <h3>sstr</h3>
                 <h3>اجواء السماء</h3>
+                <h3>اركان</h3>
+                <h3>ارياف</h3>
+                <h3>اسفار الضيافة</h3>
+                <h3>اسفاري</h3>
+                <h3>افكار السفر</h3>
+                <h3>الاجنحة السبعة</h3>
+                <h3>الاسطورة</h3>
+                <h3>البتار</h3>
+                <h3>الجمان</h3>
+                <h3>الحياة السعيدة</h3>
+                <h3>الذهبية العالمية</h3>
+                <h3>الرحلة الذمية</h3>
+                <h3>الزاجل</h3>
+                <h3>السيف</h3>
+                <h3>الشافعي</h3>
+                <h3>الصفوة</h3>
+                <h3>الصقر الاول</h3>
+                <h3>العز</h3>
+                <h3>العطلة الجميلة</h3>
+                <h3>الفخامة</h3>
+                <h3>الفرس</h3>
+                <h3>القشعمي</h3>
+                <h3>الكنان</h3>
+                <h3>المعالم</h3>
+                <h3>المكان العالي</h3>
+                <h3>الهباش</h3>
+                <h3>انجاز الاتحاد</h3>
+                <h3>اهدافي</h3>
+                <h3>اوتاد</h3>
+                <h3>باقة سفر</h3>
+                <h3>بن غيث</h3>
+                <h3>بوابة السفر</h3>
+                <h3>بوردينج</h3>
+                <h3>بوردينج تايم</h3>
+                <h3>تذكرة السفر</h3>
+                <h3>ترافل</h3>
+                <h3>ترافل جت</h3>
+                <h3>تروبيكانا</h3>
+                <h3>تروس</h3>
+                <h3>جزيرة العطلات</h3>
+                <h3>جسر العالم</h3>
+                <h3>حجوزات</h3>
+                <h3>حجوزات داود</h3>
+                <h3>دريم</h3>
+                <h3>رحلتك</h3>
+                <h3>رحلتكم</h3>
+                <h3>سافر</h3>
+                <h3>سام تيكت</h3>
+                <h3>سكاي جلوبال</h3>
+                <h3>سكاي الدولية</h3>
+                <h3>سيدرا</h3>
+                <h3>شوف الدنيا</h3>
+                <h3>طيار</h3>
+                <h3>عطلات</h3>
+                <h3>عطلات الصيف</h3>
+                <h3>عناية السفر</h3>
+                <h3>عين ماليزيا</h3>
+                <h3>فاي ان</h3>
+                <h3>فلاي ون</h3>
+                <h3>فلاي ويك</h3>
+                <h3>فييد</h3>
                 <h3>كلاسيك</h3>
-                <h3>ترافيل كير</h3>
-                <h3>مواكب ترافيل</h3>
+                <h3>كنوز السفر</h3>
+                <h3>كيان</h3>
+                <h3>محطات السفر</h3>
+                <h3>محطات العبور</h3>
+                <h3>مداراتي</h3>
+                <h3>مسافر الصحراء</h3>
+                <h3>مواكب</h3>
+                <h3>نور الرضا</h3>
+                <h3>هالو بونشاك</h3>
+                <h3>وادي السفر</h3>
             </div>
         </div>
 
@@ -649,7 +939,7 @@
 
 
 
-    
+
 
 
 
@@ -726,12 +1016,13 @@
 
 
                 <input type="text" id="clint_movements_new_check_out_input_id" placeholder="تسجيل الخروج من؟"
-                    autocomplete="off" onclick="setClintMovementsInputValue('clint_movements_new_check_out_input_id')">
+                    autocomplete="off"
+                    onclick="setAutoIntialTextInputValue('clint_movements_new_check_out_input_id', 'تسجيل الخروج من ')">
 
 
                 <input type="text" id="clint_movements_airport_welcome_input_id" placeholder="استقبال في مطار؟"
                     autocomplete="off"
-                    onclick="setClintMovementsInputValue('clint_movements_airport_welcome_input_id')">
+                    onclick="setAutoIntialTextInputValue('clint_movements_airport_welcome_input_id', 'استقبال في مطار ')">
 
 
                 <textarea id="clint_movements_details_input_id" class="package_details_input_class"
@@ -746,13 +1037,14 @@
 
 
                 <input type="text" id="clint_movements_next_city_input_id" placeholder="الذهاب لمدينة جديدة؟" readonly
-                autocomplete="off"
-                onclick="insertClintMovementsCityInputValue('clint_movements_next_city_input_id')"
-                style="cursor: pointer;">
+                    autocomplete="off"
+                    onclick="insertClintMovementsCityInputValue('clint_movements_next_city_input_id')"
+                    style="cursor: pointer;">
 
 
                 <input type="text" id="clint_movements_new_check_in_input_id" placeholder="تسجيل الدخول في؟"
-                    autocomplete="off" onclick="setClintMovementsInputValue('clint_movements_new_check_in_input_id')">
+                    autocomplete="off"
+                    onclick="setAutoIntialTextInputValue('clint_movements_new_check_in_input_id', 'تسجيل الدخول في ')">
 
 
 
@@ -784,6 +1076,13 @@
                 <h3>باندونق</h3>
             </div>
         </div>
+
+
+
+
+
+
+
 
     </section>
 
@@ -1066,6 +1365,7 @@
         </div>
 
 
+
         <div class="clint_data_row_class" style="background: darkred; color: white;">
             <div>
                 <p>عدد الأشخاص</p>
@@ -1097,7 +1397,59 @@
 
 
 
+
+
     <section id="inserted_package_data_section_page_2" style="display: none;">
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="ribbon"></ion-icon>
+            <h6>البرنامج يشمل</h6>
+        </div>
+
+
+
+
+        <div id="inserted_package_icluding_data_position_div">
+            <!-- Dynamic JS Code Here -->
+
+        </div>
+
+
+
+        <hr style="margin: 10px 0;">
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h6>البرنامج لا يشمل</h6>
+        </div>
+
+
+
+        
+
+        <div id="inserted_package_not_icluding_data_position_div">
+            <!-- Dynamic JS Code Here -->
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="inserted_package_data_section_page_3" style="display: none;">
 
 
         <div class="pdf_section_title_div_class">
@@ -1151,7 +1503,7 @@
 
 
 
-    <section id="inserted_package_data_section_page_3" style="display: none;">
+    <section id="inserted_package_data_section_page_4" style="display: none;">
 
 
         <div class="pdf_section_title_div_class">
@@ -1162,7 +1514,7 @@
 
         <div class="hotel_row_class" style="background: darkred; color: white;">
             <div>
-                <p>اسم الفندق/<br>فيلا</p>
+                <p>اسم الفندق/<br>الفيلا</p>
             </div>
             <div>
                 <p>تاريخ الحجز</p>
@@ -1209,7 +1561,7 @@
 
 
 
-    <section id="inserted_package_data_section_page_4" style="display: none;">
+    <section id="inserted_package_data_section_page_5" style="display: none;">
 
 
         <div class="pdf_section_title_div_class">
@@ -1237,30 +1589,7 @@
         </div>
 
 
-        <div id="clint_movements_rules_div">
-
-
-            <p onclick="runDeleteThisClintMovementsRule(this)">وقت الدخول للفنادق الساعة 2 او 3 ظهراً ووقت الخروج 12
-                ظهرا
-            </p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">غرف الفنادق غير متصلة، والفنادق التي توفر غرف متصلة تعتمد
-                على التوافرات لديهم</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">يفضل دفع مبلغ التأمين كاش عند دخول الفندق او الفيلا</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">خط سير البرنامج يتم تطبيقه كما تم اعتماده سابقاً ولا يحق
-                للعميل تغييره، وفي حالة تم التغيير سوف يترتب
-                على ذلك مبالغ اضافية</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">مدة الجولات 8 ساعات يومياً (من بداية صعود العميل مع
-                السائق)
-            </p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">تبدا الجولات اليومية من الساعة 8 صباحاً الى 11 مساء</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">الرجاء عدم ترك الاغراض الثمينة داخل السيارة (لا نتحمل اي
-                مسؤولية عن ضياعها)</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">السعر لا يشمل اي دخوليات للحدائق و المنتزهات</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
-            <p onclick="runDeleteThisClintMovementsRule(this)">يتم تغيير السائق في كل مدينة</p>
-
-        </div>
-
+        <p id="store_first_clint_movments_date" style="display: none;"></p>
 
     </section>
 
@@ -1272,7 +1601,7 @@
 
 
 
-    <section id="inserted_package_data_section_page_5" style="display: none;">
+    <section id="inserted_package_data_section_page_6" style="display: none;">
 
 
         <div class="pdf_section_title_div_class">
@@ -1281,10 +1610,64 @@
         </div>
 
 
-        <div id="inserted_package_data_position_div">
+        <div id="inserted_package_important_note_position_div">
             <!-- Dynamic JS Code Here -->
+
+            <p><ion-icon name="checkmark-outline"></ion-icon> وقت الدخول للفنادق الساعة 2 او 3 ظهراً ووقت الخروج 12
+                ظهراً</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> الغرفة تسع ل 2 كبار وطفل تحت 5 سنوات فقط</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> غرف الفنادق غير متصلة، والفنادق التي توفر غرف متصلة تعتمد
+                على التوافرات لديهم</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> يفضل دفع مبلغ التأمين كاش عند دخول الفندق او الفيلا</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> اذا كان حجم السيارة لايتناسب مع عددكم وامتعتكم يرجى
+                إبلاغنا مسبقا مع الأخذ بالحسبان اختلاف سعر السيارة حسب الحجم</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تذاكر الطيران الداخلي غير قابلة للإسترجاع بعد تأكيد
+                البرنامج</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon>اسعار تذاكر الطيران غير ثابته وقابله للزيادة حسب سياسة شركات الطيران</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> الغاء البرامج واستعادة المبلغ المدفوع للفنادق يعتمد على
+                سياسية الفندق حال الطلب، ولا تضمن الشركه استرجاع او تعديل الفندق في حالة الرفض من قبل الفندق</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> الوزن المسموح به في الطيران الداخلي 20 كيلو الا اذا تم
+                الإتفاق مـعنا مسبقا على الزيادة</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> مدة الجـوله السياحية 8 ساعات في اليوم ويحق للعميل اختيار
+                المناطق السياحية بشرط ان تكون بحدود المنطقة المقيم بها
+            <p><ion-icon name="checkmark-outline"></ion-icon> خط سير البرنامج يتم تطبيقه كما تم اعتماده سابقاً ولا يحق
+                للعميل تغييره، وفي حالة تم التغيير سوف يترتب على ذلك مبالغ اضافية</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تبدا الجولات اليومية من الساعة 8 صباحاً الى 11 مساء</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء عدم ترك الاغراض الثمينة داخل السيارة (لا نتحمل اي
+                مسؤولية عن ضياعها)</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> يتم تغيير السائق في كل مدينة</p>
+
         </div>
 
+
+
+
+
+        <div class="pdf_section_title_div_class" style="margin-top: 15px;">
+            <ion-icon name="megaphone-outline"></ion-icon>
+            <h6>إرشادات وتعليمات هامة</h6>
+        </div>
+
+
+        <div id="inserted_package_important_note_position_div">
+            <p><ion-icon name="checkmark-outline"></ion-icon> تأكد من حجزك لطيران الذهاب والإياب والفنادق قبل وصولكم
+                للطائرة</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تأكد من تاريخ انتهاء جواز سفرك وانه صالح على اقل تقدير
+                لمدة ستة أشهر حتى يتم السماح لك بصعود الطائرة</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تأكد ان موظفي الفندق والسائقين وجميع الطاقم يعملون على
+                راحتك فليكن صدرك واسعاً لهم وابتسامتك بلسماً</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تأكد من إظهار الإحترام لعادات وتقاليد البلد ومعاملة الناس
+                كما تحـب ان تُعامل دون استصغار او إهانة لأحد</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> عند حدوث تأخير في رحلة وتأخر موعد الوصول او التأخر في
+                معاملة السفر في المطار الرجاء إبلاغنا لتحديث وقت وصولك</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تأكد بعدم التحدث الى الأشخاص الغرباء في المطار واكتفي
+                بالتواصل مع السائق تجنباً للنصب والاحتيال كما نوهت السفارات</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> السائح مسؤول عن حقائبه وممتلكاته في المطار والفندق واثناء
+                الإنتقالات بين المدن فــكن حريــصاً</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon> تقوم الشركة بدفع جميع الضرائب ماعدا ضريبة السائح بحوالي
+                10 ريال لليلة الواحدة تُدفع للفندق مباشرة</p>
+        </div>
 
     </section>
 
