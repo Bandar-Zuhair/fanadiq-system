@@ -7,7 +7,7 @@
 
 
 
-/* Inserted clint data position */
+/* Inserted company logo data position */
 #inserted_company_name_image_position_div {
     display: flex;
     justify-content: center;
@@ -16,12 +16,11 @@
 
 .inserted_company_name_logo {
     background: white;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
     z-index: 1;
     width: 40vw;
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
 }
 
 
@@ -76,6 +75,59 @@
 .clint_data_row_class div:nth-child(4) {
     flex-grow: 0.4;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inserted package including data position */
+.inserted_package_including_and_not_icluding_data_div_class{
+    background: darkred;
+    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.inserted_package_including_and_not_icluding_data_div_class p{
+    color: white;
+    width: fit-content;
+    font-size: 2vw;
+    padding: 5px 0;
+    text-align: start;
+    cursor: pointer;
+}
+
+.inserted_package_including_and_not_icluding_data_div_class h6{
+    background: rgb(124, 0, 196);
+    color: white;
+    width: 100%;
+    font-size: 2vw;
+    padding: 5px 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.inserted_package_including_and_not_icluding_data_div_class span{
+    font-weight: 600;
+}
+
+
+
 
 
 
@@ -234,43 +286,22 @@
 
 
 
-/* Inserted package data position */
-#inserted_package_data_position_div {
+/* Inserted package important note position */
+#inserted_package_important_note_position_div {
+    background: darkred;
+    padding-right: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
-.inserted_package_data_div {
-    background: white;
-    width: 100%;
-    padding: 5px 5px 0 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 0.5px solid black;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
+#inserted_package_important_note_position_div p {
+    color: white;
+    width: fit-content;
+    font-size: 2vw;
+    padding: 5px 0;
+    text-align: start;
 }
-
-.inserted_package_data_div h6 {
-    font-size: 1.8vw;
-}
-
-#package_total_price_h6_id {
-    background: white;
-    font-weight: 600;
-    color: rgb(27, 0, 125);
-    width: 100%;
-    text-align: center;
-    padding: 3px 5px;
-    border-radius: 7px;
-}
-
-
-
-
 
 
 
@@ -392,24 +423,6 @@
 /* Reduce the width of "الى" cell */
 .clint_movements_row_class div:nth-child(3) {
     flex-grow: 0.3;
-}
-
-#clint_movements_rules_div{
-    background: white;
-    padding: 10px 0 5px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    border: 0.5px solid black;
-    border-top: none;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
-}
-
-#clint_movements_rules_div p{
-    font-size: 1.8vw;
-    cursor: pointer;
 }
 
 
@@ -671,14 +684,19 @@
 
 
 
-    .inserted_package_data_div h6 {
-        font-size: 2vw;
+
+
+
+
+
+
+    #inserted_package_including_data_div p{
+        font-size: 3vw;
     }
-
-
-
-
-
+    
+    #inserted_package_including_data_div h6{
+        font-size: 3vw;
+    }
 
 
 
@@ -724,6 +742,7 @@
 
 /* 650px */
 @media(max-width:650px) {
+
     .ensure_your_delete_action {
         padding: 10px;
     }
@@ -826,13 +845,6 @@
         font-size: 2.5vw;
     }
 
-    #clint_movements_rules_div{
-        padding: 5px 0;
-    }
-    
-    #clint_movements_rules_div p{
-        font-size: 2.3vw;
-    }
 
 
 
@@ -846,10 +858,6 @@
 
 
 
-
-    .inserted_package_data_div h6 {
-        font-size: 2.3vw;
-    }
 
 
 
@@ -900,6 +908,18 @@
 
 
 
+    #inserted_package_including_data_div p{
+        font-size: 4vw;
+        padding: 3px 0;
+    }
+    
+    #inserted_package_including_data_div h6{
+        font-size: 4vw;
+        padding: 3px 0;
+    }
+
+
+
 
 
     .hotel_row_class span {
@@ -918,13 +938,6 @@
 
 
 
-    #clint_movements_rules_div{
-        padding: 2px 0;
-    }
-    
-    #clint_movements_rules_div p{
-        font-size: 2.5vw;
-    }
 
 
 
@@ -936,9 +949,6 @@
 
 
 
-    .inserted_package_data_div h6 {
-        font-size: 2.7vw;
-    }
 
 
 
