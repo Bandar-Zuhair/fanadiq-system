@@ -155,8 +155,8 @@
 
 
         <div class="search_bar_div_class">
-            <input type="text" id="import_localstorage_data_names_search_bar_input_id"
-                placeholder="بحث.." autocomplete="off">
+            <input type="text" id="import_localstorage_data_names_search_bar_input_id" placeholder="بحث.."
+                autocomplete="off">
         </div>
 
 
@@ -180,8 +180,8 @@
 
 
         <div class="search_bar_div_class">
-            <input type="text" id="delete_localstorage_data_names_search_bar_input_id"
-                placeholder="بحث.." autocomplete="off">
+            <input type="text" id="delete_localstorage_data_names_search_bar_input_id" placeholder="بحث.."
+                autocomplete="off">
         </div>
 
 
@@ -321,6 +321,80 @@
 
 
 
+
+
+
+
+
+
+
+
+        <!-- Create hotel data section -->
+        <div class="section_title_text_div" id="toggle_hotel_elements">
+            <h1 class="section_title_text">تفاصيل الفندق</h1>
+        </div>
+
+        <div id="dropdown_hotel_content" class="dropdown_content_div_class">
+
+            <div class="package_info_input_div">
+                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_location_dropdown')" style="cursor: pointer;">
+                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off"
+                    style="cursor: pointer;">
+                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
+                    style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" autocomplete="off">
+
+                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" autocomplete="off">
+
+                <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
+
+
+                <input type="text" id="room_description_input_id" placeholder="وصف الغرفة" autocomplete="off">
+
+
+                <div class="custom_checkbox">
+                    <input type="checkbox" id="breakfast_checkbox">
+                    <label for="breakfast_checkbox">شامل الإفطار؟</label>
+                </div>
+
+
+                <textarea id="room_extra_info_textarea_id" class="package_details_input_class"
+                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
+                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                    onclick="toggleFullscreen('room_extra_info_textarea_id')"></ion-icon>
+
+
+                <div class="submit_package_pdf_div">
+                    <ion-icon name="send" id="hotel_inputs_submit_icon"
+                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Create package including and not including data section -->
         <div class="section_title_text_div" id="toggle_package_elements">
             <h1 class="section_title_text">البرنامج يشمل..؟</h1>
         </div>
@@ -399,12 +473,14 @@
 
 
                 <input type="text" id="sms_card_with_internet_amount_input_id" placeholder="عدد شرائح الإتصال؟" readonly
-                    autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
+                    autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
 
 
 
                 <input type="text" id="inner_flight_tickets_amount_input_id" placeholder="عدد تذاكر الطياران الداخلي؟"
-                    readonly autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
+                    readonly autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
 
 
 
@@ -493,50 +569,7 @@
 
 
 
-        <div class="section_title_text_div" id="toggle_hotel_elements">
-            <h1 class="section_title_text">تفاصيل الفندق</h1>
-        </div>
 
-        <div id="dropdown_hotel_content" class="dropdown_content_div_class">
-
-            <div class="package_info_input_div">
-                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_location_dropdown')" style="cursor: pointer;">
-                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off"
-                    style="cursor: pointer;">
-                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
-                    style="cursor: pointer;">
-
-
-                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" autocomplete="off">
-
-                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" autocomplete="off">
-
-                <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
-
-
-                <input type="text" id="room_description_input_id" placeholder="وصف الغرفة" autocomplete="off">
-
-
-                <div class="custom_checkbox">
-                    <input type="checkbox" id="breakfast_checkbox">
-                    <label for="breakfast_checkbox">شامل الإفطار؟</label>
-                </div>
-
-
-                <textarea id="room_extra_info_textarea_id" class="package_details_input_class"
-                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
-                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('room_extra_info_textarea_id')"></ion-icon>
-
-
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="hotel_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
-                </div>
-            </div>
-
-        </div>
 
 
 
@@ -1356,7 +1389,7 @@
 
 
 
-    <section id="inserted_package_data_section_page_1" style="display: none;">
+    <section id="downloaded_pdf_clint_data_page" style="display: none;">
 
         <img src="first-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
 
@@ -1368,13 +1401,13 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="bed"></ion-icon>
-            <h6 id="clint_package_type_h6">بكج شهر عسل 💝</h6>
+            <ion-icon name="ribbon-outline"></ion-icon>
+            <h6 id="clint_package_type_h6"></h6>
         </div>
 
 
 
-        <div class="clint_data_row_class" style="background: darkred; color: white;">
+        <div class="clint_data_row_class" style="background: rgb(207, 233, 242);">
             <div>
                 <p>عدد الأشخاص</p>
             </div>
@@ -1407,42 +1440,6 @@
 
 
 
-    <section id="inserted_package_data_section_page_2" style="display: none;">
-
-
-        <div class="pdf_section_title_div_class">
-            <ion-icon name="ribbon"></ion-icon>
-            <h6>البرنامج يشمل</h6>
-        </div>
-
-
-
-
-        <div id="inserted_package_icluding_data_position_div">
-            <!-- Dynamic JS Code Here -->
-
-        </div>
-
-
-
-
-        <div class="pdf_section_title_div_class" style="margin-top: 10px;">
-            <ion-icon name="alert-circle-outline"></ion-icon>
-            <h6>البرنامج لا يشمل</h6>
-        </div>
-
-
-
-        
-
-        <div id="inserted_package_not_icluding_data_position_div">
-            <!-- Dynamic JS Code Here -->
-
-        </div>
-
-
-
-    </section>
 
 
 
@@ -1450,13 +1447,8 @@
 
 
 
-
-
-
-
-
-
-    <section id="inserted_package_data_section_page_3" style="display: none;">
+    
+    <section id="downloaded_pdf_flight_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
 
@@ -1469,15 +1461,13 @@
 
 
 
-        <div class="flight_row_class" style="background: darkred; color: white;">
+        <div class="flight_row_class" style="background: rgb(207, 233, 242);">
             <div>
                 <p>الخطوط</p>
             </div>
             <div>
                 <p>عدد الأشخاص</p>
-            </div>
-            <div>
-                <p>الوزن المسموح</p>
+            </div>                <p>الوزن المسموح</p>
             </div>
             <div>
                 <p>من</p>
@@ -1513,19 +1503,21 @@
 
 
 
-    <section id="inserted_package_data_section_page_4" style="display: none;">
+    
+
+    <section id="downloaded_pdf_hotel_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
 
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="bed"></ion-icon>
+            <ion-icon name="bed-outline"></ion-icon>
             <h6>الفنادق / الفلل</h6>
         </div>
 
 
-        <div class="hotel_row_class" style="background: darkred; color: white;">
+        <div class="hotel_row_class" style="background: rgb(207, 233, 242);">
             <div>
                 <p>اسم الفندق/<br>الفيلا</p>
             </div>
@@ -1570,11 +1562,59 @@
 
 
 
+    <section id="downloaded_pdf_package_including_data_page" style="display: none;">
+
+        <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
+
+
+
+        <div class="pdf_section_title_div_class">
+            <ion-icon name="ribbon-outline"></ion-icon>
+            <h6>البرنامج يشمل</h6>
+        </div>
 
 
 
 
-    <section id="inserted_package_data_section_page_5" style="display: none;">
+        <div id="inserted_package_icluding_data_position_div">
+            <!-- Dynamic JS Code Here -->
+
+        </div>
+
+
+
+
+        <div class="pdf_section_title_div_class" style="margin-top: 10px;">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h6>البرنامج لا يشمل</h6>
+        </div>
+
+
+
+
+
+        <div id="inserted_package_not_icluding_data_position_div">
+            <!-- Dynamic JS Code Here -->
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    <section id="downloaded_pdf_clint_movements_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
 
@@ -1586,7 +1626,7 @@
         </div>
 
 
-        <div class="clint_movements_row_class" style="background: darkred; color: white;">
+        <div class="clint_movements_row_class" style="background: rgb(207, 233, 242);">
             <div>
                 <p>التاريخ</p>
             </div>
@@ -1616,8 +1656,8 @@
 
 
 
-
-    <section id="inserted_package_data_section_page_6">
+    
+    <section id="downloaded_pdf_important_notes_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
 
@@ -1641,7 +1681,8 @@
                 إبلاغنا مسبقا مع الأخذ بالحسبان اختلاف سعر السيارة حسب الحجم</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> تذاكر الطيران الداخلي غير قابلة للإسترجاع بعد تأكيد
                 البرنامج</p>
-            <p><ion-icon name="checkmark-outline"></ion-icon>اسعار تذاكر الطيران غير ثابته وقابله للزيادة حسب سياسة شركات الطيران</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon>اسعار تذاكر الطيران غير ثابته وقابله للزيادة حسب سياسة
+                شركات الطيران</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الغاء البرامج واستعادة المبلغ المدفوع للفنادق يعتمد على
                 سياسية الفندق حال الطلب، ولا تضمن الشركه استرجاع او تعديل الفندق في حالة الرفض من قبل الفندق</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الوزن المسموح به في الطيران الداخلي 20 كيلو الا اذا تم
@@ -1655,7 +1696,8 @@
                 مسؤولية عن ضياعها)</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> يتم تغيير السائق في كل مدينة</p>
-            <p style="text-align: center; font-weight: 600;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم التحقق من الفنادق وإعتماد الطلب</p>
+            <p style="text-align: center; font-weight: 600;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم التحقق
+                من الفنادق وإعتماد الطلب</p>
 
         </div>
 
@@ -1665,7 +1707,7 @@
 
         <div id="pdf_section_title_div_usuful_notes_id" class="pdf_section_title_div_class">
             <ion-icon name="megaphone-outline"></ion-icon>
-            <h6>إرشادات وتعليمات هامة</h6>
+            <h6>إرشادات وتعليمات عامة</h6>
         </div>
 
 
@@ -1673,7 +1715,8 @@
             <p><ion-icon name="checkmark-outline"></ion-icon> تأكد من حجزك لطيران الذهاب والإياب والفنادق قبل وصولكم
                 للطائرة</p>
             <p><ion-icon name="checkmark-outline"></ion-icon>تأكد من تعبئة الإفصاح الجمركي قبل رحلتكم</p>
-            <p><ion-icon name="checkmark-outline"></ion-icon>تأكد من ربط هاتفك بالإنترنت المجاني عند الوصول الى المطار</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon>تأكد من ربط هاتفك بالإنترنت المجاني عند الوصول الى المطار
+            </p>
             <p><ion-icon name="checkmark-outline"></ion-icon> تأكد من تاريخ انتهاء جواز سفرك وانه صالح على اقل تقدير
                 لمدة ستة أشهر حتى يتم السماح لك بصعود الطائرة</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> تأكد ان موظفي الفندق والسائقين وجميع الطاقم يعملون على
