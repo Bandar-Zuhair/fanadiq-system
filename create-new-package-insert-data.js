@@ -23,6 +23,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let honeymoonCheckbox = document.getElementById('honeymoon_checkbox');
         let guysCheckbox = document.getElementById('guys_checkbox');
         let familyCheckbox = document.getElementById('family_checkbox');
+        let twoPeopleCheckbox = document.getElementById('two_people_checkbox');
 
         // Check if any of the input values are empty
         if (personAmountInput === '' || packageStartDateInput === '' || packageEndDateInput === '' || packageTotalNightsInput === '') {
@@ -139,6 +140,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             } else if (familyCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج عائلة 👨‍👩‍👧‍👦';
 
+            } else if (twoPeopleCheckbox.checked) {
+                clintPackageTypeH6.innerHTML = 'بكج شخصين ✈️';
+
             } else {
                 clintPackageTypeH6.innerHTML = 'بكج جديد ✨';
 
@@ -185,8 +189,156 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-        /* Check if all hotel data inputs are filled */
-    } else if (clickedButtonId === 'clint_flight_inputs_submit_icon') {
+
+
+
+
+
+
+
+
+        /* Check if all package including data inputs are filled */
+    } else if (clickedButtonId === 'package_including_data_inputs_submit_icon') {
+
+
+        // Array of checkbox IDs
+        let checkboxIds = [
+            'privet_car_with_driver_to_welcome_and_etc_checkbox',
+            'hotel_booking_with_breakfast_checkbox',
+            'pertol_and_driver_living_cost_checkbox',
+            'welcome_goodbye_hotel_delivery_checkbox',
+            'going_around_with_car_checkbox',
+            'customer_service_24_hour_checkbox',
+            'sms_card_with_internet_checkbox',
+            'all_taxes_covered_but_only_for_bali_no_checkbox',
+            'inner_flight_tickets_checkbox',
+            'placese_visiting_cost_checkbox'
+        ];
+
+        // Get references to the text areas
+        let packageIncludingDataTextArea = document.getElementById('package_details_textarea_id').value;
+        let packageTotalPriceReayText = document.getElementById('package_totla_price_input_id').value;
+        let smsCardWithInternetAmountInputReayText = document.getElementById('sms_card_with_internet_amount_input_id').value;
+        let innerFlightTicketsAmountInputReayText = document.getElementById('inner_flight_tickets_amount_input_id').value;
+
+        // Check if any checkboxes are checked or if text areas are not empty
+        let areInputsValid = checkboxIds.some(id => document.getElementById(id).checked) || packageIncludingDataTextArea !== '';
+
+        if (!areInputsValid) {
+            // Show error message
+            package_including_data_inputs_submit_icon.style.backgroundColor = 'red';
+            setTimeout(() => {
+                package_including_data_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            }, 500);
+        } else {
+            // Show success message
+            package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+            setTimeout(() => {
+                package_including_data_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            // Create new div elements for including and not including data
+            let insertedPackageIncludingDataDiv = document.createElement('div');
+            insertedPackageIncludingDataDiv.id = 'inserted_package_including_data_div';
+            insertedPackageIncludingDataDiv.className = 'inserted_package_including_and_not_icluding_data_div_class';
+
+            let insertedPackageNotIncludingDataDiv = document.createElement('div');
+            insertedPackageNotIncludingDataDiv.id = 'inserted_package_not_including_data_div';
+            insertedPackageNotIncludingDataDiv.className = 'inserted_package_including_and_not_icluding_data_div_class';
+
+            // Loop over checkboxes
+            checkboxIds.forEach(id => {
+                let checkbox = document.getElementById(id);
+                let label = document.querySelector(`label[for="${id}"]`);
+                let p = document.createElement('p');
+                let icon = document.createElement('ion-icon');
+
+                if (checkbox.checked) {
+                    icon.setAttribute('name', 'checkmark-outline');
+                    p.appendChild(icon);
+
+                    if (id === 'sms_card_with_internet_checkbox' && smsCardWithInternetAmountInputReayText !== '') {
+                        p.appendChild(document.createTextNode(` ${smsCardWithInternetAmountInputReayText}`));
+                    } else if (id === 'inner_flight_tickets_checkbox' && innerFlightTicketsAmountInputReayText !== '') {
+                        p.appendChild(document.createTextNode(` ${innerFlightTicketsAmountInputReayText}`));
+                    } else {
+                        p.appendChild(document.createTextNode(` ${label.innerText}`));
+                    }
+
+                    p.className = 'inserted_package_including_data_text';
+                    insertedPackageIncludingDataDiv.appendChild(p);
+                } else {
+                    icon.setAttribute('name', 'close-outline');
+                    p.appendChild(icon);
+                    p.appendChild(document.createTextNode(` ${label.innerText}`));
+                    p.className = 'inserted_package_not_including_data_text';
+                    insertedPackageNotIncludingDataDiv.appendChild(p);
+                }
+
+                p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
+            });
+
+            // Include package details text area if not empty
+            if (packageIncludingDataTextArea !== '') {
+                packageIncludingDataTextArea.split('\n').forEach(text => {
+                    if (text.trim() !== '') {
+                        let p = document.createElement('p');
+                        let icon = document.createElement('ion-icon');
+                        icon.setAttribute('name', 'checkmark-outline');
+                        p.appendChild(icon);
+                        p.appendChild(document.createTextNode(` ${text.trim()}`));
+                        p.className = 'inserted_package_including_data_text';
+                        p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
+                        insertedPackageIncludingDataDiv.appendChild(p);
+                    }
+                });
+            }
+
+            // Include total price if not empty
+            if (packageTotalPriceReayText !== '') {
+                let h6 = document.createElement('h6');
+                let span = document.createElement('span');
+                span.textContent = `${packageTotalPriceReayText}`;
+                h6.textContent = 'إجمالي السعر ';
+                h6.appendChild(span);
+                h6.className = 'inserted_package_including_data_text';
+                h6.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
+                insertedPackageIncludingDataDiv.appendChild(h6);
+            }
+
+            // Show the 'inserted_package_data_section_page_2'
+            document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+
+            // Append the data to the respective divs
+            document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
+            document.getElementById('inserted_package_icluding_data_position_div').appendChild(insertedPackageIncludingDataDiv);
+
+            document.getElementById('inserted_package_not_icluding_data_position_div').innerHTML = '';
+            document.getElementById('inserted_package_not_icluding_data_position_div').appendChild(insertedPackageNotIncludingDataDiv);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Check if all hotel data inputs are filled */
+    else if (clickedButtonId === 'clint_flight_inputs_submit_icon') {
 
         // Get references to all input elements for later use
         let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
@@ -249,7 +401,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     <div><p>${flightToCityInput}</p></div>
                     <div><p>${flightDateInput}</p></div>
                     <div><p>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_air_line_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_air_line_controller">${flightArrivalTimeInput}</p></div>
+                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_flight_arrival_time_controller">${flightArrivalTimeInput}</p></div>
                 `;
 
 
@@ -273,12 +425,20 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 // Get the dynamically created 'flightRowAirLineController' element
-                let flightRowAirLineController = document.querySelector('.flight_row_air_line_controller');
+                let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
 
+
+                /* Pass each clicked flight div controller to the 'flightRowAirLineControllerFunction' */
+                flightRowFlightArrivalTimeControllers.forEach(element => {
+                    element.onclick = function (event) {
+                        /* Pass the div of the clicked 'flight_row_flight_arrival_time_controller' */
+                        flightRowAirLineControllerFunction(event);
+                    };
+                });
 
 
                 // Show and append the new flight data div
-                document.getElementById('inserted_package_data_section_page_2').style.display = 'block';
+                document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
                 document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
 
 
@@ -327,11 +487,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Check if there are any remaining inserted flight data div (Searching by the second image class name)
                     let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
                     if (remainingFlightDataDivs.length === 0) {
-                        // Hide section with id 'inserted_package_data_section_page_2'
-                        document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+                        // Hide section with id 'inserted_package_data_section_page_3'
+                        document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
 
                         // Hide the download button if there are no other important data sections visible
-                        if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' && document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                        if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
                             document.getElementById('export_package_pdf_div_id').style.display = 'none';
                         }
                     }
@@ -339,25 +499,25 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                // Praper drag-and-drop functionality for the newly added flight row
-                createFlightDragAndDropMood();
 
-                // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-                function createFlightDragAndDropMood() {
 
-                    // Function to show edit or delete the inserted flight data
-                    flightRowAirLineController.onclick = (event) => {
-                        let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
-                        let clickedFlightDataDiv = event.target.closest('.flight_row_class');
 
+                // Function to show delete the inserted flight data
+                flightRowAirLineControllerFunction = function (event) {
+                    let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+                    let clickedFlightDataDiv = event.target.closest('.flight_row_class');
+
+                    if (clickedFlightDataDiv) {
+                        currentFlightDataDivId = clickedFlightDataDiv.id;
 
                         runDeleteClickedFlightDataFunction = function () {
                             deleteClickedFlightData(currentFlightDataDivId);
                         }
 
 
-                        if (clickedFlightDataDiv) {
-                            currentFlightDataDivId = clickedFlightDataDiv.id;
+                        // Check if the overlay already exists
+                        let overlayLayer = document.querySelector('.black_overlay');
+                        if (!overlayLayer) {
 
                             let overlayLayer = document.createElement('div');
                             overlayLayer.classList.add('black_overlay');
@@ -380,13 +540,25 @@ checkInputsToInsertData = function (clickedButtonId) {
                                 event.stopPropagation();
                             });
                         }
-                    };
+                    }
+                };
 
+
+
+
+
+
+
+                // Praper drag-and-drop functionality for the newly added flight row
+                createFlightDragAndDropMood();
+
+                // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+                function createFlightDragAndDropMood() {
 
 
                     // Common function to handle dragging logic
                     function handleDrag(event, touch = false) {
-                        if (event.target.classList.contains('flight_row_air_line_controller')) {
+                        if (event.target.classList.contains('flight_row_flight_arrival_time_controller')) {
                             event.preventDefault();
                             let draggingElement = event.target.closest('.flight_row_class');
                             draggingElement.classList.add('dragging');
@@ -520,7 +692,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
         let totalNightsReadyText = document.getElementById('total_nights_input_id').value;
         let roomDescriptionInput = document.getElementById('room_description_input_id').value;
-        let breakfastCheckbox = document.getElementById('breakfast_checkbox').value;
+        let breakfastCheckbox = document.getElementById('breakfast_checkbox');
         let roomExtraInfoReadyText = document.getElementById('room_extra_info_textarea_id').value;
 
 
@@ -582,16 +754,25 @@ checkInputsToInsertData = function (clickedButtonId) {
             hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
 
 
-            // Get the dynamically created 'hotelRowImageController' element
-            let hotelRowImageController = document.querySelector('.hotel_row_image_controller');
+            // Get all dynamically created elements with the class 'hotelRowImageController'
+            let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll('.hotel_row_image_controller');
+
+
+
+            hotelRowImageControllers.forEach(element => {
+                element.onclick = function (event) {
+                    /* Pass the div of the clicked 'hotel_row_image_controller' */
+                    hotelRowImageControllerFunction(event);
+                };
+            });
 
 
             // Append the new hotel row div to the parent div that holds all inserted hotel data
             document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
 
 
-            /* Show up the 'inserted_package_data_section_page_3' section */
-            document.getElementById('inserted_package_data_section_page_3').style.display = 'block';
+            /* Show up the 'inserted_package_data_section_page_4' section */
+            document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
 
             /* Show the download button */
             document.getElementById('export_package_pdf_div_id').style.display = 'block';
@@ -648,59 +829,68 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
-                    // Hide section with id 'inserted_package_data_section_page_3'
-                    document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+                    // Hide section with id 'inserted_package_data_section_page_4'
+                    document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
 
                     // Hide the download button if there are no other important data sections visible
-                    if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' && document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                    if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
                         document.getElementById('export_package_pdf_div_id').style.display = 'none';
                     }
                 }
             };
 
+
+
+
+
+            // Function to show delete the inserted hotel data
+            hotelRowImageControllerFunction = function (event) {
+                let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
+                let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
+
+                if (clickedHotelDataDiv) {
+                    currentHotelDataDivId = clickedHotelDataDiv.id;
+
+                    // Create an overlay layer for better visual effect
+                    let overlayLayer = document.createElement('div');
+                    overlayLayer.classList.add('black_overlay');
+                    document.body.appendChild(overlayLayer);
+
+                    // Delayed opacity transition for smooth appearance
+                    setTimeout(() => {
+                        overlayLayer.style.opacity = '1';
+                        deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                    }, 50);
+
+                    runDeleteClickedHotelDataFunction = function () {
+                        deleteClickedHotelData(currentHotelDataDivId);
+                    }
+
+                    // Click handler to close overlay and delete box div on click outside
+                    overlayLayer.onclick = () => {
+                        deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                        overlayLayer.style.opacity = '0'; // Hide overlay
+
+                        // Remove overlay and delete box div from DOM after transition
+                        setTimeout(() => {
+                            document.body.removeChild(overlayLayer);
+                        }, 300); // Match transition duration in CSS
+                    };
+
+                    // Prevent overlayLayer click propagation to avoid immediate closure
+                    overlayLayer.addEventListener('click', (event) => {
+                        event.stopPropagation(); // Prevent immediate closure of overlay on click
+                    });
+                }
+            };
+
+
+
+
+
+
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function createHotelDragAndDropMood() {
-
-                // Function to show edit or delete the inserted hotel data
-                hotelRowImageController.onclick = (event) => {
-                    let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
-                    let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
-
-                    if (clickedHotelDataDiv) {
-                        currentHotelDataDivId = clickedHotelDataDiv.id;
-
-                        // Create an overlay layer for better visual effect
-                        let overlayLayer = document.createElement('div');
-                        overlayLayer.classList.add('black_overlay');
-                        document.body.appendChild(overlayLayer);
-
-                        // Delayed opacity transition for smooth appearance
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = '1';
-                            deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                        }, 50);
-
-                        runDeleteClickedHotelDataFunction = function () {
-                            deleteClickedHotelData(currentHotelDataDivId);
-                        }
-
-                        // Click handler to close overlay and delete box div on click outside
-                        overlayLayer.onclick = () => {
-                            deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                            overlayLayer.style.opacity = '0'; // Hide overlay
-
-                            // Remove overlay and delete box div from DOM after transition
-                            setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
-                            }, 300); // Match transition duration in CSS
-                        };
-
-                        // Prevent overlayLayer click propagation to avoid immediate closure
-                        overlayLayer.addEventListener('click', (event) => {
-                            event.stopPropagation(); // Prevent immediate closure of overlay on click
-                        });
-                    }
-                };
 
 
                 // Event listener for the drop zone (inserted_hotel_data_position_div)
@@ -876,6 +1066,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
     } else if (clickedButtonId === 'clint_movements_details_inputs_submit_icon') {
         // Get references to all input elements for later use
         let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
@@ -926,6 +1119,21 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }, 500);
 
             } else {
+
+                // Check if there are no div elements with class 'inserted_clint_movements_data_row'
+                let clintMovementsRows = document.querySelectorAll('.inserted_clint_movements_data_row');
+                if (clintMovementsRows.length === 0) {
+                    // Get the input value to store it in the 'store_first_clint_movments_date'
+                    let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
+
+                    // Set the innerText of the element with id 'store_first_clint_movments_date'
+                    let storeFirstClintMovmentsDate = document.getElementById('store_first_clint_movments_date');
+                    storeFirstClintMovmentsDate.innerText = clintMovementsCurrentDayDateInput;
+                }
+
+
+
+
                 // Get the current day date from the input field
                 let currentDayDate = new Date(clintMovementsCurrentDayDateInput.split('-').reverse().join('-'));
 
@@ -973,6 +1181,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let mixedInputsWithValue = nonEmptyInputs.join(' + ');
 
 
+
+
+
+
+
+
+                    /* Create the intial variable for storing the clint movements row content */
                     let clintMovementsRowTableDivContent;
 
                     if (storeClintMovementsNextCityInput !== null) {
@@ -996,6 +1211,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }
 
 
+
+
                     // Create a new div element to hold the hotel row
                     let clintMovementsRowTableDiv = document.createElement('div');
                     clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
@@ -1008,13 +1225,25 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+                    // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                    let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
+
+                    // Set the onclick event for each element
+                    clintMovementsRowImageControllers.forEach(element => {
+                        element.onclick = function (event) {
+                            /* Pass the div of the clicked 'clint_movements_row_controller' */
+                            clintMovementsRowFlightArrivalTimeFunction(event);
+                        };
+                    });
+
+
 
                     // Append the new hotel row div to the parent div that holds all inserted hotel data
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
 
 
-                    /* Show up the 'inserted_package_data_section_page_4' section */
-                    document.getElementById('inserted_package_data_section_page_4').style.display = 'block';
+                    /* Show up the 'inserted_package_data_section_page_5' section */
+                    document.getElementById('inserted_package_data_section_page_5').style.display = 'block';
 
                     /* Show the download button */
                     document.getElementById('export_package_pdf_div_id').style.display = 'block';
@@ -1030,7 +1259,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('clint_movements_next_city_input_id').value = '';
                     document.getElementById('clint_movements_new_check_in_input_id').value = '';
 
-                    
+
                     /* Hide all the clint movements places names */
                     bali_clint_movements_places_div.style.display = 'none';
                     jakarta_clint_movements_places_div.style.display = 'none';
@@ -1091,13 +1320,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Check if there are any remaining clint movements data divs
                     let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
                     if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
-                        // Hide section with id 'inserted_package_data_section_page_4'
-                        document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+                        // Hide section with id 'inserted_package_data_section_page_5'
+                        document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
 
                         // Hide the download button if there are no other important data sections visible
-                        if (document.getElementById('inserted_package_data_section_page_2').style.display === 'none' &&
-                            document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
-                            document.getElementById('inserted_package_data_section_page_4').style.display === 'none') {
+                        if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
+                            document.getElementById('inserted_package_data_section_page_4').style.display === 'none' &&
+                            document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
                             document.getElementById('export_package_pdf_div_id').style.display = 'none';
                         }
                     }
@@ -1111,7 +1340,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Select all elements with class 'clint_movements_row_class'
                     let clintMovementsRows = document.querySelectorAll('.clint_movements_row_class');
                     // Get the starting date input value and convert it to a Date object
-                    let startingDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+                    let startingDateInput = document.getElementById('store_first_clint_movments_date').innerText;
                     let currentDayDate = new Date(startingDateInput.split('-').reverse().join('-'));
 
                     // Skip the first element and start from the second one
@@ -1131,148 +1360,166 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }
                 }
 
+
+
+                /* Function to handel clint movements row div click */
+                clintMovementsRowFlightArrivalTimeFunction = function (event) {
+                    let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+                    let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
+
+
+                    if (clickedclintMovementsDataDiv) {
+                        currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
+
+
+                        // Create an overlay layer for better visual effect
+                        let overlayLayer = document.createElement('div');
+                        overlayLayer.classList.add('black_overlay');
+                        document.body.appendChild(overlayLayer);
+
+                        // Delayed opacity transition for smooth appearance
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = '1';
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
+                        }, 50);
+
+                        runDeleteClickedClintMovementsDataFunction = function () {
+                            deleteClickedClintMovementsData(currentClintMovementsDataDivId);
+                        }
+
+                        // Click handler to close overlay and delete box div on click outside
+                        overlayLayer.onclick = () => {
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
+                            overlayLayer.style.opacity = '0'; // Hide overlay
+
+                            // Remove overlay and delete box div from DOM after transition
+                            setTimeout(() => {
+                                document.body.removeChild(overlayLayer);
+                            }, 300); // Match transition duration in CSS
+                        };
+
+                        // Prevent overlayLayer click propagation to avoid immediate closure
+                        overlayLayer.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Prevent immediate closure of overlay on click
+                        });
+                    }
+                }
+
+
+
+
                 // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
                 function createClintMovementsDragAndDropMood() {
-                    // Loop through each ID to initialize drag and drop functionality
-                    for (let i = 0; i < insertedClintMovementsRowDivUniqueId; i++) {
-                        // Get the clint movements row div by its ID
-                        let clintMovementsRowTableDiv = document.getElementById(`clint_movements_row_id_${i}`);
-                        if (clintMovementsRowTableDiv) {
-                            // Get the row controller element within the row
-                            let clintMovementsRowController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
-
-                            // Handle click on 'clint_movements_row_class' elements
-                            clintMovementsRowController.onclick = (event) => {
-                                // Get the delete confirmation div
-                                let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
-                                // Find the closest 'clint_movements_row_class' element to the clicked element
-                                let clickedClintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
-
-                                if (clickedClintMovementsDataDiv) {
-                                    // Store the ID of the clicked element in the global variable
-                                    currentClintMovementsDataDivId = clickedClintMovementsDataDiv.id;
-
-                                    // Create an overlay layer for better visual effect
-                                    let overlayLayer = document.createElement('div');
-                                    overlayLayer.classList.add('black_overlay');
-                                    document.body.appendChild(overlayLayer);
-
-                                    // Delayed opacity transition for smooth appearance
-                                    setTimeout(() => {
-                                        overlayLayer.style.opacity = '1';
-                                        deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                                    }, 50);
-
-                                    // Define the function to delete the clicked clint movements data
-                                    runDeleteClickedClintMovementsDataFunction = function () {
-                                        deleteClickedClintMovementsData(currentClintMovementsDataDivId);
-                                    }
-
-                                    // Click handler to close overlay and delete box div on click outside
-                                    overlayLayer.onclick = () => {
-                                        deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                                        overlayLayer.style.opacity = '0'; // Hide overlay
-
-                                        // Remove overlay and delete box div from DOM after transition
-                                        setTimeout(() => {
-                                            document.body.removeChild(overlayLayer);
-                                        }, 300); // Match transition duration in CSS
-                                    };
-
-                                    // Prevent overlayLayer click propagation to avoid immediate closure
-                                    overlayLayer.addEventListener('click', (event) => {
-                                        event.stopPropagation(); // Prevent immediate closure of overlay on click
-                                    });
-                                }
-                            };
-
-                            // Handle drag and drop functionality
-                            clintMovementsRowController.addEventListener('mousedown', handleDrag);
-                            clintMovementsRowController.addEventListener('touchstart', handleDrag);
-                        }
-                    }
 
                     // Common function to handle dragging logic
-                    function handleDrag(event) {
+                    function handleDrag(event, touch = false) {
                         if (event.target.classList.contains('clint_movements_row_controller')) {
                             event.preventDefault();
-                            // Find the closest 'clint_movements_row_class' element to the dragged element
                             let draggingElement = event.target.closest('.clint_movements_row_class');
-                            draggingElement.classList.add('dragging'); // Add 'dragging' class
-                            // Store the starting Y position in the data attribute
-                            draggingElement.dataset.startY = event.clientY || event.touches[0].clientY;
-                            // Add event listeners for move and end events
-                            document.addEventListener('mousemove', move);
-                            document.addEventListener('touchmove', move);
-                            document.addEventListener('mouseup', end);
-                            document.addEventListener('touchend', end);
+                            draggingElement.classList.add('dragging');
+                            draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
+                            document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                            document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
                             // Disable scrolling
                             document.body.style.overflow = 'hidden';
                         }
                     }
 
+                    // Event listener for the drop zone
+                    let flightDropZone = document.getElementById('inserted_clint_movements_data_position_div');
+
+                    // Function to handle mouse down event
+                    function mouseDown(event) {
+                        handleDrag(event, false);
+                    }
+
+                    // Function to handle touch start event
+                    function touchStart(event) {
+                        handleDrag(event, true);
+                    }
+
                     // Function to handle move event
-                    function move(event) {
+                    function move(event, touch = false) {
                         let draggingElement = document.querySelector('.dragging');
-                        if (draggingElement) {
-                            // Get the starting Y position
-                            let startY = parseInt(draggingElement.dataset.startY || 0);
-                            // Calculate the change in Y position
-                            let deltaY = (event.clientY || event.touches[0].clientY) - startY;
-                            // Apply the transformation to the dragged element
-                            draggingElement.style.transform = `translateY(${deltaY}px)`;
+                        let startY = parseInt(draggingElement.dataset.startY || 0);
+                        let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
+                        draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                            // Get all elements with class 'clint_movements_row_class'
-                            let dropElements = Array.from(document.querySelectorAll('.clint_movements_row_class'));
-                            let currentIndex = dropElements.indexOf(draggingElement); // Get the index of the dragged element
+                        let dropElements = Array.from(flightDropZone.children);
+                        let currentIndex = dropElements.indexOf(draggingElement);
 
-                            let targetIndex = currentIndex; // Initialize the target index
-                            for (let i = 0; i < dropElements.length; i++) {
-                                let element = dropElements[i];
-                                let rect = element.getBoundingClientRect(); // Get the bounding rectangle of the element
-                                // Check if the current position is within the bounds of the element
-                                if (i !== currentIndex && (event.clientY || event.touches[0].clientY) > rect.top && (event.clientY || event.touches[0].clientY) < rect.bottom) {
-                                    // Update the target index based on the direction of the drag
-                                    if (deltaY > 0 && (event.clientY || event.touches[0].clientY) > rect.bottom - 20) {
-                                        targetIndex = i + 1;
-                                    } else if (deltaY < 0 && (event.clientY || event.touches[0].clientY) < rect.top + 20) {
-                                        targetIndex = i;
-                                    }
-                                    break;
+                        let targetIndex = currentIndex;
+                        for (let i = 0; i < dropElements.length; i++) {
+                            let element = dropElements[i];
+                            let rect = element.getBoundingClientRect();
+                            if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
+                                if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
+                                    targetIndex = i + 1;
+                                } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
+                                    targetIndex = i;
                                 }
-                            }
-
-                            // Move the dragged element to the target position
-                            if (targetIndex !== currentIndex) {
-                                let dropZone = document.getElementById('inserted_clint_movements_data_position_div');
-                                dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                                break;
                             }
                         }
+
+                        if (targetIndex !== currentIndex) {
+                            flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+
+                            /* Update the date arrangment in every drag and drop action */
+                            updateClintMovementsDates();
+                        }
+                    }
+
+                    // Function to handle mouse move event
+                    function mouseMove(event) {
+                        move(event, false);
+                    }
+
+                    // Function to handle touch move event
+                    function touchMove(event) {
+                        move(event, true);
                     }
 
                     // Function to handle end event
-                    function end(event) {
+                    function end(event, touch = false) {
                         let draggingElement = document.querySelector('.dragging');
+
                         if (draggingElement) {
-                            draggingElement.classList.remove('dragging'); // Remove 'dragging' class
-                            draggingElement.style.transform = ''; // Reset the transformation
-                            draggingElement.removeAttribute('data-start-y'); // Remove the data attribute
-                            draggingElement.classList.add('drop-transition'); // Add 'drop-transition' class
-                            // Remove 'drop-transition' class after 300ms
+                            draggingElement.classList.remove('dragging');
+                            draggingElement.style.transform = '';
+                            draggingElement.removeAttribute('data-start-y');
+
+                            draggingElement.classList.add('drop-transition');
                             setTimeout(() => {
                                 draggingElement.classList.remove('drop-transition');
-                                updateClintMovementsDates(); // Update dates after drag-and-drop
                             }, 300);
                         }
 
-                        // Remove event listeners for move and end events
-                        document.removeEventListener('mousemove', move);
-                        document.removeEventListener('touchmove', move);
-                        document.removeEventListener('mouseup', end);
-                        document.removeEventListener('touchend', end);
-                        document.body.style.overflow = ''; // Enable scrolling
+                        document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
+                        document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
+
+                        document.body.style.overflow = '';
                     }
+
+                    // Function to handle mouse up event
+                    function mouseUp(event) {
+                        end(event, false);
+                    }
+
+                    // Function to handle touch end event
+                    function touchEnd(event) {
+                        end(event, true);
+                    }
+
+                    // Add event listeners for each insertedFlightDataDiv element
+                    let insertedFlightDataDivs = document.querySelectorAll('.clint_movements_row_class');
+
+                    insertedFlightDataDivs.forEach((div) => {
+                        div.addEventListener('mousedown', mouseDown);
+                        div.addEventListener('touchstart', touchStart);
+                    });
+
                 }
 
                 // Initialize drag and drop functionality
@@ -1280,77 +1527,6 @@ checkInputsToInsertData = function (clickedButtonId) {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    } else if (clickedButtonId === 'package_inputs_submit_icon') {
-
-        // Get references to all input elements for later use
-        let packageDetailsReayText = document.getElementById('package_details_textarea_id').value;
-        let packageTotalPriceReayText = document.getElementById('package_totla_price_input_id').value;
-
-        // If Not All Inputs Are Valid, Show The Error Message
-        if (packageDetailsReayText === '' || packageTotalPriceReayText === '') {
-            package_inputs_submit_icon.style.backgroundColor = 'red';
-
-            // Set the background color of the submit icon back to default color after 2 seconds
-            setTimeout(() => {
-                package_inputs_submit_icon.style.backgroundColor = 'darkorange';
-            }, 500);
-
-
-
-            /* if all inputs are filled then insert the data in the table */
-        } else {
-            /* Change the 'تم' button color */
-            package_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Set the background color of the submit icon back to default color after 2 seconds
-            setTimeout(() => {
-                package_inputs_submit_icon.style.backgroundColor = 'darkorange';
-            }, 500);
-
-
-            // Create a new div element to insert client data
-            let insertedPackageDataDiv = document.createElement('div');
-            insertedPackageDataDiv.classList.add('inserted_package_data_div');
-
-
-            // Replace multiple consecutive new line characters with a single new line character
-            packageDetailsReayText = packageDetailsReayText.replace(/\n\s*\n/g, '\n');
-
-            // Replace new line characters with <br> tags
-            let packageDetailsWithBreaks = packageDetailsReayText.replace(/\n/g, '<br>');
-
-            let packageDetailsH6 = document.createElement('h6');
-            packageDetailsH6.innerHTML = `${packageDetailsWithBreaks}`;
-
-            let packageTotalPriceH6 = document.createElement('h6');
-            packageTotalPriceH6.innerHTML = `إجمالي السعر ${packageTotalPriceReayText}`;
-            packageTotalPriceH6.id = 'package_total_price_h6_id';
-
-            insertedPackageDataDiv.appendChild(packageDetailsH6);
-            insertedPackageDataDiv.appendChild(packageTotalPriceH6);
-
-            // Show the div and clear previous package data and append the new data div
-            if (document.getElementById('inserted_package_data_position_div').style.display === 'none') {
-                document.getElementById('inserted_package_data_position_div').style.display = 'block';
-            }
-            document.getElementById('inserted_package_data_position_div').innerHTML = '';
-            document.getElementById('inserted_package_data_position_div').appendChild(insertedPackageDataDiv);
-
-            /* Show up the 'inserted_package_data_section_page_5' section */
-            document.getElementById('inserted_package_data_section_page_5').style.display = 'block';
-        }
     }
 }
 
@@ -1370,7 +1546,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 /* Function to handel clicked clint movements rule element */
-runDeleteThisClintMovementsRule = function (clickedRule) {
+runDeleteThisPackageIncludingDataText = function (clickedPackageIncludingDataText) {
 
     // Create an overlay layer for better visual effect
     let overlayLayer = document.createElement('div');
@@ -1379,33 +1555,41 @@ runDeleteThisClintMovementsRule = function (clickedRule) {
 
 
     /* Function to delete the clint movements rule */
-    deleteClickedClintMovementsRule = function (clickedRule) {
-        clickedRule.remove();
+    deleteClickedPackageIncludingDataText = function (clickedPackageIncludingDataText) {
+        clickedPackageIncludingDataText.remove();
 
-        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
+        ensure_delete_package_including_data_text_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
         overlayLayer.style.opacity = '0'; // Hide overlay
 
         // Remove overlay and delete box div from DOM after transition
         setTimeout(() => {
             document.body.removeChild(overlayLayer);
         }, 300); // Match transition duration in CSS
+
+
+        // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
+        let remainingPackageIncludingDataText = document.querySelectorAll('.inserted_package_including_data_text');
+        if (remainingPackageIncludingDataText.length === 0) {
+            // Hide section with id 'inserted_package_data_section_page_4'
+            document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
+        }
     }
 
 
     // Delayed opacity transition for smooth appearance
     setTimeout(() => {
         overlayLayer.style.opacity = '1';
-        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -50%)'; // Center div
+        ensure_delete_package_including_data_text_div.style.transform = 'translate(-50%, -50%)'; // Center div
     }, 50);
 
     /* Function to pass the clicked clint movements rule element */
-    passClickedClintMovementsRule = function () {
-        deleteClickedClintMovementsRule(clickedRule);
+    passClickedPackageIncludingDataText = function () {
+        deleteClickedPackageIncludingDataText(clickedPackageIncludingDataText);
     }
 
     // Click handler to close overlay and delete box div on click outside
     overlayLayer.onclick = () => {
-        ensure_delete_clint_movemnt_rule_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
+        ensure_delete_package_including_data_text_div.style.transform = 'translate(-50%, -100vh)'; // Slide out
         overlayLayer.style.opacity = '0'; // Hide overlay
 
         // Remove overlay and delete box div from DOM after transition
@@ -1419,6 +1603,18 @@ runDeleteThisClintMovementsRule = function (clickedRule) {
         event.stopPropagation(); // Prevent immediate closure of overlay on click
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1496,47 +1692,106 @@ checkThePdfNameToDownload = function () {
 
 }
 
+/* Save the last PDF download data in localStorage */
+saveLastPdfDownloadData = function () {
+    let idsToCheck = [
+        'inserted_package_data_section_page_1',
+        'inserted_package_data_section_page_2',
+        'inserted_package_data_section_page_3',
+        'inserted_package_data_section_page_4',
+        'inserted_package_data_section_page_5'
+    ];
+
+    let visibleContent = [];
+
+    idsToCheck.forEach(id => {
+        let element = document.getElementById(id);
+        if (isVisible(element)) {
+            visibleContent.push(element.outerHTML);
+        }
+    });
+
+    let savedData = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
+    let newEntry = {
+        name: "Last Download",
+        elements: {}
+    };
+
+    // Populate elements object with visible content
+    idsToCheck.forEach((id, index) => {
+        let element = document.getElementById(id);
+        if (isVisible(element)) {
+            newEntry.elements[id] = element.outerHTML;
+        }
+    });
+
+    // Remove any old object with the same name
+    savedData = savedData.filter(entry => entry.name !== "Last Download");
+
+    // Add the new object at the top
+    savedData.unshift(newEntry);
+
+    localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedData));
+};
+
+/* Function to check if an element is visible */
+let isVisible = function (element) {
+    return element && element.style.display !== 'none' && element.offsetParent !== null;
+};
+
+
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
     let pdf = new jsPDF('p', 'mm', 'a4');
 
-    let backgroundImage = new Image();
-    backgroundImage.src = 'test.jpg'; // Background image for all PDF pages
+    let backgroundImages = {
+        first: 'first-page.jpg',
+        middle: 'middle-page.jpg',
+        last: 'last-page.jpg'
+    };
 
-    let addContentToPDF = function (canvas, isFirstPage) {
-        if (!isFirstPage) {
+    let addContentToPDF = function (canvas, pageType) {
+        if (pageType !== 'first') {
             pdf.addPage();
         }
 
-        pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'FAST');
+        let backgroundImageSrc = backgroundImages[pageType];
+        let backgroundImage = new Image();
+        backgroundImage.src = backgroundImageSrc;
 
-        let imgData = canvas.toDataURL('image/png', 1.0); // Highest quality
+        backgroundImage.onload = function () {
+            pdf.addImage(backgroundImage, 'JPEG', 0, 0, pdf.internal.pageSize.width, pdf.internal.pageSize.height, '', 'FAST');
 
-        let imgWidth = pdf.internal.pageSize.width;
-        let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
+            let imgData = canvas.toDataURL('image/png', 1.0); // Highest quality
 
-        let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
-        let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
+            let imgWidth = pdf.internal.pageSize.width;
+            let imgHeight = canvas.height * pdf.internal.pageSize.width / canvas.width;
 
-        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST');
+            let xPos = (pdf.internal.pageSize.width - imgWidth) / 2;  // Center horizontally
+            let yPos = (pdf.internal.pageSize.height - imgHeight) / 2; // Center vertically
+
+            pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST');
+
+            if (pageType === 'last') {
+                pdf.save(pdfName);
+                inserted_package_data_section_page_6.style.display = 'none'; // Hide the section after saving the PDF
+                saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+            }
+        };
     };
 
-    let captureCanvas = async function (section, isFirstPage) {
+    let captureCanvas = async function (section, pageType) {
         try {
             let canvas = await html2canvas(section, {
                 scale: 5, // Higher scale for better quality
                 backgroundColor: null,
                 scrollY: 0 // Ensure capturing starts from the top of the element
             });
-            addContentToPDF(canvas, isFirstPage);
+            addContentToPDF(canvas, pageType);
         } catch (error) {
             console.error('Error capturing canvas:', error);
         }
-    };
-
-    let isVisible = function (element) {
-        return element && element.style.display !== 'none' && element.offsetParent !== null;
     };
 
     let processSections = function (sections) {
@@ -1544,18 +1799,26 @@ downloadPdfWithCustomName = function (pdfName) {
 
         let processNextSection = function () {
             if (index < sections.length) {
-                let isFirstPage = (index === 0);
-                captureCanvas(sections[index], isFirstPage).then(() => {
+                let pageType;
+                if (index === 0) {
+                    pageType = 'first';
+                } else if (index === sections.length - 1) {
+                    pageType = 'last';
+                } else {
+                    pageType = 'middle';
+                }
+
+                captureCanvas(sections[index], pageType).then(() => {
                     index++;
                     processNextSection();
                 });
-            } else {
-                pdf.save(pdfName);
             }
         };
 
         processNextSection();
     };
+
+    inserted_package_data_section_page_6.style.display = 'block'; // Show the section before checking visibility
 
     let sections = [];
     let i = 1;
@@ -1573,19 +1836,3 @@ downloadPdfWithCustomName = function (pdfName) {
 
     processSections(sections);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
