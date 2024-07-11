@@ -76,11 +76,11 @@ saveNewWebsiteLpcalStorageDataName = function () {
 
         // List of div IDs to check visibility
         let divIds = [
-            'inserted_package_data_section_page_1',
-            'inserted_package_data_section_page_2',
-            'inserted_package_data_section_page_3',
-            'inserted_package_data_section_page_4',
-            'inserted_package_data_section_page_5'
+            'downloaded_pdf_clint_data_page',
+            'downloaded_pdf_package_including_data_page',
+            'downloaded_pdf_flight_data_page',
+            'downloaded_pdf_hotel_data_page',
+            'downloaded_pdf_clint_movements_data_page'
         ];
 
         // Check visibility of each div and add to the object if visible
@@ -164,11 +164,11 @@ saveNewWebsiteLpcalStorageDataName = function () {
 
         // List of div IDs to check visibility
         let divIds = [
-            'inserted_package_data_section_page_1',
-            'inserted_package_data_section_page_2',
-            'inserted_package_data_section_page_3',
-            'inserted_package_data_section_page_4',
-            'inserted_package_data_section_page_5'
+            'downloaded_pdf_clint_data_page',
+            'downloaded_pdf_package_including_data_page',
+            'downloaded_pdf_flight_data_page',
+            'downloaded_pdf_hotel_data_page',
+            'downloaded_pdf_clint_movements_data_page'
         ];
 
         // Check visibility of each div and add to the object if visible
@@ -336,17 +336,17 @@ function importWebsiteLocalStorageDataName() {
             let matchingObject = savedWebsiteDataArray.find(data => data.name === clickedDataName);
 
             if (matchingObject && matchingObject.elements) {
-                document.getElementById('inserted_clint_data_position_div').innerHTML = '';
+                document.getElementById('downloaded_pdf_clint_data_page').innerHTML = '';
                 document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
                 document.getElementById('inserted_flight_data_position_div').innerHTML = '';
                 document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
                 document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
 
-                document.getElementById('inserted_package_data_section_page_1').style.display = 'none';
-                document.getElementById('inserted_package_data_section_page_2').style.display = 'none';
-                document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
-                document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
-                document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
+                document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+                document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+                document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+                document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
 
                 for (let divId in matchingObject.elements) {
                     let htmlSectionPdfPageDiv = document.getElementById(divId);
@@ -470,7 +470,7 @@ deleteWebsiteLocalStorageDataName = function () {
 /* Function to re-active the drag and drop functionality (copied code for the main inserted daa js code) */
 reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
-    if (visiableDivIdName === 'inserted_package_data_section_page_3') {
+    if (visiableDivIdName === 'downloaded_pdf_flight_data_page') {
 
 
         // Get all elements with the class name 'flight_row_class'
@@ -528,11 +528,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if there are any remaining inserted flight data div (Searching by the second image class name)
             let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
             if (remainingFlightDataDivs.length === 0) {
-                // Hide section with id 'inserted_package_data_section_page_3'
-                document.getElementById('inserted_package_data_section_page_3').style.display = 'none';
+                // Hide section with id 'downloaded_pdf_flight_data_page'
+                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
 
                 // Hide the download button if there are no other important data sections visible
-                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
             }
@@ -712,7 +712,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-    } else if (visiableDivIdName === 'inserted_package_data_section_page_4') {
+    } else if (visiableDivIdName === 'downloaded_pdf_hotel_data_page') {
 
 
         // Get all elements with the class name 'hotel_row_class'
@@ -771,11 +771,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
             let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
             if (remainingHotelDataDivs.length === 0) {
-                // Hide section with id 'inserted_package_data_section_page_4'
-                document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+                // Hide section with id 'downloaded_pdf_hotel_data_page'
+                document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
 
                 // Hide the download button if there are no other important data sections visible
-                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' && document.getElementById('inserted_package_data_section_page_4').style.display === 'none' && document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
             }
@@ -1005,7 +1005,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-    } else if (visiableDivIdName === 'inserted_package_data_section_page_5') {
+    } else if (visiableDivIdName === 'downloaded_pdf_clint_movements_data_page') {
 
 
         // Get all elements with the class name 'flight_row_class'
@@ -1078,13 +1078,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if there are any remaining clint movements data divs
             let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
             if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
-                // Hide section with id 'inserted_package_data_section_page_5'
-                document.getElementById('inserted_package_data_section_page_5').style.display = 'none';
+                // Hide section with id 'downloaded_pdf_clint_movements_data_page'
+                document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
 
                 // Hide the download button if there are no other important data sections visible
-                if (document.getElementById('inserted_package_data_section_page_3').style.display === 'none' &&
-                    document.getElementById('inserted_package_data_section_page_4').style.display === 'none' &&
-                    document.getElementById('inserted_package_data_section_page_5').style.display === 'none') {
+                if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' &&
+                    document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' &&
+                    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
                     document.getElementById('export_package_pdf_div_id').style.display = 'none';
                 }
             }
