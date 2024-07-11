@@ -190,6 +190,18 @@
 
 
 
+/* Usuful notes section title element */
+#pdf_section_title_div_usuful_notes_id{
+    margin-top: 15px; 
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -287,7 +299,7 @@
 
 
 /* Inserted package important note position */
-#inserted_package_important_note_position_div {
+.inserted_package_important_note_position_div_class {
     background: darkred;
     padding-right: 5px;
     display: flex;
@@ -295,7 +307,7 @@
     justify-content: center;
 }
 
-#inserted_package_important_note_position_div p {
+.inserted_package_important_note_position_div_class p {
     color: white;
     width: fit-content;
     font-size: 2vw;
@@ -709,6 +721,18 @@
 
 
 
+    .inserted_package_important_note_position_div_class p {
+        font-size: 2.5vw;
+        padding: 3px 0;
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -862,6 +886,12 @@
 
 
 
+    .inserted_package_important_note_position_div_class p {
+        font-size: 3vw;
+        padding: 2px 0;
+    }
+
+
 
 
 
@@ -937,8 +967,22 @@
 
 
 
+    #pdf_section_title_div_usuful_notes_id{
+        margin-top: 10px; 
+    }
 
 
+
+
+
+
+
+
+
+
+    .inserted_package_important_note_position_div_class p {
+        font-size: 3.2vw;
+    }
 
 
 
