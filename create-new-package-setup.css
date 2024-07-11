@@ -386,25 +386,35 @@ body {
     background: rgb(213, 213, 213);
 }
 
-.localstorage_controller_div_class {
+#localstorage_save_name_input_div {
     z-index: 1000;
     background: white;
-    width: 80%;
-    padding: 50px;
+    width: 100%;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -150vh);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     border: 0.5px solid black;
     border-radius: 7px;
     transition: transform 0.5s ease;
 }
 
-.localstorage_controller_div_class h6 {
+#localstorage_save_name_input_div div {
+    width: 100%;
+    margin: 50px 0;
+}
+
+#first_div_in_localstorage_save_name_input_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#localstorage_save_name_input_div h6 {
     background: darkred;
     color: white;
     width: 100%;
@@ -415,7 +425,7 @@ body {
     border-top-right-radius: 7px;
 }
 
-.localstorage_controller_div_class p {
+#localstorage_save_name_input_div p {
     background: darkorange;
     width: fit-content;
     color: white;
@@ -427,7 +437,7 @@ body {
     cursor: pointer;
 }
 
-.localstorage_controller_div_class input {
+#localstorage_save_name_input_div input {
     width: 100%;
     font-size: 3vw;
     text-align: center;
@@ -436,7 +446,7 @@ body {
     border-bottom-right-radius: 7px;
 }
 
-.localstorage_controller_div_class input::placeholder {
+#localstorage_save_name_input_div input::placeholder {
     font-size: 3.5vw;
     border: none;
 }
@@ -452,28 +462,69 @@ body {
 
 
 
-
-
-/* LocalStorage import stored data */
-.all_localstorage_stored_data_names_div_class {
-    width: 100%;
+/* Importing and deleting data from localStorage */
+.localstorage_dropdown_div_class {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 5px;
-    border-radius: 7px;
+    width: 100%;
+    min-height: 50vh;
+    max-height: 50vh;
+    padding: 5px 0;
+    background: rgb(0, 191, 234);
+    position: fixed;
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
 }
 
-.all_localstorage_stored_data_names_div_class p {
-    background: rgb(0, 65, 111);
+.localstorage_dropdown_div_class h6 {
+    background: darkred;
     color: white;
     width: 100%;
-    font-size: 2.5vw;
-    margin: 5px 0;
+    font-size: 2vw;
     text-align: center;
+    border: 0.5px solid black;
+}
+
+.localstorage_dropdown_div_class p {
+    background: darkorange;
+    color: white;
+    font-size: 2.5vw;
+    padding: 1px 5px;
+    text-align: center;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+    align-self: flex-start; /* Position the button to the right */
+    margin-right: 5px; /* Adjust margin as needed */
+}
+
+.localstorage_dropdown_div_class .search_bar_div_class {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.localstorage_dropdown_div_class .search_bar_input_class {
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+}
+
+.localstorage_dropdown_div_class .company_names_options_dropdown_class {
+    width: 100%;
+}
+
+.localstorage_dropdown_div_class h3 {
+    background: white;
     transition: all 0.1s ease-in-out;
 }
+
+
+
+
 
 
 
@@ -581,6 +632,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
 }
 
+#package_including_details_div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .custom_checkbox {
     display: flex;
     align-items: center;
@@ -663,6 +722,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: rgb(0, 191, 234);
     width: 100%;
     min-height: 50vh;
+    max-height: 50vh;
     padding: 5px 0;
     position: fixed;
     bottom: 0;
@@ -937,9 +997,60 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 8px 14px;
     }
 
+
+
+
+
+    /* LocalStorage Elements */
+    #localstorage_save_name_input_div h6 {
+        font-size: 3vw;
+    }
+
+    #localstorage_save_name_input_div p {
+        font-size: 3vw;
+    }
+
     #localstorage_data_controller_div p {
         font-size: 3vw;
     }
+
+    #localstorage_save_name_input_div input {
+        font-size: 4vw;
+    }
+
+    #localstorage_save_name_input_div input::placeholder {
+        font-size: 4.5vw;
+    }
+
+
+
+
+    .localstorage_dropdown_div_class h6 {
+        font-size: 3vw;
+    }
+
+    .localstorage_dropdown_div_class p {
+        font-size: 3vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     .package_info_input_div {
         padding: 5px;
@@ -1072,26 +1183,45 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 3.5vw;
     }
 
+
+
+
+
+    /* LocalStorage Element */
     #localstorage_data_controller_div p {
         font-size: 3.5vw;
         padding: 1px 2px;
     }
 
-    .localstorage_controller_div_class h6 {
+    #localstorage_save_name_input_div h6 {
         font-size: 4vw;
     }
 
-    .localstorage_controller_div_class p {
+    #localstorage_save_name_input_div p {
         font-size: 4vw;
     }
 
-    .localstorage_controller_div_class input {
+    #localstorage_save_name_input_div input {
         font-size: 5vw;
     }
 
-    .localstorage_controller_div_class input::placeholder {
+    #localstorage_save_name_input_div input::placeholder {
         font-size: 5.5vw;
     }
+
+
+
+    .localstorage_dropdown_div_class h6 {
+        font-size: 4vw;
+    }
+
+    .localstorage_dropdown_div_class p {
+        font-size: 4.5vw;
+    }
+
+
+
+
 
 
 
@@ -1251,23 +1381,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 4vw;
     }
 
-    .localstorage_controller_div_class {
+    #localstorage_save_name_input_div {
         width: 100%;
     }
 
-    .localstorage_controller_div_class h6 {
+    #localstorage_save_name_input_div h6 {
         font-size: 6vw;
     }
 
-    .localstorage_controller_div_class p {
+    #localstorage_save_name_input_div p {
         font-size: 6vw;
     }
 
-    .localstorage_controller_div_class input {
+    #localstorage_save_name_input_div input {
         font-size: 7vw;
     }
 
-    .localstorage_controller_div_class input::placeholder {
+    #localstorage_save_name_input_div input::placeholder {
         font-size: 7.5vw;
     }
 
