@@ -212,6 +212,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             'sms_card_with_internet_checkbox',
             'all_taxes_covered_but_only_for_bali_no_checkbox',
             'inner_flight_tickets_checkbox',
+            'outer_flight_tickets_checkbox',
             'placese_visiting_cost_checkbox'
         ];
 
@@ -1743,6 +1744,90 @@ let isVisible = function (element) {
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = function (pdfName) {
     let { jsPDF } = window.jspdf;
+
+    let captureCanvas = async function (section) {
+        try {
+            let canvas = await html2canvas(section, {
+                scale: 4, // Moderate scale for balanced quality and size
+                backgroundColor: null,
+                scrollY: 0 // Ensure capturing starts from the top of the element
+            });
+            return canvas;
+        } catch (error) {
+            console.error('Error capturing canvas:', error);
+        }
+    };
+
+    let combineCanvases = function (canvases) {
+        let totalHeight = canvases.reduce((sum, canvas) => sum + canvas.height, 0);
+        let combinedCanvas = document.createElement('canvas');
+        combinedCanvas.width = canvases[0].width;
+        combinedCanvas.height = totalHeight;
+        let context = combinedCanvas.getContext('2d');
+
+        let yOffset = 0;
+        canvases.forEach(canvas => {
+            context.drawImage(canvas, 0, yOffset);
+            yOffset += canvas.height;
+        });
+
+        return combinedCanvas;
+    };
+
+    let processSections = async function (sections) {
+        let canvases = [];
+
+        for (let section of sections) {
+            let canvas = await captureCanvas(section);
+            if (canvas) {
+                canvases.push(canvas);
+            }
+        }
+
+        let combinedCanvas = combineCanvases(canvases);
+
+        let pdfWidth = 210; // A4 width in mm
+        let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
+        let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Compress image to reduce size
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+        pdf.save(pdfName);
+        inserted_package_data_section_page_6.style.display = 'none'; // Hide the section after saving the PDF
+        saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+    };
+
+    inserted_package_data_section_page_6.style.display = 'block'; // Show the section before checking visibility
+
+    let sections = [];
+    let i = 1;
+    while (true) {
+        let section = document.getElementById(`inserted_package_data_section_page_${i}`);
+        if (section) {
+            if (isVisible(section)) {
+                sections.push(section);
+            }
+        } else {
+            break;
+        }
+        i++;
+    }
+
+    processSections(sections);
+};
+
+
+
+
+
+
+
+
+
+
+/* downloadPdfWithCustomName = function (pdfName) {
+    let { jsPDF } = window.jspdf;
     let pdf = new jsPDF('p', 'mm', 'a4');
 
     let backgroundImages = {
@@ -1835,4 +1920,4 @@ downloadPdfWithCustomName = function (pdfName) {
     }
 
     processSections(sections);
-};
+}; */
