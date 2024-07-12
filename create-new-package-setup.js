@@ -447,10 +447,6 @@ document.getElementById('company_names_search_bar_input_id').addEventListener('i
 
 
 /* Hotel dropdown info */
-document.getElementById('hotel_location_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('hotel_location_search_bar_input_id', 'hotel_location_dropdown');
-});
-
 document.getElementById('hotel_bali_area_search_bar_input_id').addEventListener('input', () => {
     filterOptions('hotel_bali_area_search_bar_input_id', 'hotel_bali_area_dropdown');
 });
@@ -507,25 +503,18 @@ document.getElementById('lombok_hotel_search_bar_input_id').addEventListener('in
 
 
 
-/* Package including data sms and tickets amount dropdown */
-document.getElementById('sms_card_and_ticket_amount_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('sms_card_and_ticket_amount_search_bar_input_id', 'sms_card_and_ticket_amount_dropdown');
+
+
+
+
+/* clint movements hotel names dropdown */
+document.getElementById('clint_movements_hotel_names_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('clint_movements_hotel_names_search_bar_input_id', 'clint_movements_hotel_names_dropdown');
 });
 
 
 
 
-
-
-
-
-
-
-
-/* flight dropdown info */
-document.getElementById('airport_line_name_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('airport_line_name_search_bar_input_id', 'airport_line_name_dropdown');
-});
 
 
 
@@ -609,48 +598,154 @@ insertFlightDestinationCityInputValue = function (clickedInputIdName) {
 
 
 
+/* Function to run the dropdown functonality for flight people amount */
+let adultFlightPersonAmountInput = document.getElementById('adult_flight_person_amount_input_id');
 
+// Get the options within the dropdown
+let adultFlightPersonAmountInputOptions = document.querySelectorAll('#adult_flight_people_amount_dropdown h3');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Clint movements details */
-document.getElementById('clint_movement_city_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('clint_movement_city_search_bar_input_id', 'clint_movemnt_city_dropdown');
+adultFlightPersonAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        adultFlightPersonAmountInput.value = option.textContent; // Set input value to selected option
+        hideOverlay(); // Hide overlay after selection
+    });
 });
 
 
 
-/* Function to set the clicked input text */
-setAutoIntialTextInputValue = function (clickedInputIdName, clickedInputValue) {
-    let clickedInputIdNameIntialValue = document.getElementById(clickedInputIdName);
+let infantFlightPersonAmountInput = document.getElementById('infant_flight_person_amount_input_id');
 
-    clickedInputIdNameIntialValue.value = clickedInputValue;
+// Get the options within the dropdown
+let infantFlightPersonAmountInputOptions = document.querySelectorAll('#infant_flight_people_amount_dropdown h3');
+
+infantFlightPersonAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        if(option.textContent === 'حذف'){
+            infantFlightPersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
+
+        }else{
+            infantFlightPersonAmountInput.value = option.textContent; // Set input value to selected option
+        }
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Clint movements functions */
+let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id');
+
+// Get the options within the dropdown
+let clintMovementsAirportWelcomeInputOptions = document.querySelectorAll('#clint_movemnt_welcome_airport_location_dropdown h3');
+
+clintMovementsAirportWelcomeInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        if(option.textContent === 'حذف'){
+            clintMovementsAirportWelcomeInput.value = ''; // Set input value to selected option
+
+        }else{
+            clintMovementsAirportWelcomeInput.value = option.textContent; // Set input value to selected option
+        }
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+// Praper a variable to store the currently active input field
+let currentInput = null;
+
+// Function to set the current input when an input is clicked
+function setCurrentInput(event) {
+    currentInput = event.target; // Set currentInput to the clicked input element
 }
+
+// Attach event listeners to the check-out and check-in inputs to set the current input
+document.getElementById('clint_movements_new_check_out_input_id').addEventListener('click', setCurrentInput);
+document.getElementById('clint_movements_new_check_in_input_id').addEventListener('click', setCurrentInput);
+
+// Function to insert the clicked h3 text into the current input value
+function insertTextIntoInput(event) {
+    // Check if the clicked element is an h3 tag and if there is a currentInput set
+    if (event.target.tagName === 'H3' && currentInput) {
+        let clickedText = event.target.innerText; // Get the inner text of the clicked h3
+
+        // Depending on the current input field, update its value with appropriate text
+        if (currentInput.id === 'clint_movements_new_check_out_input_id') {
+            if (clickedText === 'حذف') {
+                currentInput.value = ''; // Clear the input if 'حذف' is clicked
+            } else {
+                currentInput.value = `تسجيل الخروج من ${clickedText}`; // Set check-out text
+            }
+        } else if (currentInput.id === 'clint_movements_new_check_in_input_id') {
+            if (clickedText === 'حذف') {
+                currentInput.value = ''; // Clear the input if 'حذف' is clicked
+            } else {
+                currentInput.value = `تسجيل الدخول في ${clickedText}`; // Set check-in text
+            }
+        }
+
+        // Hide the dropdown menu after selecting an option
+        hideOverlay(event.target.closest('.searchable_names_dropdown_class').id);
+    }
+}
+
+// Attach the event listener to the dropdown container for h3 clicks
+document.getElementById('clint_movements_hotel_names_dropdown').addEventListener('click', insertTextIntoInput);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Variable to store the last clicked clint movement city input
 let lastClickedClintMovementCityInput = null;
 
-/* Variable to the clicked h3 city for the 'clint_movements_next_city_input_id' input */
+/* Variable to the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use */
 let storeClintMovementsNextCityInput = null;
 
+/* Function to handel the dropdown city names for clint movemenets */
 insertClintMovementsCityInputValue = function (clickedInputIdName) {
     // Store the reference to the last clicked input field
     lastClickedClintMovementCityInput = document.getElementById(clickedInputIdName);
@@ -831,6 +926,7 @@ pickThisClintMovementsPlace = function (clickedPlace) {
             // Reset the background color of all p elements to darkred
             for (var i = 0; i < pElements.length; i++) {
                 pElements[i].style.backgroundColor = 'rgb(207, 233, 242)';
+                pElements[i].style.color = 'black';
             }
         }
     });
@@ -838,8 +934,10 @@ pickThisClintMovementsPlace = function (clickedPlace) {
     // Toggle the background color of the clicked p element
     if (clickedPlace.style.backgroundColor === 'rgb(0, 155, 0)') {
         clickedPlace.style.backgroundColor = 'rgb(207, 233, 242)';
+        clickedPlace.style.color = 'black';
     } else {
         clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
+        clickedPlace.style.color = 'white';
     }
 
     // Additional functionality for clint_movements_places_names_options_for_random_days_class
@@ -908,9 +1006,9 @@ function setTheFirstClintMovemnetsDate() {
             clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
 
 
-            // Reset the content of the inserted_clint_movements_data_position_div and hid the elements
+            // Reset the content of the inserted_clint_movements_data_position_div and hide the elements
             insertedClintMovementsDataPositionDiv.innerHTML = '';
-            document.getElementById('inserted_package_data_section_page_4').style.display = 'none';
+            document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
             document.getElementById('export_package_pdf_div_id').style.display = 'none';
 
 
@@ -1083,7 +1181,7 @@ var firstDayPicker = new Pikaday({
     }
 });
 
-// Initialize the second date picker (clint_movements_last_day_date_input_id)
+// Praper the second date picker (clint_movements_last_day_date_input_id)
 var lastDayPicker = new Pikaday({
     field: document.getElementById('clint_movements_last_day_date_input_id'), // Field to attach the date picker
     format: 'DD-M', // Format to display only day and month
@@ -1093,6 +1191,243 @@ var lastDayPicker = new Pikaday({
         let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format
         return `${day}-${month}`; // Return formatted date
     },
+});
+
+
+
+// Arabic month names
+let arabicMonths = {
+    January: 'يناير',
+    February: 'فبراير',
+    March: 'مارس',
+    April: 'ابريل',
+    May: 'ماي',
+    June: 'يونيو',
+    July: 'يوليو',
+    August: 'اغسطس',
+    September: 'سبتمبر',
+    October: 'اكتوبر',
+    November: 'نوفمبر',
+    December: 'ديسمبر'
+};
+
+// Arabic month names reverse lookup
+let arabicMonthsReverse = {
+    'يناير': 'January',
+    'فبراير': 'February',
+    'مارس': 'March',
+    'ابريل': 'April',
+    'ماي': 'May',
+    'يونيو': 'June',
+    'يوليو': 'July',
+    'اغسطس': 'August',
+    'سبتمبر': 'September',
+    'اكتوبر': 'October',
+    'نوفمبر': 'November',
+    'ديسمبر': 'December'
+};
+
+// Function to calculate the difference in days between two dates
+function calculateDaysDifference(startDate, endDate) {
+    if (!startDate || !endDate) return '';
+    let [startDay, startMonth] = startDate.split(' ');
+    let [endDay, endMonth] = endDate.split(' ');
+
+    let start = new Date(`${arabicMonthsReverse[startMonth]} ${startDay}, ${new Date().getFullYear()}`);
+    let end = new Date(`${arabicMonthsReverse[endMonth]} ${endDay}, ${new Date().getFullYear()}`);
+    let diffTime = end - start; // Difference in time
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Difference in days
+    return diffDays;
+}
+
+// Function to update the total nights input
+function updateTotalNights() {
+    let startDate = document.getElementById('package_start_date_input_id').value;
+    let endDate = document.getElementById('package_end_date_input_id').value;
+    let totalNights = calculateDaysDifference(startDate, endDate);
+    document.getElementById('package_total_nights_input_id').value = totalNights;
+}
+
+
+/* Inputs date for whole package start and end period */
+var startDatePicker = new Pikaday({
+    field: document.getElementById('package_start_date_input_id'),
+    format: 'DD-M',
+    minDate: new Date(),
+    toString(date, format) {
+        let day = date.getDate();
+        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        return `${day} ${month}`;
+    },
+    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+});
+
+var endDatePicker = new Pikaday({
+    field: document.getElementById('package_end_date_input_id'),
+    format: 'DD-M',
+    minDate: new Date(),
+    toString(date, format) {
+        let day = date.getDate();
+        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        return `${day} ${month}`;
+    },
+    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to calculate the difference in days between two dates
+function calculateDaysDifference(startDate, endDate) {
+    if (!startDate || !endDate) return '';
+    let [startDay, startMonth] = startDate.split(' ');
+    let [endDay, endMonth] = endDate.split(' ');
+
+    let start = new Date(`${arabicMonthsReverse[startMonth]} ${startDay}, ${new Date().getFullYear()}`);
+    let end = new Date(`${arabicMonthsReverse[endMonth]} ${endDay}, ${new Date().getFullYear()}`);
+    let diffTime = end - start; // Difference in time
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Difference in days
+    return diffDays;
+}
+
+// Function to update the total nights input
+function updateTotalNights() {
+    let startDate = document.getElementById('hotel_check_in_input_id').value;
+    let endDate = document.getElementById('hotel_check_out_input_id').value;
+    let totalNights = calculateDaysDifference(startDate, endDate);
+    document.getElementById('hotel_total_nights_input_id').value = totalNights;
+}
+
+
+/* Inputs date for hotel start and end period */
+var startDatePicker = new Pikaday({
+    field: document.getElementById('hotel_check_in_input_id'),
+    format: 'DD-M',
+    minDate: new Date(),
+    toString(date, format) {
+        let day = date.getDate();
+        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        return `${day} ${month}`;
+    },
+    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+});
+
+var endDatePicker = new Pikaday({
+    field: document.getElementById('hotel_check_out_input_id'),
+    format: 'DD-M',
+    minDate: new Date(),
+    toString(date, format) {
+        let day = date.getDate();
+        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        return `${day} ${month}`;
+    },
+    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+});
+
+
+
+
+
+
+
+
+
+
+
+
+/* Inputs date for flight date */
+var startDatePicker = new Pikaday({
+    field: document.getElementById('flight_date_input_id'),
+    format: 'DD-M',
+    minDate: new Date(),
+    toString(date, format) {
+        let day = date.getDate();
+        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        return `${day} ${month}`;
+    },
+    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Time picker for flight fly and arravial time */
+$(document).ready(function() {
+    $('#flight_fly_away_time_input_id').pickatime({
+        format: 'HH:i',
+        interval: 5,
+        min: [0, 0],
+        max: [23, 59]
+    });
+    
+    $('#flight_arrival_time_input_id').pickatime({
+        format: 'HH:i',
+        interval: 5,
+        min: [0, 0],
+        max: [23, 59]
+    });
 });
 
 
