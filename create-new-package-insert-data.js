@@ -182,7 +182,6 @@ checkInputsToInsertData = function (clickedButtonId) {
             'hotel_booking_with_breakfast_checkbox',
             'pertol_and_driver_living_cost_checkbox',
             'welcome_goodbye_hotel_delivery_checkbox',
-            'going_around_with_car_checkbox',
             'customer_service_24_hour_checkbox',
             'sms_card_with_internet_checkbox',
             'all_taxes_covered_but_only_for_bali_no_checkbox',
@@ -242,17 +241,24 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }
 
                     p.className = 'inserted_package_including_data_text';
+                    if (id === 'sms_card_with_internet_checkbox' || id === 'inner_flight_tickets_checkbox') {
+                        p.classList.add('special-text');
+                    }
                     insertedPackageIncludingDataDiv.appendChild(p);
                 } else {
                     icon.setAttribute('name', 'close-outline');
                     p.appendChild(icon);
                     p.appendChild(document.createTextNode(` ${label.innerText}`));
                     p.className = 'inserted_package_not_including_data_text';
+                    if (id === 'sms_card_with_internet_checkbox' || id === 'inner_flight_tickets_checkbox') {
+                        p.classList.add('special-text');
+                    }
                     insertedPackageNotIncludingDataDiv.appendChild(p);
                 }
 
                 p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
             });
+
 
             // Include package details text area if not empty
             if (packageIncludingDataTextArea !== '') {
@@ -322,7 +328,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         // Get references to all input elements for later use
         let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-        let flightPersonAmountInput = document.getElementById('flight_person_amount_input_id').value;
+        let adultFlightPersonAmountInput = document.getElementById('adult_flight_person_amount_input_id').value;
+        let infantFlightPersonAmountInput = document.getElementById('infant_flight_person_amount_input_id').value;
         let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
         let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
         let flightDateInput = document.getElementById('flight_date_input_id').value;
@@ -334,7 +341,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAirLineInput === '' || flightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '' || flightFlyAwayTimeInput === '' || flightArrivalTimeInput === '') {
+        if (flightAirLineInput === '' || adultFlightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '') {
 
             /* Chnage the sumbit icon background color */
             clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
@@ -375,13 +382,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Create the HTML content for a new hotel row
                 let flightRowTableDivContent = `
                     <div><p>${flightAirLineInput}</p></div>
-                    <div><p>${flightPersonAmountInput}</p></div>
+                    <div><p>${adultFlightPersonAmountInput}</p>\n<p>${infantFlightPersonAmountInput}</p></div>
                     <div><p>20 كيلو لكل شخص</p></div>
                     <div><p>${flightFromCityInput}</p></div>
                     <div><p>${flightToCityInput}</p></div>
                     <div><p>${flightDateInput}</p></div>
                     <div><p>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_flight_arrival_time_controller">${flightArrivalTimeInput}</p></div>
+                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
                 `;
 
 
@@ -404,17 +411,93 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
                 // Get the dynamically created 'flightRowAirLineController' element
                 let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
 
 
-                /* Pass each clicked flight div controller to the 'flightRowAirLineControllerFunction' */
+                // Function to handle touch events and distinguish between tap and scroll for flight row
+                function handleFlightTouchEvent(element) {
+                    let touchStartX, touchStartY, touchStartTime;
+
+                    // Record the starting touch position and time
+                    element.addEventListener('touchstart', (event) => {
+                        let touch = event.touches[0];
+                        touchStartX = touch.clientX;
+                        touchStartY = touch.clientY;
+                        touchStartTime = new Date().getTime();
+                    });
+
+                    // Compare the ending touch position and time to determine if it was a tap
+                    element.addEventListener('touchend', (event) => {
+                        let touch = event.changedTouches[0];
+                        let touchEndX = touch.clientX;
+                        let touchEndY = touch.clientY;
+                        let touchEndTime = new Date().getTime();
+
+                        let deltaX = touchEndX - touchStartX;
+                        let deltaY = touchEndY - touchStartY;
+                        let deltaTime = touchEndTime - touchStartTime;
+
+                        // Check if the touch event qualifies as a tap
+                        let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                        // If it's a tap, run the click function
+                        if (isTap) {
+                            flightRowAirLineControllerFunction(event);
+                        }
+                    });
+                }
+
+                // Function to handle mouse events and distinguish between click and drag for flight row
+                function handleFlightMouseEvent(element) {
+                    let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
+
+                    // Record the starting mouse position and time
+                    element.addEventListener('mousedown', (event) => {
+                        mouseStartX = event.clientX;
+                        mouseStartY = event.clientY;
+                        mouseStartTime = new Date().getTime();
+                        isDragging = false;
+                    });
+
+                    // Mark as dragging if mouse moves significantly
+                    element.addEventListener('mousemove', (event) => {
+                        let deltaX = event.clientX - mouseStartX;
+                        let deltaY = event.clientY - mouseStartY;
+                        if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                            isDragging = true;
+                        }
+                    });
+
+                    // Compare the ending mouse position and time to determine if it was a click
+                    element.addEventListener('mouseup', (event) => {
+                        let mouseEndX = event.clientX;
+                        let mouseEndY = event.clientY;
+                        let mouseEndTime = new Date().getTime();
+
+                        let deltaX = mouseEndX - mouseStartX;
+                        let deltaY = mouseEndY - mouseStartY;
+                        let deltaTime = mouseEndTime - mouseStartTime;
+
+                        // Check if the mouse event qualifies as a click
+                        let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                        // If it's a click, run the click function
+                        if (isClick) {
+                            flightRowAirLineControllerFunction(event);
+                        }
+                    });
+                }
+
+                // Attach click and touch event listeners to each element
                 flightRowFlightArrivalTimeControllers.forEach(element => {
-                    element.onclick = function (event) {
-                        /* Pass the div of the clicked 'flight_row_flight_arrival_time_controller' */
-                        flightRowAirLineControllerFunction(event);
-                    };
+                    handleFlightMouseEvent(element); // Handle mouse events with click detection
+                    handleFlightTouchEvent(element); // Handle touch events with tap detection
                 });
+
+
+
 
 
                 // Show and append the new flight data div
@@ -428,7 +511,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Get references to all input elements and reset their values thier
                 document.getElementById('flight_air_line_input_id').value = '';
-                document.getElementById('flight_person_amount_input_id').value = '';
+                document.getElementById('adult_flight_person_amount_input_id').value = '';
+                document.getElementById('infant_flight_person_amount_input_id').value = '';
                 document.getElementById('flight_from_city_input_id').value = '';
                 document.getElementById('flight_to_city_input_id').value = '';
                 document.getElementById('flight_date_input_id').value = '';
@@ -482,8 +566,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                // Function to show delete the inserted flight data
-                flightRowAirLineControllerFunction = function (event) {
+                // Function to handle flight row div click or touch
+                function flightRowAirLineControllerFunction(event) {
                     let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
                     let clickedFlightDataDiv = event.target.closest('.flight_row_class');
 
@@ -494,11 +578,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                             deleteClickedFlightData(currentFlightDataDivId);
                         }
 
-
                         // Check if the overlay already exists
                         let overlayLayer = document.querySelector('.black_overlay');
                         if (!overlayLayer) {
-
                             let overlayLayer = document.createElement('div');
                             overlayLayer.classList.add('black_overlay');
                             document.body.appendChild(overlayLayer);
@@ -508,7 +590,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                                 deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
                             }, 50);
 
-                            overlayLayer.onclick = () => {
+                            // Handle both click and touch events on overlay for consistency
+                            let handleOverlayClick = () => {
                                 deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
                                 overlayLayer.style.opacity = '0';
                                 setTimeout(() => {
@@ -516,12 +599,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                                 }, 300);
                             };
 
+                            overlayLayer.addEventListener('click', handleOverlayClick);
+                            overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
+
                             overlayLayer.addEventListener('click', (event) => {
                                 event.stopPropagation();
                             });
                         }
                     }
                 };
+
+
 
 
 
@@ -670,7 +758,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
-        let totalNightsReadyText = document.getElementById('total_nights_input_id').value;
+        let totalNightsReadyText = document.getElementById('hotel_total_nights_input_id').value;
         let roomDescriptionInput = document.getElementById('room_description_input_id').value;
         let breakfastCheckbox = document.getElementById('breakfast_checkbox');
         let roomExtraInfoReadyText = document.getElementById('room_extra_info_textarea_id').value;
@@ -766,7 +854,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_name_input_id').value = '';
             document.getElementById('hotel_check_in_input_id').value = '';
             document.getElementById('hotel_check_out_input_id').value = '';
-            document.getElementById('total_nights_input_id').value = '';
+            document.getElementById('hotel_total_nights_input_id').value = '';
             document.getElementById('room_description_input_id').value = '';
             document.getElementById('breakfast_checkbox').checked = false;
             document.getElementById('room_extra_info_textarea_id').value = '';
@@ -1175,7 +1263,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         clintMovementsRowTableDivContent = `
                             <div><p>${clintMovementsCurrentDayDateInput}</p></div>
                             <div><p>${mixedInputsWithValue}</p></div>
-                            <div class="clint_movements_row_controller inserted_clint_movements_data_row controller_elements_cursor_pointer"><p>${clintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}</p></div>
+                            <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}</p></div>
                         `;
 
                         /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable */
@@ -1186,7 +1274,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         clintMovementsRowTableDivContent = `
                             <div><p>${clintMovementsCurrentDayDateInput}</p></div>
                             <div><p>${mixedInputsWithValue}</p></div>
-                            <div class="clint_movements_row_controller inserted_clint_movements_data_row controller_elements_cursor_pointer"><p>${clintMovementsCurrentCityInput}</p></div>
+                            <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}</p></div>
                         `;
                     }
 
@@ -1205,16 +1293,98 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
+
+
                     // Get all dynamically created elements with the class 'clint_movements_row_controller'
                     let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
 
-                    // Set the onclick event for each element
+                    // Function to handle touch events and distinguish between tap and scroll
+                    function handleTouchEvent(element) {
+                        let touchStartX, touchStartY, touchStartTime;
+
+                        // Record the starting touch position and time
+                        element.addEventListener('touchstart', (event) => {
+                            let touch = event.touches[0];
+                            touchStartX = touch.clientX;
+                            touchStartY = touch.clientY;
+                            touchStartTime = new Date().getTime();
+                        });
+
+                        // Compare the ending touch position and time to determine if it was a tap
+                        element.addEventListener('touchend', (event) => {
+                            let touch = event.changedTouches[0];
+                            let touchEndX = touch.clientX;
+                            let touchEndY = touch.clientY;
+                            let touchEndTime = new Date().getTime();
+
+                            let deltaX = touchEndX - touchStartX;
+                            let deltaY = touchEndY - touchStartY;
+                            let deltaTime = touchEndTime - touchStartTime;
+
+                            // Check if the touch event qualifies as a tap
+                            let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                            // If it's a tap, run the click function
+                            if (isTap) {
+                                clintMovementsRowFlightArrivalTimeFunction(event);
+                            }
+                        });
+                    }
+
+                    // Function to handle mouse events and distinguish between click and drag
+                    function handleMouseEvent(element) {
+                        let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
+
+                        // Record the starting mouse position and time
+                        element.addEventListener('mousedown', (event) => {
+                            mouseStartX = event.clientX;
+                            mouseStartY = event.clientY;
+                            mouseStartTime = new Date().getTime();
+                            isDragging = false;
+                        });
+
+                        // Mark as dragging if mouse moves significantly
+                        element.addEventListener('mousemove', (event) => {
+                            let deltaX = event.clientX - mouseStartX;
+                            let deltaY = event.clientY - mouseStartY;
+                            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                                isDragging = true;
+                            }
+                        });
+
+                        // Compare the ending mouse position and time to determine if it was a click
+                        element.addEventListener('mouseup', (event) => {
+                            let mouseEndX = event.clientX;
+                            let mouseEndY = event.clientY;
+                            let mouseEndTime = new Date().getTime();
+
+                            let deltaX = mouseEndX - mouseStartX;
+                            let deltaY = mouseEndY - mouseStartY;
+                            let deltaTime = mouseEndTime - mouseStartTime;
+
+                            // Check if the mouse event qualifies as a click
+                            let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                            // If it's a click, run the click function
+                            if (isClick) {
+                                clintMovementsRowFlightArrivalTimeFunction(event);
+                            }
+                        });
+                    }
+
+                    // Attach click and touch event listeners to each element
                     clintMovementsRowImageControllers.forEach(element => {
-                        element.onclick = function (event) {
-                            /* Pass the div of the clicked 'clint_movements_row_controller' */
-                            clintMovementsRowFlightArrivalTimeFunction(event);
-                        };
+                        handleMouseEvent(element); // Handle mouse events with click detection
+                        handleTouchEvent(element); // Handle touch events with tap detection
                     });
+
+
+
+
+
 
 
 
@@ -1342,48 +1512,48 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                /* Function to handel clint movements row div click */
-                clintMovementsRowFlightArrivalTimeFunction = function (event) {
+                // Function to handle clint movements row div click or touch
+                function clintMovementsRowFlightArrivalTimeFunction(event) {
                     let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
                     let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
 
-
                     if (clickedclintMovementsDataDiv) {
                         currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
-
-
-                        // Create an overlay layer for better visual effect
-                        let overlayLayer = document.createElement('div');
-                        overlayLayer.classList.add('black_overlay');
-                        document.body.appendChild(overlayLayer);
-
-                        // Delayed opacity transition for smooth appearance
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = '1';
-                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-                        }, 50);
 
                         runDeleteClickedClintMovementsDataFunction = function () {
                             deleteClickedClintMovementsData(currentClintMovementsDataDivId);
                         }
 
-                        // Click handler to close overlay and delete box div on click outside
-                        overlayLayer.onclick = () => {
-                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)'; // Slide out
-                            overlayLayer.style.opacity = '0'; // Hide overlay
+                        // Check if the overlay already exists
+                        let overlayLayer = document.querySelector('.black_overlay');
+                        if (!overlayLayer) {
+                            let overlayLayer = document.createElement('div');
+                            overlayLayer.classList.add('black_overlay');
+                            document.body.appendChild(overlayLayer);
 
-                            // Remove overlay and delete box div from DOM after transition
                             setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
-                            }, 300); // Match transition duration in CSS
-                        };
+                                overlayLayer.style.opacity = '1';
+                                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
+                            }, 50);
 
-                        // Prevent overlayLayer click propagation to avoid immediate closure
-                        overlayLayer.addEventListener('click', (event) => {
-                            event.stopPropagation(); // Prevent immediate closure of overlay on click
-                        });
+                            // Handle both click and touch events on overlay for consistency
+                            let handleOverlayClick = () => {
+                                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+                                overlayLayer.style.opacity = '0';
+                                setTimeout(() => {
+                                    document.body.removeChild(overlayLayer);
+                                }, 300);
+                            };
+
+                            overlayLayer.addEventListener('click', handleOverlayClick);
+                            overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
+
+                            overlayLayer.addEventListener('click', (event) => {
+                                event.stopPropagation();
+                            });
+                        }
                     }
-                }
+                };
 
 
 
@@ -1727,7 +1897,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section) {
         try {
             let canvas = await html2canvas(section, {
-                scale: 4, // Moderate scale for balanced quality and size
+                scale: 3, // Moderate scale for balanced quality and size
                 backgroundColor: null,
                 scrollY: 0 // Ensure capturing starts from the top of the element
             });
@@ -1823,7 +1993,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     ];
 
     let sections = [];
-    
+
     // Iterate through each class name and check visibility
     divsIdNames.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
