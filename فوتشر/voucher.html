@@ -29,7 +29,7 @@
     <header id="header">
 
         <div id="header_div">
-            <img src="../فنادق-اندونيسيا/فنادق-اندونيسيا.png" alt="فنادق اندونيسيا">
+            <img src="../فنادق-اندونيسيا/فنادق-اندونيسيا.png">
             <h1>Fanadiq Indonesia</h1>
         </div>
 
@@ -44,9 +44,7 @@
 
             <div class="header_navbar_links" id="support-links">
                 <a href="../index.html">Create New Package</a>
-                <a href="#">Create New Voucher</a>
-                <a href="#">Create New Invoice</a>
-                <a href="#">Create New Clint Movements</a>
+                <a href="../توافرات-الفنادق/hotel-availability.html">Check Hotel Availability</a>
             </div>
 
         </div>
@@ -69,7 +67,7 @@
     <section id="create_new_voucher_section">
 
         <div class="section_title_text_div">
-            <h1 class="section_title_text_class" title="فنادق اندونيسيا">New Voucher</h1>
+            <h1 class="section_title_text_class">New Voucher</h1>
         </div>
 
         <div class="voucher_info_input_div">
@@ -90,9 +88,11 @@
 
             <input type="text" id="check_out_input_id" placeholder="Check Out" autocomplete="off">
 
-            <input type="text" id="meal_plan_input_id" placeholder="Meal Plan" autocomplete="off">
+            <input type="text" id="meal_plan_input_id" placeholder="Meal Plan" autocomplete="off"
+                onclick="setVoucherClintDataInputValue('meal_plan_input_id')">
 
-            <input type="text" id="customer_name_input_id" placeholder="Clint Name?" autocomplete="off">
+            <input type="text" id="customer_name_input_id" placeholder="Clint Name?" autocomplete="off"
+                onclick="setVoucherClintDataInputValue('customer_name_input_id')">
 
         </div>
 
@@ -122,19 +122,86 @@
     <!-- Company Names Logo -->
     <div id="company_names_dropdown" class="searchable_names_dropdown_class">
         <div class="company_name_search_bar_div">
-            <input type="text" id="company_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.." autocomplete="off">
+            <input type="text" id="company_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.."
+                autocomplete="off">
         </div>
         <div class="company_names_options_dropdown_class">
-            <h3>Vid</h3>
-            <h3>Eye of Malaysia Toure</h3>
-            <h3>Travel Gate</h3>
-            <h3>Halo Puncak</h3>
-            <h3>Hojuzat Com</h3>
-            <h3>Enjaz Al Etihad</h3>
-            <h3>Ajwaa Sky Travel</h3>
-            <h3>Classic</h3>
-            <h3>travel Care</h3>
-            <h3>Mwakeb Travel </h3>
+            <h3>gv</h3>
+            <h3>sstr</h3>
+            <h3>اجواء السماء</h3>
+            <h3>اركان</h3>
+            <h3>ارياف</h3>
+            <h3>اسفار الضيافة</h3>
+            <h3>اسفاري</h3>
+            <h3>افكار السفر</h3>
+            <h3>الاجنحة السبعة</h3>
+            <h3>الاسطورة</h3>
+            <h3>البتار</h3>
+            <h3>الجمان</h3>
+            <h3>الحياة السعيدة</h3>
+            <h3>الذهبية العالمية</h3>
+            <h3>الرحلة الذمية</h3>
+            <h3>الزاجل</h3>
+            <h3>السيف</h3>
+            <h3>الشافعي</h3>
+            <h3>الصفوة</h3>
+            <h3>الصقر الاول</h3>
+            <h3>العز</h3>
+            <h3>العطلة الجميلة</h3>
+            <h3>الفخامة</h3>
+            <h3>الفرس</h3>
+            <h3>القشعمي</h3>
+            <h3>الكنان</h3>
+            <h3>المعالم</h3>
+            <h3>المكان العالي</h3>
+            <h3>الهباش</h3>
+            <h3>انجاز الاتحاد</h3>
+            <h3>اهدافي</h3>
+            <h3>اوتاد</h3>
+            <h3>باقة سفر</h3>
+            <h3>بن غيث</h3>
+            <h3>بوابة السفر</h3>
+            <h3>بوردينج</h3>
+            <h3>بوردينج تايم</h3>
+            <h3>تذكرة السفر</h3>
+            <h3>ترافل</h3>
+            <h3>ترافل جت</h3>
+            <h3>تروبيكانا</h3>
+            <h3>تروس</h3>
+            <h3>جزيرة العطلات</h3>
+            <h3>جسر العالم</h3>
+            <h3>حجوزات</h3>
+            <h3>حجوزات داود</h3>
+            <h3>دريم</h3>
+            <h3>رحلتك</h3>
+            <h3>رحلتكم</h3>
+            <h3>سافر</h3>
+            <h3>سام تيكت</h3>
+            <h3>سكاي جلوبال</h3>
+            <h3>سكاي الدولية</h3>
+            <h3>سيدرا</h3>
+            <h3>شوف الدنيا</h3>
+            <h3>طيار</h3>
+            <h3>عطلات</h3>
+            <h3>عطلات الصيف</h3>
+            <h3>عناية السفر</h3>
+            <h3>عين ماليزيا</h3>
+            <h3>فاي ان</h3>
+            <h3>فلاي ون</h3>
+            <h3>فلاي ويك</h3>
+            <h3>فيد</h3>
+            <h3>كلاسيك</h3>
+            <h3>كنوز السفر</h3>
+            <h3>كيان</h3>
+            <h3>محطات السفر</h3>
+            <h3>محطات العبور</h3>
+            <h3>مداراتي</h3>
+            <h3>مسافر الصحراء</h3>
+            <h3>مواكب</h3>
+            <h3>نور الرضا</h3>
+            <h3>هالو بونشاك</h3>
+            <h3>وادي السفر</h3>
+            <h3>تاج الماسة</h3>
         </div>
     </div>
 
@@ -152,7 +219,8 @@
     <!-- All Hotel Names -->
     <div id="property_names_dropdown" class="searchable_names_dropdown_class">
         <div class="company_name_search_bar_div">
-            <input type="text" id="property_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.." autocomplete="off">
+            <input type="text" id="property_name_search_bar" class="company_name_search_bar_class" placeholder="بحث.."
+                autocomplete="off">
         </div>
         <div class="company_names_options_dropdown_class">
             <h3>Komaneka Keramas</h3>
@@ -210,8 +278,9 @@
 
 
 
-    <h1 class="section_title_text" title="فنادق اندونيسيا"
-        style="text-align: center; background: white; color: black; box-shadow: 0 0 0 0.5px black; margin: 0; cursor: text; padding: 15px 0 10px;"><ion-icon name="arrow-down-circle-outline"></ion-icon> Example</h1>
+    <h1 class="section_title_text"
+        style="text-align: center; background: white; color: black; box-shadow: 0 0 0 0.5px black; margin: 0; cursor: text; padding: 15px 0 10px;">
+        <ion-icon name="arrow-down-circle-outline"></ion-icon> Example</h1>
 
     <!-- Choose Hotel Location Section -->
     <section id="voucher_pdf_file_structure_section">
@@ -220,7 +289,7 @@
 
     </section>
 
-    
+
 
 
     <div id="export_package_pdf_div_id" style="display: none;">
@@ -250,6 +319,11 @@
 
     <script src="voucher.js"></script>
 
+
+
+    <!-- Ionicons Append -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
