@@ -387,8 +387,8 @@ searchBarInputElements.forEach(input => {
 
     // Add a click event listener to the input element
     input.addEventListener('click', () => {
-        // Find the closest parent element with the class 'dropdown_div_class'
-        let dropdownDiv = input.closest('.dropdown_div_class');
+        // Find the closest parent element with the class 'searchable_names_dropdown_class'
+        let dropdownDiv = input.closest('.searchable_names_dropdown_class');
 
         // Set a smooth transition for the height property
         dropdownDiv.style.transition = 'height 0.2s ease-in-out';
@@ -402,8 +402,8 @@ searchBarInputElements.forEach(input => {
         // Get the trimmed and lowercased value of the input element
         let filter = input.value.trim().toLowerCase();
 
-        // Find the closest parent element with the class 'dropdown_div_class'
-        let dropdownDiv = input.closest('.dropdown_div_class');
+        // Find the closest parent element with the class 'searchable_names_dropdown_class'
+        let dropdownDiv = input.closest('.searchable_names_dropdown_class');
 
         // Select all <h3> elements within the same dropdown div
         let options = dropdownDiv.querySelectorAll('h3');
@@ -818,7 +818,7 @@ pickThisClintMovementsPlace = function (clickedPlace) {
     // Get the parent div of the clicked p element
     var parentDiv = clickedPlace.parentElement;
 
-    // Get all div elements with ids starting with 'clint_movements_place_div'
+    // Get all div elements with ids starting with 'clint_movements_places_names_options_for'
     var allDivs = document.querySelectorAll('[id^="clint_movements_places_names_options_for"]');
 
     // Iterate through all divs
@@ -830,18 +830,40 @@ pickThisClintMovementsPlace = function (clickedPlace) {
 
             // Reset the background color of all p elements to darkred
             for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'darkred';
+                pElements[i].style.backgroundColor = 'rgb(207, 233, 242)';
             }
         }
     });
 
     // Toggle the background color of the clicked p element
     if (clickedPlace.style.backgroundColor === 'rgb(0, 155, 0)') {
-        clickedPlace.style.backgroundColor = 'darkred';
+        clickedPlace.style.backgroundColor = 'rgb(207, 233, 242)';
     } else {
         clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
     }
+
+    // Additional functionality for clint_movements_places_names_options_for_random_days_class
+    if (parentDiv.classList.contains('clint_movements_places_names_options_for_random_days_class')) {
+        var allRandomDaysClassDivs = document.querySelectorAll('.clint_movements_places_names_options_for_random_days_class');
+
+        // Iterate through all random days class divs
+        allRandomDaysClassDivs.forEach(function (randomDaysClassDiv) {
+            // Get all p elements within the random days class div
+            var pElements = randomDaysClassDiv.getElementsByTagName('p');
+
+            // Reset the background color of all p elements in random days class
+            for (var i = 0; i < pElements.length; i++) {
+                pElements[i].style.backgroundColor = 'rgb(207, 233, 242)';
+            }
+        });
+
+        // Set the background color of the clicked p element to green
+        clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
+    }
 }
+
+
+
 
 // Function to collect the clicked clint movements places and set them in the textarea
 setTheClickedClintMovementsPlace = function () {
@@ -959,21 +981,21 @@ function showOverlay(clickedInputDropdownIdName) {
 
     setTimeout(() => {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-    }, 100);
+    }, 50);
 }
 
 
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
     // Check if any dropdown with the class name 'company_names_dropdown_class' is visible and hide it
-    let visibleDropdown_1 = document.querySelector('.dropdown_div_class.show');
+    let visibleDropdown_1 = document.querySelector('.searchable_names_dropdown_class.show');
     if (visibleDropdown_1) {
         visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
         company_names_dropdown.style.height = '50vh'; // Set height to 50vh when search bar is clicked
     }
 
-    // Reset all dropdown_div_class elements back to their default styling
-    let dropdownDivElements = document.querySelectorAll('.dropdown_div_class');
+    // Reset all 'searchable_names_dropdown_class' elements back to their default styling
+    let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
     dropdownDivElements.forEach(dropdown => {
         dropdown.style.height = ''; // Reset height to default
         dropdown.style.transition = ''; // Reset transition to default
