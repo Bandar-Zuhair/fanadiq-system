@@ -150,7 +150,8 @@
 
 
     <!-- Dropdown Div For Hotel Locations -->
-    <div id="import_localstorage_data_names_dropdown" class="searchable_names_dropdown_class localstorage_dropdown_div_class">
+    <div id="import_localstorage_data_names_dropdown"
+        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
         <h6>إستعادة البيانات</h6>
 
 
@@ -175,7 +176,8 @@
 
 
     <!-- Dropdown Div For Hotel Locations -->
-    <div id="delete_localstorage_data_names_dropdown" class="searchable_names_dropdown_class localstorage_dropdown_div_class">
+    <div id="delete_localstorage_data_names_dropdown"
+        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
         <h6>حذف البيانات</h6>
 
 
@@ -268,12 +270,14 @@
                 <input type="text" id="hotel_person_amount_input_id" placeholder="عدد الاشخاص" autocomplete="off">
 
 
-                <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج"
-                    autocomplete="off">
+                <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
+                    autocomplete="off" style="cursor: pointer;">
 
-                <input type="text" id="package_end_date_input_id" placeholder="تاريخ نهاية البرنامج" autocomplete="off">
+                <input type="text" id="package_end_date_input_id" placeholder="تاريخ نهاية البرنامج" readonly
+                    autocomplete="off" style="cursor: pointer;">
 
-                <input type="text" id="package_total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
+                <input type="text" id="package_total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off"
+                    readonly>
 
 
                 <input type="text" id="clint_company_name_input_id" placeholder="شركة..؟" readonly autocomplete="off"
@@ -345,18 +349,21 @@
                     style="cursor: pointer;">
 
 
-                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" autocomplete="off">
+                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
+                    style="cursor: pointer;">
 
-                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" autocomplete="off">
+                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" readonly autocomplete="off"
+                    style="cursor: pointer;">
 
-                <input type="text" id="total_nights_input_id" placeholder="مجموع الليالي" autocomplete="off">
+                <input type="text" id="hotel_total_nights_input_id" placeholder="مجموع الليالي" readonly
+                    autocomplete="off" style="cursor: pointer;">
 
 
                 <input type="text" id="room_description_input_id" placeholder="وصف الغرفة" autocomplete="off">
 
 
                 <div class="custom_checkbox">
-                    <input type="checkbox" id="breakfast_checkbox">
+                    <input type="checkbox" id="breakfast_checkbox" checked>
                     <label for="breakfast_checkbox">شامل الإفطار؟</label>
                 </div>
 
@@ -411,7 +418,8 @@
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox"
                             name="package_type" checked>
-                        <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او مايماثل حجمها) مع سائق طوال مدة
+                        <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
+                            مايماثل حجمها) مع سائق طوال مدة
                             الرحلة</label>
                     </div>
 
@@ -428,7 +436,8 @@
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="welcome_goodbye_hotel_delivery_checkbox" checked>
-                        <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق والجولات السياحية</label>
+                        <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق
+                            والجولات السياحية</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
@@ -442,8 +451,7 @@
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="all_taxes_covered_but_only_for_bali_no_checkbox"
-                            checked>
+                        <input type="checkbox" id="all_taxes_covered_but_only_for_bali_no_checkbox" checked>
                         <label for="all_taxes_covered_but_only_for_bali_no_checkbox">جميع الضرائب الحكومية بإستثناء
                             ضريبة دخول بالي</label>
                     </div>
@@ -514,8 +522,6 @@
         <!-- Dropdown Div For Hotel Locations -->
         <div id="sms_card_and_ticket_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="sms_card_and_ticket_amount_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
@@ -672,8 +678,6 @@
         <!-- Dropdown Div For Hotel Locations -->
         <div id="hotel_location_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="hotel_location_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
                 <h3>بالي</h3>
@@ -911,7 +915,13 @@
                 <input type="text" id="flight_air_line_input_id" placeholder="الخط الجوي" readonly autocomplete="off"
                     onclick="showOverlay('airport_line_name_dropdown')" style="cursor: pointer;">
 
-                <input type="text" id="flight_person_amount_input_id" placeholder="عدد الأشخاص" autocomplete="off">
+                <input type="text" id="adult_flight_person_amount_input_id" placeholder="عدد البغالين" readonly
+                    autocomplete="off" onclick="showOverlay('adult_flight_people_amount_dropdown')"
+                    style="cursor: pointer;">
+
+                <input type="text" id="infant_flight_person_amount_input_id" placeholder="عدد الرضاع" readonly
+                    autocomplete="off" onclick="showOverlay('infant_flight_people_amount_dropdown')"
+                    style="cursor: pointer;">
 
                 <input type="text" id="flight_from_city_input_id" placeholder="من مدينة" readonly autocomplete="off"
                     onclick="insertFlightDestinationCityInputValue('flight_from_city_input_id')"
@@ -920,11 +930,14 @@
                 <input type="text" id="flight_to_city_input_id" placeholder="الى مدينة" readonly autocomplete="off"
                     onclick="insertFlightDestinationCityInputValue('flight_to_city_input_id')" style="cursor: pointer;">
 
-                <input type="text" id="flight_date_input_id" placeholder="تاريخ السفر" autocomplete="off">
+                <input type="text" id="flight_date_input_id" placeholder="تاريخ السفر" readonly autocomplete="off"
+                    style="cursor: pointer;">
 
-                <input type="text" id="flight_fly_away_time_input_id" placeholder="وقت الإقلاع" autocomplete="off">
+                <input type="text" id="flight_fly_away_time_input_id" placeholder="وقت الإقلاع" readonly
+                    autocomplete="off">
 
-                <input type="text" id="flight_arrival_time_input_id" placeholder="وقت الوصول" autocomplete="off">
+                <input type="text" id="flight_arrival_time_input_id" placeholder="وقت الوصول" readonly
+                    autocomplete="off">
 
 
 
@@ -943,10 +956,61 @@
 
 
         <!-- Dropdown Div For Hotel Locations -->
+        <div id="adult_flight_people_amount_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>1 بالغ</h3>
+                <h3>2 بالغين</h3>
+                <h3>3 بالغين</h3>
+                <h3>4 بالغين</h3>
+                <h3>5 بالغين</h3>
+                <h3>6 بالغين</h3>
+                <h3>7 بالغين</h3>
+                <h3>8 بالغين</h3>
+                <h3>9 بالغين</h3>
+                <h3>10 بالغين</h3>
+                <h3>11 بالغين</h3>
+                <h3>12 بالغين</h3>
+                <h3>13 بالغين</h3>
+                <h3>14 بالغين</h3>
+                <h3>15 بالغين</h3>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="infant_flight_people_amount_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>1 رضيع</h3>
+                <h3>2 رضاع</h3>
+                <h3>3 رضاع</h3>
+                <h3>4 رضاع</h3>
+                <h3>5 رضاع</h3>
+                <h3>6 رضاع</h3>
+                <h3>7 رضاع</h3>
+                <h3>8 رضاع</h3>
+                <h3>9 رضاع</h3>
+                <h3>10 رضاع</h3>
+                <h3>11 رضاع</h3>
+                <h3>12 رضاع</h3>
+                <h3>13 رضاع</h3>
+                <h3>14 رضاع</h3>
+                <h3>15 رضاع</h3>
+            </div>
+        </div>
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
         <div id="airport_line_name_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="airport_line_name_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
                 <h3>الجارودا</h3>
@@ -962,8 +1026,6 @@
         <!-- Dropdown Div For Hotel Locations -->
         <div id="airport_destination_name_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="airport_destination_name_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
                 <h3>جاكرتا</h3>
@@ -1016,9 +1078,9 @@
 
 
                 <input type="text" id="clint_movements_first_day_date_input_id" placeholder="اول يوم" readonly
-                    autocomplete="off">
+                    autocomplete="off" style="cursor: pointer;">
                 <input type="text" id="clint_movements_last_day_date_input_id" placeholder="اخر يوم" readonly
-                    autocomplete="off">
+                    autocomplete="off" style="cursor: pointer;">
 
 
 
@@ -1060,13 +1122,13 @@
 
 
                 <input type="text" id="clint_movements_new_check_out_input_id" placeholder="تسجيل الخروج من؟"
-                    autocomplete="off"
-                    onclick="setAutoIntialTextInputValue('clint_movements_new_check_out_input_id', 'تسجيل الخروج من ')">
+                    readonly autocomplete="off" onclick="showOverlay('clint_movements_hotel_names_dropdown')"
+                    style="cursor: pointer;">
 
 
                 <input type="text" id="clint_movements_airport_welcome_input_id" placeholder="استقبال في مطار؟"
-                    autocomplete="off"
-                    onclick="setAutoIntialTextInputValue('clint_movements_airport_welcome_input_id', 'استقبال في مطار ')">
+                    autocomplete="off" onclick="showOverlay('clint_movemnt_welcome_airport_location_dropdown')"
+                    style="cursor: pointer;">
 
 
                 <textarea id="clint_movements_details_input_id" class="package_details_input_class"
@@ -1087,8 +1149,8 @@
 
 
                 <input type="text" id="clint_movements_new_check_in_input_id" placeholder="تسجيل الدخول في؟"
-                    autocomplete="off"
-                    onclick="setAutoIntialTextInputValue('clint_movements_new_check_in_input_id', 'تسجيل الدخول في ')">
+                    readonly autocomplete="off"
+                    onclick="showOverlay('clint_movements_hotel_names_dropdown')" style="cursor: pointer;">
 
 
 
@@ -1106,11 +1168,9 @@
 
 
 
-        <!-- Dropdown Div For Hotel Locations -->
+        <!-- Dropdown div for clint movements city -->
         <div id="clint_movemnt_city_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="clint_movement_city_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
@@ -1123,7 +1183,73 @@
 
 
 
+        <!-- Dropdown div for clint movements city -->
+        <div id="clint_movemnt_welcome_airport_location_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>بالي</h3>
+                <h3>جاكرتا</h3>
+            </div>
+        </div>
 
+
+
+
+
+
+        <!-- Dropdown div for hotel names -->
+        <div id="clint_movements_hotel_names_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+                <input type="text" id="clint_movements_hotel_names_search_bar_input_id" class="search_bar_input_class"
+                    placeholder="بحث.." autocomplete="off">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>Komaneka Keramas</h3>
+                <h3>Komaneka Tanggayuda</h3>
+                <h3>Samsara Ubud</h3>
+                <h3>Tejaprana</h3>
+                <h3>K Club</h3>
+                <h3>Ulaman Eco Luxury</h3>
+                <h3>Aksari Ubud</h3>
+                <h3>Ulu Segara</h3>
+                <h3>Merusaka</h3>
+                <h3>Apurva Kempinski</h3>
+                <h3>Hilton Bali</h3>
+                <h3>The Nest</h3>
+                <h3>Agranusa Signature Villa</h3>
+                <h3>The Trans Bali</h3>
+                <h3>Indigo Bali</h3>
+                <h3>Sini Vie Villa</h3>
+                <h3>Aloft Seminyak</h3>
+                <h3>Impiana Villa</h3>
+                <h3>Aleva Villa</h3>
+                <h3>Monolocale Resort</h3>
+                <h3>Ize Seminyak</h3>
+                <h3>Mamaka By Ovolo</h3>
+                <h3>Aryaduta Kuta</h3>
+                <h3>Tribe</h3>
+                <h3>Aloft Kuta</h3>
+                <h3>Paasha Atelier</h3>
+                <h3>Movenpick Jimbaran</h3>
+                <h3>Platinum Jimbaran</h3>
+                <h3>Umana Bali</h3>
+                <h3>Ascott Jakarta</h3>
+                <h3>Citadines Sudirman</h3>
+                <h3>Parkroyal Serviced Suites</h3>
+                <h3>Somerset Sudirman</h3>
+                <h3>Aloft Wahied Hasiem</h3>
+                <h3>Ascott Sudirman</h3>
+                <h3>Vertu Harmoni</h3>
+                <h3>Grand Aston</h3>
+                <h3>Le Eminence</h3>
+                <h3>Courtyard Marriott</h3>
+                <h3>The Trans Luxury</h3>
+                <h3>Kalandara</h3>
+            </div>
+        </div>
 
 
 
@@ -1233,7 +1359,8 @@
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_bali_area_9" class="clint_movements_places_names_options_for_random_days_class">
+            <div id="clint_movements_places_names_options_for_bali_area_9"
+                class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
@@ -1266,7 +1393,8 @@
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_jakarta_area_3" class="clint_movements_places_names_options_for_random_days_class">
+            <div id="clint_movements_places_names_options_for_jakarta_area_3"
+                class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
@@ -1310,7 +1438,8 @@
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_puncak_area_5" class="clint_movements_places_names_options_for_random_days_class">
+            <div id="clint_movements_places_names_options_for_puncak_area_5"
+                class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
@@ -1361,7 +1490,8 @@
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_bandung_area_5" class="clint_movements_places_names_options_for_random_days_class">
+            <div id="clint_movements_places_names_options_for_bandung_area_5"
+                class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
@@ -1481,7 +1611,7 @@
 
 
 
-    
+
     <section id="downloaded_pdf_flight_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
@@ -1539,7 +1669,7 @@
 
 
 
-    
+
 
     <section id="downloaded_pdf_hotel_data_page" style="display: none;">
 
@@ -1648,7 +1778,7 @@
 
 
 
-    
+
 
     <section id="downloaded_pdf_clint_movements_data_page" style="display: none;">
 
@@ -1692,7 +1822,7 @@
 
 
 
-    
+
     <section id="downloaded_pdf_important_notes_data_page" style="display: none;">
 
         <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
@@ -1732,7 +1862,8 @@
                 مسؤولية عن ضياعها)</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> يتم تغيير السائق في كل مدينة</p>
-            <p style="text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم التحقق
+            <p style="text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم
+                التحقق
                 من الفنادق وإعتماد الطلب</p>
 
         </div>
@@ -1800,6 +1931,12 @@
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/themes/default.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/themes/default.time.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.time.js"></script>
 
 
     <!-- Download PDF Link -->
