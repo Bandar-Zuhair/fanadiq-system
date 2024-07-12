@@ -321,7 +321,7 @@ function importWebsiteLocalStorageDataName() {
             found = true;
 
 
-            let dropdownDivElements = document.querySelectorAll('.dropdown_div_class');
+            let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
             dropdownDivElements.forEach(dropdown => {
                 dropdown.classList.remove('show');
             });
@@ -419,7 +419,7 @@ deleteWebsiteLocalStorageDataName = function () {
 
 
             /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
-            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.dropdown_div_class');
+            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.searchable_names_dropdown_class');
             allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach(dropdown => {
                 dropdown.classList.remove('show');
             });
