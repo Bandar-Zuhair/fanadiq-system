@@ -50,7 +50,7 @@ companyNameInput.addEventListener('click', () => {
 
 // Event listener to expand company names dropdown on search bar click
 companyNameSearchBar.addEventListener('click', () => {
-    companyNamesDiv.style.height = '90vh'; // Set height to 90vh when search bar is clicked
+    companyNamesDiv.style.height = '80vh'; // Set height to 90vh when search bar is clicked
     companyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
 });
 
@@ -72,18 +72,6 @@ companyNameSearchBar.addEventListener('input', () => {
     options.forEach(option => {
         let companyName = option.textContent.trim().toLowerCase();
         if (companyName.includes(filter)) {
-            option.style.display = 'block';
-        } else {
-            option.style.display = 'none';
-        }
-    });
-});
-
-// Prepare setup to show only the first 6 elements initially
-document.addEventListener('DOMContentLoaded', () => {
-    let options = companyNamesDiv.querySelectorAll('.company_names_options_dropdown_class h3');
-    options.forEach((option, index) => {
-        if (index < 6) {
             option.style.display = 'block';
         } else {
             option.style.display = 'none';
@@ -124,6 +112,12 @@ function hideHotelDropdown() {
 propertyNameInput.addEventListener('click', () => {
     propertyNamesDiv.classList.add('show');
     showOverlay(); // Assuming showOverlay() is defined elsewhere to show an overlay
+});
+
+// Event listener to expand company names dropdown on search bar click
+propertyNameSearchBar.addEventListener('click', () => {
+    propertyNamesDiv.style.height = '80vh'; // Set height to 90vh when search bar is clicked
+    propertyNamesDiv.style.transition = 'height 0.2s ease-in-out'; // Ensure height transition is smooth
 });
 
 // Event listener to handle selection of hotel names
@@ -188,7 +182,7 @@ function showOverlay() {
 
     setTimeout(() => {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-    }, 100);
+    }, 50);
 }
 
 // Function to hide the overlay and any visible dropdown
@@ -232,25 +226,22 @@ function hideOverlay() {
 
 
 
-/* Set the intial value for the 'meal_plan_input_id' once clicked on it */
-var mealPlanInput = document.getElementById('meal_plan_input_id');
-function setInitialMealPlanValue() {
-    mealPlanInput.value = "Bed & Breakfast for person";
-    mealPlanInput.removeEventListener('focus', setInitialMealPlanValue);
+
+
+/* Function to set the clicked input text */
+setVoucherClintDataInputValue = function (clickedInputName) {
+    const inputElement = document.getElementById(clickedInputName);
+
+    if (clickedInputName === 'customer_name_input_id') {
+        if (inputElement.value === '') {
+            inputElement.value = 'Mr. ';
+        }
+    } else if (clickedInputName === 'meal_plan_input_id') {
+        if (inputElement.value === '') {
+            inputElement.value = 'Bed & Breakfast for person';
+        }
+    }
 }
-mealPlanInput.addEventListener('focus', setInitialMealPlanValue);
-
-
-
-/* Set the intial value for the 'meal_plan_input_id' once clicked on it */
-var customerNameInput = document.getElementById('customer_name_input_id');
-function setInitialCustomerNameValue() {
-    customerNameInput.value = "Mr. ";
-    customerNameInput.removeEventListener('focus', setInitialCustomerNameValue);
-}
-customerNameInput.addEventListener('focus', setInitialCustomerNameValue);
-
-
 
 
 
@@ -304,12 +295,12 @@ enterVoucherData = function () {
         let allPdfContent = `
     
         <div id="voucher_company_logo_div">
-            <img src="../company-logo/${companyLogoSrcReadyText}.jpg" />
+            <img src="../صور-الشركات/${companyLogoSrcReadyText}.jpg" />
         </div>
 
 
         <div class="voucher_details_title_div">
-            <h5>Booking Reference:</h5>
+            <h5>Booking Details:</h5>
         </div>
 
 
@@ -365,7 +356,7 @@ enterVoucherData = function () {
 
 
         <div id="voucher_customer_details_div">
-            <div class="booking_detail_div">
+            <div class="booking_detail_div" style=" border: none">
                 <h5>Name:</h5>
                 <h6>${customerNameInput.value}</h6>
             </div>
@@ -504,9 +495,6 @@ downloadPdfWithCustomName = function (pdfName) {
             pdf.addPage();
         }
 
-        // Set background color
-        pdf.setFillColor(223, 232, 237);
-        pdf.rect(0, 0, imgWidth, pageHeight, 'F');
 
         let imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format with highest quality
         let imgHeight = canvas.height * imgWidth / canvas.width;
@@ -530,12 +518,12 @@ downloadPdfWithCustomName = function (pdfName) {
             },
             x: (imgWidth - element.offsetWidth) / 2, // Center the HTML content horizontally
             y: (pageHeight - element.offsetHeight) / 2, // Center the HTML content vertically
-            html2canvas: { scale: 2 }
+            html2canvas: { scale: 5 }
         });
     };
 
     // Only generate PDF with the first section
-    html2canvas(section1, { scale: 2 }).then(canvas1 => {
+    html2canvas(section1, { scale: 5 }).then(canvas1 => {
         addContentToPDF(canvas1, true);
 
         // Add HTML content for vector-based text
