@@ -134,7 +134,10 @@
 
 
 
-
+.special-text {
+    background: rgb(124, 204, 231);
+    border-radius: 7px;
+}
 
 
 
