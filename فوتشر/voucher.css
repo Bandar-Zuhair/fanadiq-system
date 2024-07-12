@@ -1,3 +1,22 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Cabin:ital,wght@0,400..700;1,400..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Questrial&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+
+
+
+
+
+
+
+
+
+/* All */
+* {
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+
+
 /* Create new voucher inputs section */
 #create_new_voucher_section {
     background: rgb(215, 232, 244);
@@ -101,6 +120,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: rgb(0, 191, 234);
     width: 100%;
     min-height: 50vh;
+    max-height: 50vh;
     padding: 5px 0;
     position: fixed;
     bottom: 0;
@@ -110,7 +130,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     overflow-y: auto;
     transform: translateY(100%);
-    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out; /* Add height transition */
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
 }
 
 /* Visible state for the dropdown */
@@ -187,7 +207,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Inserted pdf file data elements */
 #voucher_pdf_file_structure_section{
-    background: rgb(223, 232, 237);
+    background: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -206,7 +226,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 #voucher_company_logo_div img{
     width: 35vw;
-    border: 0.5px solid black;
     border-radius: 7px;
 }
 
@@ -230,18 +249,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 #voucher_booking_details_div{
     background: rgb(108, 125, 136);
-    width: 60%;
-    margin-bottom: 100px;
+    width: 65%;
+    margin: 50px 0 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    border-top: 0.5px solid black;
     border-right: 0.5px solid black;
     border-left: 0.5px solid black;
 }
 
 .booking_detail_div {
-    background: rgb(215, 232, 244);
+    background: white;
     width: 100%;
     padding: 0 5px;
     display: flex;
@@ -252,7 +272,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .booking_detail_div *{
     font-size: 2.5vw;
-    font-weight: 500;
+    padding: 5px;
+}
+
+.booking_detail_div h6{
+    font-weight: 600;
 }
 
 
@@ -261,12 +285,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #voucher_customer_details_div{
     background: rgb(108, 125, 136);
     width: 60%;
+    margin: 50px 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-right: 0.5px solid black;
-    border-left: 0.5px solid black;
+    border: none;
 }
 
 #voucher_customer_details_div h5{
@@ -286,7 +310,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 #voucher_property_image_div img{
     width: 25vw;
-    border: 1px solid black;
     border-radius: 7px;
 }
 
