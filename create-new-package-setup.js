@@ -771,7 +771,7 @@ clintMovementsAirportWelcomeInputOptions.forEach(option => {
             clintMovementsAirportWelcomeInput.value = ''; // Set input value to selected option
 
         }else{
-            clintMovementsAirportWelcomeInput.value = option.textContent; // Set input value to selected option
+            clintMovementsAirportWelcomeInput.value = `الإستقبال في مطار ${option.textContent}`; // Set input value to selected option
         }
         hideOverlay(); // Hide overlay after selection
     });
@@ -881,7 +881,7 @@ insertClintMovementsCityInputValue = function (clickedInputIdName) {
 
                     // Check if the selected city is different from the current value
                     if (lastClickedClintMovementCityInput.value !== this.innerText) {
-                        clint_movements_details_input_id.value = ''; // Reset the details input
+                        clint_movements_details_input_id.value = ''; // Reset the visiting places input
                     }
 
                     // Set the value of the input to the inner text of the clicked h3 element
