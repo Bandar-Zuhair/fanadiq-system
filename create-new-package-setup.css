@@ -488,28 +488,6 @@ body {
     margin-right: 5px; /* Adjust margin as needed */
 }
 
-.localstorage_dropdown_div_class .search_bar_div_class {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.localstorage_dropdown_div_class .search_bar_input_class {
-    width: 100%;
-    font-size: 2vw;
-    text-align: center;
-}
-
-.localstorage_dropdown_div_class .company_names_options_dropdown_class {
-    width: 100%;
-}
-
-.localstorage_dropdown_div_class h3 {
-    background: white;
-    transition: all 0.1s ease-in-out;
-}
-
 
 
 
