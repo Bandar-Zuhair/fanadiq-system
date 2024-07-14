@@ -145,17 +145,17 @@ checkboxes.forEach(checkbox => {
 
 
 /* Dropdown the package including sms cards and inner flight tickets amount */
-// Set lastClickedClintMovementCityInput when the sms card input field is clicked
+// Set lastClickedClintMovementsCityInput when the sms card input field is clicked
 document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementCityInput = document.getElementById('hotel_breakfast_people_amount_input_id');
+    lastClickedClintMovementsCityInput = document.getElementById('hotel_breakfast_people_amount_input_id');
 });
 
 document.getElementById('sms_card_with_internet_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
+    lastClickedClintMovementsCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
 });
 
 document.getElementById('inner_flight_tickets_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementCityInput = document.getElementById('inner_flight_tickets_amount_input_id');
+    lastClickedClintMovementsCityInput = document.getElementById('inner_flight_tickets_amount_input_id');
 });
 
 
@@ -166,22 +166,22 @@ let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#sms_card
 // Add click event listener to each h3 element
 smsCardWithInternetAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        if (lastClickedClintMovementCityInput) { // Check if an input field was clicked before
+        if (lastClickedClintMovementsCityInput) { // Check if an input field was clicked before
             if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
-                lastClickedClintMovementCityInput.value = ''; // Clear the value of the last clicked input field
+                lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
             } else { // If the clicked h3 element's inner text is not "حذف"
-                if (lastClickedClintMovementCityInput.id === 'sms_card_with_internet_amount_input_id') {
+                if (lastClickedClintMovementsCityInput.id === 'sms_card_with_internet_amount_input_id') {
                     // Set the value of the sms card input field with the selected option
-                    lastClickedClintMovementCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
+                    lastClickedClintMovementsCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
 
 
-                } else if (lastClickedClintMovementCityInput.id === 'inner_flight_tickets_amount_input_id') {
+                } else if (lastClickedClintMovementsCityInput.id === 'inner_flight_tickets_amount_input_id') {
                     // Set the value of the inner flight tickets input field with the selected option
-                    lastClickedClintMovementCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+                    lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
 
 
-                }else if(lastClickedClintMovementCityInput.id === 'hotel_breakfast_people_amount_input_id'){
-                    lastClickedClintMovementCityInput.value = `شامل الإفطار ل${option.textContent}`;
+                } else if (lastClickedClintMovementsCityInput.id === 'hotel_breakfast_people_amount_input_id') {
+                    lastClickedClintMovementsCityInput.value = `شامل الإفطار ل${option.textContent}`;
                 }
             }
             hideOverlay(); // Hide the dropdown overlay after selection
@@ -238,7 +238,7 @@ hotelRoomAmountInputOptions.forEach(option => {
 
 
 /* Function to create hotel room type description h3 dropdown elements */
-let createRoopTypeDescripyionDropDown = function(){
+let createRoopTypeDescripyionDropDown = function () {
     // Get the value of the hotel name input field
     let hotelNameInput = document.getElementById('hotel_name_input_id').value;
 
@@ -721,10 +721,10 @@ let infantFlightPersonAmountInputOptions = document.querySelectorAll('#infant_fl
 infantFlightPersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
-        if(option.textContent === 'حذف'){
+        if (option.textContent === 'حذف') {
             infantFlightPersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
 
-        }else{
+        } else {
             infantFlightPersonAmountInput.value = option.textContent; // Set input value to selected option
         }
         hideOverlay(); // Hide overlay after selection
@@ -767,10 +767,10 @@ let clintMovementsAirportWelcomeInputOptions = document.querySelectorAll('#clint
 clintMovementsAirportWelcomeInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
-        if(option.textContent === 'حذف'){
+        if (option.textContent === 'حذف') {
             clintMovementsAirportWelcomeInput.value = ''; // Set input value to selected option
 
-        }else{
+        } else {
             clintMovementsAirportWelcomeInput.value = `الإستقبال في مطار ${option.textContent}`; // Set input value to selected option
         }
         hideOverlay(); // Hide overlay after selection
@@ -840,92 +840,145 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 
 
 // Variable to store the last clicked clint movement city input
-let lastClickedClintMovementCityInput = null;
+let lastClickedClintMovementsCityInput = null;
 
-/* Variable to the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use */
+// Variable to store the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use
 let storeClintMovementsNextCityInput = null;
 
-/* Function to handel the dropdown city names for clint movemenets */
-insertClintMovementsCityInputValue = function (clickedInputIdName) {
-    // Store the reference to the last clicked input field
-    lastClickedClintMovementCityInput = document.getElementById(clickedInputIdName);
+/* Clint movements pick current city functions */
+let clintMovementsCurrentCityInput = document.getElementById('clint_movements_current_city_input_id');
 
-    // Add event listeners to h3 elements inside the dropdown
-    let h3Elements = clint_movemnt_city_dropdown.querySelectorAll('h3');
-    h3Elements.forEach(h3 => {
-        /* Set onclick function for each h3 element */
-        h3.onclick = function () {
-            if (this.innerText === 'حذف') {
-                lastClickedClintMovementCityInput.value = ''; // Set none as the value of the clicked input
+// Get the options within the dropdown
+let clintMovementsCurrentCityInputOptions = document.querySelectorAll('#clint_movemnts_current_city_dropdown h3');
 
+clintMovementsCurrentCityInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        clintMovementsCurrentCityInput.value = option.textContent; // Set input value to selected option
 
-                /* Hide all the clint movements places names */
-                bali_clint_movements_places_div.style.display = 'none';
-                jakarta_clint_movements_places_div.style.display = 'none';
-                puncak_clint_movements_places_div.style.display = 'none';
-                bandung_clint_movements_places_div.style.display = 'none';
+        // Set the value of the last clicked input to the current city input
+        lastClickedClintMovementsCityInput = clintMovementsCurrentCityInput;
 
-
-                /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable just in case if the clicked input was 'clint_movements_next_city_input_id'*/
-                storeClintMovementsNextCityInput = null;
-                hideOverlay(); // Hide the overlay after selection
-
-            } else {
-                /* Set the value of the 'clint_movements_next_city_input_id' input */
-                if (lastClickedClintMovementCityInput.id === 'clint_movements_next_city_input_id') {
-                    lastClickedClintMovementCityInput.value = `الذهاب الى ${this.innerText}`;
-
-                    storeClintMovementsNextCityInput = this.innerText;
-
-                } else if (lastClickedClintMovementCityInput.id === 'clint_movements_current_city_input_id') {
-
-                    // Check if the selected city is different from the current value
-                    if (lastClickedClintMovementCityInput.value !== this.innerText) {
-                        clint_movements_details_input_id.value = ''; // Reset the visiting places input
-                    }
-
-                    // Set the value of the input to the inner text of the clicked h3 element
-                    lastClickedClintMovementCityInput.value = this.innerText;
-                }
-                hideOverlay(); // Hide the overlay after selection
-
-            }
-        };
+        hideOverlay(); // Hide overlay after selection
     });
-    showOverlay('clint_movemnt_city_dropdown');
-}
+});
+
+/* Clint movements pick new city functions */
+let clintMovementsNextCityInput = document.getElementById('clint_movements_next_city_input_id');
+
+// Get the options within the dropdown
+let clintMovementsNextCityInputOptions = document.querySelectorAll('#clint_movemnts_next_city_dropdown h3');
+
+clintMovementsNextCityInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        if (option.textContent === 'حذف') {
+            clintMovementsNextCityInput.value = ''; // Clear input value
+
+            // Reset stored next city input
+            storeClintMovementsNextCityInput = null;
+            
+
+        } else if (option.textContent === 'مغادرة') {
+            clintMovementsNextCityInput.value = 'الذهاب للمطار للمغادرة'; // Set input value
+
+            // Reset stored next city input
+            storeClintMovementsNextCityInput = null;
+
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+
+        } else {
+            clintMovementsNextCityInput.value = `الذهاب الى ${option.textContent}`; // Set input value
+
+            // Set storeClintMovementsNextCityInput for regular city selection
+            storeClintMovementsNextCityInput = option.textContent;
+        }
+
+        // Set the value of the last clicked input to the next city input
+        lastClickedClintMovementsCityInput = clintMovementsNextCityInput;
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
 
 
 
 /* Function to show clint movements places page */
 showClintMovemtsPlacesPage = function () {
-    if (clint_movements_current_city_input_id.value === 'بالي') {
-        bali_clint_movements_places_div.style.display = 'block';
-        jakarta_clint_movements_places_div.style.display = 'none';
-        puncak_clint_movements_places_div.style.display = 'none';
-        bandung_clint_movements_places_div.style.display = 'none';
 
 
-    } else if (clint_movements_current_city_input_id.value === 'جاكرتا') {
-        bali_clint_movements_places_div.style.display = 'none';
-        jakarta_clint_movements_places_div.style.display = 'block';
-        puncak_clint_movements_places_div.style.display = 'none';
-        bandung_clint_movements_places_div.style.display = 'none';
+    /* in case if the 'clint_movements_next_city_input_id' was empty then use the value of the 'clint_movements_current_city_input_id' */
+    if (storeClintMovementsNextCityInput === null) {
 
-    } else if (clint_movements_current_city_input_id.value === 'بونشاك') {
-        bali_clint_movements_places_div.style.display = 'none';
-        jakarta_clint_movements_places_div.style.display = 'none';
-        puncak_clint_movements_places_div.style.display = 'block';
-        bandung_clint_movements_places_div.style.display = 'none';
 
-    } else if (clint_movements_current_city_input_id.value === 'باندونق') {
-        bali_clint_movements_places_div.style.display = 'none';
-        jakarta_clint_movements_places_div.style.display = 'none';
-        puncak_clint_movements_places_div.style.display = 'none';
-        bandung_clint_movements_places_div.style.display = 'block';
+        /* Show the clint movements visting places based on the value of the 'clint_movements_current_city_input_id' */
+        if (clint_movements_current_city_input_id.value === 'بالي') {
+            bali_clint_movements_places_div.style.display = 'block';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+
+        } else if (clint_movements_current_city_input_id.value === 'جاكرتا') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'block';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+        } else if (clint_movements_current_city_input_id.value === 'بونشاك') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'block';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+        } else if (clint_movements_current_city_input_id.value === 'باندونق') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'block';
+
+        }
+
+
+
+        /* if the 'storeClintMovementsNextCityInput' which is the value of 'clint_movements_next_city_input_id' is not null then use it to show clint movements visting places */
+    } else if (storeClintMovementsNextCityInput !== null) {
+
+
+        /* Show the clint movements visting places based on the value of the 'storeClintMovementsNextCityInput' */
+        if (storeClintMovementsNextCityInput === 'بالي') {
+            bali_clint_movements_places_div.style.display = 'block';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+
+        } else if (storeClintMovementsNextCityInput === 'جاكرتا') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'block';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+        } else if (storeClintMovementsNextCityInput === 'بونشاك') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'block';
+            bandung_clint_movements_places_div.style.display = 'none';
+
+        } else if (storeClintMovementsNextCityInput === 'باندونق') {
+            bali_clint_movements_places_div.style.display = 'none';
+            jakarta_clint_movements_places_div.style.display = 'none';
+            puncak_clint_movements_places_div.style.display = 'none';
+            bandung_clint_movements_places_div.style.display = 'block';
+
+        }
 
     }
-
 
 
 
@@ -1076,7 +1129,7 @@ setTheClickedClintMovementsPlace = function () {
     });
 
     // Set the collected text inside the textarea
-    let clintMovementsDetailsInput = document.getElementById('clint_movements_details_input_id'); // Get the textarea by its id
+    let clintMovementsDetailsInput = document.getElementById('clint_movements_whole_day_actions_details_textarea_id'); // Get the textarea by its id
     clintMovementsDetailsInput.value = clickedPlacesText.join(' + '); // Join the text with ' + ' and set it as the value of the textarea
 }
 
@@ -1163,12 +1216,16 @@ function setTheFirstClintMovemnetsDate() {
 
 
 
+
+
+
+
 // Function to show the overlay
 function showOverlay(clickedInputDropdownIdName) {
     let clickedInputDropdown = document.getElementById(clickedInputDropdownIdName);
 
     // Store the reference to the last clicked input field
-    lastClickedClintMovementCityInput = document.getElementById(event.target.id);
+    lastClickedClintMovementsCityInput = document.getElementById(event.target.id);
     clickedInputDropdown.classList.add('show'); // Show the clicked input dropdown
     clickedInputDropdown.style.transition = 'transform 0.2s ease-in-out'; // Ensure transform transition is smooth
 
@@ -1518,14 +1575,14 @@ var startDatePicker = new Pikaday({
 
 
 /* Time picker for flight fly and arravial time */
-$(document).ready(function() {
+$(document).ready(function () {
     $('#flight_fly_away_time_input_id').pickatime({
         format: 'HH:i',
         interval: 5,
         min: [0, 0],
         max: [23, 59]
     });
-    
+
     $('#flight_arrival_time_input_id').pickatime({
         format: 'HH:i',
         interval: 5,
@@ -1629,8 +1686,6 @@ function toggleFullscreen(textAreaId) {
     // Append exit button to body
     document.body.appendChild(exitTextAreaFullScreenButton);
 }
-
-
 
 
 
