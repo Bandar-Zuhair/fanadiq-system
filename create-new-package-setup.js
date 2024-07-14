@@ -1341,8 +1341,18 @@ function calculateDaysDifference(startDate, endDate) {
     return diffDays;
 }
 
+
+
+
+
+
+
+
+
+
+
 // Function to update the total nights input
-function updateTotalNights() {
+function calculateTwoDifferentDateForTotalNights() {
     let startDate = document.getElementById('package_start_date_input_id').value;
     let endDate = document.getElementById('package_end_date_input_id').value;
     let totalNights = calculateDaysDifference(startDate, endDate);
@@ -1351,7 +1361,7 @@ function updateTotalNights() {
 
 
 /* Inputs date for whole package start and end period */
-var startDatePicker = new Pikaday({
+var wholePackageStartDatePicker = new Pikaday({
     field: document.getElementById('package_start_date_input_id'),
     format: 'DD-M',
     minDate: new Date(),
@@ -1360,10 +1370,10 @@ var startDatePicker = new Pikaday({
         let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
         return `${day} ${month}`;
     },
-    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+    onSelect: calculateTwoDifferentDateForTotalNights // Call 'calculateTwoDifferentDateForTotalNights' when a date is selected
 });
 
-var endDatePicker = new Pikaday({
+var wholePackageEndDatePicker = new Pikaday({
     field: document.getElementById('package_end_date_input_id'),
     format: 'DD-M',
     minDate: new Date(),
@@ -1372,7 +1382,7 @@ var endDatePicker = new Pikaday({
         let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
         return `${day} ${month}`;
     },
-    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+    onSelect: calculateTwoDifferentDateForTotalNights // Call 'calculateTwoDifferentDateForTotalNights' when a date is selected
 });
 
 
@@ -1386,30 +1396,9 @@ var endDatePicker = new Pikaday({
 
 
 
-// Function to calculate the difference in days between two dates
-function calculateDaysDifference(startDate, endDate) {
-    if (!startDate || !endDate) return '';
-    let [startDay, startMonth] = startDate.split(' ');
-    let [endDay, endMonth] = endDate.split(' ');
-
-    let start = new Date(`${arabicMonthsReverse[startMonth]} ${startDay}, ${new Date().getFullYear()}`);
-    let end = new Date(`${arabicMonthsReverse[endMonth]} ${endDay}, ${new Date().getFullYear()}`);
-    let diffTime = end - start; // Difference in time
-    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Difference in days
-    return diffDays;
-}
-
-// Function to update the total nights input
-function updateTotalNights() {
-    let startDate = document.getElementById('hotel_check_in_input_id').value;
-    let endDate = document.getElementById('hotel_check_out_input_id').value;
-    let totalNights = calculateDaysDifference(startDate, endDate);
-    document.getElementById('hotel_total_nights_input_id').value = totalNights;
-}
-
 
 /* Inputs date for hotel start and end period */
-var startDatePicker = new Pikaday({
+var hotelStartDatePicker = new Pikaday({
     field: document.getElementById('hotel_check_in_input_id'),
     format: 'DD-M',
     minDate: new Date(),
@@ -1418,10 +1407,10 @@ var startDatePicker = new Pikaday({
         let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
         return `${day} ${month}`;
     },
-    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+    onSelect: calculateTwoDifferentDateForTotalNights // Call 'calculateTwoDifferentDateForTotalNights' when a date is selected
 });
 
-var endDatePicker = new Pikaday({
+var hotelEndDatePicker = new Pikaday({
     field: document.getElementById('hotel_check_out_input_id'),
     format: 'DD-M',
     minDate: new Date(),
@@ -1430,7 +1419,7 @@ var endDatePicker = new Pikaday({
         let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
         return `${day} ${month}`;
     },
-    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+    onSelect: calculateTwoDifferentDateForTotalNights // Call 'calculateTwoDifferentDateForTotalNights' when a date is selected
 });
 
 
@@ -1454,7 +1443,7 @@ var startDatePicker = new Pikaday({
         let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
         return `${day} ${month}`;
     },
-    onSelect: updateTotalNights // Call updateTotalNights when a date is selected
+    onSelect: calculateTwoDifferentDateForTotalNights // Call 'calculateTwoDifferentDateForTotalNights' when a date is selected
 });
 
 
