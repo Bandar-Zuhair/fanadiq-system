@@ -466,21 +466,6 @@ body {
 
 
 /* Importing and deleting data from localStorage */
-.localstorage_dropdown_div_class {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    min-height: 50vh;
-    max-height: 50vh;
-    padding: 5px 0;
-    background: rgb(0, 191, 234);
-    position: fixed;
-    bottom: 0;
-    overflow-y: auto;
-    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
-}
-
 .localstorage_dropdown_div_class h6 {
     background: darkred;
     color: white;
