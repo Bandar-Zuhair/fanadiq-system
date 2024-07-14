@@ -174,7 +174,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         /* Check if all package including data inputs are filled */
     } else if (clickedButtonId === 'package_including_data_inputs_submit_icon') {
-
+        // Check if the submit button for including package data was clicked
 
         // Array of checkbox IDs
         let checkboxIds = [
@@ -200,13 +200,13 @@ checkInputsToInsertData = function (clickedButtonId) {
         let areInputsValid = checkboxIds.some(id => document.getElementById(id).checked) || packageIncludingDataTextArea !== '';
 
         if (!areInputsValid) {
-            // Show error message
+            // Show error message if no checkboxes are checked and text areas are empty
             package_including_data_inputs_submit_icon.style.backgroundColor = 'red';
             setTimeout(() => {
                 package_including_data_inputs_submit_icon.style.backgroundColor = 'darkorange';
             }, 500);
         } else {
-            // Show success message
+            // Show success message if checkboxes are checked or text areas are not empty
             package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             setTimeout(() => {
                 package_including_data_inputs_submit_icon.style.backgroundColor = 'darkorange';
@@ -229,9 +229,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let icon = document.createElement('ion-icon');
 
                 if (checkbox.checked) {
+                    // If checkbox is checked, create checkmark icon and append text
                     icon.setAttribute('name', 'checkmark-outline');
                     p.appendChild(icon);
 
+                    // Append additional input text for special cases (SMS card and inner flight tickets)
                     if (id === 'sms_card_with_internet_checkbox' && smsCardWithInternetAmountInputReayText !== '') {
                         p.appendChild(document.createTextNode(` ${smsCardWithInternetAmountInputReayText}`));
                     } else if (id === 'inner_flight_tickets_checkbox' && innerFlightTicketsAmountInputReayText !== '') {
@@ -240,25 +242,29 @@ checkInputsToInsertData = function (clickedButtonId) {
                         p.appendChild(document.createTextNode(` ${label.innerText}`));
                     }
 
+                    // Apply styles for included data
                     p.className = 'inserted_package_including_data_text';
                     if (id === 'sms_card_with_internet_checkbox' || id === 'inner_flight_tickets_checkbox') {
-                        p.classList.add('special-text');
+                        p.classList.add('special_package_including_data_background_color_text');
                     }
                     insertedPackageIncludingDataDiv.appendChild(p);
                 } else {
+                    // If checkbox is not checked, create close icon and append text
                     icon.setAttribute('name', 'close-outline');
                     p.appendChild(icon);
                     p.appendChild(document.createTextNode(` ${label.innerText}`));
+
+                    // Apply styles for not included data
                     p.className = 'inserted_package_not_including_data_text';
                     if (id === 'sms_card_with_internet_checkbox' || id === 'inner_flight_tickets_checkbox') {
-                        p.classList.add('special-text');
+                        p.classList.add('special_package_including_data_background_color_text');
                     }
                     insertedPackageNotIncludingDataDiv.appendChild(p);
                 }
 
+                // Add click event to delete each inserted data text
                 p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
             });
-
 
             // Include package details text area if not empty
             if (packageIncludingDataTextArea !== '') {
@@ -271,6 +277,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         p.appendChild(document.createTextNode(` ${text.trim()}`));
                         p.className = 'inserted_package_including_data_text';
                         p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)');
+                        p.classList.add('special_package_including_data_background_color_text');
                         insertedPackageIncludingDataDiv.appendChild(p);
                     }
                 });
@@ -288,22 +295,29 @@ checkInputsToInsertData = function (clickedButtonId) {
                 insertedPackageIncludingDataDiv.appendChild(h6);
             }
 
-
-
             // Append the data to the respective divs
-            document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
-            document.getElementById('inserted_package_icluding_data_position_div').appendChild(insertedPackageIncludingDataDiv);
+            let insertedPackageIncludingDataPositionDiv = document.getElementById('inserted_package_icluding_data_position_div');
+            let insertedPackageNotIncludingDataPositionDiv = document.getElementById('inserted_package_not_icluding_data_position_div');
 
-            document.getElementById('inserted_package_not_icluding_data_position_div').innerHTML = '';
-            document.getElementById('inserted_package_not_icluding_data_position_div').appendChild(insertedPackageNotIncludingDataDiv);
+            insertedPackageIncludingDataPositionDiv.innerHTML = '';
+            insertedPackageIncludingDataPositionDiv.appendChild(insertedPackageIncludingDataDiv);
 
+            insertedPackageNotIncludingDataPositionDiv.innerHTML = '';
+            insertedPackageNotIncludingDataPositionDiv.appendChild(insertedPackageNotIncludingDataDiv);
 
+            // Show or hide titles based on content
+            let pdfSectionPackageIncludingDataTitle = document.getElementById('pdf_section_package_icluding_data_title_id');
+            let pdfSectionPackageNotIncludingDataTitle = document.getElementById('pdf_section_package_not_icluding_data_title_id');
+
+            pdfSectionPackageIncludingDataTitle.style.display = insertedPackageIncludingDataDiv.children.length > 0 ? 'block' : 'none';
+            pdfSectionPackageNotIncludingDataTitle.style.display = insertedPackageNotIncludingDataDiv.children.length > 0 ? 'block' : 'none';
 
             // Show the 'downloaded_pdf_package_including_data_page'
             document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'block';
         }
-
     }
+
+
 
 
 
