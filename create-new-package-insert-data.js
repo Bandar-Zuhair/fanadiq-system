@@ -1483,49 +1483,35 @@ checkInputsToInsertData = function (clickedButtonId) {
                         /* if the 'clintMovementsNextCityInput' does not contain 'الذهاب للمطار للمغادرة' */
                     } else {
 
-                        /* Check is tthere any value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
-                        if (clintMovementsWholeDayActionsDetailsTextarea !== '') {
 
-                            // Change the submit icon background color
-                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+                        // Change the submit icon background color
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+                        // Set the background color of the submit icon back to default color
+                        setTimeout(() => {
+                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                        }, 500);
 
-                            // Set the background color of the submit icon back to default color
-                            setTimeout(() => {
-                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
-                            }, 500);
-
-
-                            /* But if there is not value in the 'clintMovementsWholeDayActionsDetailsTextarea' then contiue the process */
-                        } else {
-
-                            // Change the submit icon background color
-                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
-                            // Set the background color of the submit icon back to default color
-                            setTimeout(() => {
-                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
-                            }, 500);
-
-                            // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
-                            currentDayDate.setDate(currentDayDate.getDate() + 1);
-                            let newDayDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
-                            document.getElementById('clint_movements_current_day_date_input_id').value = newDayDate;
+                        // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
+                        currentDayDate.setDate(currentDayDate.getDate() + 1);
+                        let newDayDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
+                        document.getElementById('clint_movements_current_day_date_input_id').value = newDayDate;
 
 
 
 
 
 
-                            // Create an array of non-empty inputs
-                            let nonEmptyInputs = [
-                                clintMovementsNewCheckOutInput,
-                                clintMovementsNextCityInput,
-                                clintMovementsAirportWelcomeInput,
-                                clintMovementsWholeDayActionsDetailsTextarea,
-                                clintMovementsNewCheckInInput
-                            ].filter(input => input !== '');
+                        // Create an array of non-empty inputs
+                        let nonEmptyInputs = [
+                            clintMovementsNewCheckOutInput,
+                            clintMovementsNextCityInput,
+                            clintMovementsAirportWelcomeInput,
+                            clintMovementsWholeDayActionsDetailsTextarea,
+                            clintMovementsNewCheckInInput
+                        ].filter(input => input !== '');
 
-                            // Join the non-empty inputs with ' + ' separator
-                            let mixedInputsWithValue = nonEmptyInputs.join(' + ');
+                        // Join the non-empty inputs with ' + ' separator
+                        let mixedInputsWithValue = nonEmptyInputs.join(' + ');
 
 
 
@@ -1534,168 +1520,167 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                            /* Create the intial variable for storing the clint movements row content */
-                            let clintMovementsRowTableDivContent;
+                        /* Create the intial variable for storing the clint movements row content */
+                        let clintMovementsRowTableDivContent;
 
-                            if (storeClintMovementsNextCityInput !== null) {
-                                // Create the HTML content for a new hotel row
-                                clintMovementsRowTableDivContent = `
+                        if (storeClintMovementsNextCityInput !== null) {
+                            // Create the HTML content for a new hotel row
+                            clintMovementsRowTableDivContent = `
                             <div><p>${clintMovementsCurrentDayDateInput}</p></div>
                             <div><p>${mixedInputsWithValue}</p></div>
                             <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}</p></div>
                         `;
 
-                                /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable */
-                                storeClintMovementsNextCityInput = null;
+                            /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable */
+                            storeClintMovementsNextCityInput = null;
 
-                            } else {
-                                // Create the HTML content for a new hotel row
-                                clintMovementsRowTableDivContent = `
+                        } else {
+                            // Create the HTML content for a new hotel row
+                            clintMovementsRowTableDivContent = `
                             <div><p>${clintMovementsCurrentDayDateInput}</p></div>
                             <div><p>${mixedInputsWithValue}</p></div>
                             <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}</p></div>
                         `;
-                            }
+                        }
 
 
 
 
-                            // Create a new div element to hold the hotel row
-                            let clintMovementsRowTableDiv = document.createElement('div');
-                            clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
-                            clintMovementsRowTableDiv.classList.add('clint_movements_row_class'); // Add a class to the div for styling
-                            insertedClintMovementsRowDivUniqueId++;
+                        // Create a new div element to hold the hotel row
+                        let clintMovementsRowTableDiv = document.createElement('div');
+                        clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
+                        clintMovementsRowTableDiv.classList.add('clint_movements_row_class'); // Add a class to the div for styling
+                        insertedClintMovementsRowDivUniqueId++;
 
 
-                            // Insert the HTML content into the newly created div
-                            clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
-
-
-
+                        // Insert the HTML content into the newly created div
+                        clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
 
 
 
 
 
-                            // Get all dynamically created elements with the class 'clint_movements_row_controller'
-                            let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
 
-                            // Function to handle touch events and distinguish between tap and scroll
-                            function handleTouchEvent(element) {
-                                let touchStartX, touchStartY, touchStartTime;
 
-                                // Record the starting touch position and time
-                                element.addEventListener('touchstart', (event) => {
-                                    let touch = event.touches[0];
-                                    touchStartX = touch.clientX;
-                                    touchStartY = touch.clientY;
-                                    touchStartTime = new Date().getTime();
-                                });
 
-                                // Compare the ending touch position and time to determine if it was a tap
-                                element.addEventListener('touchend', (event) => {
-                                    let touch = event.changedTouches[0];
-                                    let touchEndX = touch.clientX;
-                                    let touchEndY = touch.clientY;
-                                    let touchEndTime = new Date().getTime();
+                        // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                        let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
 
-                                    let deltaX = touchEndX - touchStartX;
-                                    let deltaY = touchEndY - touchStartY;
-                                    let deltaTime = touchEndTime - touchStartTime;
+                        // Function to handle touch events and distinguish between tap and scroll
+                        function handleTouchEvent(element) {
+                            let touchStartX, touchStartY, touchStartTime;
 
-                                    // Check if the touch event qualifies as a tap
-                                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                                    // If it's a tap, run the click function
-                                    if (isTap) {
-                                        clintMovementsRowFlightArrivalTimeFunction(event);
-                                    }
-                                });
-                            }
-
-                            // Function to handle mouse events and distinguish between click and drag
-                            function handleMouseEvent(element) {
-                                let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
-
-                                // Record the starting mouse position and time
-                                element.addEventListener('mousedown', (event) => {
-                                    mouseStartX = event.clientX;
-                                    mouseStartY = event.clientY;
-                                    mouseStartTime = new Date().getTime();
-                                    isDragging = false;
-                                });
-
-                                // Mark as dragging if mouse moves significantly
-                                element.addEventListener('mousemove', (event) => {
-                                    let deltaX = event.clientX - mouseStartX;
-                                    let deltaY = event.clientY - mouseStartY;
-                                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                                        isDragging = true;
-                                    }
-                                });
-
-                                // Compare the ending mouse position and time to determine if it was a click
-                                element.addEventListener('mouseup', (event) => {
-                                    let mouseEndX = event.clientX;
-                                    let mouseEndY = event.clientY;
-                                    let mouseEndTime = new Date().getTime();
-
-                                    let deltaX = mouseEndX - mouseStartX;
-                                    let deltaY = mouseEndY - mouseStartY;
-                                    let deltaTime = mouseEndTime - mouseStartTime;
-
-                                    // Check if the mouse event qualifies as a click
-                                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                                    // If it's a click, run the click function
-                                    if (isClick) {
-                                        clintMovementsRowFlightArrivalTimeFunction(event);
-                                    }
-                                });
-                            }
-
-                            // Attach click and touch event listeners to each element
-                            clintMovementsRowImageControllers.forEach(element => {
-                                handleMouseEvent(element); // Handle mouse events with click detection
-                                handleTouchEvent(element); // Handle touch events with tap detection
+                            // Record the starting touch position and time
+                            element.addEventListener('touchstart', (event) => {
+                                let touch = event.touches[0];
+                                touchStartX = touch.clientX;
+                                touchStartY = touch.clientY;
+                                touchStartTime = new Date().getTime();
                             });
 
+                            // Compare the ending touch position and time to determine if it was a tap
+                            element.addEventListener('touchend', (event) => {
+                                let touch = event.changedTouches[0];
+                                let touchEndX = touch.clientX;
+                                let touchEndY = touch.clientY;
+                                let touchEndTime = new Date().getTime();
 
+                                let deltaX = touchEndX - touchStartX;
+                                let deltaY = touchEndY - touchStartY;
+                                let deltaTime = touchEndTime - touchStartTime;
 
+                                // Check if the touch event qualifies as a tap
+                                let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
 
-
-
-
-
-                            // Append the new hotel row div to the parent div that holds all inserted hotel data
-                            document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
-
-
-                            /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
-                            document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
-
-                            /* Show the download button */
-                            document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-
-
-
-                            // Get references to all input elements and reset their values
-                            document.getElementById('clint_movements_current_city_input_id').value = '';
-                            document.getElementById('clint_movements_new_check_out_input_id').value = '';
-                            document.getElementById('clint_movements_airport_welcome_input_id').value = '';
-                            document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
-                            document.getElementById('clint_movements_next_city_input_id').value = '';
-                            document.getElementById('clint_movements_new_check_in_input_id').value = '';
-
-
-                            /* Hide all the clint movements places names */
-                            bali_clint_movements_places_div.style.display = 'none';
-                            jakarta_clint_movements_places_div.style.display = 'none';
-                            puncak_clint_movements_places_div.style.display = 'none';
-                            bandung_clint_movements_places_div.style.display = 'none';
-
+                                // If it's a tap, run the click function
+                                if (isTap) {
+                                    clintMovementsRowFlightArrivalTimeFunction(event);
+                                }
+                            });
                         }
+
+                        // Function to handle mouse events and distinguish between click and drag
+                        function handleMouseEvent(element) {
+                            let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
+
+                            // Record the starting mouse position and time
+                            element.addEventListener('mousedown', (event) => {
+                                mouseStartX = event.clientX;
+                                mouseStartY = event.clientY;
+                                mouseStartTime = new Date().getTime();
+                                isDragging = false;
+                            });
+
+                            // Mark as dragging if mouse moves significantly
+                            element.addEventListener('mousemove', (event) => {
+                                let deltaX = event.clientX - mouseStartX;
+                                let deltaY = event.clientY - mouseStartY;
+                                if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                                    isDragging = true;
+                                }
+                            });
+
+                            // Compare the ending mouse position and time to determine if it was a click
+                            element.addEventListener('mouseup', (event) => {
+                                let mouseEndX = event.clientX;
+                                let mouseEndY = event.clientY;
+                                let mouseEndTime = new Date().getTime();
+
+                                let deltaX = mouseEndX - mouseStartX;
+                                let deltaY = mouseEndY - mouseStartY;
+                                let deltaTime = mouseEndTime - mouseStartTime;
+
+                                // Check if the mouse event qualifies as a click
+                                let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                                // If it's a click, run the click function
+                                if (isClick) {
+                                    clintMovementsRowFlightArrivalTimeFunction(event);
+                                }
+                            });
+                        }
+
+                        // Attach click and touch event listeners to each element
+                        clintMovementsRowImageControllers.forEach(element => {
+                            handleMouseEvent(element); // Handle mouse events with click detection
+                            handleTouchEvent(element); // Handle touch events with tap detection
+                        });
+
+
+
+
+
+
+
+
+                        // Append the new hotel row div to the parent div that holds all inserted hotel data
+                        document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
+
+
+                        /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
+                        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
+
+                        /* Show the download button */
+                        document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+
+
+
+                        // Get references to all input elements and reset their values
+                        document.getElementById('clint_movements_current_city_input_id').value = '';
+                        document.getElementById('clint_movements_new_check_out_input_id').value = '';
+                        document.getElementById('clint_movements_airport_welcome_input_id').value = '';
+                        document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
+                        document.getElementById('clint_movements_next_city_input_id').value = '';
+                        document.getElementById('clint_movements_new_check_in_input_id').value = '';
+
+
+                        /* Hide all the clint movements places names */
+                        bali_clint_movements_places_div.style.display = 'none';
+                        jakarta_clint_movements_places_div.style.display = 'none';
+                        puncak_clint_movements_places_div.style.display = 'none';
+                        bandung_clint_movements_places_div.style.display = 'none';
+
                     }
                 }
 
@@ -1958,7 +1943,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 createClintMovementsDragAndDropMood();
             }
         }
-
     }
 }
 
