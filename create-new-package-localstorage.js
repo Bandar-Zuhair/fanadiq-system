@@ -1430,9 +1430,3 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
     }
 
 }
-
-
-
-
-// Clear all data from localStorage
-/* localStorage.clear(); */
