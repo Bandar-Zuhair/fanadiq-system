@@ -179,7 +179,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         // Array of checkbox IDs
         let checkboxIds = [
             'privet_car_with_driver_to_welcome_and_etc_checkbox',
-            'hotel_booking_with_breakfast_checkbox',
+            'hotel_booking_with_breakfast_for_2_people_checkbox',
             'pertol_and_driver_living_cost_checkbox',
             'welcome_goodbye_hotel_delivery_checkbox',
             'customer_service_24_hour_checkbox',
@@ -759,15 +759,16 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
         let totalNightsReadyText = document.getElementById('hotel_total_nights_input_id').value;
-        let roomDescriptionInput = document.getElementById('room_description_input_id').value;
-        let breakfastCheckbox = document.getElementById('breakfast_checkbox');
+        let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
+        let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id').value;
+        let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
         let roomExtraInfoReadyText = document.getElementById('room_extra_info_textarea_id').value;
 
 
 
 
 
-        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || totalNightsReadyText === '' || roomDescriptionInput === '') {
+        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || totalNightsReadyText === '' || hotelRoomTypeDescriptionInput === '') {
 
             // Change the sumbit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'red';
@@ -798,7 +799,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             // Concatenate the room description with a breakfast note if the checkbox is checked
-            let roomDescription = roomDescriptionInput + (breakfastCheckbox.checked ? ' شامل الإفطار' : '');
+            let roomDescription = hotelRoomTypeDescriptionInput + (hotelBreakfastPeopleAmountInput !== '' ? ` ${hotelBreakfastPeopleAmountInput}` : '');
 
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
@@ -806,6 +807,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><p>من ${hotelCheckInReadyText}</p><p style="color: red">الى ${hotelCheckOutReadyText}</p></div>
                 <div><p>${totalNightsReadyText}</p></div>
                 <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
+                <div><p>${hotelRoomAmountInput}</p></div>
                 <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
                 <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style"cursor: pointer"></div>
             `;
@@ -827,12 +829,54 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+            // Function to handle touch and mouse events to distinguish between click and drag
+            function handleClickEvent(element) {
+                let touchStartX, touchStartY, touchStartTime;
+                let isDragging = false;
+                let isTouchEvent = false; // Flag to distinguish between touch and mouse events
+
+                element.addEventListener('touchstart', (event) => {
+                    let touch = event.touches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    touchStartTime = new Date().getTime();
+                    isDragging = false;
+                    isTouchEvent = true; // Set the flag to indicate a touch event
+                });
+
+                element.addEventListener('touchmove', () => {
+                    isDragging = true;
+                });
+
+                element.addEventListener('touchend', (event) => {
+                    isTouchEvent = false; // Reset the flag after the touch event ends
+                });
+
+                element.addEventListener('mousedown', (event) => {
+                    if (!isTouchEvent) { // Only execute if it is not a touch event
+                        touchStartX = event.clientX;
+                        touchStartY = event.clientY;
+                        touchStartTime = new Date().getTime();
+                        isDragging = false;
+                    }
+                });
+
+                element.addEventListener('mousemove', () => {
+                    isDragging = true;
+                });
+
+                element.addEventListener('mouseup', (event) => {
+                    if (!isDragging && !isTouchEvent) { // Only execute if it is not a touch event
+                        hotelRowImageControllerFunction(event);
+                    }
+                });
+            }
+
+            // Attach click and touch event listeners to each element
             hotelRowImageControllers.forEach(element => {
-                element.onclick = function (event) {
-                    /* Pass the div of the clicked 'hotel_row_image_controller' */
-                    hotelRowImageControllerFunction(event);
-                };
+                handleClickEvent(element);
             });
+
 
 
             // Append the new hotel row div to the parent div that holds all inserted hotel data
@@ -855,8 +899,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_check_in_input_id').value = '';
             document.getElementById('hotel_check_out_input_id').value = '';
             document.getElementById('hotel_total_nights_input_id').value = '';
-            document.getElementById('room_description_input_id').value = '';
-            document.getElementById('breakfast_checkbox').checked = false;
+            document.getElementById('hotel_room_type_description_input_id').value = '';
+            document.getElementById('hotel_room_amount_input_id').value = '';
+            document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
             document.getElementById('room_extra_info_textarea_id').value = '';
 
             // Disable the hotel_area_input_id and hotel_name_input_id inputs
