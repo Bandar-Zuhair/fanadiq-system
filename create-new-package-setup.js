@@ -146,6 +146,10 @@ checkboxes.forEach(checkbox => {
 
 /* Dropdown the package including sms cards and inner flight tickets amount */
 // Set lastClickedClintMovementCityInput when the sms card input field is clicked
+document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementCityInput = document.getElementById('hotel_breakfast_people_amount_input_id');
+});
+
 document.getElementById('sms_card_with_internet_amount_input_id').addEventListener('click', () => {
     lastClickedClintMovementCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
 });
@@ -169,9 +173,15 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
                 if (lastClickedClintMovementCityInput.id === 'sms_card_with_internet_amount_input_id') {
                     // Set the value of the sms card input field with the selected option
                     lastClickedClintMovementCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
+
+
                 } else if (lastClickedClintMovementCityInput.id === 'inner_flight_tickets_amount_input_id') {
                     // Set the value of the inner flight tickets input field with the selected option
                     lastClickedClintMovementCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+
+
+                }else if(lastClickedClintMovementCityInput.id === 'hotel_breakfast_people_amount_input_id'){
+                    lastClickedClintMovementCityInput.value = `شامل الإفطار ل${option.textContent}`;
                 }
             }
             hideOverlay(); // Hide the dropdown overlay after selection
@@ -210,6 +220,76 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
 
 
 
+
+/* Dropdown airport line names functionality */
+let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id');
+
+// Get the options within the dropdown
+let hotelRoomAmountInputOptions = document.querySelectorAll('#hotel_room_amount_dropdown h3');
+
+hotelRoomAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        hotelRoomAmountInput.value = option.textContent; // Set input value to selected option
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+/* Function to create hotel room type description h3 dropdown elements */
+let createRoopTypeDescripyionDropDown = function(){
+    // Get the value of the hotel name input field
+    let hotelNameInput = document.getElementById('hotel_name_input_id').value;
+
+    // Get the input field where the selected room type description will be displayed
+    let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id');
+
+    // Get the div where the room type description h3 elements will be appended
+    let hotelRoomTypeDescriptionH3ElementsDiv = document.getElementById('hotel_room_type_description_h3_elements_div_id');
+
+    // Check if the hotel name input field is not empty
+    if (hotelNameInput !== '') {
+        // Clear any existing content in the h3 elements div
+        hotelRoomTypeDescriptionH3ElementsDiv.innerHTML = '';
+
+        // Find the hotel object in the hotelRoomTypesDescriptionArray that matches the hotel name input value
+        let hotel = hotelRoomTypesDescriptionArray.find(hotel => hotel.hotelName === hotelNameInput);
+
+        // If a matching hotel object is found
+        if (hotel) {
+            // Loop through each room type in the hotelRoomTypes array of the matching hotel object
+            hotel.hotelRoomTypes.forEach(roomType => {
+                // Create a new h3 element for the room type
+                let h3 = document.createElement('h3');
+
+                // Set the text content of the h3 element to the current room type
+                h3.textContent = roomType;
+
+                // Append the h3 element to the h3 elements div
+                hotelRoomTypeDescriptionH3ElementsDiv.appendChild(h3);
+
+                // Add a click event listener to the h3 element
+                h3.addEventListener('click', () => {
+                    // When the h3 element is clicked, set the value of the room type description input field to the text content of the h3 element
+                    hotelRoomTypeDescriptionInput.value = h3.textContent;
+
+                    // Hide the overlay (assuming hideOverlay function is defined elsewhere)
+                    hideOverlay();
+                });
+            });
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 // Get the following elements for later use
 let hotelLocationInput = document.getElementById('hotel_location_input_id');
 let hotelAreaInput = document.getElementById('hotel_area_input_id');
@@ -234,6 +314,7 @@ function checkHotelLocation() {
     } else {
         hotelAreaInput.style.display = 'block'; // Show the hotel area input
     }
+
 }
 
 // Function to check if inputs should be clickable
@@ -264,6 +345,7 @@ hotelLocationOptions.forEach(option => {
         checkHotelLocation(); // Check the hotel location after setting the value
         hotelAreaInput.value = ''; // Clear the hotel area input
         hotelNameInput.value = ''; // Clear the hotel name input
+        document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
         hotelLocationDropdown.classList.remove('show'); // Hide dropdown after selection
         hideOverlay(); // Hide overlay after selection
         checkInputClickability(); // Check input clickability after setting the value
@@ -275,6 +357,7 @@ hotelAreaOptions.forEach(option => {
     option.addEventListener('click', () => {
         hotelAreaInput.value = option.textContent; // Set input value to selected option
         hotelNameInput.value = ''; // Clear the hotel name input
+        document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
         hotelAreaDropdown.classList.remove('show'); // Hide dropdown after selection
         hideOverlay(); // Hide overlay after selection
         checkInputClickability(); // Check input clickability after setting the value
@@ -345,6 +428,7 @@ function toggleHotelNameDropdown() {
     dropdownHotelOptions.forEach(option => {
         option.addEventListener('click', () => {
             hotelNameInput.value = option.textContent; // Set input value to selected option
+            document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
             hideOverlay(); // Hide overlay after selection
         });
     });
@@ -394,7 +478,8 @@ searchBarInputElements.forEach(input => {
         dropdownDiv.style.transition = 'height 0.2s ease-in-out';
 
         // Set the height of the dropdown div to 80vh when the search bar is clicked
-        dropdownDiv.style.height = '80vh';
+        dropdownDiv.style.maxHeight = '80vh';
+        dropdownDiv.style.minHeight = '80vh';
     });
 
     // Add an input event listener to the input element
@@ -508,6 +593,21 @@ document.getElementById('lombok_hotel_search_bar_input_id').addEventListener('in
 
 
 /* clint movements hotel names dropdown */
+document.getElementById('hotel_room_type_description_input_id').addEventListener('input', () => {
+    filterOptions('hotel_room_type_description_input_id', 'hotel_room_type_description_dropdown');
+});
+
+
+
+
+
+
+
+
+
+
+
+/* clint movements hotel names dropdown */
 document.getElementById('clint_movements_hotel_names_search_bar_input_id').addEventListener('input', () => {
     filterOptions('clint_movements_hotel_names_search_bar_input_id', 'clint_movements_hotel_names_dropdown');
 });
@@ -556,14 +656,14 @@ document.getElementById('delete_localstorage_data_names_search_bar_input_id').ad
 
 /* Clint Flight Details */
 /* Dropdown airport line names functionality */
-let airPortNamesInput = document.getElementById('flight_air_line_input_id');
+let flightAirLineInput = document.getElementById('flight_air_line_input_id');
 
 // Get the options within the dropdown
-let airPortNamesInputOptions = document.querySelectorAll('#airport_line_name_dropdown h3');
+let flightAirLineInputOptions = document.querySelectorAll('#airport_line_name_dropdown h3');
 
-airPortNamesInputOptions.forEach(option => {
+flightAirLineInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        airPortNamesInput.value = option.textContent; // Set input value to selected option
+        flightAirLineInput.value = option.textContent; // Set input value to selected option
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -1089,13 +1189,14 @@ function hideOverlay() {
     let visibleDropdown_1 = document.querySelector('.searchable_names_dropdown_class.show');
     if (visibleDropdown_1) {
         visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
-        company_names_dropdown.style.height = '50vh'; // Set height to 50vh when search bar is clicked
     }
+
 
     // Reset all 'searchable_names_dropdown_class' elements back to their default styling
     let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
     dropdownDivElements.forEach(dropdown => {
-        dropdown.style.height = ''; // Reset height to default
+        dropdown.style.maxHeight = ''; // Reset maxHeight to default
+        dropdown.style.minHeight = ''; // Reset minHeight to default
         dropdown.style.transition = ''; // Reset transition to default
     });
 
