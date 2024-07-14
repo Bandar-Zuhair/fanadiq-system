@@ -260,8 +260,14 @@
     flex-grow: 0.4;
 }
 
-/* Reduce the width of "المدينة" cells */
+/* Reduce the width of "عدد الليالي" and "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
+    /* "عدد الليالي" cell */
+    flex-grow: 0.4;
+}
+
+/* Reduce the width of "المدينة" cells */
+.hotel_row_class div:nth-child(6) {
     flex-grow: 0.6;
     border-left: none;
 }
