@@ -104,7 +104,15 @@ let companyNamesInputOptions = document.querySelectorAll('#company_names_dropdow
 
 companyNamesInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        companyNamesInput.value = option.textContent; // Set input value to selected option
+
+        /* if the clicked h3 element was delete then reset the 'clint_company_name_input_id' value */
+        if(option.textContent === 'حذف'){
+            companyNamesInput.value = '';
+
+        }else{
+            companyNamesInput.value = option.textContent; // Set input value to selected option
+        }
+
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -1242,7 +1250,7 @@ function showOverlay(clickedInputDropdownIdName) {
 
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
-    // Check if any dropdown with the class name 'company_names_dropdown_class' is visible and hide it
+    // Check if any dropdown with the class name 'searchable_names_dropdown_class' is visible and hide it
     let visibleDropdown_1 = document.querySelector('.searchable_names_dropdown_class.show');
     if (visibleDropdown_1) {
         visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
