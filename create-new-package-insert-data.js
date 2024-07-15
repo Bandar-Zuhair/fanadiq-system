@@ -382,7 +382,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let flightRowTableDivContent = `
                     <div><p>${flightAirLineInput}</p></div>
                     <div><p>${adultFlightPersonAmountInput}</p>\n<p>${infantFlightPersonAmountInput}</p></div>
-                    <div><p>20 كيلو لكل شخص</p></div>
+                    <div><p>20 كيلو للشخص</p></div>
                     <div><p>${flightFromCityInput}</p></div>
                     <div><p>${flightToCityInput}</p></div>
                     <div><p>${flightDateInput}</p></div>
