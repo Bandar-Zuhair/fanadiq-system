@@ -87,6 +87,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Clear previous company logo and insert the new logo div
                 document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
                 document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
+
+
+            }else{
+                // Clear previous company logo and insert the new logo div
+                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
             }
 
             /* Function to delete company logo */
