@@ -13,127 +13,159 @@ checkInputsToInsertData = function (clickedButtonId) {
     // Check if the clicked button is the 'clint_inputs_submit_icon'
     if (clickedButtonId === 'clint_inputs_submit_icon') {
         // Get references to all input elements for later use
-        let personAmountInput = document.getElementById('hotel_person_amount_input_id').value;
+        let packageClintNameInput = document.getElementById('package_clint_name_input_id').value;
+        let packagePersonAmountInput = document.getElementById('package_person_amount_input_id').value;
         let packageStartDateInput = document.getElementById('package_start_date_input_id').value;
         let packageEndDateInput = document.getElementById('package_end_date_input_id').value;
-        let packageTotalNightsInput = document.getElementById('package_total_nights_input_id').value;
         let clintCompanyNameInput = document.getElementById('clint_company_name_input_id').value;
         let honeymoonCheckbox = document.getElementById('honeymoon_checkbox');
         let guysCheckbox = document.getElementById('guys_checkbox');
         let familyCheckbox = document.getElementById('family_checkbox');
         let twoPeopleCheckbox = document.getElementById('two_people_checkbox');
 
-        // Check if any of the input values are empty
-        if (personAmountInput === '' || packageStartDateInput === '' || packageEndDateInput === '') {
-            // Change the submit icon color to red to indicate error
-            clint_inputs_submit_icon.style.backgroundColor = 'red';
-            // Set the background color of the submit icon back to default color
-            setTimeout(() => {
-                clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
-            }, 500);
-        } else {
-            // Change the submit icon color to green to indicate success
-            clint_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
-            // Set the background color of the submit icon back to default color
-            setTimeout(() => {
-                clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            if (clintCompanyNameInput !== '') {
-                // Create a new image element for the company logo
-                let insertedCompanyNameLogoImage = document.createElement('img');
-                // Replace spaces with dashes in the company name
-                let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, '-');
-                insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
-                insertedCompanyNameLogoImage.classList.add('inserted_company_name_logo');
-                insertedCompanyNameLogoImage.onclick = function (event) {
-                    event.preventDefault(); // Prevent the default behavior of the click event
-                    event.stopPropagation(); // Stop the event from propagating further
-
-                    // Create overlay layer
-                    let overlayLayer = document.createElement('div');
-                    overlayLayer.className = 'black_overlay';
-                    overlayLayer.id = 'black_overlay_id';
-                    document.body.appendChild(overlayLayer);
-
-                    // Show overlay layer with smooth opacity transition
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-                    }, 100);
-
-                    // Slide in delete box options div
-                    let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
-
-                    // Smoothly slide to the middle of the screen
-                    setTimeout(() => {
-                        deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-                    }, 50); // Adjust timing as needed
-
-                    // Event listener to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        // Hide delete box options div
-                        deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
-
-                        // Hide overlay layer with opacity transition
-                        overlayLayer.style.opacity = '0';
-
-                        // Remove overlay and delete box div from DOM after transition
-                        setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
-                };
-
-                // Clear previous company logo and insert the new logo div
-                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-                document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
 
 
-            }else{
-                // Clear previous company logo and insert the new logo div
-                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-            }
 
-            /* Function to delete company logo */
-            deleteClickedCompanyLogo = function () {
-                document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+        // Change the submit icon color to green to indicate success
+        clint_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+        // Set the background color of the submit icon back to default color
+        setTimeout(() => {
+            clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
+        }, 500);
+
+        if (clintCompanyNameInput !== '') {
+            // Create a new image element for the company logo
+            let insertedCompanyNameLogoImage = document.createElement('img');
+            // Replace spaces with dashes in the company name
+            let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, '-');
+            insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
+            insertedCompanyNameLogoImage.classList.add('inserted_company_name_logo');
+            insertedCompanyNameLogoImage.onclick = function (event) {
+                event.preventDefault(); // Prevent the default behavior of the click event
+                event.stopPropagation(); // Stop the event from propagating further
+
+                // Create overlay layer
+                let overlayLayer = document.createElement('div');
+                overlayLayer.className = 'black_overlay';
+                overlayLayer.id = 'black_overlay_id';
+                document.body.appendChild(overlayLayer);
+
+                // Show overlay layer with smooth opacity transition
+                setTimeout(() => {
+                    overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+                }, 100);
 
                 // Slide in delete box options div
                 let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
 
-                // Event listener to close overlay and delete box div on click outside
-                // Hide delete box div
-                deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                let overlayLayer = document.getElementById('black_overlay_id')
-
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and delete box div from DOM after transition
+                // Smoothly slide to the middle of the screen
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-            }
+                    deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                }, 50); // Adjust timing as needed
 
-            let clintPackageTypeH6 = document.getElementById('clint_package_type_h6');
+                // Event listener to close overlay and delete box div on click outside
+                overlayLayer.onclick = () => {
+                    // Hide delete box options div
+                    deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
 
-            /* Check which checkbox is checked then include the text in the content */
-            if (honeymoonCheckbox.checked) {
-                clintPackageTypeH6.innerHTML = 'بكج شهر عسل 💝';
-            } else if (guysCheckbox.checked) {
-                clintPackageTypeH6.innerHTML = 'بكج شباب ✨';
-            } else if (familyCheckbox.checked) {
-                clintPackageTypeH6.innerHTML = 'بكج عائلة 👨‍👩‍👧‍👦';
-            } else if (twoPeopleCheckbox.checked) {
-                clintPackageTypeH6.innerHTML = 'بكج شخصين ✈️';
-            } else {
-                clintPackageTypeH6.innerHTML = 'بكج جديد ✨';
-            }
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = '0';
 
-            let insertedClintDataRowDivContent = `
+                    // Remove overlay and delete box div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+                };
+            };
+
+            // Clear previous company logo and insert the new logo div
+            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+            document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
+
+
+        } else {
+            // Clear previous company logo and insert the new logo div
+            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+        }
+
+        /* Function to delete company logo */
+        deleteClickedCompanyLogo = function () {
+            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+
+            // Slide in delete box options div
+            let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
+
+            // Event listener to close overlay and delete box div on click outside
+            // Hide delete box div
+            deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
+
+            // Hide overlay layer with opacity transition
+            let overlayLayer = document.getElementById('black_overlay_id')
+
+            overlayLayer.style.opacity = '0';
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+        }
+
+        let clintPackageTypeH6 = document.getElementById('clint_package_type_h6');
+
+        /* Check which checkbox is checked then include the text in the content */
+        if (honeymoonCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = 'بكج شهر عسل 💝';
+        } else if (guysCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = 'بكج شباب ✨';
+        } else if (familyCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = 'بكج عائلة 👨‍👩‍👧‍👦';
+        } else if (twoPeopleCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = 'بكج شخصين ✈️';
+        } else {
+            clintPackageTypeH6.innerHTML = 'بكج جديد ✨';
+        }
+
+
+
+
+        if (packageClintNameInput !== '') {
+            clint_full_name_p.innerText = `الأستاذ : ${packageClintNameInput}`;
+        
+            // Apply border styling to all divs with class name clint_data_row_class
+            document.querySelectorAll('.clint_data_row_class').forEach(element => {
+                element.style.border = '0.5px solid black';
+                element.style.borderBottom = '0.5px solid black'; // Ensures the bottom border is also styled
+            });
+        } else {
+            clint_full_name_p.innerText = '';
+        
+            // Apply border bottom styling to all divs with class name clint_data_row_class
+            document.querySelectorAll('.clint_data_row_class').forEach(element => {
+                element.style.border = ''; // Remove any border styles
+                element.style.borderBottom = '0.5px solid black'; // Apply only border bottom style
+            });
+        }
+        
+
+
+
+        /* Create a new variable to build all the clint info content */
+        let insertedClintDataRowDivContent;
+
+
+        /* Check if there is no any data in the following inputs then hide the whole main clint row div */
+        if (packagePersonAmountInput === '' && packageStartDateInput === '' && packageEndDateInput === '') {
+
+            /* Hide the 'clint_data_row_main_div_id' if there is no data at all */
+            document.getElementById('clint_data_row_main_div_id').style.display = 'none';
+
+        } else {
+
+            /* Check if the 'storePackageTotalNights' is equal undefined or no */
+            if (storePackageTotalNights === undefined) {
+                insertedClintDataRowDivContent = `
                 <div>
-                    <p>${personAmountInput}</p>
+                    <p>${packagePersonAmountInput}</p>
                 </div>
                 <div>
                     <p>${packageStartDateInput}</p>
@@ -142,22 +174,44 @@ checkInputsToInsertData = function (clickedButtonId) {
                     <p>${packageEndDateInput}</p>
                 </div>
                 <div>
-                    <p>${packageTotalNightsInput}</p>
+                    <p></p>
                 </div>
             `;
 
-            let insertedClintDataRowDiv = document.createElement('div');
-            insertedClintDataRowDiv.className = 'clint_data_row_class';
-            insertedClintDataRowDiv.innerHTML = insertedClintDataRowDivContent;
 
-            // Clear previous client data and insert the new data div
-            let insertedClintDataPositionDiv = document.getElementById('inserted_clint_data_position_div');
-            insertedClintDataPositionDiv.innerHTML = ''; // Clear the existing content
-            insertedClintDataPositionDiv.appendChild(insertedClintDataRowDiv);
+            } else {
+                insertedClintDataRowDivContent = `
+                <div>
+                    <p>${packagePersonAmountInput}</p>
+                </div>
+                <div>
+                    <p>${packageStartDateInput}</p>
+                </div>
+                <div>
+                    <p>${packageEndDateInput}</p>
+                </div>
+                <div>
+                    <p>${storePackageTotalNights}</p>
+                </div>
+            `;
 
-            /* Show up the 'downloaded_pdf_clint_data_page' section */
-            document.getElementById('downloaded_pdf_clint_data_page').style.display = 'block';
+            }
+
+            /* Show the 'clint_data_row_main_div_id' if there is any data is inserted */
+            document.getElementById('clint_data_row_main_div_id').style.display = 'flex';
         }
+
+        let insertedClintDataRowDiv = document.createElement('div');
+        insertedClintDataRowDiv.className = 'clint_data_row_class';
+        insertedClintDataRowDiv.innerHTML = insertedClintDataRowDivContent;
+
+        // Clear previous client data and insert the new data div
+        let insertedClintDataPositionDiv = document.getElementById('inserted_clint_data_position_div');
+        insertedClintDataPositionDiv.innerHTML = ''; // Clear the existing content
+        insertedClintDataPositionDiv.appendChild(insertedClintDataRowDiv);
+
+        /* Show up the 'downloaded_pdf_clint_data_page' section */
+        document.getElementById('downloaded_pdf_clint_data_page').style.display = 'block';
 
 
 
@@ -757,7 +811,6 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
-        let totalNightsReadyText = document.getElementById('hotel_total_nights_input_id').value;
         let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
         let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id').value;
         let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
@@ -767,7 +820,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || totalNightsReadyText === '' || hotelRoomTypeDescriptionInput === '') {
+        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelRoomAmountInput === '') {
 
             // Change the sumbit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'red';
@@ -804,7 +857,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             let hotelRowTableDivContent = `
                 <div><p>${hotelNameReadyText}</p></div>
                 <div><p>من ${hotelCheckInReadyText}</p><p style="color: red">الى ${hotelCheckOutReadyText}</p></div>
-                <div><p>${totalNightsReadyText}</p></div>
+                <div><p>${storeHotelTotalNights}</p></div>
                 <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
                 <div><p>${hotelRoomAmountInput}</p></div>
                 <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
