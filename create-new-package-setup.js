@@ -1417,13 +1417,22 @@ function calculateDaysDifference(startDate, endDate) {
 
 
 
+/* Store the package total nights for later use */
+let storePackageTotalNights;
 
 // Function to update the total nights input
 function updateWholePackageTotalNights() {
     let startDate = document.getElementById('package_start_date_input_id').value;
     let endDate = document.getElementById('package_end_date_input_id').value;
     let totalNights = calculateDaysDifference(startDate, endDate);
-    document.getElementById('package_total_nights_input_id').value = totalNights;
+
+
+    /* Store the package total nights for later use */
+    storePackageTotalNights = totalNights;
+
+    if(package_start_date_input_id.value !== '' && package_end_date_input_id.value !== ''){
+        document.getElementById('package_total_nights_input_id').value = `${totalNights} ليالي`;
+    }
 }
 
 
@@ -1464,12 +1473,22 @@ var wholePackageEndDatePicker = new Pikaday({
 
 
 
+/* Store the package total nights for later use */
+let storeHotelTotalNights;
+
 // Function to update the total nights input
 function updateHotelTotalNights() {
     let startDate = document.getElementById('hotel_check_in_input_id').value;
     let endDate = document.getElementById('hotel_check_out_input_id').value;
     let totalNights = calculateDaysDifference(startDate, endDate);
-    document.getElementById('hotel_total_nights_input_id').value = totalNights;
+
+
+    /* Store the package total nights for later use */
+    storeHotelTotalNights = totalNights;
+
+    if(hotel_check_in_input_id.value !== '' && hotel_check_out_input_id.value !== ''){
+        document.getElementById('hotel_total_nights_input_id').value = `${totalNights} ليالي`;
+    }
 }
 
 
@@ -1501,6 +1520,14 @@ var hotelEndDatePicker = new Pikaday({
     /* Run the 'updateHotelTotalNights' to find the total night amount */
     onSelect: updateHotelTotalNights // Call 'updateHotelTotalNights' when a date is selected
 });
+
+
+
+
+
+
+
+
 
 
 
