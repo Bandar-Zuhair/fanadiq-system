@@ -25,6 +25,7 @@
 #clint_full_name_p {
     width: 100%;
     font-size: 2vw;
+    padding: 3px 0;
     text-align: center;
     border-right: 0.5px solid black;
     border-left: 0.5px solid black;
@@ -50,7 +51,9 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    border-bottom: 0.5px solid black;
+    border-top: 0.5px solid black;
+    border-right: 0.5px solid black;
+    border-left: 0.5px solid black;
 }
 
 .clint_data_row_class div {
@@ -68,7 +71,6 @@
 
 .clint_data_row_class div:first-child {
     flex-grow: 0.9;
-    border-right: 0.5px solid black;
 }
 
 .clint_data_row_class p {
@@ -80,6 +82,11 @@
 .clint_data_row_class div:nth-child(3),
 .clint_data_row_class div:nth-child(4) {
     flex-grow: 0.4;
+}
+
+/* Reduce the width of "المدينة" cells */
+.clint_data_row_class div:nth-child(4) {
+    border-left: none;
 }
 
 /* Reduce the width of "المدينة" cells */
