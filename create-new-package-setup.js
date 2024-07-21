@@ -1,3 +1,16 @@
+/* Function to prevent the page refresh by mistake */
+window.addEventListener('beforeunload', function (event) {
+    event.preventDefault(); // Prevent the default action
+    event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
+});
+
+
+
+
+
+
+
+/* Function to show and hide different pachage details sections */
 showPackageTypeSection = function (packageType) {
 
     if (packageType === 'hotel') {
