@@ -128,22 +128,26 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+        /* if there is any value in the 'packageClintNameInput' then change the border styling and set the innerText of the p element */
         if (packageClintNameInput !== '') {
+            
+            /* Set the innerText of the p element */
             clint_full_name_p.innerText = `الأستاذ : ${packageClintNameInput}`;
         
-            // Apply border styling to all divs with class name clint_data_row_class
-            document.querySelectorAll('.clint_data_row_class').forEach(element => {
-                element.style.border = '0.5px solid black';
-                element.style.borderBottom = '0.5px solid black'; // Ensures the bottom border is also styled
-            });
+            /* Change the border styling for better looking */
+            pdf_clint_info_section_title_div_id.style.borderBottom = '0.5px solid black';
+            
+            /* Show the p element if it was hidden */
+            clint_full_name_p.style.display = 'block';
+
+
+            /* But if there is no any value in the 'packageClintNameInput' then do the following code */
         } else {
             clint_full_name_p.innerText = '';
         
-            // Apply border bottom styling to all divs with class name clint_data_row_class
-            document.querySelectorAll('.clint_data_row_class').forEach(element => {
-                element.style.border = ''; // Remove any border styles
-                element.style.borderBottom = '0.5px solid black'; // Apply only border bottom style
-            });
+            pdf_clint_info_section_title_div_id.style.borderBottom = 'none';
+
+            clint_full_name_p.style.display = 'none';
         }
         
 
@@ -859,7 +863,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><p>من ${hotelCheckInReadyText}</p><p style="color: red">الى ${hotelCheckOutReadyText}</p></div>
                 <div><p>${storeHotelTotalNights}</p></div>
                 <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
-                <div><p>${hotelRoomAmountInput}</p></div>
+                <div><p>${storeHotelTotalRoomsNumber}</p></div>
                 <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
                 <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style"cursor: pointer"></div>
             `;
