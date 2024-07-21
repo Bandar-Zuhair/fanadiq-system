@@ -228,6 +228,8 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
 
 
 
+/* Store the hotel total rooms number for later use (in hotel row data) */
+let storeHotelTotalRoomsNumber;
 
 /* Dropdown airport line names functionality */
 let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id');
@@ -237,7 +239,12 @@ let hotelRoomAmountInputOptions = document.querySelectorAll('#hotel_room_amount_
 
 hotelRoomAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        hotelRoomAmountInput.value = option.textContent; // Set input value to selected option
+
+        /* Save the clicked number in the variable for later use */
+        storeHotelTotalRoomsNumber = option.textContent
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelRoomAmountInput.value = `عدد الغرف ${option.textContent}`;
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -311,7 +318,7 @@ let hotelAreaDropdown = document.getElementById('hotel_bali_area_dropdown');
 let hotelLocationOptions = hotelLocationDropdown.querySelectorAll('h3');
 let hotelAreaOptions = hotelAreaDropdown.querySelectorAll('h3');
 
-// Initialize overlay layer variable
+// Praper the overlay layer variable
 let overlayLayer = null;
 
 // Function to show the hotel area input if the location is "بالي"
