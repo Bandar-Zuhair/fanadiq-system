@@ -1,97 +1,45 @@
-/* Inserted company logo data position */
-#inserted_company_name_image_position_div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Vazirmatn:wght@100..900&display=swap');
 
-.inserted_company_name_logo {
-    background: white;
-    margin-bottom: 15px;
-    z-index: 1;
-    width: 40vw;
-    border-radius: 7px;
-    cursor: pointer;
-}
+/* Simple Animation SetUp For Later Use */
+@keyframes floatAnimation {
 
+    0%,
+    100% {
+        transform: translateY(0);
+    }
 
-
-
-
-
-
-
-
-#clint_full_name_p {
-    width: 100%;
-    font-size: 2vw;
-    padding: 3px 0;
-    text-align: center;
-    border-right: 0.5px solid black;
-    border-left: 0.5px solid black;
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Inserted clint data position */
-.clint_data_row_class {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    border-top: 0.5px solid black;
-    border-right: 0.5px solid black;
-    border-left: 0.5px solid black;
+/* Change the background color and text color of highlighted text */
+::selection {
+    background-color: rgb(0, 115, 182);
+    /* Background color */
+    color: white;
+    /* Text color */
 }
 
-.clint_data_row_class div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-left: 0.5px solid black;
+
+/* All */
+* {
+    font-family: "Vazirmatn", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-weight: 400;
+    direction: rtl;
 }
 
-.clint_data_row_class div * {
-    text-align: center;
-}
 
-.clint_data_row_class div:first-child {
-    flex-grow: 0.9;
-}
-
-.clint_data_row_class p {
-    font-size: 2.5vw;
-}
-
-/* Reduce the width of "المدينة" cells */
-.clint_data_row_class div:nth-child(2),
-.clint_data_row_class div:nth-child(3),
-.clint_data_row_class div:nth-child(4) {
-    flex-grow: 0.4;
-}
-
-/* Reduce the width of "المدينة" cells */
-.clint_data_row_class div:nth-child(4) {
-    border-left: none;
-}
-
-/* Reduce the width of "المدينة" cells */
-.clint_data_row_class div:nth-child(4) p {
-    color: darkorange;
+/* Body */
+body {
+    opacity: 0;
+    background: rgb(215, 232, 244);
+    color: black;
+    transition: all 0.5s ease-in-out;
 }
 
 
@@ -103,473 +51,410 @@
 
 
 
-
-
-
-
-
-
-
-
-
-/* Inserted package including data position */
-.inserted_package_including_and_not_icluding_data_div_class {
-    background: rgb(207, 233, 242);
-    padding-right: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.inserted_package_including_and_not_icluding_data_div_class p {
-    width: fit-content;
-    font-size: 2vw;
-    padding: 5px 0;
-    text-align: start;
-    cursor: pointer;
-}
-
-.inserted_package_including_and_not_icluding_data_div_class h6 {
-    background: rgb(155, 209, 227);
-    width: 100%;
-    font-size: 2vw;
-    padding: 5px 0;
-    text-align: center;
-    cursor: pointer;
-}
-
-.inserted_package_including_and_not_icluding_data_div_class span {
-    font-weight: 600;
-}
-
-
-
-
-
-
-
-
-
-
-
-.special_package_including_data_background_color_text {
-    background: rgb(124, 204, 231);
-    border-radius: 7px;
-}
-
-
-
-
-
-
-
-
-
-
-/* Pdf section title */
-.pdf_section_title_div_class {
-    background: rgb(210, 210, 210);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    padding: 10px;
-    border: 0.5px solid black;
-    position: relative;
-    /* Add this to position the icon absolutely */
-}
-
-.pdf_section_title_div_class h6 {
-    font-size: 2.5vw;
-    font-weight: 600;
-    flex: 1;
-    /* Add this to make h6 take the remaining space */
-    text-align: center;
-    /* Center the text horizontally */
-}
-
-.pdf_section_title_div_class ion-icon {
-    font-size: 4.5vw;
-    position: absolute;
-    /* Position the icon absolutely */
-    right: 10px;
-    /* Position the icon 10px from the right */
-    top: 50%;
-    /* Position the icon vertically in the center */
-    transform: translateY(-50%);
-    /* Adjust vertical alignment */
-}
-
-
-
-
-
-/* Usuful notes section title element */
-#pdf_section_title_div_usuful_notes_id {
-    margin-top: 15px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Inserted hotel data position */
-.hotel_row_class {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    border-bottom: 0.5px solid black;
-}
-
-.hotel_row_class div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-left: 0.5px solid black;
-}
-
-.hotel_row_class div * {
-    text-align: center;
-}
-
-.hotel_row_class div:first-child {
-    border-right: 0.5px solid black;
-    flex-grow: 0.9;
-}
-
-.hotel_row_class div:last-child img {
-    width: 90%;
-    border: 0.5px solid black;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.hotel_row_class p {
-    font-size: 2.5vw;
-    font-weight: 600;
-}
-
-.hotel_row_class span {
-    font-size: 1.7vw;
-    font-weight: 600;
-}
-
-/* Reduce the width of "عدد الليالي" and "المدينة" cells */
-.hotel_row_class div:nth-child(3) {
-    /* "عدد الليالي" cell */
-    flex-grow: 0.4;
-}
-
-/* Reduce the width of "عدد الليالي" and "المدينة" cells */
-.hotel_row_class div:nth-child(5) {
-    /* "عدد الليالي" cell */
-    flex-grow: 0.4;
-}
-
-/* Reduce the width of "المدينة" cells */
-.hotel_row_class div:nth-child(6) {
-    flex-grow: 0.6;
-    border-left: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Inserted package important note position */
-.inserted_package_important_note_position_div_class {
-    background: rgb(207, 233, 242);
-    padding-right: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.inserted_package_important_note_position_div_class p {
-    width: fit-content;
-    font-size: 2vw;
-    padding: 5px 0;
-    text-align: start;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Inserted flight data position */
-.flight_row_class {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    border-bottom: 0.5px solid black;
-}
-
-.flight_row_class div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-left: 0.5px solid black;
-}
-
-.flight_row_class div * {
-    text-align: center;
-}
-
-.flight_row_class div:first-child {
-    flex-grow: 0.9;
-    border-right: 0.5px solid black;
-}
-
-.flight_row_class p {
-    font-size: 2.5vw;
-    font-weight: 600;
-}
-
-/* Reduce the width of "من" and "الى" cells */
-.flight_row_class div:nth-child(4),
-.flight_row_class div:nth-child(5) {
-    flex-grow: 0.5;
-}
-
-/* Reduce the width of "عدد الأشخاص" cell */
-.flight_row_class div:nth-child(2) {
-    flex-grow: 0.8;
-}
-
-/* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
-.flight_row_class div:nth-child(7),
-.flight_row_class div:nth-child(8) {
-    flex-grow: 0.6;
-}
-
-
-/* Reduce the width of "عدد الأشخاص" cell */
-.flight_row_class div:nth-child(6) p {
-    color: darkorange;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* Inserted transportation_plan data position */
-.clint_movements_row_class {
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    border-bottom: 0.5px solid black;
-}
-
-.clint_movements_row_class div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-left: 0.5px solid black;
-}
-
-.clint_movements_row_class div * {
-    text-align: center;
-}
-
-.clint_movements_row_class div:first-child {
-    flex-grow: 0.9;
-    border-right: 0.5px solid black;
-}
-
-.clint_movements_row_class p {
-    font-size: 2vw;
-    font-weight: 600;
-}
-
-/* Reduce the width of "من" cell */
-.clint_movements_row_class div:nth-child(1) {
-    flex-grow: 0.2;
-}
-
-/* Reduce the width of "الى" cell */
-.clint_movements_row_class div:nth-child(3) {
-    flex-grow: 0.3;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Delete box message */
-.ensure_your_delete_action {
-    z-index: 1000;
-    background-color: white;
-    width: fit-content;
-    padding: 20px;
+/* Special Effects */
+.black_overlay {
+    z-index: 999;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.6);
+    /* Black with 70% opacity */
+    width: 100vw;
+    /* Full width of the viewport */
+    height: 100vh;
+    /* Full height of the viewport */
     position: fixed;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 7px;
-    text-align: center;
-    box-shadow: 0 0 5px black;
-    transform: translate(-50%, -100vh);
-    transition: transform 0.5s ease;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease-in-out;
 }
 
-.ensure_your_delete_action button {
+
+/* TextArea for full screen mood */
+.package_details_input_class {
+    width: 85vw;
+    font-size: 2vw;
+    height: 4vw;
+    text-align: center;
+    resize: none;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.package_details_input_class::placeholder {
+    font-size: 2.5vw;
+    text-align: center;
+}
+
+
+/* Enter textArea full screen mood button */
+.textarea_open_fullscreen_icon_class {
+    background: rgb(0, 255, 0);
     font-size: 3vw;
     padding: 5px;
     cursor: pointer;
+    border: none;
     border-radius: 7px;
+    border: 0.5px solid black;
+    transition: all 0.1s ease-in-out;
 }
 
-.ensure_your_delete_action button:hover {
-    box-shadow: 0 0.5px 3px black;
+.textarea_open_fullscreen_icon_class:hover {
+    background: rgb(0, 223, 0);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Download pdf file */
-#export_package_pdf_div_id {
-    width: 100%;
-}
-
-#export_package_pdf_div_id button {
-    width: 100%;
+/* Exit the full screen mood button */
+.exit_full_screen_icon {
+    z-index: 1001;
+    background-color: rgb(255, 0, 0);
+    color: white;
     font-size: 3vw;
+    padding: 10px;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid black;
+    transition: all 0.1s ease-in-out;
+}
+
+.exit_full_screen_icon:hover {
+    background: rgb(195, 0, 0);
+}
+
+/* Exit the full screen mood button */
+.insert_clint_movements_places_icon {
+    z-index: 1001;
+    background-color: rgb(0, 202, 0);
+    color: white;
+    font-size: 2.5vw;
+    padding: 15px;
+    position: fixed;
+    top: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid black;
+    transition: all 0.1s ease-in-out;
+}
+
+.insert_clint_movements_places_icon:hover {
+    background: rgb(0, 150, 0);
+}
+
+
+/* Clint movements tutorial */
+.clint_movements_full_page_div {
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    background: rgb(215, 232, 244);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.clint_movements_full_page_div {
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    background: rgb(215, 232, 244);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.clint_movements_full_page_div h6 {
+    background: white;
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.5px solid black;
+}
+
+.clint_movements_full_page_div p {
+    background: darkred;
+    color: white;
+    font-size: 2vw;
+    margin: 3px 0;
+    text-align: center;
+    border: 0.5px solid black;
+    cursor: pointer;
+}
+
+
+
+
+
+
+/* Exported pdf file element */
+.inserted_package_data_section_page_image_class{
+    display: none;
+    width: 100%;
+    padding: 100px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Header */
+#header {
+    background: rgb(215, 232, 244);
+    padding: 20px 0;
+    /* Increased padding for better spacing */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Space out header sections */
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+#header_div {
+    width: 100%;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    /* Space evenly between child elements */
+    align-items: center;
+}
+
+#header_div img {
+    width: 15vw;
+}
+
+#header_div h1 {
+    font-size: 2vw;
+    font-weight: bolder;
+}
+
+
+/* Navbar sections within the header */
+.header_navbar_section {
+    padding-top: 15px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.header_navbar_section:hover {
+    box-shadow: 0 3px 5px -3px black;
+}
+
+.header_navbar_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.header_navbar_title {
+    font-size: 2vw;
+}
+
+.header_navbar_header ion-icon {
+    font-size: 1.5vw;
+}
+
+.header_navbar_links {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Reverse the order of links */
+    gap: 10px;
+    margin-top: 10px;
+    transition: max-height 0.2s ease-in-out;
+    align-items: flex-end;
+    /* Align links to the right */
+    width: 100%;
+    /* Take full width of the container */
+}
+
+.header_navbar_links a {
+    text-decoration: none;
+    color: rgb(0, 102, 255);
+    font-size: 1.5vw;
+    padding-left: 20px;
+    /* Add padding for spacing */
+    transition: all 0.1s ease-in-out;
+}
+
+.header_navbar_links a:hover {
+    color: black;
+    letter-spacing: 1px;
+}
+
+#fanadiqindonesia_error_page_go_back_button {
+    background: black;
+    color: white;
+    margin: 5px 0;
+    padding: 10px 18px;
+    font-size: 2vw;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#fanadiqindonesia_error_page_go_back_button:hover {
+    color: rgb(0, 255, 0);
+    transform: scale(1.015);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Website localstorage controller */
+#localstorage_data_controller_div {
+    width: 100%;
+    padding: 10px 0 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#localstorage_data_controller_div p {
+    background: white;
+    width: 100%;
+    font-size: 2.5vw;
+    padding: 1px 5px;
     text-align: center;
     cursor: pointer;
     border: 0.5px solid black;
-    border-radius: 0;
-    box-shadow: 0 0 0 black;
+    border-radius: 7px;
+    transition: all 0.1s ease-in-out;
+}
+
+#localstorage_data_controller_div p:nth-child(2) {
+    margin: 0 5px;
+}
+
+#localstorage_data_controller_div p:hover {
+    background: rgb(213, 213, 213);
+}
+
+#localstorage_save_name_input_div {
+    z-index: 1000;
+    background: white;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    transition: transform 0.5s ease;
+}
+
+#localstorage_save_name_input_div div {
+    width: 100%;
+    margin: 50px 0;
+}
+
+#first_div_in_localstorage_save_name_input_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#localstorage_save_name_input_div h6 {
+    background: darkred;
+    color: white;
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.5px solid black;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+#localstorage_save_name_input_div p {
+    background: darkorange;
+    width: fit-content;
+    color: white;
+    font-size: 2vw;
+    padding: 1px 5px;
+    text-align: center;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+#localstorage_save_name_input_div input {
+    width: 100%;
+    font-size: 3vw;
+    text-align: center;
+    border: 0.5px solid black;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+#localstorage_save_name_input_div input::placeholder {
+    font-size: 3.5vw;
+    border: none;
+}
+
+.localstorage_data_name_submit_button {
     transition: all 0.2s ease-in-out;
 }
 
@@ -580,57 +465,498 @@
 
 
 
+/* Importing and deleting data from localStorage */
+.localstorage_dropdown_div_class h6 {
+    background: darkred;
+    color: white;
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.5px solid black;
+}
+
+.localstorage_dropdown_div_class p {
+    background: darkorange;
+    color: white;
+    font-size: 2.5vw;
+    padding: 1px 5px;
+    text-align: center;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+    align-self: flex-start; /* Position the button to the right */
+    margin-right: 5px; /* Adjust margin as needed */
+}
 
 
-/* Name pdf file box */
-#name_pdf_file_div {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Create New hotel Package Section */
+#create_new_hotel_package_section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    z-index: 1000;
-    top: 50%;
-    left: 50%;
-    box-shadow: 0 0 5px black;
-    border: 1px solid black;
-    transform: translate(-50%, -100vh);
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 95%;
-    max-width: 90%;
-    max-height: 90%;
-    overflow: auto;
-    border-radius: 8px;
-    text-align: center;
-    transition: transform 0.5s ease;
 }
 
-#name_pdf_file_div span {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.section_title_text_div {
+    width: 100%;
+    margin-top: 4px;
     cursor: pointer;
-    font-size: 4vw;
-    color: #888;
 }
 
-#name_pdf_file_div input {
-    width: 90%;
+.section_title_text {
+    background: rgb(131, 0, 148);
+    color: white;
+    width: 100%;
     font-size: 3vw;
+    padding: 10px 0;
     text-align: center;
-    border: 1px solid black;
-    border-radius: 7px;
+    border: 0.5px solid black;
+    line-height: 1.5;
 }
 
-#name_pdf_file_div button {
+.dropdown_content_div_class {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.package_info_input_div {
+    background: rgb(171, 190, 204);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.package_info_input_div input {
+    width: 85vw;
     font-size: 2.5vw;
-    margin-top: 10px;
-    padding: 1px 10px;
+    margin: 5px 0;
+    text-align: center;
+    border-radius: 7px;
+    padding: 5px;
+    height: 70px;
+    box-sizing: border-box;
+    border: 0.5px solid black;
+}
+
+/* Prevent interaction with the date input's text field */
+input[type="date"][readonly] {
+    pointer-events: none;
+    background: #e9ecef;
+    cursor: default;
+}
+
+/* Ensure date picker icon is clickable */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    pointer-events: auto;
+}
+
+/* Styling for placeholder text */
+.package_info_input_div input::placeholder {
+    color: #919191;
+    font-size: 2vw;
+    text-align: center;
+}
+
+#clint_package_type_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom_checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.custom_checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 2vw;
+    height: 2vw;
+    margin: 0;
+    cursor: pointer;
+    opacity: 0;
+    outline: none;
+    order: 1;
+}
+
+.custom_checkbox label {
+    font-size: 2.5vw;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.custom_checkbox label::before {
+    background-color: white;
+    content: '';
+    width: 3vw;
+    height: 3vw;
+    margin-left: 2px;
+    display: inline-block;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom_checkbox input[type="checkbox"]:checked+label::before {
+    background-color: rgb(0, 255, 0);
+}
+
+
+
+
+
+
+
+
+
+/* Package including data checkbox */
+#package_including_details_div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.package_including_data_custom_checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.package_including_data_custom_checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 2vw;
+    height: 2vw;
+    margin: 0;
+    cursor: pointer;
+    opacity: 0;
+    outline: none;
+    order: 1;
+}
+
+.package_including_data_custom_checkbox label {
+    font-size: 2vw;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.package_including_data_custom_checkbox label::before {
+    background-color: white;
+    content: '';
+    width: 3vw;
+    height: 3vw;
+    margin-left: 2px;
+    display: inline-block;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.package_including_data_custom_checkbox input[type="checkbox"]:checked+label::before {
+    background-color: rgb(0, 255, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Submit data icon */
+.submit_package_pdf_div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.submit_package_pdf_div ion-icon {
+    background: darkorange;
+    color: white;
+    font-size: 3vw;
+    padding: 15px;
     cursor: pointer;
     border-radius: 7px;
-    border: 1px solid black;
+    border: 0.5px solid black;
+    transition: all 0.2s ease-in-out;
+}
+
+/* When adding new child input it will make submit icon disappear */
+#hotel_person_amount_submit_button.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+/* Filter company names div */
+/* Company names dropdown container */
+.searchable_names_dropdown_class {
+    z-index: 1000;
+    background: rgb(0, 191, 234);
+    width: 100%;
+    min-height: 50vh;
+    max-height: 50vh;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+/* Visible state for the dropdown */
+.searchable_names_dropdown_class.show {
+    transform: translateY(0);
+}
+
+/* Search bar container */
+.search_bar_div_class {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Search bar input */
+.search_bar_div_class input {
+    width: 100%;
+    font-size: 2vw;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Company name options */
+.company_names_options_dropdown_class {
+    background: rgb(0, 191, 234);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Style for the h3 elements */
+.company_names_options_dropdown_class h3 {
+    background: white;
+    font-size: 3vw;
+    margin: 5px;
+    padding: 6px 10px;
+    border-radius: 7px;
+    box-shadow: 0 0 0.5px 0.5px black;
+    text-align: center;
+    cursor: pointer;
+    flex: 1 1 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Create new flight package section */
+#create_new_flight_package_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Create new clint movements plane section */
+#create_new_clint_movements_paln_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#clint_movements_place_options_and_tuorial {
+    width: 100%;
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#clint_movements_place_options_and_tuorial p {
+    background: white;
+    font-size: 2vw;
+    padding: 1px 5px;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+#clint_movements_place_options_and_tuorial p:hover {
+    opacity: 0.8;
+}
+
+/* Clint movements tutorial */
+.clint_movements_tutorial_full_page_div {
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background: rgb(215, 232, 244);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.clint_movements_tutorial_full_page_div p {
+    background: darkred;
+    color: white;
+    font-size: 2vw;
+    margin: 3px 0;
+    text-align: center;
+    border: 0.5px solid black;
+    cursor: pointer;
+}
+
+
+
+
+
+/* Clint movements places names */
+.clint_movements_places_full_page_div {
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    background: rgb(215, 232, 244);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.clint_movements_places_full_page_div h5 {
+    background: white;
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.5px solid black;
+}
+
+.clint_movements_places_full_page_div h6 {
+    background: rgb(210, 210, 210); 
+    width: 100%;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.5px solid black;
+}
+
+.clint_movements_places_full_page_div p {
+    background: rgb(207, 233, 242);
+    font-size: 2vw;
+    margin: 3px 0;
+    text-align: center;
+    border: 0.5px solid black;
+    cursor: pointer;
     transition: all 0.1s ease-in-out;
 }
 
@@ -650,144 +976,228 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Media Queries */
 /* 1250px */
-@media(max-width:1250px) {}
+@media(max-width:1250px) {
+    .package_details_input_class {
+        height: 6vw;
+    }
+}
 
 /* 1040px */
 @media(max-width:1040px) {}
 
 /* 950px */
 @media(max-width:950px) {
-    .inserted_company_name_logo {
-        width: 45vw;
+    #header_div img {
+        width: 20vw;
     }
 
+    #header_div h1 {
+        font-size: 3vw;
+    }
 
+    .header_navbar_section {
+        padding-top: 10px;
+    }
 
+    .header_navbar_header {
+        padding: 0 10px;
+    }
 
-
-
-
-
-
-
-    #clint_full_name_p {
+    .header_navbar_title {
         font-size: 2.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-    .pdf_section_title_div_class {
-        padding: 6px;
-    }
-
-    .pdf_section_title_div_class h6 {
-        font-size: 2.7vw;
-    }
-
-    .pdf_section_title_div_class ion-icon {
-        font-size: 5.5vw;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .inserted_package_including_and_not_icluding_data_div_class p {
+    .header_navbar_header ion-icon {
         font-size: 2.5vw;
     }
 
-    .inserted_package_including_and_not_icluding_data_div_class h6 {
+    .header_navbar_links a {
         font-size: 2.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    .inserted_package_important_note_position_div_class p {
-        font-size: 2.5vw;
-        padding: 3px 0;
-    }
-
-
-
-
-
-
-
-
-
-
-
-    .ensure_your_delete_action button {
+    .section_title_text {
         font-size: 4vw;
-        padding: 4px;
+        padding: 8px 14px;
     }
 
-    #export_package_pdf_div_id button {
+
+
+
+
+    /* LocalStorage Elements */
+    #localstorage_save_name_input_div h6 {
+        font-size: 3vw;
+    }
+
+    #localstorage_save_name_input_div p {
+        font-size: 3vw;
+    }
+
+    #localstorage_data_controller_div p {
+        font-size: 3vw;
+    }
+
+    #localstorage_save_name_input_div input {
         font-size: 4vw;
     }
 
-    #name_pdf_file_div span {
-        font-size: 6vw;
+    #localstorage_save_name_input_div input::placeholder {
+        font-size: 4.5vw;
     }
 
-    #name_pdf_file_div input {
-        font-size: 4vw;
+
+
+
+    .localstorage_dropdown_div_class h6 {
+        font-size: 3vw;
     }
 
-    #name_pdf_file_div button {
+    .localstorage_dropdown_div_class p {
+        font-size: 3vw;
+    }
+
+
+
+
+
+
+
+
+
+
+    /* Inserted images in exported pdf */
+    .inserted_package_data_section_page_image_class{
+        padding: 50px 0;
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .package_info_input_div {
+        padding: 5px;
+    }
+
+    .package_info_input_div input {
+        width: 90vw;
+        font-size: 3.7vw;
+        margin: 3px 0;
+        padding: 3px;
+        height: 60px;
+    }
+
+    .package_info_input_div input::placeholder {
+        font-size: 4.2vw;
+    }
+
+    .package_details_input_class {
+        width: 90vw;
+        font-size: 3vw;
+        height: 9vw;
+    }
+
+    .package_details_input_class::placeholder {
         font-size: 3.5vw;
+    }
+
+    .submit_package_pdf_div ion-icon {
+        font-size: 4vw;
+        padding: 10px;
+    }
+
+
+
+
+
+    .custom_checkbox label {
+        font-size: 3.5vw;
+    }
+
+    .custom_checkbox label::before {
+        width: 5vw;
+        height: 5vw;
+    }
+
+    .package_including_data_custom_checkbox label {
+        font-size: 2.5vw;
+    }
+    
+    .package_including_data_custom_checkbox label::before {
+        width: 4vw;
+        height: 4vw;
+    }
+
+
+
+
+    .textarea_open_fullscreen_icon_class {
+        font-size: 4vw;
+        padding: 3px;
+    }
+
+    .exit_full_screen_icon {
+        font-size: 4vw;
+        padding: 10px;
+    }
+
+    .insert_clint_movements_places_icon {
+        font-size: 4vw;
+        padding: 10px;
+    }
+
+    .search_bar_div_class {
+        padding: 5px;
+    }
+
+    .search_bar_div_class input {
+        font-size: 3vw;
+        padding: 5px;
+    }
+
+    .company_names_options_dropdown_class {
+        padding: 5px 0;
+    }
+
+    .company_names_options_dropdown_class h3 {
+        font-size: 4vw;
+        padding: 5px 9px;
+    }
+
+    #clint_movements_place_options_and_tuorial p {
+        font-size: 3vw;
+        padding: 1px 3px;
+    }
+
+    .clint_movements_tutorial_full_page_div p {
+        font-size: 2.5vw;
+    }
+
+    .clint_movements_places_full_page_div h5 {
+        font-size: 2.5vw;
+    }
+
+    .clint_movements_places_full_page_div h6 {
+        font-size: 2.5vw;
+    }
+
+    .clint_movements_places_full_page_div p {
+        font-size: 2.5vw;
     }
 }
 
@@ -795,288 +1205,439 @@
 @media(max-width:850px) {}
 
 /* 760px */
-@media(max-width:760px) {}
+@media(max-width:760px) {
+    #package_details_input_id {
+        font-size: 14px;
+    }
+}
 
 /* 650px */
 @media(max-width:650px) {
-
-    .ensure_your_delete_action {
-        padding: 10px;
+    #header_div {
+        padding: 5px 15px;
     }
 
-    .ensure_your_delete_action button {
+    #header_div img {
+        width: 30vw;
+    }
+
+    #header_div h1 {
+        font-size: 4vw;
+    }
+
+    .header_navbar_title {
+        font-size: 3.5vw;
+    }
+
+    .header_navbar_header ion-icon {
+        font-size: 3.5vw;
+    }
+
+    .header_navbar_links a {
+        font-size: 3.5vw;
+    }
+
+
+
+
+
+    /* LocalStorage Element */
+    #localstorage_data_controller_div p {
+        font-size: 3.5vw;
+        padding: 1px 2px;
+    }
+
+    #localstorage_save_name_input_div h6 {
+        font-size: 4vw;
+    }
+
+    #localstorage_save_name_input_div p {
+        font-size: 4vw;
+    }
+
+    #localstorage_save_name_input_div input {
         font-size: 5vw;
+    }
+
+    #localstorage_save_name_input_div input::placeholder {
+        font-size: 5.5vw;
+    }
+
+
+
+    .localstorage_dropdown_div_class h6 {
+        font-size: 4vw;
+    }
+
+    .localstorage_dropdown_div_class p {
+        font-size: 4.5vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Inserted images in exported pdf */
+    .inserted_package_data_section_page_image_class{
+        padding: 30px 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .section_title_text_div {
+        margin: 2px 0;
+    }
+
+    .section_title_text {
+        font-size: 5vw;
+        padding: 8px;
+    }
+
+    .package_info_input_div {
         padding: 3px;
     }
 
-    #export_package_pdf_div_id button {
+    .package_info_input_div input {
+        width: 95vw;
+        font-size: 4.2vw;
+        margin: 2px 0;
+        padding: 2px;
+        height: 50px;
+    }
+
+    .package_info_input_div input::placeholder {
+        font-size: 5.2vw;
+    }
+
+    .package_details_input_class {
+        width: 95vw;
+        font-size: 3.5vw;
+        height: 11vw;
+    }
+
+    .package_details_input_class::placeholder {
+        font-size: 4vw;
+    }
+
+    .submit_package_pdf_div ion-icon {
+        font-size: 6.5vw;
+        padding: 5px;
+    }
+
+
+
+
+
+
+    .custom_checkbox label {
+        font-size: 4.5vw;
+    }
+
+    .custom_checkbox label::before {
+        width: 6vw;
+        height: 6vw;
+    }
+
+    .package_including_data_custom_checkbox label {
+        font-size: 3vw;
+    }
+    
+    .package_including_data_custom_checkbox label::before {
+        width: 5vw;
+        height: 5vw;
+    }
+
+
+
+
+
+
+
+    .textarea_open_fullscreen_icon_class {
         font-size: 5vw;
+    }
+
+    .exit_full_screen_icon {
+        font-size: 7vw;
+        padding: 5px;
+    }
+
+    .insert_clint_movements_places_icon {
+        font-size: 7vw;
+        padding: 5px;
+    }
+
+    .search_bar_div_class {
+        padding: 4px;
+    }
+
+    .search_bar_div_class input {
+        font-size: 4vw;
+        padding: 4px;
+    }
+
+    .company_names_options_dropdown_class {
+        padding: 3px 0;
+    }
+
+    .company_names_options_dropdown_class h3 {
+        font-size: 5vw;
+        margin: 4px;
+        padding: 4px;
+    }
+
+    #clint_movements_place_options_and_tuorial p {
+        font-size: 4vw;
+        padding: 3px;
+    }
+
+    .clint_movements_tutorial_full_page_div p {
+        font-size: 3vw;
+    }
+
+    .clint_movements_places_full_page_div h5 {
+        font-size: 3vw;
+    }
+
+    .clint_movements_places_full_page_div h6 {
+        font-size: 3vw;
+    }
+
+    .clint_movements_places_full_page_div p {
+        font-size: 3vw;
     }
 }
 
 
 /* 580px */
-@media(max-width:580px) {
-    .inserted_company_name_logo {
-        width: 50vw;
-    }
-
-
-
-
-
-
-
-
-
-    #clint_full_name_p {
-        font-size: 3.5vw;
-    }
-
-
-
-
-
-
-
-    .clint_data_row_class p {
-        font-size: 3.5vw;
-    }
-
-
-
-
-
-
-
-    .pdf_section_title_div_class {
-        padding: 4px;
-    }
-
-    .pdf_section_title_div_class h6 {
-        font-size: 3.5vw;
-    }
-
-    .pdf_section_title_div_class ion-icon {
-        font-size: 6.5vw;
-    }
-
-
-
-
-
-
-
-
-
-
-
-    .hotel_row_class div:last-child img {
-        width: 95%;
-    }
-
-    .hotel_row_class p {
-        font-size: 3vw;
-    }
-
-    .hotel_row_class span {
-        font-size: 2.2vw;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    .flight_row_class p {
-        font-size: 3vw;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    .clint_movements_row_class p {
-        font-size: 2.5vw;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .inserted_package_important_note_position_div_class p {
-        font-size: 3vw;
-        padding: 2px 0;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #name_pdf_file_div span {
-        font-size: 7vw;
-    }
-
-    #name_pdf_file_div input {
-        font-size: 5vw;
-    }
-
-    #name_pdf_file_div button {
-        font-size: 4.5vw;
-        padding: 1px 5px;
-    }
-}
+@media(max-width:580px) {}
 
 /* 500px */
 @media(max-width:500px) {}
 
 /* 400px */
 @media(max-width:400px) {
-    .inserted_company_name_logo {
-        width: 55vw;
+    #header_div {
+        padding: 5px 10px;
     }
 
+    #header_div img {
+        width: 35vw;
+    }
 
-
-
-
-
-
-
-    #clint_full_name_p {
+    #header_div h1 {
         font-size: 4.5vw;
     }
 
-
-
-
-
-
-
-
-    .inserted_package_including_and_not_icluding_data_div_class p {
-        font-size: 3.2vw;
-        padding: 3px 0;
+    .header_navbar_header {
+        padding: 0 5px;
     }
 
-    .inserted_package_including_and_not_icluding_data_div_class h6 {
-        font-size: 4.2vw;
-        padding: 3px 0;
+    .header_navbar_title {
+        font-size: 4.5vw;
     }
 
-
-
-
-
-    .hotel_row_class span {
-        font-size: 2.4vw;
+    .header_navbar_header ion-icon {
+        font-size: 4.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    #pdf_section_title_div_usuful_notes_id {
-        margin-top: 10px;
+    .header_navbar_links a {
+        font-size: 4.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-    .inserted_package_important_note_position_div_class p {
-        font-size: 3.2vw;
+    #localstorage_data_controller_div p {
+        font-size: 4vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .ensure_your_delete_action {
-        padding: 5px;
+    #localstorage_save_name_input_div {
+        width: 100%;
     }
 
-    .ensure_your_delete_action button {
-        font-size: 6vw;
-        padding: 2px;
-    }
-
-    #export_package_pdf_div_id button {
+    #localstorage_save_name_input_div h6 {
         font-size: 6vw;
     }
 
-    #name_pdf_file_div span {
+    #localstorage_save_name_input_div p {
+        font-size: 6vw;
+    }
+
+    #localstorage_save_name_input_div input {
+        font-size: 7vw;
+    }
+
+    #localstorage_save_name_input_div input::placeholder {
+        font-size: 7.5vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* Inserted images in exported pdf */
+    .inserted_package_data_section_page_image_class{
+        padding: 20px 0;
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .section_title_text {
+        font-size: 6vw;
+        padding: 6px;
+    }
+
+    .package_info_input_div input {
+        font-size: 5.2vw;
+        padding: 1px;
+        height: 40px;
+    }
+
+    .package_info_input_div input::placeholder {
+        font-size: 6.2vw;
+    }
+
+    .package_details_input_class {
+        font-size: 4.5vw;
+    }
+
+    .package_details_input_class::placeholder {
+        font-size: 5vw;
+    }
+
+    .submit_package_pdf_div ion-icon {
         font-size: 8vw;
     }
 
-    #name_pdf_file_div input {
+
+
+
+
+    .custom_checkbox {
+        margin: 5px;
+    }
+
+    .custom_checkbox label {
+        font-size: 5.5vw;
+    }
+
+    .custom_checkbox label::before {
+        width: 7vw;
+        height: 7vw;
+    }
+
+    .package_including_data_custom_checkbox {
+        margin: 5px;
+    }
+
+    .package_including_data_custom_checkbox label::before {
+        width: 6vw;
+        height: 6vw;
+    }
+
+
+
+
+
+
+
+
+
+
+    .textarea_open_fullscreen_icon_class {
         font-size: 6vw;
     }
 
-    #name_pdf_file_div button {
-        font-size: 5.5vw;
-        padding: 1px 3px;
+    .exit_full_screen_icon {
+        font-size: 9vw;
+        padding: 3px;
+    }
+
+    .insert_clint_movements_places_icon {
+        font-size: 9vw;
+        padding: 3px;
+    }
+
+    .search_bar_div_class {
+        padding: 3px;
+    }
+
+    .search_bar_div_class input {
+        font-size: 5vw;
+        padding: 3px;
+    }
+
+    .company_names_options_dropdown_class h3 {
+        font-size: 6.5vw;
+        margin: 3px;
+        padding: 1px;
+    }
+
+    #clint_movements_place_options_and_tuorial p {
+        font-size: 5vw;
+    }
+
+    .clint_movements_tutorial_full_page_div p {
+        font-size: 3.5vw;
+    }
+
+    .clint_movements_places_full_page_div h5 {
+        font-size: 4.5vw;
+    }
+
+    .clint_movements_places_full_page_div h6 {
+        font-size: 4.5vw;
+    }
+
+    .clint_movements_places_full_page_div p {
+        font-size: 4.5vw;
     }
 }
 
 /* 320px */
-@media(max-width:320px) {}
+@media(max-width:320px) {
+    .package_info_input_div input {
+        height: 35px;
+    }
+}
