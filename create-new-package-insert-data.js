@@ -2104,7 +2104,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section) {
         try {
             let canvas = await html2canvas(section, {
-                scale: 3.5, // Higher scale for better quality
+                scale: 3, // Higher scale for better quality
                 backgroundColor: null,
                 scrollY: 0 // Ensure capturing starts from the top of the element
             });
