@@ -6,12 +6,10 @@
 }
 
 .inserted_company_name_logo {
-    background: white;
-    margin-bottom: 15px;
-    z-index: 1;
-    width: 40vw;
-    border-radius: 7px;
+    margin-bottom: 10px;
+    width: 20vw;
     cursor: pointer;
+    border-radius: 7px;
 }
 
 
@@ -29,12 +27,13 @@
     text-align: center;
     border-right: 0.5px solid black;
     border-left: 0.5px solid black;
+    border-bottom: 0.5px solid black;
 }
 
 
 
 
-
+ 
 
 
 
@@ -51,9 +50,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    border-top: 0.5px solid black;
-    border-right: 0.5px solid black;
-    border-left: 0.5px solid black;
+    border: 0.5px solid black;
 }
 
 .clint_data_row_class div {
@@ -114,7 +111,7 @@
 
 /* Inserted package including data position */
 .inserted_package_including_and_not_icluding_data_div_class {
-    background: rgb(207, 233, 242);
+    background: white;
     padding-right: 5px;
     display: flex;
     flex-direction: column;
@@ -168,36 +165,33 @@
 
 /* Pdf section title */
 .pdf_section_title_div_class {
-    background: rgb(210, 210, 210);
+    background: white;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     margin: auto;
     padding: 10px;
-    border: 0.5px solid black;
     position: relative;
     /* Add this to position the icon absolutely */
 }
 
 .pdf_section_title_div_class h6 {
+    background: rgb(238, 167, 0);
+    width: fit-content;
+    color: white;
     font-size: 2.5vw;
+    padding: 5px 15px;
     font-weight: 600;
-    flex: 1;
-    /* Add this to make h6 take the remaining space */
     text-align: center;
-    /* Center the text horizontally */
+    border-radius: 7px;
 }
 
 .pdf_section_title_div_class ion-icon {
     font-size: 4.5vw;
-    position: absolute;
     /* Position the icon absolutely */
-    right: 10px;
     /* Position the icon 10px from the right */
-    top: 50%;
     /* Position the icon vertically in the center */
-    transform: translateY(-50%);
     /* Adjust vertical alignment */
 }
 
@@ -259,8 +253,12 @@
     flex-grow: 0.9;
 }
 
+.hotel_row_class div:last-child {
+    flex-grow: 0.6;
+}
+
 .hotel_row_class div:last-child img {
-    width: 90%;
+    width: 100%;
     border: 0.5px solid black;
     border-radius: 7px;
     cursor: pointer;
@@ -276,21 +274,40 @@
     font-weight: 600;
 }
 
-/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+/* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and "المدينة" cells */
+.hotel_row_class div:nth-child(2) {
+    /* "عدد الليالي" cell */
+    flex-grow: 0.6;
+}
+
+/* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and "المدينة" cells */
 .hotel_row_class div:nth-child(3) {
     /* "عدد الليالي" cell */
-    flex-grow: 0.4;
+    flex-grow: 0.5;
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
+.hotel_row_class div:nth-child(4) {
+    /* "عدد الليالي" cell */
+    flex-grow: 0.5;
+}
+
+/* Reduce the width of "نوع الغرفة" and "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
+    /* "عدد الليالي" cell */
+    flex-grow: 0.8;
+}
+
+/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+.hotel_row_class div:nth-child(6) {
     /* "عدد الليالي" cell */
     flex-grow: 0.4;
 }
 
 /* Reduce the width of "المدينة" cells */
-.hotel_row_class div:nth-child(6) {
+.hotel_row_class div:nth-child(7) {
     flex-grow: 0.6;
+    font-size: 0.5vw;
     border-left: none;
 }
 
@@ -314,9 +331,10 @@
 
 
 
+
 /* Inserted package important note position */
 .inserted_package_important_note_position_div_class {
-    background: rgb(207, 233, 242);
+    background: white;
     padding-right: 5px;
     display: flex;
     flex-direction: column;
@@ -339,6 +357,31 @@
 
 
 
+
+
+
+/* Inserted package total price section */
+#package_total_price_div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#package_total_price_div h6{
+    background: rgb(0, 93, 163); color: white;
+    font-size: 4vw;
+    padding: 5px 15px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+#package_total_price_div p{
+    font-size: 4vw;
+    padding: 5px 15px;
+    border-radius: 7px;
+    text-align: center;
+}
 
 
 
@@ -387,25 +430,32 @@
 /* Reduce the width of "من" and "الى" cells */
 .flight_row_class div:nth-child(4),
 .flight_row_class div:nth-child(5) {
-    flex-grow: 0.5;
+    flex-grow: 0.9;
 }
 
 /* Reduce the width of "عدد الأشخاص" cell */
 .flight_row_class div:nth-child(2) {
+    flex-grow: 1;
+}
+
+/* Reduce the width of "عدد الأشخاص" cell */
+.flight_row_class div:nth-child(6) p {
+    color: darkorange;
+}
+
+/* Reduce the width of "عدد الأشخاص" cell */
+.flight_row_class div:nth-child(6) {
     flex-grow: 0.8;
 }
 
 /* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
 .flight_row_class div:nth-child(7),
 .flight_row_class div:nth-child(8) {
-    flex-grow: 0.6;
+    flex-grow: 0.9;
 }
 
 
-/* Reduce the width of "عدد الأشخاص" cell */
-.flight_row_class div:nth-child(6) p {
-    color: darkorange;
-}
+
 
 
 
@@ -676,7 +726,7 @@
 /* 950px */
 @media(max-width:950px) {
     .inserted_company_name_logo {
-        width: 45vw;
+        width: 25vw;
     }
 
 
@@ -707,6 +757,7 @@
 
     .pdf_section_title_div_class h6 {
         font-size: 2.7vw;
+        padding: 3px 10px;
     }
 
     .pdf_section_title_div_class ion-icon {
@@ -818,7 +869,8 @@
 /* 580px */
 @media(max-width:580px) {
     .inserted_company_name_logo {
-        width: 50vw;
+        width: 30vw;
+        margin-bottom: 5px;
     }
 
 
@@ -855,6 +907,7 @@
 
     .pdf_section_title_div_class h6 {
         font-size: 3.5vw;
+        padding: 2px 5px;
     }
 
     .pdf_section_title_div_class ion-icon {
@@ -871,16 +924,13 @@
 
 
 
-    .hotel_row_class div:last-child img {
-        width: 95%;
-    }
 
     .hotel_row_class p {
-        font-size: 3vw;
+        font-size: 2.8vw;
     }
 
     .hotel_row_class span {
-        font-size: 2.2vw;
+        font-size: 2vw;
     }
 
 
@@ -968,7 +1018,8 @@
 /* 400px */
 @media(max-width:400px) {
     .inserted_company_name_logo {
-        width: 55vw;
+        width: 35vw;
+        margin-bottom: 0px;
     }
 
 
@@ -1004,7 +1055,7 @@
 
 
     .hotel_row_class span {
-        font-size: 2.4vw;
+        font-size: 2.3vw;
     }
 
 
