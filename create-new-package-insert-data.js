@@ -2234,3 +2234,4 @@ downloadPdfWithCustomName = async function (pdfName) {
     await processSections(sections); // Process visible sections to generate the PDF
 };
 
+
