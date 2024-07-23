@@ -33,7 +33,7 @@
 
 
 
- 
+
 
 
 
@@ -275,12 +275,7 @@
 }
 
 /* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and "المدينة" cells */
-.hotel_row_class div:nth-child(2) {
-    /* "عدد الليالي" cell */
-    flex-grow: 0.6;
-}
-
-/* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and "المدينة" cells */
+.hotel_row_class div:nth-child(2),
 .hotel_row_class div:nth-child(3) {
     /* "عدد الليالي" cell */
     flex-grow: 0.5;
@@ -361,22 +356,23 @@
 
 
 /* Inserted package total price section */
-#package_total_price_div{
+#package_total_price_div {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#package_total_price_div h6{
-    background: rgb(0, 93, 163); color: white;
+#package_total_price_div h6 {
+    background: rgb(0, 93, 163);
+    color: white;
     font-size: 4vw;
     padding: 5px 15px;
     border-radius: 7px;
     text-align: center;
 }
 
-#package_total_price_div p{
+#package_total_price_div p {
     font-size: 4vw;
     padding: 5px 15px;
     border-radius: 7px;
