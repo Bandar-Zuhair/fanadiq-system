@@ -831,7 +831,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 0 0.5px 0.5px black;
     text-align: center;
     cursor: pointer;
-    flex: 1 1 auto;
 }
 
 
@@ -1632,7 +1631,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .company_names_options_dropdown_class h3 {
         font-size: 6.5vw;
         margin: 3px;
-        padding: 1px;
     }
 
     #clint_movements_place_options_and_tuorial p {
