@@ -2104,7 +2104,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section) {
         try {
             let canvas = await html2canvas(section, {
-                scale: 3, // Increase scale for higher quality and larger size
+                scale: 3, // Moderate scale for balanced quality and size
                 backgroundColor: null,
                 scrollY: 0 // Ensure capturing starts from the top of the element
             });
@@ -2163,15 +2163,13 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
 
         let padding = 2; // Define padding in mm
-        let scaleFactor = 1.5; // Scale factor to make elements larger
-        let originalWidth = 210; // Original A4 width in mm
-        let scaledWidth = originalWidth * scaleFactor; // Calculate new width
-        let pdfHeight = (combinedCanvas.height * (scaledWidth - 2 * padding)) / combinedCanvas.width;
-        let pdf = new jsPDF('p', 'mm', [scaledWidth, pdfHeight]);
+        let pdfWidth = 210; // A4 width in mm
+        let pdfHeight = (combinedCanvas.height * (pdfWidth - 2 * padding)) / combinedCanvas.width;
+        let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
         let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Compress image to reduce size
 
-        pdf.addImage(imgData, 'JPEG', padding, 0, scaledWidth - 2 * padding, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'JPEG', padding, 0, pdfWidth - 2 * padding, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
@@ -2233,4 +2231,5 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     await processSections(sections); // Process visible sections to generate the PDF
 };
+
 
