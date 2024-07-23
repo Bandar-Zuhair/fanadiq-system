@@ -2166,7 +2166,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 1); // Compress image to reduce size
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Compress image to reduce size
 
         pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
@@ -2229,6 +2229,6 @@ downloadPdfWithCustomName = async function (pdfName) {
     }
 
     await processSections(sections); // Process visible sections to generate the PDF
-};
+}; 
 
 
