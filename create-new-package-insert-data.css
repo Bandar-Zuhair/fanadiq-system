@@ -86,10 +86,6 @@
     border-left: none;
 }
 
-/* Reduce the width of "المدينة" cells */
-.clint_data_row_class div:nth-child(4) p {
-    color: rgb(224, 157, 0);
-}
 
 
 
@@ -432,11 +428,6 @@
 /* Reduce the width of "عدد الأشخاص" cell */
 .flight_row_class div:nth-child(2) {
     flex-grow: 1;
-}
-
-/* Reduce the width of "عدد الأشخاص" cell */
-.flight_row_class div:nth-child(6) p {
-    color: rgb(224, 157, 0);
 }
 
 /* Reduce the width of "عدد الأشخاص" cell */
