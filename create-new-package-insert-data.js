@@ -306,16 +306,12 @@ checkInputsToInsertData = function (clickedButtonId) {
         insertedPackageNotIncludingDataDiv.id = 'inserted_package_not_including_data_div';
         insertedPackageNotIncludingDataDiv.className = 'inserted_package_including_and_not_icluding_data_div_class';
 
-
         if (packageTotlaPriceInput !== '') {
             downloaded_pdf_total_price_data_page.style.display = 'block';
-
             package_total_price_p_id.innerText = packageTotlaPriceInput;
-
         } else {
             downloaded_pdf_total_price_data_page.style.display = 'none';
         }
-
 
         // Loop over checkboxes
         checkboxIds.forEach(id => {
@@ -329,12 +325,20 @@ checkInputsToInsertData = function (clickedButtonId) {
                 icon.setAttribute('name', 'checkmark-outline'); // Set the icon to a checkmark
                 p.appendChild(icon); // Append the icon to the paragraph
 
-                if (id === 'sms_card_with_internet_checkbox' && smsCardWithInternetAmountInputReayText !== '') {
-                    // If the checkbox is for the SMS card with internet and the amount input is not empty
-                    p.appendChild(document.createTextNode(` ${smsCardWithInternetAmountInputReayText}`)); // Append the amount text
-                } else if (id === 'inner_flight_tickets_checkbox' && innerFlightTicketsAmountInputReayText !== '') {
-                    // If the checkbox is for the inner flight tickets and the amount input is not empty
-                    p.appendChild(document.createTextNode(` ${innerFlightTicketsAmountInputReayText}`)); // Append the amount text
+                if (id === 'sms_card_with_internet_checkbox') {
+                    // If the checkbox is for the SMS card with internet
+                    let textContent = smsCardWithInternetAmountInputReayText !== ''
+                        ? ` ${smsCardWithInternetAmountInputReayText}`
+                        : ' شرائح إتصال مع نت مفتوح'; // Default text if input is empty
+                    p.appendChild(document.createTextNode(textContent)); // Append the text
+                    p.style.padding = '0 5px'; // Add padding to this p element
+                } else if (id === 'inner_flight_tickets_checkbox') {
+                    // If the checkbox is for the inner flight tickets
+                    let textContent = innerFlightTicketsAmountInputReayText !== ''
+                        ? ` ${innerFlightTicketsAmountInputReayText}`
+                        : ' تذاكر الطيران الداخلي'; // Default text if input is empty
+                    p.appendChild(document.createTextNode(textContent)); // Append the text
+                    p.style.padding = '0 5px'; // Add padding to this p element
                 } else {
                     // For all other checkboxes
                     labelText.forEach((text, index) => { // Loop through the label text parts
@@ -362,12 +366,14 @@ checkInputsToInsertData = function (clickedButtonId) {
                 p.className = 'inserted_package_not_including_data_text'; // Set the class for the paragraph
                 if (id === 'sms_card_with_internet_checkbox' || id === 'inner_flight_tickets_checkbox') {
                     p.classList.add('special_package_including_data_background_color_text'); // Add a special class for certain checkboxes
+                    p.style.padding = '0 5px'; // Add padding to this p element
                 }
                 insertedPackageNotIncludingDataDiv.appendChild(p); // Append the paragraph to the not including data div
             }
 
             p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)'); // Set the onclick attribute to delete the text
         });
+
 
         // Include package details text area if not empty
         if (packageIncludingDataTextArea !== '') {
@@ -2156,7 +2162,7 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        let padding = 10; // Define padding in mm
+        let padding = 2; // Define padding in mm
         let scaleFactor = 1.5; // Scale factor to make elements larger
         let originalWidth = 210; // Original A4 width in mm
         let scaledWidth = originalWidth * scaleFactor; // Calculate new width
