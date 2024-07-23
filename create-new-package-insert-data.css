@@ -177,7 +177,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(238, 167, 0);
+    background: rgb(224, 157, 0);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -1128,3 +1128,6 @@
         padding: 1px 3px;
     }
 }
+
+/* 320px */
+@media(max-width:320px) {}
