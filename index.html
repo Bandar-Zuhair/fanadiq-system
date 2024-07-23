@@ -127,14 +127,14 @@
 
     <div id="localstorage_save_name_input_div">
         <div id="first_div_in_localstorage_save_name_input_div">
-            <p onclick="svaeCurrentWebsiteLocalStorageDataName()">حفظ التقدم</p>
+            <p onclick="saveCurrentWebsiteLocalStorageDataName()">حفظ التقدم</p>
         </div>
         <div>
             <h6>تخزين جديد</h6>
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
                 autocomplete="off">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="svaeNewWebsiteLocalStorageDataName()">تخزين جديد</p>
+                onclick="saveNewWebsiteLocalStorageDataName()">تخزين جديد</p>
         </div>
     </div>
 
@@ -270,7 +270,12 @@
                 <input type="text" id="package_clint_name_input_id" placeholder="اسم العميل" autocomplete="off">
 
 
-                <input type="text" id="package_person_amount_input_id" placeholder="عدد الأشخاص" autocomplete="off">
+                <input type="text" id="adult_package_person_amount_input_id" placeholder="عدد البالغين" autocomplete="off"
+                    readonly onclick="showOverlay('adult_whole_package_people_amount_dropdown')"
+                    style="cursor: pointer;">
+
+
+                <input type="text" id="kids_package_person_amount_input_id" placeholder="عدد الأطفال" autocomplete="off">
 
 
                 <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
@@ -324,6 +329,34 @@
 
 
 
+
+
+
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="adult_whole_package_people_amount_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>1 بالغ</h3>
+                <h3>2 بالغين</h3>
+                <h3>3 بالغين</h3>
+                <h3>4 بالغين</h3>
+                <h3>5 بالغين</h3>
+                <h3>6 بالغين</h3>
+                <h3>7 بالغين</h3>
+                <h3>8 بالغين</h3>
+                <h3>9 بالغين</h3>
+                <h3>10 بالغين</h3>
+                <h3>11 بالغين</h3>
+                <h3>12 بالغين</h3>
+                <h3>13 بالغين</h3>
+                <h3>14 بالغين</h3>
+                <h3>15 بالغين</h3>
+            </div>
+        </div>
 
 
 
@@ -395,13 +428,6 @@
 
 
 
-
-        <div id="overlay"></div>
-        <div id="confirmationDialog">
-            <p>Are you sure you want to leave this page?</p>
-            <button id="confirmBtn">OK</button>
-            <button id="cancelBtn">Cancel</button>
-        </div>
 
 
 
@@ -1167,6 +1193,7 @@
             <div class="company_names_options_dropdown_class">
                 <h3>جاكرتا</h3>
                 <h3>بالي</h3>
+                <h3>باندونق</h3>
             </div>
         </div>
 
@@ -1737,9 +1764,9 @@
 
 
 
-    <section id="downloaded_pdf_clint_data_page" style="display: none;">
+    <section id="downloaded_pdf_clint_data_page" style="background: white; display: none;">
 
-        <img src="first-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
+        <img src="" id="welcome_pdf_first_page_image_id" class="inserted_package_data_section_page_image_class">
 
 
 
@@ -1749,15 +1776,15 @@
 
 
         <div id="pdf_clint_info_section_title_div_id" class="pdf_section_title_div_class">
-            <ion-icon name="ribbon-outline"></ion-icon>
             <h6 id="clint_package_type_h6">بكج شهر عسل</h6>
+            <ion-icon name="ribbon-outline" style="transform: scaleX(-1);"></ion-icon>
         </div>
 
 
-        <p id="clint_full_name_p" style="background: rgb(207, 233, 242);"></p>
+        <p id="clint_full_name_p"></p>
 
 
-        <div id="clint_data_row_main_div_id" class="clint_data_row_class" style="background: rgb(207, 233, 242);">
+        <div id="clint_data_row_main_div_id" class="clint_data_row_class" style="background: rgb(0, 93, 163); color: white;">
             <div>
                 <p>عدد الأشخاص</p>
             </div>
@@ -1768,7 +1795,7 @@
                 <p>الى</p>
             </div>
             <div>
-                <p style="color: black">مجموع الليالي</p>
+                <p style="color: white">مجموع الليالي</p>
             </div>
         </div>
 
@@ -1805,13 +1832,13 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="airplane-outline"></ion-icon>
             <h6>الطيران الداخلي</h6>
+            <ion-icon name="airplane-outline"></ion-icon>
         </div>
 
 
 
-        <div class="flight_row_class" style="background: rgb(207, 233, 242);">
+        <div class="flight_row_class" style="background: rgb(0, 93, 163); color: white;">
             <div>
                 <p>الخطوط</p>
             </div>
@@ -1828,7 +1855,7 @@
                 <p>الى</p>
             </div>
             <div>
-                <p style="color:black">تاريخ السفر</p>
+                <p style="color:white">تاريخ السفر</p>
             </div>
             <div>
                 <p>وقت الإقلاع</p>
@@ -1864,26 +1891,29 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="bed-outline"></ion-icon>
             <h6>الفنادق / الفلل</h6>
+            <ion-icon name="bed-outline"></ion-icon>
         </div>
 
 
-        <div class="hotel_row_class" style="background: rgb(207, 233, 242);">
+        <div class="hotel_row_class" style="background: rgb(0, 93, 163); color: white;">
             <div>
                 <p>اسم الفندق/<br>الفيلا</p>
             </div>
             <div>
-                <p>تاريخ الحجز</p>
+                <p>تاريخ الدخول</p>
+            </div>
+            <div>
+                <p>تاريخ الخروج</p>
             </div>
             <div>
                 <p>عدد الليالي</p>
             </div>
             <div class="description_cell">
-                <p>نوع السكن</p>
+                <p>نوع الغرفة/<br>الفيلا</p>
             </div>
             <div>
-                <p>غرف النوم</p>
+                <p>عدد الغرف</p>
             </div>
             <div>
                 <p>المدينة</p>
@@ -1924,8 +1954,8 @@
 
 
         <div id="pdf_section_package_icluding_data_title_id" class="pdf_section_title_div_class">
-            <ion-icon name="ribbon-outline"></ion-icon>
             <h6>البرنامج يشمل</h6>
+            <ion-icon name="ribbon-outline"></ion-icon>
         </div>
 
 
@@ -1941,8 +1971,8 @@
 
         <div id="pdf_section_package_not_icluding_data_title_id" class="pdf_section_title_div_class"
             style="margin-top: 10px;">
-            <ion-icon name="alert-circle-outline"></ion-icon>
             <h6>البرنامج لا يشمل</h6>
+            <ion-icon name="alert-circle-outline"></ion-icon>
         </div>
 
 
@@ -1977,12 +2007,12 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="map-outline"></ion-icon>
             <h6>خط سير البرنامج</h6>
+            <ion-icon name="map-outline"></ion-icon>
         </div>
 
 
-        <div class="clint_movements_row_class" style="background: rgb(207, 233, 242);">
+        <div class="clint_movements_row_class" style="background: rgb(0, 93, 163); color: white;">
             <div>
                 <p>التاريخ</p>
             </div>
@@ -2019,8 +2049,8 @@
 
 
         <div class="pdf_section_title_div_class">
-            <ion-icon name="megaphone-outline"></ion-icon>
-            <h6>معلومات مهمة جدا</h6>
+            <h6>معلومات مهمة جداً</h6>
+            <ion-icon name="megaphone-outline" style="transform: scaleX(-1);"></ion-icon>
         </div>
 
 
@@ -2052,7 +2082,7 @@
                 مسؤولية عن ضياعها)</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> يتم تغيير السائق في كل مدينة</p>
-            <p style="text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم
+            <p style="width: 100%; text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم
                 التحقق
                 من الفنادق وإعتماد الطلب</p>
 
@@ -2063,8 +2093,8 @@
 
 
         <div id="pdf_section_title_div_usuful_notes_id" class="pdf_section_title_div_class">
-            <ion-icon name="megaphone-outline"></ion-icon>
             <h6>إرشادات وتعليمات عامة</h6>
+            <ion-icon name="megaphone-outline" style="transform: scaleX(-1);"></ion-icon>
         </div>
 
 
@@ -2092,7 +2122,38 @@
 
 
 
-        <img src="last-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
+        <img src="last-pdf-image.jpg" id="inserted_package_important_notes_data_section_page_image_id" class="inserted_package_data_section_page_image_class">
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <section id="downloaded_pdf_total_price_data_page" style="display: none;">
+
+        <img src="middle-pdf-image.jpg" class="inserted_package_data_section_page_image_class">
+
+
+        <div class="pdf_section_title_div_class">
+            <h6>فريق فنادق إندونيسيا</h6>
+            <ion-icon name="medal-outline"></ion-icon>
+        </div>
+
+        <div id="package_total_price_div">
+            <h6>الإجمالي</h6>
+            <p id="package_total_price_p_id" onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')" style="cursor: pointer;"></p>
+        </div>
+
+
+        <img src="last-pdf-image.jpg" id="inserted_package_total_price_data_section_page_image_id" class="inserted_package_data_section_page_image_class">
 
     </section>
 
