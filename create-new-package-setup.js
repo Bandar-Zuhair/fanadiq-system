@@ -1,8 +1,40 @@
 /* Function to prevent the page refresh by mistake */
-window.addEventListener('beforeunload', function (event) {
+/* window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-});
+}); */
+
+
+
+
+
+
+
+/* Header Nav Bar */
+function toggleLinks(id) {
+    var links = document.getElementById(id);
+    if (links.style.maxHeight) {
+        links.style.maxHeight = null;
+    } else {
+        links.style.maxHeight = links.scrollHeight + "px";
+    }
+}
+
+
+/* Page Load Header Fade Animation */
+setTimeout(function () {
+    document.getElementById('body').style.opacity = "1";
+}, 100);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -30,29 +62,6 @@ showPackageTypeSection = function (packageType) {
 
     }
 }
-
-
-
-/* Header Nav Bar */
-function toggleLinks(id) {
-    var links = document.getElementById(id);
-    if (links.style.maxHeight) {
-        links.style.maxHeight = null;
-    } else {
-        links.style.maxHeight = links.scrollHeight + "px";
-    }
-}
-
-
-/* Page Load Header Fade Animation */
-setTimeout(function () {
-    document.getElementById('body').style.opacity = "1";
-}, 100);
-
-
-
-
-
 
 
 
@@ -99,6 +108,30 @@ toggleDropdownContent('toggle_clint_movements_period_elements', 'clint_movements
 
 
 
+
+
+
+
+
+
+
+
+
+/* Dropdown airport line names functionality */
+let adultPackagePersonAmountInput = document.getElementById('adult_package_person_amount_input_id');
+
+// Get the options within the dropdown
+let adultPackagePersonAmountInputOptions = document.querySelectorAll('#adult_whole_package_people_amount_dropdown h3');
+
+adultPackagePersonAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        /* Save the clicked number in the variable for later use */
+        adultPackagePersonAmountInput.value = option.textContent
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
 
 
 
@@ -1672,7 +1705,7 @@ $(document).ready(function () {
 
 
 
-
+ 
 
 
 
