@@ -88,7 +88,7 @@
 
 /* Reduce the width of "المدينة" cells */
 .clint_data_row_class div:nth-child(4) p {
-    color: darkorange;
+    color: rgb(224, 157, 0);
 }
 
 
@@ -265,12 +265,12 @@
 }
 
 .hotel_row_class p {
-    font-size: 2.5vw;
+    font-size: 2.2vw;
     font-weight: 600;
 }
 
 .hotel_row_class span {
-    font-size: 1.7vw;
+    font-size: 1.5vw;
     font-weight: 600;
 }
 
@@ -278,7 +278,7 @@
 .hotel_row_class div:nth-child(2),
 .hotel_row_class div:nth-child(3) {
     /* "عدد الليالي" cell */
-    flex-grow: 0.5;
+    flex-grow: 0.6;
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
@@ -290,7 +290,7 @@
 /* Reduce the width of "نوع الغرفة" and "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
     /* "عدد الليالي" cell */
-    flex-grow: 0.8;
+    flex-grow: 1.2;
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
@@ -366,14 +366,14 @@
 #package_total_price_div h6 {
     background: rgb(0, 93, 163);
     color: white;
-    font-size: 4vw;
+    font-size: 5vw;
     padding: 5px 15px;
     border-radius: 7px;
     text-align: center;
 }
 
 #package_total_price_div p {
-    font-size: 4vw;
+    font-size: 5vw;
     padding: 5px 15px;
     border-radius: 7px;
     text-align: center;
@@ -419,7 +419,7 @@
 }
 
 .flight_row_class p {
-    font-size: 2.5vw;
+    font-size: 2.3vw;
     font-weight: 600;
 }
 
@@ -436,7 +436,7 @@
 
 /* Reduce the width of "عدد الأشخاص" cell */
 .flight_row_class div:nth-child(6) p {
-    color: darkorange;
+    color: rgb(224, 157, 0);
 }
 
 /* Reduce the width of "عدد الأشخاص" cell */
@@ -447,7 +447,7 @@
 /* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
 .flight_row_class div:nth-child(7),
 .flight_row_class div:nth-child(8) {
-    flex-grow: 0.9;
+    flex-grow: 0.7;
 }
 
 
@@ -922,11 +922,11 @@
 
 
     .hotel_row_class p {
-        font-size: 2.8vw;
+        font-size: 2.5vw;
     }
 
     .hotel_row_class span {
-        font-size: 2vw;
+        font-size: 1.9vw;
     }
 
 
@@ -941,7 +941,7 @@
 
 
     .flight_row_class p {
-        font-size: 3vw;
+        font-size: 2.5vw;
     }
 
 
@@ -1086,6 +1086,21 @@
 
 
 
+
+
+
+
+
+
+    #package_total_price_div h6 {
+        font-size: 7vw;
+        padding: 3px 10px;
+    }
+    
+    #package_total_price_div p {
+        font-size: 7vw;
+        padding: 3px 10px;
+    }
 
 
 
