@@ -31,7 +31,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         clint_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
         // Set the background color of the submit icon back to default color
         setTimeout(() => {
-            clint_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            clint_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
         }, 500);
 
         if (clintCompanyNameInput !== '') {
@@ -294,7 +294,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         // Show success message
         package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
         setTimeout(() => {
-            package_including_data_inputs_submit_icon.style.backgroundColor = 'darkorange';
+            package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
         }, 500);
 
         // Create new div elements for including and not including data
@@ -457,7 +457,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
             }, 500);
 
 
@@ -470,7 +470,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                 }, 500);
 
             } else {
@@ -478,7 +478,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                 }, 2000);
 
 
@@ -883,7 +883,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
             }, 500);
 
         } else {
@@ -891,7 +891,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
             }, 500);
 
 
@@ -1318,7 +1318,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
             }, 500);
 
 
@@ -1337,7 +1337,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                 }, 500);
 
             } else {
@@ -1369,7 +1369,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Set the background color of the submit icon back to default color
                     setTimeout(() => {
-                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                     }, 500);
 
 
@@ -1389,7 +1389,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                             // Set the background color of the submit icon back to default color
                             setTimeout(() => {
-                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                             }, 500);
 
 
@@ -1404,7 +1404,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                     // Set the background color of the submit icon back to default color
                     setTimeout(() => {
-                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'darkorange';
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
                     }, 500);
 
                     // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
@@ -2162,7 +2162,7 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        let padding = 2; // Define padding in mm
+        let padding = 3; // Define padding in mm
         let pdfWidth = 210; // A4 width in mm
         let pdfHeight = (combinedCanvas.height * (pdfWidth - 2 * padding)) / combinedCanvas.width;
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
