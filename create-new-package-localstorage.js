@@ -42,13 +42,13 @@ saveNewWebsiteLpcalStorageDataName = function () {
 
 
 
-    
+
 
 
 
 
     /* Save (New) website data to the localstorage */
-    svaeNewWebsiteLocalStorageDataName = function () {
+    saveNewWebsiteLocalStorageDataName = function () {
         let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
         let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
@@ -80,7 +80,8 @@ saveNewWebsiteLpcalStorageDataName = function () {
             'downloaded_pdf_package_including_data_page',
             'downloaded_pdf_flight_data_page',
             'downloaded_pdf_hotel_data_page',
-            'downloaded_pdf_clint_movements_data_page'
+            'downloaded_pdf_clint_movements_data_page',
+            'downloaded_pdf_total_price_data_page'
         ];
 
         // Check visibility of each div and add to the object if visible
@@ -149,7 +150,7 @@ saveNewWebsiteLpcalStorageDataName = function () {
 
 
     /* Save (Current) website data to the localstorage */
-    svaeCurrentWebsiteLocalStorageDataName = function () {
+    saveCurrentWebsiteLocalStorageDataName = function () {
         let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
         let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
@@ -168,7 +169,8 @@ saveNewWebsiteLpcalStorageDataName = function () {
             'downloaded_pdf_package_including_data_page',
             'downloaded_pdf_flight_data_page',
             'downloaded_pdf_hotel_data_page',
-            'downloaded_pdf_clint_movements_data_page'
+            'downloaded_pdf_clint_movements_data_page',
+            'downloaded_pdf_total_price_data_page'
         ];
 
         // Check visibility of each div and add to the object if visible
@@ -347,6 +349,7 @@ function importWebsiteLocalStorageDataName() {
                 document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
                 document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
                 document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+                document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
 
                 for (let divId in matchingObject.elements) {
                     let htmlSectionPdfPageDiv = document.getElementById(divId);
@@ -470,7 +473,74 @@ deleteWebsiteLocalStorageDataName = function () {
 /* Function to re-active the drag and drop functionality (copied code for the main inserted daa js code) */
 reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
-    if (visiableDivIdName === 'downloaded_pdf_flight_data_page') {
+    if (visiableDivIdName === 'downloaded_pdf_clint_data_page') {
+
+        /* Function to reActive the company logo delete functionality */
+        document.getElementById('inserted_company_name_logo_id').onclick = function (event) {
+            event.preventDefault(); // Prevent the default behavior of the click event
+            event.stopPropagation(); // Stop the event from propagating further
+
+            // Create overlay layer
+            let overlayLayer = document.createElement('div');
+            overlayLayer.className = 'black_overlay';
+            overlayLayer.id = 'black_overlay_id';
+            document.body.appendChild(overlayLayer);
+
+            // Show overlay layer with smooth opacity transition
+            setTimeout(() => {
+                overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+            }, 100);
+
+            // Slide in delete box options div
+            let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
+
+            // Smoothly slide to the middle of the screen
+            setTimeout(() => {
+                deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+            }, 50); // Adjust timing as needed
+
+            // Event listener to close overlay and delete box div on click outside
+            overlayLayer.onclick = () => {
+                // Hide delete box options div
+                deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
+
+                // Hide overlay layer with opacity transition
+                overlayLayer.style.opacity = '0';
+
+                // Remove overlay and delete box div from DOM after transition
+                setTimeout(() => {
+                    document.body.removeChild(overlayLayer);
+                }, 300); // Match transition duration in CSS
+            };
+        };
+
+
+        /* Function to delete company logo */
+        deleteClickedCompanyLogo = function () {
+            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
+
+            // Slide in delete box options div
+            let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
+
+            // Event listener to close overlay and delete box div on click outside
+            // Hide delete box div
+            deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
+
+            // Hide overlay layer with opacity transition
+            let overlayLayer = document.getElementById('black_overlay_id')
+
+            overlayLayer.style.opacity = '0';
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+        }
+
+
+
+
+    } else if (visiableDivIdName === 'downloaded_pdf_flight_data_page') {
 
 
         // Get all elements with the class name 'flight_row_class'
@@ -1428,5 +1498,4 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         // Initialize drag and drop functionality
         createClintMovementsDragAndDropMood();
     }
-
 }
