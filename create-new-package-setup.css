@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Vazirmatn:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
 
 /* Simple Animation SetUp For Later Use */
 @keyframes floatAnimation {
@@ -16,7 +17,7 @@
 
 /* Change the background color and text color of highlighted text */
 ::selection {
-    background-color: rgb(0, 115, 182);
+    background-color: rgb(0, 180, 168);
     /* Background color */
     color: white;
     /* Text color */
@@ -25,7 +26,7 @@
 
 /* All */
 * {
-    font-family: "Vazirmatn", sans-serif;
+    font-family: "Noto Kufi Arabic", sans-serif;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -41,6 +42,26 @@ body {
     color: black;
     transition: all 0.5s ease-in-out;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -736,7 +757,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-
+ 
 
 
 
