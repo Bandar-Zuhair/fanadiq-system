@@ -1211,7 +1211,7 @@ function setTheFirstClintMovemnetsDate() {
 
         // Set the background color of the submit icon back to default color
         setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'darkorange';
+            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(224, 157, 0)';
         }, 500);
 
         // Check if the first day date input value has changed
@@ -1236,7 +1236,7 @@ function setTheFirstClintMovemnetsDate() {
 
         // Set the background color of the submit icon back to default color
         setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'darkorange';
+            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(224, 157, 0)';
         }, 500);
     }
 }
