@@ -81,7 +81,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             };
 
             // Clear previous company logo and insert the new logo div
-            if(document.getElementById('inserted_company_name_image_position_div')){
+            if (document.getElementById('inserted_company_name_image_position_div')) {
                 document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
             }
             document.getElementById('inserted_company_name_image_position_div').appendChild(insertedCompanyNameLogoImage);
@@ -2915,15 +2915,11 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdfWidth = 210; // A4 width in mm
         let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
-        let padding = 10; // Padding in mm
-        let contentWidth = pdfWidth - (2 * padding); // Adjusted width with padding
-
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
         let imgData = combinedCanvas.toDataURL('image/jpeg', 0.4); // Compress image to reduce size
 
-        // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
@@ -2934,7 +2930,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
 
-        if(document.getElementById('inserted_company_name_image_position_div')){
+        if (document.getElementById('inserted_company_name_image_position_div')) {
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
         }
 
@@ -2949,7 +2945,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block'; // Show the section before checking visibility
 
-    if(document.getElementById('inserted_company_name_image_position_div')){
+    if (document.getElementById('inserted_company_name_image_position_div')) {
         document.getElementById('inserted_company_name_image_position_div').style.display = 'none'; // Show the section before checking visibility
     }
 
