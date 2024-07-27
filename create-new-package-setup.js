@@ -1677,7 +1677,6 @@ var clintMovementsFirstDayPicker = new Pikaday({
         let minEndDate = new Date(selectedDate);
         minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
         clintMovementsLastDayPicker.setMinDate(minEndDate); // Update min date for the second picker
-        clintMovementsLastDayPicker.setDisableDayFn(disableSpecificDates); // Reapply disable function
     }
 });
 
