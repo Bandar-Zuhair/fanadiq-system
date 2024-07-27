@@ -71,7 +71,6 @@ body {
 
 
 
-
 /* Special Effects */
 .black_overlay {
     z-index: 999;
@@ -103,7 +102,7 @@ body {
 }
 
 .package_details_input_class::placeholder {
-    font-size: 2.5vw;
+    font-size: 2vw;
     text-align: center;
 }
 
@@ -148,7 +147,7 @@ body {
 /* Exit the full screen mood button */
 .insert_clint_movements_places_icon {
     z-index: 1001;
-    background-color: rgb(0, 202, 0);
+    background-color: rgb(255, 174, 0);
     color: white;
     font-size: 2.5vw;
     padding: 15px;
@@ -162,7 +161,7 @@ body {
 }
 
 .insert_clint_movements_places_icon:hover {
-    background: rgb(0, 150, 0);
+    background: rgb(215, 147, 0);
 }
 
 
@@ -450,7 +449,7 @@ body {
 }
 
 #localstorage_save_name_input_div p {
-    background: rgb(224, 157, 0);
+    background: rgb(0, 56, 99);
     width: fit-content;
     color: white;
     font-size: 2vw;
@@ -497,7 +496,7 @@ body {
 }
 
 .localstorage_dropdown_div_class p {
-    background: rgb(224, 157, 0);
+    background: rgb(0, 56, 99);
     color: white;
     font-size: 2.5vw;
     padding: 1px 5px;
@@ -739,7 +738,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .submit_package_pdf_div ion-icon {
-    background: rgb(224, 157, 0);
+    background: rgb(255, 174, 0);
     color: white;
     font-size: 3vw;
     padding: 15px;
@@ -749,13 +748,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: all 0.2s ease-in-out;
 }
 
-/* When adding new child input it will make submit icon disappear */
-#hotel_person_amount_submit_button.hidden {
-    opacity: 0;
-    visibility: hidden;
+
+
+
+.edit_data_controll_icons_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-
+.edit_data_controll_icons_div div{
+    margin: 10px 5px 0;
+}
 
  
 
@@ -768,7 +772,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Company names dropdown container */
 .searchable_names_dropdown_class {
     z-index: 1000;
-    background: rgb(0, 191, 234);
+    background: rgb(0, 93, 163);
     width: 100%;
     min-height: 50vh;
     max-height: 50vh;
@@ -811,7 +815,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Company name options */
 .company_names_options_dropdown_class {
-    background: rgb(0, 191, 234);
+    background: rgb(0, 93, 163);
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -824,7 +828,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Style for the h3 elements */
 .company_names_options_dropdown_class h3 {
     background: white;
-    font-size: 3vw;
+    font-size: 2.5vw;
     margin: 5px;
     padding: 6px 10px;
     border-radius: 7px;
@@ -926,13 +930,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .clint_movements_tutorial_full_page_div p {
-    background: darkred;
+    background: rgb(0, 56, 99);
     color: white;
     font-size: 2vw;
     margin: 3px 0;
     text-align: center;
     border: 0.5px solid black;
-    cursor: pointer;
+    cursor: default;
 }
 
 
@@ -963,7 +967,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .clint_movements_places_full_page_div h6 {
-    background: rgb(210, 210, 210); 
+    background: rgb(207, 233, 242); 
     width: 100%;
     font-size: 2vw;
     text-align: center;
@@ -971,7 +975,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .clint_movements_places_full_page_div p {
-    background: rgb(207, 233, 242);
+    background: rgb(0, 56, 99);
+    color: white;
     font-size: 2vw;
     margin: 3px 0;
     text-align: center;
@@ -1195,7 +1200,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .company_names_options_dropdown_class h3 {
-        font-size: 4vw;
+        font-size: 3.5vw;
         padding: 5px 9px;
     }
 
@@ -1421,7 +1426,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .company_names_options_dropdown_class h3 {
-        font-size: 5vw;
+        font-size: 4.5vw;
         margin: 4px;
         padding: 4px;
     }
@@ -1629,7 +1634,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .company_names_options_dropdown_class h3 {
-        font-size: 6.5vw;
+        font-size: 5.5vw;
         margin: 3px;
     }
 
