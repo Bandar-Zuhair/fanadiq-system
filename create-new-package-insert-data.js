@@ -31,7 +31,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         clint_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
         // Set the background color of the submit icon back to default color
         setTimeout(() => {
-            clint_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+            clint_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
 
         if (clintCompanyNameInput !== '') {
@@ -294,7 +294,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         // Show success message
         package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
         setTimeout(() => {
-            package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+            package_including_data_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
 
         // Create new div elements for including and not including data
@@ -437,8 +437,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         // Get references to all input elements for later use
         let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-        let adultFlightPersonAmountInput = document.getElementById('adult_flight_person_amount_input_id').value;
-        let infantFlightPersonAmountInput = document.getElementById('infant_flight_person_amount_input_id').value;
+        let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
+        let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
         let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
         let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
         let flightDateInput = document.getElementById('flight_date_input_id').value;
@@ -450,14 +450,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAirLineInput === '' || adultFlightPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '') {
+        if (flightAirLineInput === '' || flightAdultPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '') {
 
             /* Chnage the sumbit icon background color */
             clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
 
 
@@ -470,7 +470,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                 }, 500);
 
             } else {
@@ -478,7 +478,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                 }, 2000);
 
 
@@ -490,14 +490,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Create the HTML content for a new hotel row
                 let flightRowTableDivContent = `
-                    <div><p>${flightAirLineInput}</p></div>
-                    <div><p>${adultFlightPersonAmountInput}</p>\n<p>${infantFlightPersonAmountInput}</p></div>
+                    <div><p id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
+                    <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
                     <div><p>20 كيلو للشخص</p></div>
-                    <div><p>${flightFromCityInput}</p></div>
-                    <div><p>${flightToCityInput}</p></div>
-                    <div><p>${flightDateInput}</p></div>
-                    <div><p>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
+                    <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
+                    <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
+                    <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                    <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
+                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
                 `;
 
 
@@ -620,8 +620,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Get references to all input elements and reset their values thier
                 document.getElementById('flight_air_line_input_id').value = '';
-                document.getElementById('adult_flight_person_amount_input_id').value = '';
-                document.getElementById('infant_flight_person_amount_input_id').value = '';
+                document.getElementById('flight_adult_person_amount_input_id').value = '';
+                document.getElementById('flight_infant_person_amount_input_id').value = '';
                 document.getElementById('flight_from_city_input_id').value = '';
                 document.getElementById('flight_to_city_input_id').value = '';
                 document.getElementById('flight_date_input_id').value = '';
@@ -646,7 +646,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }
 
                     // Hide edit/delete options div
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+                    let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
                     deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
 
                     // Hide overlay layer with opacity transition
@@ -675,17 +675,184 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+                /* Function to edit the clicked flight row data */
+                editClickedFlightData = function (clickedFlightDataDivIdName) {
+
+                    /* Make sure the correct section is the one that is visiable */
+                    create_new_hotel_package_section.style.display = 'none';
+                    create_new_flight_package_section.style.display = 'flex';
+                    create_new_clint_movements_paln_section.style.display = 'none';
+
+
+                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
+                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'block';
+                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'block';
+
+
+                    document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
+                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(0, 93, 163)';
+
+
+                    document.getElementById('flight_dropdown_content').scrollIntoView({
+                        block: 'center',
+                        inline: 'center',
+                        behavior: 'smooth',
+                    });
+
+
+
+                    // Hide delete button div
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_clint_movements_data_div');
+                    deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = '0';
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+
+                    // Get the clicked flight data row
+                    let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
+                    let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
+
+
+
+
+                    // Extract data using IDs
+                    let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightDateInput = clickedFlightDataDiv.querySelector(`p[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+
+                    // Assign values to inputs
+                    document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
+                    document.getElementById('flight_adult_person_amount_input_id').value = flightAdultPersonAmountInput;
+                    document.getElementById('flight_infant_person_amount_input_id').value = flightInfantPersonAmountInput;
+                    document.getElementById('flight_from_city_input_id').value = flightFromCityInput;
+                    document.getElementById('flight_to_city_input_id').value = flightToCityInput;
+                    document.getElementById('flight_date_input_id').value = flightDateInput;
+                    document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
+                    document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
+
+
+
+
+                    /* Function to cancel the flight row data editing process */
+                    cancelNewFlightDataRow = function () {
+                        // Get references to all input elements and reset their values
+                        document.getElementById('flight_air_line_input_id').value = '';
+                        document.getElementById('flight_adult_person_amount_input_id').value = '';
+                        document.getElementById('flight_infant_person_amount_input_id').value = '';
+                        document.getElementById('flight_from_city_input_id').value = '';
+                        document.getElementById('flight_to_city_input_id').value = '';
+                        document.getElementById('flight_date_input_id').value = '';
+                        document.getElementById('flight_fly_away_time_input_id').value = '';
+                        document.getElementById('flight_arrival_time_input_id').value = '';
+
+
+                        /* Hide and show different icons */
+                        document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
+                        document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
+                        document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
+
+
+                        /* Reset the innerText and styling to defualt */
+                        document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
+                        document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+                    }
+
+
+
+
+                    /* Function to confirm the new flight row data */
+                    confirmNewFlightDataRow = function () {
+                        // Get the clicked flight data row
+                        let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
+
+                        // Clear the old data
+                        clickedFlightDataDiv.innerHTML = '';
+
+
+                        // Extract the new data from the input fields
+                        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
+                        let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
+                        let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
+                        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
+                        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
+                        let flightDateInput = document.getElementById('flight_date_input_id').value;
+                        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
+                        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+
+
+                        // Create the HTML content for a new hotel row
+                        let flightRowTableDivContent = `
+                            <div><p id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
+                            <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
+                            <div><p>20 كيلو للشخص</p></div>
+                            <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
+                            <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
+                            <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                            <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
+                            <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
+                        `;
+
+
+                        // Insert the HTML content into the newly created div
+                        clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
+
+
+                        // Reattach event listeners to the image controllers
+                        let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
+                        hotelRowImageControllers.forEach(element => {
+                            handleFlightMouseEvent(element); // Handle mouse events with click detection
+                            handleFlightTouchEvent(element); // Handle touch events with tap detection
+                        });
+
+
+                        // Clear the input after confirm the new flight data
+                        cancelNewFlightDataRow();
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
                 // Function to handle flight row div click or touch
                 function flightRowAirLineControllerFunction(event) {
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_flight_data_div');
+                    let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
                     let clickedFlightDataDiv = event.target.closest('.flight_row_class');
 
                     if (clickedFlightDataDiv) {
                         currentFlightDataDivId = clickedFlightDataDiv.id;
 
+
+                        /* Function to run delete clicked flight row data */
                         runDeleteClickedFlightDataFunction = function () {
                             deleteClickedFlightData(currentFlightDataDivId);
                         }
+
+                        /* Function to run delete clicked flight row data */
+                        runEditClickedFlightDataFunction = function () {
+                            editClickedFlightData(currentFlightDataDivId);
+                        }
+
 
                         // Check if the overlay already exists
                         let overlayLayer = document.querySelector('.black_overlay');
@@ -868,69 +1035,86 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
         let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
-        let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id').value;
+        let hotelRoomContainPoolInput = document.getElementById('hotel_room_contain_pool_input_id').value;
+        let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id').value;
+        let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id').value;
         let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
-        let roomExtraInfoReadyText = document.getElementById('room_extra_info_textarea_id').value;
+        let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
 
+        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
 
-
-
-
-        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelRoomAmountInput === '') {
-
-            // Change the sumbit icon background color
+            // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'red';
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
 
         } else {
-            // Change the sumbit icon background color
+            // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
-
-
-
-
-
-
-
-
 
             // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
             let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
 
-            // Concatenate the room description with a breakfast note if the checkbox is checked
-            let roomDescription = hotelRoomTypeDescriptionInput + (hotelBreakfastPeopleAmountInput !== '' ? ` ${hotelBreakfastPeopleAmountInput}` : '');
-
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
-                <div><p>${hotelNameReadyText}</p></div>
-                <div><p>${hotelCheckInReadyText}</p></div>
-                <div><p style="color: red">${hotelCheckOutReadyText}</p></div>
-                <div><p>${storeHotelTotalNights}</p></div>
-                <div class="description_cell"><span>${roomDescription}</span>${roomExtraInfoReadyText ? `<span style="color: rgb(0, 132, 255)">${roomExtraInfoReadyText}</span>` : ''}</div>
-                <div><p>${storeHotelTotalRoomsNumber}</p></div>
-                <div><p>${hotelLocationReadyText}${hotelAreaReadyText ? `<br>${hotelAreaReadyText}` : ''}</p></div>
-                <div><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style"cursor: pointer"></div>
+                <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
+                <div><p id='hotel_check_in_${insertedHotelDataDivUniqueId}'>${hotelCheckInReadyText}</p></div>
+                <div><p style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}'>${hotelCheckOutReadyText}</p></div>
+                <div><p id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</p></div>
+                <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
+                <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
+                <div><p id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</p>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
             `;
-
 
             // Create a new div element to hold the hotel row
             let hotelRowTableDiv = document.createElement('div');
             hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`; // Set a unique ID for the hotel row div
             hotelRowTableDiv.classList.add('hotel_row_class'); // Add a class to the div for styling
-            insertedHotelDataDivUniqueId++;
 
 
             // Insert the HTML content into the newly created div
             hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
+
+            // Append <p> elements for each input with text
+            if (hotelRoomContainPoolInput !== '') {
+                let poolP = document.createElement('span');
+                poolP.id = `hotel_pool_p_id_${insertedHotelDataDivUniqueId}`;
+                poolP.innerText = hotelRoomContainPoolInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(poolP);
+            }
+            if (hotelRoomViewInput !== '') {
+                let viewP = document.createElement('span');
+                viewP.id = `hotel_view_p_id_${insertedHotelDataDivUniqueId}`;
+                viewP.innerText = hotelRoomViewInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(viewP);
+            }
+            if (hotelBreakfastPeopleAmountInput !== '') {
+                let breakfastP = document.createElement('span');
+                breakfastP.id = `hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}`;
+                breakfastP.innerText = hotelBreakfastPeopleAmountInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(breakfastP);
+            }
+            if (hotelRoomExtraInfoReadyText !== '') {
+                let hotelExtraInfoSpan = document.createElement('span');
+                hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
+                hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
+                hotelExtraInfoSpan.style.background = 'rgb(0, 93, 163)';
+                hotelExtraInfoSpan.style.color = 'white';
+                hotelExtraInfoSpan.style.padding = '0 5px';
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+            }
+
+            insertedHotelDataDivUniqueId++;
+
+
 
 
             // Get all dynamically created elements with the class 'hotelRowImageController'
@@ -1009,9 +1193,12 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_check_out_input_id').value = '';
             document.getElementById('hotel_total_nights_input_id').value = '';
             document.getElementById('hotel_room_type_description_input_id').value = '';
-            document.getElementById('hotel_room_amount_input_id').value = '';
+            document.getElementById('hotel_room_contain_pool_input_id').value = '';
+            document.getElementById('hotel_room_view_input_id').value = '';
+            document.getElementById('hotel_unit_amount_input_id').value = '';
             document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
-            document.getElementById('room_extra_info_textarea_id').value = '';
+            document.getElementById('hotel_room_extra_info_textarea_id').value = '';
+
 
             // Disable the hotel_area_input_id and hotel_name_input_id inputs
             document.getElementById('hotel_area_input_id').disabled = true;
@@ -1028,16 +1215,16 @@ checkInputsToInsertData = function (clickedButtonId) {
             let currentHotelDataDivId;
 
             // Function to handle delete clicked hotel data
-            deleteClickedHotelData = function (clickedHotelCardIdName) {
-                let overlayLayer = document.querySelector('.black_overlay');
+            deleteClickedHotelData = function (clickedHotelRowIdName) {
 
-                let clickedHotelCardElement = document.getElementById(clickedHotelCardIdName);
+                let clickedHotelCardElement = document.getElementById(clickedHotelRowIdName);
                 if (clickedHotelCardElement) {
                     clickedHotelCardElement.remove();
                 }
 
                 // Hide delete button div
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
+                let overlayLayer = document.querySelector('.black_overlay');
+                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
                 deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
@@ -1065,9 +1252,237 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+            /* Function to edit the clicked hotel row data */
+            editClickedHotelDataFunction = function (clickedHotelRowIdName) {
+
+                /* Make sure the correct section is the one that is visiable */
+                create_new_hotel_package_section.style.display = 'flex';
+                create_new_flight_package_section.style.display = 'none';
+                create_new_clint_movements_paln_section.style.display = 'none';
+
+
+                /* Hide and show different icons */
+                document.getElementById('hotel_inputs_submit_icon').style.display = 'none';
+                document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'block';
+                document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'block';
+
+
+                /* Change the innerText and the background color of the 'hotel_content_section_title_text_id' */
+                document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
+                document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(0, 93, 163)';
+
+
+                /* Scroll up to the middle of the 'toggle_hotel_elements' */
+                document.getElementById('toggle_hotel_elements').scrollIntoView({
+                    block: 'center',
+                    inline: 'center',
+                    behavior: 'smooth',
+                });
+
+
+                // Hide delete button div
+                let overlayLayer = document.querySelector('.black_overlay');
+                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
+                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                // Hide overlay layer with opacity transition
+                overlayLayer.style.opacity = '0';
+
+                // Remove overlay and edit/delete div from DOM after transition
+                setTimeout(() => {
+                    document.body.removeChild(overlayLayer);
+                }, 300); // Match transition duration in CSS
+
+                // Get the clicked hotel data row
+                let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
+                let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
+
+                // If the selected location is not "بالي"
+                if (document.getElementById('hotel_location_input_id').value.trim() != "بالي") {
+                    document.getElementById('hotel_area_input_id').style.display = 'none'; // Hide the hotel area input
+                } else {
+                    document.getElementById('hotel_area_input_id').style.display = 'block'; // Show the hotel area input
+                }
+
+                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel area input
+
+
+                // Extract data using IDs
+                let hotelLocationText = clickedHotelDataDiv.querySelector(`p[id^='hotel_location_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+
+                /* Praper a variable for hotel area value (if exist) */
+                let hotelAreaText = null;
+
+                /* Check if there is any value in the hotel area input then store in the 'hotelAreaText' variable */
+                if (clickedHotelDataDiv.querySelector(`p[id^='hotel_area_${insertedHotelDataDivUniqueId}']`)) {
+                    hotelAreaText = clickedHotelDataDiv.querySelector(`p[id^='hotel_area_${insertedHotelDataDivUniqueId}']`).innerText;
+
+                    document.getElementById('hotel_area_input_id').style.display = 'block'; // Show the hotel area input
+                    document.getElementById('hotel_area_input_id').disabled = false; // Re-Enable hotel name input
+                }
+
+                let hotelNameText = clickedHotelDataDiv.querySelector(`p[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelCheckInText = clickedHotelDataDiv.querySelector(`p[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelCheckOutText = clickedHotelDataDiv.querySelector(`p[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelTotalNightsText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomTypeDescriptionText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+
+                // Assign values to inputs
+                document.getElementById('hotel_location_input_id').value = hotelLocationText;
+                document.getElementById('hotel_area_input_id').value = hotelAreaText;
+                document.getElementById('hotel_name_input_id').value = hotelNameText;
+                document.getElementById('hotel_check_in_input_id').value = hotelCheckInText;
+                document.getElementById('hotel_check_out_input_id').value = hotelCheckOutText;
+                document.getElementById('hotel_total_nights_input_id').value = `${hotelTotalNightsText} ليالي`;
+                document.getElementById('hotel_room_type_description_input_id').value = hotelRoomTypeDescriptionText;
+                document.getElementById('hotel_room_contain_pool_input_id').value = hotelRoomContainPoolText;
+                document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
+                document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
+                document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
+                document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
+
+
+
+                /* Function to cancel the hotel row data editing process */
+                cancelNewHotelDataRow = function () {
+                    // Get references to all input elements and reset their values
+                    document.getElementById('hotel_location_input_id').value = '';
+                    document.getElementById('hotel_area_input_id').value = '';
+                    document.getElementById('hotel_name_input_id').value = '';
+                    document.getElementById('hotel_check_in_input_id').value = '';
+                    document.getElementById('hotel_check_out_input_id').value = '';
+                    document.getElementById('hotel_total_nights_input_id').value = '';
+                    document.getElementById('hotel_room_type_description_input_id').value = '';
+                    document.getElementById('hotel_room_contain_pool_input_id').value = '';
+                    document.getElementById('hotel_room_view_input_id').value = '';
+                    document.getElementById('hotel_unit_amount_input_id').value = '';
+                    document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
+                    document.getElementById('hotel_room_extra_info_textarea_id').value = '';
+
+                    // Disable the hotel_area_input_id and hotel_name_input_id inputs
+                    document.getElementById('hotel_area_input_id').disabled = true;
+                    document.getElementById('hotel_name_input_id').disabled = true;
+
+                    /* Hide and show different icons */
+                    document.getElementById('hotel_inputs_submit_icon').style.display = 'block';
+                    document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'none';
+                    document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'none';
+
+
+                    /* Reset the innerText and styling to defualt */
+                    document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
+                    document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+                };
+
+
+
+                /* Function to confirm the new hotel row data */
+                confirmNewHotelDataRow = function () {
+                    // Get the clicked hotel data row
+                    let clickedHotelDataDiv = document.getElementById(currentHotelDataDivId);
+
+                    // Clear the old data
+                    clickedHotelDataDiv.innerHTML = '';
+
+                    // Extract the new data from the input fields
+                    let hotelLocationReadyText = document.getElementById('hotel_location_input_id').value;
+                    let hotelAreaReadyText = document.getElementById('hotel_area_input_id').value;
+                    let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
+                    let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
+                    let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
+                    let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
+                    let hotelRoomContainPoolText = document.getElementById('hotel_room_contain_pool_input_id').value;
+                    let hotelRoomViewText = document.getElementById('hotel_room_view_input_id').value;
+                    let hotelBreakfastPeopleAmountText = document.getElementById('hotel_breakfast_people_amount_input_id').value;
+                    let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
+
+
+                    /* if one of the inputs is empty then stop the process */
+                    if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
+
+                        // Change the submit icon background color
+                        confirm_new_hotel_data_row_icon.style.backgroundColor = 'red';
+
+                        // Set the background color of the submit icon back to default color
+                        setTimeout(() => {
+                            confirm_new_hotel_data_row_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                        }, 500);
+
+                    } else {
+
+                        // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
+                        let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
+
+                        // Create the HTML content for a new hotel row
+                        let hotelRowTableDivContent = `
+                            <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
+                            <div><p id='hotel_check_in_${insertedHotelDataDivUniqueId}'>${hotelCheckInReadyText}</p></div>
+                            <div><p style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}'>${hotelCheckOutReadyText}</p></div>
+                            <div><p id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</p></div>
+                            <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
+                            <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
+                            <div><p id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</p>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                        `;
+
+                        // Insert the new HTML content into the clicked hotel data div
+                        clickedHotelDataDiv.innerHTML = hotelRowTableDivContent;
+
+                        // Append <p> elements for each input with text
+                        if (hotelRoomContainPoolText !== '') {
+                            let poolP = document.createElement('span');
+                            poolP.id = `hotel_pool_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            poolP.innerText = hotelRoomContainPoolText;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolP);
+                        }
+                        if (hotelRoomViewText !== '') {
+                            let viewP = document.createElement('span');
+                            viewP.id = `hotel_view_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            viewP.innerText = hotelRoomViewText;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewP);
+                        }
+                        if (hotelBreakfastPeopleAmountText !== '') {
+                            let breakfastP = document.createElement('span');
+                            breakfastP.id = `hotel_breakfast_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            breakfastP.innerText = hotelBreakfastPeopleAmountText;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastP);
+                        }
+                        if (hotelRoomExtraInfoReadyText !== '') {
+                            let hotelExtraInfoSpan = document.createElement('span');
+                            hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
+                            hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
+                            hotelExtraInfoSpan.style.background = 'rgb(0, 93, 163)';
+                            hotelExtraInfoSpan.style.color = 'white';
+                            hotelExtraInfoSpan.style.padding = '0 5px';
+                            hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+                        }
+
+                        // Reattach event listeners to the image controllers
+                        let hotelRowImageControllers = clickedHotelDataDiv.querySelectorAll('.hotel_row_image_controller');
+                        hotelRowImageControllers.forEach(element => {
+                            handleClickEvent(element);
+                        });
+
+                        // Clear the input after confirm the new hotel data
+                        cancelNewHotelDataRow();
+                    }
+                };
+            };
+
+
+
+
+
+
+
             // Function to show delete the inserted hotel data
             hotelRowImageControllerFunction = function (event) {
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_hotel_data_div');
+                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
                 let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
 
                 if (clickedHotelDataDiv) {
@@ -1084,9 +1499,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                         deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)'; // Center div
                     }, 50);
 
+
+                    /* Function to run delete clikced hotel row data */
                     runDeleteClickedHotelDataFunction = function () {
                         deleteClickedHotelData(currentHotelDataDivId);
                     }
+
+                    /* Function to run edit clikced hotel row data */
+                    runEditClickedHotelDataFunction = function () {
+                        editClickedHotelDataFunction(currentHotelDataDivId);
+                    }
+
 
                     // Click handler to close overlay and delete box div on click outside
                     overlayLayer.onclick = () => {
@@ -1294,39 +1717,23 @@ checkInputsToInsertData = function (clickedButtonId) {
     } else if (clickedButtonId === 'clint_movements_details_inputs_submit_icon') {
         // Get references to all input elements for later use
         let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
-        let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id').value;
-        let clintMovementsCurrentCityInput = document.getElementById('clint_movements_current_city_input_id').value;
         let clintMovementsNewCheckOutInput = document.getElementById('clint_movements_new_check_out_input_id').value;
-        let clintMovementsNewCheckInInput = document.getElementById('clint_movements_new_check_in_input_id').value;
         let clintMovementsNextCityInput = document.getElementById('clint_movements_next_city_input_id').value;
+        let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id').value;
         let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
-
-
-
-
-
-
-
-
-
+        let clintMovementsCurrentCityInput = document.getElementById('clint_movements_current_city_input_id').value;
+        let clintMovementsNewCheckInInput = document.getElementById('clint_movements_new_check_in_input_id').value;
 
         // If Not All Inputs Are Valid, Show The Error Message
         if (clintMovementsCurrentDayDateInput === '' || clintMovementsCurrentCityInput === '') {
 
-            // Change the sumbit icon background color
+            // Change the submit icon background color
             clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
 
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
-
-
-
-
-
-
-
 
         } else {
 
@@ -1337,24 +1744,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                 }, 500);
 
             } else {
-
-                // Check if there are no div elements with class 'inserted_clint_movements_data_row'
-                let clintMovementsRows = document.querySelectorAll('.inserted_clint_movements_data_row');
-                if (clintMovementsRows.length === 0) {
-                    // Get the input value to store it in the 'store_first_clint_movments_date'
-                    let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
-
-                    // Set the innerText of the element with id 'store_first_clint_movments_date'
-                    let storeFirstClintMovmentsDate = document.getElementById('store_first_clint_movments_date');
-                    storeFirstClintMovmentsDate.innerText = clintMovementsCurrentDayDateInput;
-                }
-
-
-
 
                 // Get the current day date from the input field
                 let currentDayDate = new Date(clintMovementsCurrentDayDateInput.split('-').reverse().join('-'));
@@ -1369,9 +1762,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Set the background color of the submit icon back to default color
                     setTimeout(() => {
-                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                     }, 500);
-
 
                     /* Exit the function and stop processing */
                     return;
@@ -1382,16 +1774,15 @@ checkInputsToInsertData = function (clickedButtonId) {
                     if (clintMovementsNextCityInput === 'الذهاب للمطار للمغادرة') {
 
                         /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
-                        if (clintMovementsWholeDayActionsDetailsTextarea !== '') {
+                        if (clintMovementsAirportWelcomeInput !== '' || clintMovementsWholeDayActionsDetailsTextarea !== '' || clintMovementsNewCheckInInput !== '') {
 
                             // Change the submit icon background color
                             clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
 
                             // Set the background color of the submit icon back to default color
                             setTimeout(() => {
-                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                             }, 500);
-
 
                             /* Exit the function and stop processing */
                             return;
@@ -1399,12 +1790,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                         }
                     }
 
-
                     // Change the submit icon background color
                     clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                     // Set the background color of the submit icon back to default color
                     setTimeout(() => {
-                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(224, 157, 0)';
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                     }, 500);
 
                     // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
@@ -1412,65 +1802,108 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let newDayDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
                     document.getElementById('clint_movements_current_day_date_input_id').value = newDayDate;
 
-
-
-
-
-
-                    // Create an array of non-empty inputs
-                    let nonEmptyInputs = [
-                        clintMovementsNewCheckOutInput,
-                        clintMovementsNextCityInput,
-                        clintMovementsAirportWelcomeInput,
-                        clintMovementsWholeDayActionsDetailsTextarea,
-                        clintMovementsNewCheckInInput
-                    ].filter(input => input !== '');
-
-                    // Join the non-empty inputs with ' + ' separator
-                    let mixedInputsWithValue = nonEmptyInputs.join(' + ');
-
-
-
-
-
-
-
-
-                    /* Create the intial variable for storing the clint movements row content */
-                    let clintMovementsRowTableDivContent;
-
-                    if (storeClintMovementsNextCityInput !== null) {
-                        // Create the HTML content for a new hotel row
-                        clintMovementsRowTableDivContent = `
-                            <div><p>${clintMovementsCurrentDayDateInput}</p></div>
-                            <div><p>${mixedInputsWithValue}</p></div>
-                            <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}</p></div>
-                        `;
-
-                        /* Reset the intial value of the 'storeClintMovementsNextCityInput' variable */
-                        storeClintMovementsNextCityInput = null;
-
-                    } else {
-                        // Create the HTML content for a new hotel row
-                        clintMovementsRowTableDivContent = `
-                            <div><p>${clintMovementsCurrentDayDateInput}</p></div>
-                            <div><p>${mixedInputsWithValue}</p></div>
-                            <div class="clint_movements_row_controller inserted_clint_movements_data_row" style=" cursor: pointer;"><p class="clint_movements_row_controller inserted_clint_movements_data_row">${clintMovementsCurrentCityInput}</p></div>
-                        `;
-                    }
-
-
-
+                    // Create the HTML content for a new hotel row
+                    let clintMovementsRowTableDivContent = `
+                        <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
+                        <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
+                        <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
+                        <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                        <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                    `;
 
                     // Create a new div element to hold the hotel row
                     let clintMovementsRowTableDiv = document.createElement('div');
                     clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
-                    clintMovementsRowTableDiv.classList.add('clint_movements_row_class'); // Add a class to the div for styling
-                    insertedClintMovementsRowDivUniqueId++;
-
+                    clintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing'); // Add a class to the div for styling
 
                     // Insert the HTML content into the newly created div
                     clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
+
+                    // Append the new hotel row div to the parent div that holds all inserted hotel data
+                    document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
+
+                    // Create and append each <p> element with unique ID
+                    let pElements = [
+                        { text: clintMovementsNewCheckOutInput, id: `clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}` },
+                        { text: clintMovementsNextCityInput, id: `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}` },
+                        { text: clintMovementsAirportWelcomeInput, id: `clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}` },
+                        { text: clintMovementsWholeDayActionsDetailsTextarea, id: `clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}` },
+                        { text: clintMovementsNewCheckInInput, id: `clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}` }
+                    ];
+
+                    // Append each <p> element to the container
+                    pElements.forEach(pElement => {
+                        if (pElement.text !== '') {
+                            let p = document.createElement('p');
+                            p.id = pElement.id;
+                            p.innerText = pElement.text;
+                            p.style.display = 'none';
+                            document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(p);
+                        }
+                    });
+
+                    // Concatenate all texts with a + sign
+                    let concatenatedText = pElements.map(p => p.text).filter(text => text !== '').join('+');
+
+                    // Create and append a <p> element for the concatenated text
+                    let pElementConcatenated = document.createElement('p');
+                    pElementConcatenated.id = `clint_movements_concatenated_${insertedClintMovementsRowDivUniqueId}`;
+                    pElementConcatenated.innerText = concatenatedText;
+                    document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
+
+
+
+                    /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' for later use (when editing) */
+                    document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsCurrentCityInput;
+
+
+
+
+                    // Check if storeClintMovementsNextCityInput has a value
+                    if (clintMovementsNextCityInput !== '' && clintMovementsNextCityInput !== 'الذهاب للمطار للمغادرة') {
+                        // Create a variable that combines both values separated by a - sign
+                        let combinedCityText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
+
+                        // Create and append a new <p> element with the combined city text
+                        let pElementCombinedCity = document.createElement('p');
+                        pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.innerText = combinedCityText;
+                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+
+                    } else {
+                        // Create a variable that combines both values separated by a - sign
+                        let combinedCityText = `${storeClintMovementsCurrentCityInput}`;
+
+                        // Create and append a new <p> element with the combined city text
+                        let pElementCombinedCity = document.createElement('p');
+                        pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.innerText = combinedCityText;
+                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                    }
+
+                    // Clear the input values after adding the new hotel row
+                    document.getElementById('clint_movements_new_check_out_input_id').value = '';
+                    document.getElementById('clint_movements_next_city_input_id').value = '';
+                    document.getElementById('clint_movements_airport_welcome_input_id').value = '';
+                    document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
+                    document.getElementById('clint_movements_current_city_input_id').value = '';
+                    document.getElementById('clint_movements_new_check_in_input_id').value = '';
+
+                    // Increment the unique ID for the next hotel row
+                    insertedClintMovementsRowDivUniqueId++;
+
+
+
+
+                    /* Reset all variables for later refrence (when editing) */
+                    storeClintMovementsCurrentCityInput = null;
+                    storeClintMovementsNextCityInput = null;
+
+
+
 
 
 
@@ -1510,7 +1943,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                             // If it's a tap, run the click function
                             if (isTap) {
-                                clintMovementsRowFlightArrivalTimeFunction(event);
+                                clintMovementsRowCityNameControllerFunction(event);
                             }
                         });
                     }
@@ -1551,7 +1984,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                             // If it's a click, run the click function
                             if (isClick) {
-                                clintMovementsRowFlightArrivalTimeFunction(event);
+                                clintMovementsRowCityNameControllerFunction(event);
                             }
                         });
                     }
@@ -1569,8 +2002,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                    // Append the new hotel row div to the parent div that holds all inserted hotel data
-                    document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
+
 
 
                     /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
@@ -1611,19 +2043,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let currentClintMovementsDataDivId;
 
                 // Function to handle delete clicked clint movements data
-                deleteClickedClintMovementsData = function (clickedHotelCardIdName) {
+                deleteClickedClintMovementsData = function (clickedClintMovementsRowdName) {
                     // Select the overlay layer element
                     let overlayLayer = document.querySelector('.black_overlay');
 
                     // Get the clicked element by its ID
-                    let clickedHotelCardElement = document.getElementById(clickedHotelCardIdName);
+                    let clickedHotelCardElement = document.getElementById(clickedClintMovementsRowdName);
                     if (clickedHotelCardElement) {
                         // Remove the clicked element from the DOM
                         clickedHotelCardElement.remove();
                     }
 
                     // Hide the delete confirmation div by translating it out of view
-                    let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+                    let deleteClintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
                     deleteClintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
 
                     // Reduce the opacity of the overlay layer to 0 (for fade-out effect)
@@ -1635,7 +2067,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     }, 300); // Match transition duration in CSS
 
                     // Update dates after deleting a row
-                    updateClintMovementsDates();
+                    arrangeClintMovementsDates();
 
                     // Reduce the date of clint_movements_current_day_date_input_id by one day
                     // Get the current day input element by its ID
@@ -1667,73 +2099,390 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                // Function to update dates in clint_movements_row_class divs starting from the second element
-                function updateClintMovementsDates() {
-                    // Select all elements with class 'clint_movements_row_class'
-                    let clintMovementsRows = document.querySelectorAll('.clint_movements_row_class');
-                    // Get the starting date input value and convert it to a Date object
-                    let startingDateInput = document.getElementById('store_first_clint_movments_date').innerText;
-                    let currentDayDate = new Date(startingDateInput.split('-').reverse().join('-'));
 
-                    // Skip the first element and start from the second one
-                    for (let index = 1; index < clintMovementsRows.length; index++) {
-                        let row = clintMovementsRows[index]; // Get the current row
-                        // Find the first 'div' element containing a 'p' tag within the row
-                        let dateDiv = row.querySelector('div:first-child p');
-                        if (dateDiv) {
-                            let newDayDate = new Date(currentDayDate); // Create a new Date object
-                            // Adjust the date by adding (index - 1) days
-                            newDayDate.setDate(currentDayDate.getDate() + index - 1);
-                            // Format the new date in 'DD-MMM' format
-                            let formattedDate = newDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
-                            // Set the formatted date as the inner text of the 'p' tag
-                            dateDiv.innerText = formattedDate;
+
+
+
+
+
+
+
+
+
+                // Function to handle delete clicked clint movements data
+                editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
+
+                    /* Make sure the correct section is the one that is visiable */
+                    create_new_hotel_package_section.style.display = 'none';
+                    create_new_flight_package_section.style.display = 'none';
+                    create_new_clint_movements_paln_section.style.display = 'flex';
+
+
+                    /* Show and hide different icons */
+                    document.getElementById('clint_movements_details_inputs_submit_icon').style.display = 'none';
+                    document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'block';
+                    document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'block';
+
+
+                    /* Change the innerText and styling to defualt */
+                    document.getElementById('clint_movements_content_section_title_text_id').innerText = 'تعديل تفاصيل خط السير';
+                    document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(0, 93, 163)';
+
+
+                    /* Scroll up to the middle of the 'clint_movements_details_dropdown_content' */
+                    document.getElementById('clint_movements_details_dropdown_content').scrollIntoView({
+                        block: 'center',
+                        inline: 'center',
+                        behavior: 'smooth',
+                    });
+
+
+                    /* Disable the clint movements dates when editing */
+                    document.getElementById('clint_movements_first_day_date_input_id').disabled = true;
+                    document.getElementById('clint_movements_last_day_date_input_id').disabled = true;
+
+
+                    // Hide delete button div
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
+                    deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = '0';
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+
+                    // Get the clicked clint movements data row
+                    let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
+                    let insertedClintMovementsRowDivUniqueId = currentClintMovementsDataDivId.split('_').pop(); // Extract the unique ID from the clicked row ID
+
+
+
+                    /* Store the (before editing day value) */
+                    let clintMovementsBeforeEditingDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
+
+
+
+                    // Extract data using IDs
+                    let clintMovementsCurrentDayDateInput = clickedClintMovementsDataDiv.querySelector(`h6[id^='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsNewCheckOutInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsNextCityInput = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsAirportWelcomeInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsWholeDayActionsDetailsTextarea = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsNewCheckInInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsStoredCurrentCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                    let clintMovementsStoredNextCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+
+                    // Assign values to inputs
+                    document.getElementById('clint_movements_current_day_date_input_id').value = clintMovementsCurrentDayDateInput;
+                    document.getElementById('clint_movements_new_check_out_input_id').value = clintMovementsNewCheckOutInput;
+
+                    if (clintMovementsNextCityInput !== '') {
+                        document.getElementById('clint_movements_next_city_input_id').value = `الذهاب الى ${clintMovementsNextCityInput}`;
+                    }
+
+
+                    document.getElementById('clint_movements_airport_welcome_input_id').value = clintMovementsAirportWelcomeInput;
+                    document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = clintMovementsWholeDayActionsDetailsTextarea;
+                    document.getElementById('clint_movements_new_check_in_input_id').value = clintMovementsNewCheckInInput;
+                    document.getElementById('clint_movements_current_city_input_id').value = `المدينة الحالية ${clintMovementsStoredCurrentCityValue}`;
+
+
+
+
+
+
+
+                    /* Function to cancel the clint movements row data editing process */
+                    cancelNewClintMovementsDataRow = function () {
+                        // Get references to all input elements and reset their values
+                        document.getElementById('clint_movements_current_day_date_input_id').value = '';
+                        document.getElementById('clint_movements_new_check_out_input_id').value = '';
+                        document.getElementById('clint_movements_next_city_input_id').value = '';
+                        document.getElementById('clint_movements_airport_welcome_input_id').value = '';
+                        document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
+                        document.getElementById('clint_movements_new_check_in_input_id').value = '';
+                        document.getElementById('clint_movements_current_city_input_id').value = '';
+                        document.getElementById('clint_movements_next_city_input_id').value = '';
+
+
+
+                        /* Hide and show different icons */
+                        document.getElementById('clint_movements_details_inputs_submit_icon').style.display = 'block';
+                        document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
+                        document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
+
+
+                        /* Reset the innerText and styling to defualt */
+                        document.getElementById('clint_movements_content_section_title_text_id').innerText = 'تفاصيل الطيران';
+                        document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+
+                        /* Restore the (before editing) current day date */
+                        document.getElementById('clint_movements_current_day_date_input_id').value = clintMovementsBeforeEditingDayDateInput;
+
+
+                        /* Re-enable the clint movements dates when editing */
+                        document.getElementById('clint_movements_first_day_date_input_id').disabled = false;
+                        document.getElementById('clint_movements_last_day_date_input_id').disabled = false;
+                    }
+
+
+
+
+                    /* Function to confirm the new clint movements row data */
+                    confirmNewClintMovementsDataRow = function () {
+                        // Get the clicked clint movements data row
+                        let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
+
+                        // Clear the old data (and replace (the  inner data) later and not the whole div)
+                        clickedClintMovementsDataDiv.innerHTML = '';
+
+
+                        // Get references to all input elements for later use
+                        let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id').value;
+                        let clintMovementsNewCheckOutInput = document.getElementById('clint_movements_new_check_out_input_id').value;
+                        let clintMovementsNextCityInput = document.getElementById('clint_movements_next_city_input_id').value;
+                        let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id').value;
+                        let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
+                        let clintMovementsNewCheckInInput = document.getElementById('clint_movements_new_check_in_input_id').value;
+
+                        /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
+                        if (clintMovementsNextCityInput === 'الذهاب للمطار للمغادرة') {
+                            /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
+                            if (clintMovementsWholeDayActionsDetailsTextarea !== '') {
+                                // Change the submit icon background color
+                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                                // Set the background color of the submit icon back to default color
+                                setTimeout(() => {
+                                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                                }, 500);
+
+                                /* Exit the function and stop processing */
+                                return;
+                            }
                         }
+
+                        // Create the HTML content for a new hotel row
+                        let clintMovementsRowTableDivContent = `
+                            <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
+                            <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
+                            <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
+                            <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                            <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                        `;
+
+                        // Insert the updated HTML content into the current edithing div
+                        clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
+
+                        // Create and append each <p> element with unique ID
+                        let pElements = [
+                            { text: clintMovementsNewCheckOutInput, id: `clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsNextCityInput, id: `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsAirportWelcomeInput, id: `clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsWholeDayActionsDetailsTextarea, id: `clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsNewCheckInInput, id: `clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}` }
+                        ];
+
+                        // Append each <p> element to the container
+                        pElements.forEach(pElement => {
+                            if (pElement.text !== '') {
+                                let p = document.createElement('p');
+                                p.id = pElement.id;
+                                p.innerText = pElement.text;
+                                p.style.display = 'none';
+                                document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(p);
+                            }
+                        });
+
+                        // Concatenate all texts with a + sign
+                        let concatenatedText = pElements.map(p => p.text).filter(text => text !== '').join('+');
+
+                        // Create and append a <p> element for the concatenated text
+                        let pElementConcatenated = document.createElement('p');
+                        pElementConcatenated.id = `clint_movements_concatenated_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementConcatenated.innerText = concatenatedText;
+                        document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
+
+                        let clintMovementsCurrentCityInputP = null;
+
+                        if (storeClintMovementsCurrentCityInput === null) {
+                            // Create a new <p> element for the current and next city
+                            clintMovementsCurrentCityInputP = document.createElement('p');
+                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                            clintMovementsCurrentCityInputP.innerText = clintMovementsStoredCurrentCityValue;
+                        } else {
+                            // Create a new <p> element for the current and next city
+                            clintMovementsCurrentCityInputP = document.createElement('p');
+                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                            clintMovementsCurrentCityInputP.innerText = storeClintMovementsCurrentCityInput;
+                        }
+
+                        /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' */
+                        document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredCurrentCityValue;
+
+                        // Check if storeClintMovementsNextCityInput has a value
+                        if (clintMovementsNextCityInput !== '' && clintMovementsNextCityInput !== 'الذهاب للمطار للمغادرة') {
+
+
+                            if (storeClintMovementsNextCityInput === null) {
+                                if (storeClintMovementsCurrentCityInput === null) {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${clintMovementsStoredNextCityValue}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                } else {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${clintMovementsStoredNextCityValue}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                }
+                            } else {
+                                if (storeClintMovementsCurrentCityInput === null) {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${storeClintMovementsNextCityInput}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                } else {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                }
+                            }
+                        } else {
+
+                            /* if there is no inserted clint movements next city then dont include it */
+                            if (storeClintMovementsCurrentCityInput === null) {
+                                // Create and append a new <p> element with the concatenated text
+                                let pElementCombinedCity = document.createElement('p');
+                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}`;
+                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                            } else {
+                                // Create and append a new <p> element with the concatenated text
+                                let pElementCombinedCity = document.createElement('p');
+                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}`;
+                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                            }
+                        }
+
+
+
+
+
+                        // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                        let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll('.clint_movements_row_controller');
+
+
+                        // Attach click and touch event listeners to each element
+                        clintMovementsRowImageControllers.forEach(element => {
+                            handleMouseEvent(element); // Handle mouse events with click detection
+                            handleTouchEvent(element); // Handle touch events with tap detection
+                        });
+
+
+
+
+                        /* Reset all variables for later refrence (when editing) */
+                        storeClintMovementsCurrentCityInput = null;
+                        storeClintMovementsNextCityInput = null;
+
+
+                        /* Recall the functionality of the 'clint_movements_row_controller' controller */
+                        arrangeClintMovementsDates()
+                        createClintMovementsDragAndDropMood()
+
+                        // Clear the input after confirm the new flight data
+                        cancelNewClintMovementsDataRow()
                     }
                 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // Function to handle clint movements row div click or touch
-                function clintMovementsRowFlightArrivalTimeFunction(event) {
-                    let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_clint_movemnt_data_div');
+                clintMovementsRowCityNameControllerFunction = function (event) {
+                    let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
                     let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
 
-                    if (clickedclintMovementsDataDiv) {
-                        currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
+                    currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
 
-                        runDeleteClickedClintMovementsDataFunction = function () {
-                            deleteClickedClintMovementsData(currentClintMovementsDataDivId);
-                        }
+                    /* Function to run delete the clicked clint movements row data */
+                    runDeleteClickedClintMovementsDataFunction = function () {
+                        deleteClickedClintMovementsData(currentClintMovementsDataDivId);
+                    }
 
-                        // Check if the overlay already exists
-                        let overlayLayer = document.querySelector('.black_overlay');
-                        if (!overlayLayer) {
-                            let overlayLayer = document.createElement('div');
-                            overlayLayer.classList.add('black_overlay');
-                            document.body.appendChild(overlayLayer);
 
+                    /* Function to run edit the clicked clint movements row data */
+                    runEditClickedClintMovementsDataFunction = function () {
+                        editClickedClintMovementsData(currentClintMovementsDataDivId);
+                    }
+
+
+                    // Check if the overlay already exists
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    if (!overlayLayer) {
+                        let overlayLayer = document.createElement('div');
+                        overlayLayer.classList.add('black_overlay');
+                        document.body.appendChild(overlayLayer);
+
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = '1';
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
+                        }, 50);
+
+                        // Handle both click and touch events on overlay for consistency
+                        let handleOverlayClick = () => {
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+                            overlayLayer.style.opacity = '0';
                             setTimeout(() => {
-                                overlayLayer.style.opacity = '1';
-                                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
-                            }, 50);
+                                document.body.removeChild(overlayLayer);
+                            }, 300);
+                        };
 
-                            // Handle both click and touch events on overlay for consistency
-                            let handleOverlayClick = () => {
-                                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
-                                overlayLayer.style.opacity = '0';
-                                setTimeout(() => {
-                                    document.body.removeChild(overlayLayer);
-                                }, 300);
-                            };
+                        overlayLayer.addEventListener('click', handleOverlayClick);
+                        overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
 
-                            overlayLayer.addEventListener('click', handleOverlayClick);
-                            overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                            overlayLayer.addEventListener('click', (event) => {
-                                event.stopPropagation();
-                            });
-                        }
+                        overlayLayer.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                        });
                     }
                 };
 
@@ -1799,7 +2548,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
 
                             /* Update the date arrangment in every drag and drop action */
-                            updateClintMovementsDates();
+                            arrangeClintMovementsDates();
                         }
                     }
 
@@ -2229,6 +2978,4 @@ downloadPdfWithCustomName = async function (pdfName) {
     }
 
     await processSections(sections); // Process visible sections to generate the PDF
-}; 
-
-
+};
