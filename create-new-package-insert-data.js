@@ -315,6 +315,12 @@ checkInputsToInsertData = function (clickedButtonId) {
             downloaded_pdf_total_price_data_page.style.display = 'none';
         }
 
+        // Function to get the current color of the checkbox label pseudo-element
+        function getCheckboxColor(checkbox) {
+            let label = checkbox.nextElementSibling;
+            return window.getComputedStyle(label, '::before').backgroundColor;
+        }
+
         // Loop over checkboxes
         checkboxIds.forEach(id => {
             let checkbox = document.getElementById(id); // Get the checkbox element by its ID
@@ -323,26 +329,26 @@ checkInputsToInsertData = function (clickedButtonId) {
             let p = document.createElement('p'); // Create a new paragraph element
             let icon = document.createElement('ion-icon'); // Create a new ion-icon element
 
-            if (checkbox.checked) { // If the checkbox is checked
+            // Determine the color of the checkbox
+            let color = getCheckboxColor(checkbox);
+
+            if (color === 'rgb(0, 255, 0)') { // If the checkbox color is green
                 icon.setAttribute('name', 'checkmark-outline'); // Set the icon to a checkmark
                 p.appendChild(icon); // Append the icon to the paragraph
 
                 if (id === 'sms_card_with_internet_checkbox') {
-                    // If the checkbox is for the SMS card with internet
                     let textContent = smsCardWithInternetAmountInputReayText !== ''
                         ? ` ${smsCardWithInternetAmountInputReayText}`
                         : ' شرائح إتصال مع نت مفتوح'; // Default text if input is empty
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
                 } else if (id === 'inner_flight_tickets_checkbox') {
-                    // If the checkbox is for the inner flight tickets
                     let textContent = innerFlightTicketsAmountInputReayText !== ''
                         ? ` ${innerFlightTicketsAmountInputReayText}`
                         : ' تذاكر الطيران الداخلي'; // Default text if input is empty
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
                 } else {
-                    // For all other checkboxes
                     labelText.forEach((text, index) => { // Loop through the label text parts
                         p.appendChild(document.createTextNode(` ${text}`)); // Append the text part
                         if (index < labelText.length - 1) {
@@ -356,7 +362,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     p.classList.add('special_package_including_data_background_color_text'); // Add a special class for certain checkboxes
                 }
                 insertedPackageIncludingDataDiv.appendChild(p); // Append the paragraph to the including data div
-            } else { // If the checkbox is not checked
+
+            } else if (color === 'rgb(255, 0, 0)') { // If the checkbox color is red
                 icon.setAttribute('name', 'close-outline'); // Set the icon to a close mark
                 p.appendChild(icon); // Append the icon to the paragraph
                 labelText.forEach((text, index) => { // Loop through the label text parts
@@ -375,6 +382,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)'); // Set the onclick attribute to delete the text
         });
+
 
 
         // Include package details text area if not empty
