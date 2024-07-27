@@ -152,10 +152,10 @@ companyNamesInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
         /* if the clicked h3 element was delete then reset the 'clint_company_name_input_id' value */
-        if(option.textContent === 'حذف'){
+        if (option.textContent === 'حذف') {
             companyNamesInput.value = '';
 
-        }else{
+        } else {
             companyNamesInput.value = option.textContent; // Set input value to selected option
         }
 
@@ -164,12 +164,12 @@ companyNamesInputOptions.forEach(option => {
 });
 
 
-let checkboxes = document.querySelectorAll('#clint_package_type_div input[type="checkbox"]');
+let clintPackageTypeDiv = document.querySelectorAll('#clint_package_type_div input[type="checkbox"]');
 
-checkboxes.forEach(checkbox => {
+clintPackageTypeDiv.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
         if (checkbox.checked) {
-            checkboxes.forEach(otherCheckbox => {
+            clintPackageTypeDiv.forEach(otherCheckbox => {
                 if (otherCheckbox !== checkbox) {
                     otherCheckbox.checked = false;
                 }
@@ -198,50 +198,6 @@ checkboxes.forEach(checkbox => {
 
 
 
-/* Dropdown the package including sms cards and inner flight tickets amount */
-// Set lastClickedClintMovementsCityInput when the sms card input field is clicked
-document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementsCityInput = document.getElementById('hotel_breakfast_people_amount_input_id');
-});
-
-document.getElementById('sms_card_with_internet_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementsCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
-});
-
-document.getElementById('inner_flight_tickets_amount_input_id').addEventListener('click', () => {
-    lastClickedClintMovementsCityInput = document.getElementById('inner_flight_tickets_amount_input_id');
-});
-
-
-
-// Get all the h3 elements within the dropdown
-let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#sms_card_and_ticket_amount_dropdown h3');
-
-// Add click event listener to each h3 element
-smsCardWithInternetAmountInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        if (lastClickedClintMovementsCityInput) { // Check if an input field was clicked before
-            if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
-                lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
-            } else { // If the clicked h3 element's inner text is not "حذف"
-                if (lastClickedClintMovementsCityInput.id === 'sms_card_with_internet_amount_input_id') {
-                    // Set the value of the sms card input field with the selected option
-                    lastClickedClintMovementsCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
-
-
-                } else if (lastClickedClintMovementsCityInput.id === 'inner_flight_tickets_amount_input_id') {
-                    // Set the value of the inner flight tickets input field with the selected option
-                    lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
-
-
-                } else if (lastClickedClintMovementsCityInput.id === 'hotel_breakfast_people_amount_input_id') {
-                    lastClickedClintMovementsCityInput.value = `شامل الإفطار ل${option.textContent}`;
-                }
-            }
-            hideOverlay(); // Hide the dropdown overlay after selection
-        }
-    });
-});
 
 
 
@@ -268,29 +224,26 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
 
 
 
-
-
-
-
-
-
-/* Store the hotel total rooms number for later use (in hotel row data) */
-let storeHotelTotalRoomsNumber;
+/* Function to insert the hotel room view and including pool text */
 
 /* Dropdown airport line names functionality */
-let hotelRoomAmountInput = document.getElementById('hotel_room_amount_input_id');
+let hotelRoomContainPoolInput = document.getElementById('hotel_room_contain_pool_input_id');
 
 // Get the options within the dropdown
-let hotelRoomAmountInputOptions = document.querySelectorAll('#hotel_room_amount_dropdown h3');
+let hotelRoomContainPoolInputOptions = document.querySelectorAll('#hotel_room_contain_pool_dropdown h3');
 
-hotelRoomAmountInputOptions.forEach(option => {
+hotelRoomContainPoolInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
-        /* Save the clicked number in the variable for later use */
-        storeHotelTotalRoomsNumber = option.textContent
+        if (option.textContent === 'حذف') {
+            hotelRoomContainPoolInput.value = '';
+
+        } else {
+            hotelRoomContainPoolInput.value = `مع ${option.textContent}`;
+
+        }
 
         /* Set the input value with the clicked rooms number h3 innerText */
-        hotelRoomAmountInput.value = `عدد الغرف ${option.textContent}`;
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -298,8 +251,86 @@ hotelRoomAmountInputOptions.forEach(option => {
 
 
 
+
+/* Dropdown airport line names functionality */
+let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id');
+
+// Get the options within the dropdown
+let hotelRoomViewInputOptions = document.querySelectorAll('#hotel_room_view_dropdown h3');
+
+hotelRoomViewInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        if (option.textContent === 'حذف') {
+            hotelRoomViewInput.value = '';
+
+        } else {
+            hotelRoomViewInput.value = `بإطلالة على ${option.textContent}`;
+
+        }
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to store the clicked hotel unit amount */
+
+/* Store the hotel total rooms number for later use (in hotel row data) */
+let storeHotelTotalUnitNumber;
+
+/* Dropdown airport line names functionality */
+let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id');
+
+// Get the options within the dropdown
+let hotelUnitAmountInputOptions = document.querySelectorAll('#hotel_unit_amount_dropdown h3');
+
+hotelUnitAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        /* Save the clicked number in the variable for later use */
+        storeHotelTotalUnitNumber = option.textContent
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelUnitAmountInput.value = `عدد الوحدات ${option.textContent}`;
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
+
 /* Function to create hotel room type description h3 dropdown elements */
-let createRoopTypeDescripyionDropDown = function () {
+let createRoomTypeDescripyionDropDown = function () {
     // Get the value of the hotel name input field
     let hotelNameInput = document.getElementById('hotel_name_input_id').value;
 
@@ -351,90 +382,101 @@ let createRoopTypeDescripyionDropDown = function () {
 
 
 
+
+
+
+
+
+// Praper the overlay layer variable
+let overlayLayer = null;
+
+
+
+
+
+
+
+
 // Get the following elements for later use
 let hotelLocationInput = document.getElementById('hotel_location_input_id');
 let hotelAreaInput = document.getElementById('hotel_area_input_id');
 let hotelNameInput = document.getElementById('hotel_name_input_id');
 
-// Get the dropdown elements
-let hotelLocationDropdown = document.getElementById('hotel_location_dropdown');
-let hotelAreaDropdown = document.getElementById('hotel_bali_area_dropdown');
-
 // Get the options within the dropdowns
-let hotelLocationOptions = hotelLocationDropdown.querySelectorAll('h3');
-let hotelAreaOptions = hotelAreaDropdown.querySelectorAll('h3');
+let hotelLocationInputOptions = document.querySelectorAll('#hotel_location_dropdown h3');
+let hotelAreaInputOptions = document.querySelectorAll('#hotel_bali_area_dropdown h3');
 
-// Praper the overlay layer variable
-let overlayLayer = null;
-
-// Function to show the hotel area input if the location is "بالي"
-function checkHotelLocation() {
-    // If the selected location is not "بالي"
-    if (hotelLocationInput.value.trim() != "بالي") {
-        hotelAreaInput.style.display = 'none'; // Hide the hotel area input
-    } else {
-        hotelAreaInput.style.display = 'block'; // Show the hotel area input
-    }
-
-}
-
-// Function to check if inputs should be clickable
-function checkInputClickability() {
-    if (hotelLocationInput.value.trim() === '') {
-        hotelAreaInput.disabled = true; // Disable hotel area input
-        hotelNameInput.disabled = true; // Disable hotel name input
-    } else {
-        hotelAreaInput.disabled = false; // Enable hotel area input
-        if (hotelAreaInput.style.display === 'block' && hotelAreaInput.value.trim() === '') {
-            hotelNameInput.disabled = true; // Disable hotel name input if hotel area input is visible and empty
-        } else {
-            hotelNameInput.disabled = false; // Enable hotel name input
-        }
-    }
-}
-
-// Add an event listener to check the hotel location input value on change
-hotelLocationInput.addEventListener('input', () => {
-    checkHotelLocation();
-    checkInputClickability();
-});
 
 // Add event listener for each location option in the dropdown
-hotelLocationOptions.forEach(option => {
+hotelLocationInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+
+        /* Check if the clicked h3 innerText is the same existing value of the 'hotel_location_input_id' */
+        if (hotelLocationInput.value === option.textContent) {
+            hideOverlay(); // Hide overlay after selection
+
+            /* Exist the function and stop the process of reseting the inputs */
+            return;
+        }
+
         hotelLocationInput.value = option.textContent; // Set input value to selected option
-        checkHotelLocation(); // Check the hotel location after setting the value
+
+        // check the clicked h3 innerText
+        if (option.textContent === "بالي") {
+            hotelAreaInput.style.display = 'block'; // Show the hotel area input
+            hotelAreaInput.disabled = false; // Re-Enable hotel name input
+            hotelNameInput.disabled = true; // Disable hotel name input if hotel area input is visible and empty
+
+        } else {
+            hotelAreaInput.style.display = 'none'; // Hide the hotel area input
+            hotelNameInput.disabled = false; // Re-Enable hotel name input
+        }
+
+
         hotelAreaInput.value = ''; // Clear the hotel area input
         hotelNameInput.value = ''; // Clear the hotel name input
+
+
         document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
-        hotelLocationDropdown.classList.remove('show'); // Hide dropdown after selection
+
+
         hideOverlay(); // Hide overlay after selection
-        checkInputClickability(); // Check input clickability after setting the value
     });
 });
 
 // Add event listeners for each area option in the dropdown
-hotelAreaOptions.forEach(option => {
+hotelAreaInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        /* Check if the clicked h3 innerText is the same existing value of the 'hotel_area_input_id' */
+        if (hotelAreaInput.value === option.textContent) {
+            hideOverlay(); // Hide overlay after selection
+
+            /* Exist the function and stop the process of reseting the inputs */
+            return;
+        }
+
+
         hotelAreaInput.value = option.textContent; // Set input value to selected option
+
+
         hotelNameInput.value = ''; // Clear the hotel name input
+
+
         document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
-        hotelAreaDropdown.classList.remove('show'); // Hide dropdown after selection
+
+
         hideOverlay(); // Hide overlay after selection
-        checkInputClickability(); // Check input clickability after setting the value
+
+
+        hotelNameInput.disabled = false; // Re-Enable hotel name input
     });
 });
 
 
-// Toggle dropdown visibility on hotel area input click
-hotelAreaInput.addEventListener('click', (event) => {
-    if (!hotelAreaInput.disabled) { // Check if input is not disabled
-        showOverlay('hotel_bali_area_dropdown');
-    }
-});
-
 // Function to toggle visibility of the correct hotel name dropdown
-function toggleHotelNameDropdown() {
+toggleHotelNameDropdown = function () {
     let location = hotelLocationInput.value.trim(); // Get the current location value
     let area = hotelAreaInput.value.trim(); // Get the current area value
     let dropdownToShow = null; // Initialize variable for the dropdown to show
@@ -476,6 +518,9 @@ function toggleHotelNameDropdown() {
                 case "اولواتو":
                     dropdownToShow = 'uluwatu_hotel_dropdown';
                     break;
+                case "ليجين":
+                    dropdownToShow = 'legian_hotel_dropdown';
+                    break;
             }
             break;
     }
@@ -495,13 +540,8 @@ function toggleHotelNameDropdown() {
     });
 }
 
-// Add an event listener to toggle the correct hotel name dropdown on click
-hotelNameInput.addEventListener('click', (event) => {
-    if (!hotelNameInput.disabled) { // Check if input is not disabled
-        event.stopPropagation(); // Prevent the click event from propagating to the document
-        toggleHotelNameDropdown(); // Toggle the correct hotel name dropdown
-    }
-});
+
+
 
 
 
@@ -625,6 +665,10 @@ document.getElementById('uluwatu_hotel_search_bar_input_id').addEventListener('i
     filterOptions('uluwatu_hotel_search_bar_input_id', 'uluwatu_hotel_dropdown');
 });
 
+document.getElementById('legian_hotel_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('legian_hotel_search_bar_input_id', 'legian_hotel_dropdown');
+});
+
 document.getElementById('jakarta_hotel_search_bar_input_id').addEventListener('input', () => {
     filterOptions('jakarta_hotel_search_bar_input_id', 'jakarta_hotel_dropdown');
 });
@@ -715,6 +759,97 @@ document.getElementById('delete_localstorage_data_names_search_bar_input_id').ad
 
 
 
+
+/* Dropdown the package including sms cards and inner flight tickets amount */
+// Set lastClickedClintMovementsCityInput when the sms card input field is clicked
+document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementsCityInput = document.getElementById('hotel_breakfast_people_amount_input_id');
+});
+
+document.getElementById('sms_card_with_internet_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementsCityInput = document.getElementById('sms_card_with_internet_amount_input_id');
+});
+
+document.getElementById('inner_flight_tickets_amount_input_id').addEventListener('click', () => {
+    lastClickedClintMovementsCityInput = document.getElementById('inner_flight_tickets_amount_input_id');
+});
+
+
+
+// Get all the h3 elements within the dropdown
+let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#sms_card_and_ticket_amount_dropdown h3');
+
+// Add click event listener to each h3 element
+smsCardWithInternetAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        if (lastClickedClintMovementsCityInput) { // Check if an input field was clicked before
+            if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
+                lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
+            } else { // If the clicked h3 element's inner text is not "حذف"
+                if (lastClickedClintMovementsCityInput.id === 'sms_card_with_internet_amount_input_id') {
+                    // Set the value of the sms card input field with the selected option
+                    lastClickedClintMovementsCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
+
+
+                } else if (lastClickedClintMovementsCityInput.id === 'inner_flight_tickets_amount_input_id') {
+                    // Set the value of the inner flight tickets input field with the selected option
+                    lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+
+
+                } else if (lastClickedClintMovementsCityInput.id === 'hotel_breakfast_people_amount_input_id') {
+                    lastClickedClintMovementsCityInput.value = `شامل الإفطار ل${option.textContent}`;
+                }
+            }
+            hideOverlay(); // Hide the dropdown overlay after selection
+        }
+    });
+});
+
+
+
+
+/* Dropdown airport line names functionality */
+let carTypeInput = document.getElementById('car_type_input_id');
+
+// Get the options within the dropdown
+let carTypeInputOptions = document.querySelectorAll('#car_type_dropdown h3');
+
+carTypeInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        if (option.textContent === 'حذف') {
+            /* Reset the input value if clicked on the 'حذف' h3 */
+            carTypeInput.value = '';
+
+        } else {
+            /* Set the input value with the clicked car type h3 innerText */
+            carTypeInput.value = option.textContent;
+
+        }
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Clint Flight Details */
 /* Dropdown airport line names functionality */
 let flightAirLineInput = document.getElementById('flight_air_line_input_id');
@@ -729,6 +864,7 @@ flightAirLineInputOptions.forEach(option => {
     });
 });
 
+/* Function to store the clicjed city name inside the clikced unput */
 insertFlightDestinationCityInputValue = function (clickedInputIdName) {
     let clickedInputDropdownIdName = 'airport_destination_name_dropdown';
     let clickedInputDropdown = document.getElementById(clickedInputDropdownIdName);
@@ -760,33 +896,33 @@ insertFlightDestinationCityInputValue = function (clickedInputIdName) {
 
 
 /* Function to run the dropdown functonality for flight people amount */
-let adultFlightPersonAmountInput = document.getElementById('adult_flight_person_amount_input_id');
+let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id');
 
 // Get the options within the dropdown
-let adultFlightPersonAmountInputOptions = document.querySelectorAll('#adult_flight_people_amount_dropdown h3');
+let flightAdultPersonAmountInputOptions = document.querySelectorAll('#flight_adult_people_amount_dropdown h3');
 
-adultFlightPersonAmountInputOptions.forEach(option => {
+flightAdultPersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        adultFlightPersonAmountInput.value = option.textContent; // Set input value to selected option
+        flightAdultPersonAmountInput.value = option.textContent; // Set input value to selected option
         hideOverlay(); // Hide overlay after selection
     });
 });
 
 
 
-let infantFlightPersonAmountInput = document.getElementById('infant_flight_person_amount_input_id');
+let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id');
 
 // Get the options within the dropdown
-let infantFlightPersonAmountInputOptions = document.querySelectorAll('#infant_flight_people_amount_dropdown h3');
+let flightInfantPersonAmountInputOptions = document.querySelectorAll('#flight_infant_people_amount_dropdown h3');
 
-infantFlightPersonAmountInputOptions.forEach(option => {
+flightInfantPersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
         if (option.textContent === 'حذف') {
-            infantFlightPersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
+            flightInfantPersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
 
         } else {
-            infantFlightPersonAmountInput.value = option.textContent; // Set input value to selected option
+            flightInfantPersonAmountInput.value = option.textContent; // Set input value to selected option
         }
         hideOverlay(); // Hide overlay after selection
     });
@@ -893,7 +1029,7 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 
 
 
-
+    
 
 
 
@@ -902,6 +1038,9 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 
 // Variable to store the last clicked clint movement city input
 let lastClickedClintMovementsCityInput = null;
+
+// Variable to store the clicked h3 city for the 'clint_movements_current_city_input_id' input for later use
+let storeClintMovementsCurrentCityInput = null;
 
 // Variable to store the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use
 let storeClintMovementsNextCityInput = null;
@@ -914,7 +1053,11 @@ let clintMovementsCurrentCityInputOptions = document.querySelectorAll('#clint_mo
 
 clintMovementsCurrentCityInputOptions.forEach(option => {
     option.addEventListener('click', () => {
-        clintMovementsCurrentCityInput.value = option.textContent; // Set input value to selected option
+
+        /* Store the clicked current clint movements city for later use */
+        storeClintMovementsCurrentCityInput = option.textContent;
+
+        clintMovementsCurrentCityInput.value = `المدينة الحالية ${option.textContent}`; // Set input value to selected option
 
         // Set the value of the last clicked input to the current city input
         lastClickedClintMovementsCityInput = clintMovementsCurrentCityInput;
@@ -936,7 +1079,7 @@ clintMovementsNextCityInputOptions.forEach(option => {
 
             // Reset stored next city input
             storeClintMovementsNextCityInput = null;
-            
+
 
         } else if (option.textContent === 'مغادرة') {
             clintMovementsNextCityInput.value = 'الذهاب للمطار للمغادرة'; // Set input value
@@ -1139,16 +1282,14 @@ pickThisClintMovementsPlace = function (clickedPlace) {
 
             // Reset the background color of all p elements to darkred
             for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'rgb(207, 233, 242)';
-                pElements[i].style.color = 'black';
+                pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
             }
         }
     });
 
     // Toggle the background color of the clicked p element
     if (clickedPlace.style.backgroundColor === 'rgb(0, 155, 0)') {
-        clickedPlace.style.backgroundColor = 'rgb(207, 233, 242)';
-        clickedPlace.style.color = 'black';
+        clickedPlace.style.backgroundColor = 'rgb(0, 56, 99)';
     } else {
         clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
         clickedPlace.style.color = 'white';
@@ -1165,7 +1306,7 @@ pickThisClintMovementsPlace = function (clickedPlace) {
 
             // Reset the background color of all p elements in random days class
             for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'rgb(207, 233, 242)';
+                pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
             }
         });
 
@@ -1195,51 +1336,148 @@ setTheClickedClintMovementsPlace = function () {
 }
 
 
-/* Function to set the first and last date of the clint movements period */
-let initialClintFirstDayDateValue = document.getElementById('clint_movements_first_day_date_input_id').value;
 
+
+
+/* Function to set the clint movements date */
 function setTheFirstClintMovemnetsDate() {
+    // Get the values from the input fields
     let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
     let clintMovementsLastDayDateInput = document.getElementById('clint_movements_last_day_date_input_id').value;
     let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id');
     let clintMovementsPeriodInputsSubmitIcon = document.getElementById('clint_movements_period_inputs_submit_icon');
-    let insertedClintMovementsDataPositionDiv = document.getElementById('inserted_clint_movements_data_position_div');
 
+    // Check if both date inputs are filled
     if (clintMovementsFirstDayDateInput !== '' && clintMovementsLastDayDateInput !== '') {
-        // Change the submit icon background color
+        // Change the submit icon background color to green
         clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(0, 255, 0)';
 
-        // Set the background color of the submit icon back to default color
+        // Reset the background color of the submit icon to dark orange after 500ms
         setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(224, 157, 0)';
+            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
 
-        // Check if the first day date input value has changed
-        if (initialClintFirstDayDateValue !== clintMovementsFirstDayDateInput) {
-            // Set the new value of the 'clint_movements_first_day_date_input_id' inside 'clint_movements_current_day_date_input_id'
-            clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
+        // Get all div elements with the class name 'clint_movements_row_class_for_editing'
+        let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
+
+        // Variable to store the h6 element inside the topmost div
+        let topClintMovementsRowH6Element;
+
+        // Check if there are any divs with the class name 'clint_movements_row_class_for_editing'
+        if (clintMovementsRowDivs.length > 0) {
+            // Target the topmost div
+            let topClintMovementsRowDiv = clintMovementsRowDivs[0];
+
+            // Get the h6 element inside the topmost div
+            topClintMovementsRowH6Element = topClintMovementsRowDiv.querySelector('h6');
+
+            // Check if the h6 element exists before accessing its innerText
+            if (topClintMovementsRowH6Element) {
+
+                // If the h6 element's text is not equal to the first day date input
+                if (topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
 
 
-            // Reset the content of the inserted_clint_movements_data_position_div and hide the elements
-            insertedClintMovementsDataPositionDiv.innerHTML = '';
-            document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
-            document.getElementById('export_package_pdf_div_id').style.display = 'none';
+                    topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput
 
+                    // Set the current day date input to the first day date input
+                    clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
 
-            // Update the initial value to the current value
-            initialClintFirstDayDateValue = clintMovementsFirstDayDateInput;
+                    arrangeClintMovementsDates();
+
+                    /* Exit and stop the process */
+                    return;
+                }
+
+            }
         }
 
+        // Set the new value of the 'clint_movements_first_day_date_input_id' inside 'clint_movements_current_day_date_input_id'
+        // Only if it's not equal to topClintMovementsRowH6Element.innerText
+        if (!topClintMovementsRowH6Element || topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
+            clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
+        }
+
+
+        /* Store the saved first and last clint movements date (for localstorage use) */
+        document.getElementById('store_localstorage_clint_movements_first_day_date_value').innerText = clintMovementsFirstDayDateInput;
+        document.getElementById('store_localstorage_clint_movements_last_day_date_value').innerText = clintMovementsLastDayDateInput;
+        document.getElementById('store_localstorage_clint_movements_total_nights_day_date_value').innerText = document.getElementById('clint_movements_total_nights_input_id').value;
+
+
     } else {
-        // Change the submit icon background color
+        // Change the submit icon background color to red
         clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'red';
 
-        // Set the background color of the submit icon back to default color
+        // Reset the background color of the submit icon to dark orange after 500ms
         setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(224, 157, 0)';
+            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
     }
 }
+
+
+
+
+
+
+
+/* Function to arrange dates in the clint movements */
+arrangeClintMovementsDates = function() {
+    // Get the value from the input field
+    let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+
+    // Convert the input value to a Date object
+    let currentDate = new Date(clintMovementsFirstDayDateInput);
+
+    // Get all div elements with the class name 'clint_movements_row_class'
+    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class');
+
+    // Iterate through each div
+    for (let i = 0; i < clintMovementsRowDivs.length; i++) {
+        // Get the h6 element inside the current div
+        let h6Element = clintMovementsRowDivs[i].querySelector('h6');
+
+        // Check if the h6 element exists
+        if (h6Element) {
+            // Format the current date to 'DD-M'
+            let day = currentDate.getDate(); // Get the day
+            let month = currentDate.toLocaleString('default', { month: 'short' }); // Get the month in short format
+            let formattedDate = `${day}-${month}`; // Return formatted date
+
+            // Set the innerText of the h6 element to the formatted date
+            h6Element.innerText = formattedDate;
+
+            // Move to the next day
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+    }
+
+    // Get the last div element with the class name 'clint_movements_row_class'
+    let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
+
+    // Get the h6 element inside the last div
+    let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
+
+    // Check if the last h6 element exists
+    if (lastH6Element) {
+        // Parse the date from the lastH6Element
+        let lastH6Date = new Date(`${lastH6Element.innerText}-${new Date().getFullYear()}`);
+
+        // Add one day to the date
+        lastH6Date.setDate(lastH6Date.getDate() + 1);
+
+        // Format the new date
+        let newDay = lastH6Date.getDate();
+        let newMonth = lastH6Date.toLocaleString('default', { month: 'short' });
+        let newFormattedDate = `${newDay}-${newMonth}`;
+
+        // Set the new date to clint_movements_current_day_date_input_id
+        document.getElementById('clint_movements_current_day_date_input_id').value = newFormattedDate;
+    }
+}
+
+
 
 
 
@@ -1283,6 +1521,11 @@ function setTheFirstClintMovemnetsDate() {
 
 // Function to show the overlay
 function showOverlay(clickedInputDropdownIdName) {
+
+    // Disable scrolling
+    document.documentElement.style.overflow = 'hidden';
+
+
     let clickedInputDropdown = document.getElementById(clickedInputDropdownIdName);
 
     // Store the reference to the last clicked input field
@@ -1303,6 +1546,11 @@ function showOverlay(clickedInputDropdownIdName) {
 
 // Function to hide the overlay and any visible dropdown
 function hideOverlay() {
+
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
+
+
     // Check if any dropdown with the class name 'searchable_names_dropdown_class' is visible and hide it
     let visibleDropdown_1 = document.querySelector('.searchable_names_dropdown_class.show');
     if (visibleDropdown_1) {
@@ -1330,12 +1578,6 @@ function hideOverlay() {
         }, 200); // Assuming 200ms is the duration of your opacity transition
     }
 }
-
-
-
-
-// Check which input element should be clickable or unclickable based on the value of the 'hotel_location_input_id'
-checkInputClickability();
 
 
 
@@ -1379,11 +1621,48 @@ checkInputClickability();
 
 
 /* Function to pick the first and last clint movemennts dates */
+
+// Function to update the total nights input
+function updateWholeClintMovementsTotalNights() {
+    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id');
+    let endDateInput = document.getElementById('clint_movements_last_day_date_input_id');
+    let totalNightsInput = document.getElementById('clint_movements_total_nights_input_id');
+
+    let startDate = startDateInput.value;
+    let endDate = endDateInput.value;
+
+    if (startDate !== '' && endDate !== '') {
+        let totalNights = calculateDaysDifference(startDate, endDate);
+
+        // Store the package total nights for later use
+        storePackageTotalNights = totalNights;
+        totalNightsInput.value = `${totalNights} ليالي`;
+
+        // Ensure the end date is not earlier than or equal to the start date
+        if (new Date(startDate) >= new Date(endDate)) {
+            endDateInput.value = '';
+            totalNightsInput.value = '';
+        }
+    } else {
+        totalNightsInput.value = '';
+    }
+}
+
+// Function to disable specific dates
+function disableSpecificDates(date) {
+    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+    if (startDateInput) {
+        let startDate = new Date(startDateInput);
+        return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
+    }
+    return false;
+}
+
 // Get today's date
 var today = new Date();
 
-// Praper Pikaday for the first day input
-var firstDayPicker = new Pikaday({
+// Prepare Pikaday for the first day input
+var clintMovementsFirstDayPicker = new Pikaday({
     field: document.getElementById('clint_movements_first_day_date_input_id'), // Field to attach the date picker
     format: 'DD-M', // Format to display only day and month
     minDate: today, // Set minimum date to today
@@ -1392,27 +1671,35 @@ var firstDayPicker = new Pikaday({
         let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format
         return `${day}-${month}`; // Return formatted date
     },
-
-    /* Function to limit the data picker for the 'clint_movements_last_day_date_input_id' */
-    onSelect: function (date) { // Function to run when a date is selected
-        // Set the minDate for the last day picker to be one day after the selected first date
-        let minDate = new Date(date);
-        minDate.setDate(minDate.getDate() + 1);
-        lastDayPicker.setMinDate(minDate);
+    onSelect: function() {
+        updateWholeClintMovementsTotalNights();
+        let selectedDate = this.getDate();
+        let minEndDate = new Date(selectedDate);
+        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
+        clintMovementsLastDayPicker.setMinDate(minEndDate); // Update min date for the second picker
+        clintMovementsLastDayPicker.setDisableDayFn(disableSpecificDates); // Reapply disable function
     }
 });
 
-// Praper the second date picker (clint_movements_last_day_date_input_id)
-var lastDayPicker = new Pikaday({
+// Prepare the second date picker (clint_movements_last_day_date_input_id)
+var clintMovementsLastDayPicker = new Pikaday({
     field: document.getElementById('clint_movements_last_day_date_input_id'), // Field to attach the date picker
     format: 'DD-M', // Format to display only day and month
-    minDate: today, // Set minimum date to today
+    minDate: today, // Set minimum date to today (will be updated dynamically)
     toString(date, format) { // Function to format the date
         let day = date.getDate(); // Get the day
         let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format
         return `${day}-${month}`; // Return formatted date
     },
+    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
+    onSelect: updateWholeClintMovementsTotalNights // Call 'updateWholeClintMovementsTotalNights' when a date is selected
 });
+
+
+
+
+
+
 
 
 
@@ -1483,7 +1770,7 @@ function updateWholePackageTotalNights() {
     /* Store the package total nights for later use */
     storePackageTotalNights = totalNights;
 
-    if(package_start_date_input_id.value !== '' && package_end_date_input_id.value !== ''){
+    if (package_start_date_input_id.value !== '' && package_end_date_input_id.value !== '') {
         document.getElementById('package_total_nights_input_id').value = `${totalNights} ليالي`;
     }
 }
@@ -1526,7 +1813,7 @@ var wholePackageEndDatePicker = new Pikaday({
 
 
 
-/* Store the package total nights for later use */
+/* Store the hotel total nights for later use */
 let storeHotelTotalNights;
 
 // Function to update the total nights input
@@ -1539,7 +1826,7 @@ function updateHotelTotalNights() {
     /* Store the package total nights for later use */
     storeHotelTotalNights = totalNights;
 
-    if(hotel_check_in_input_id.value !== '' && hotel_check_out_input_id.value !== ''){
+    if (hotel_check_in_input_id.value !== '' && hotel_check_out_input_id.value !== '') {
         document.getElementById('hotel_total_nights_input_id').value = `${totalNights} ليالي`;
     }
 }
@@ -1705,7 +1992,7 @@ $(document).ready(function () {
 
 
 
- 
+
 
 
 
