@@ -12,14 +12,6 @@
     border-radius: 7px;
 }
 
-
-
-
-
-
-
-
-
 #clint_full_name_p {
     width: 100%;
     font-size: 2vw;
@@ -29,20 +21,6 @@
     border-left: 0.5px solid black;
     border-bottom: 0.5px solid black;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Inserted clint data position */
 .clint_data_row_class {
@@ -86,25 +64,6 @@
     border-left: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Inserted package including data position */
 .inserted_package_including_and_not_icluding_data_div_class {
     background: white;
@@ -135,30 +94,11 @@
     font-weight: 600;
 }
 
-
-
-
-
-
-
-
-
-
-
 .special_package_including_data_background_color_text {
     background: rgb(0, 93, 163);
     color: white;
     border-radius: 7px;
 }
-
-
-
-
-
-
-
-
-
 
 /* Pdf section title */
 .pdf_section_title_div_class {
@@ -192,36 +132,10 @@
     /* Adjust vertical alignment */
 }
 
-
-
-
-
 /* Usuful notes section title element */
 #pdf_section_title_div_usuful_notes_id {
     margin-top: 15px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Inserted hotel data position */
 .hotel_row_class {
@@ -297,27 +211,6 @@
     font-size: 0.5vw;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Inserted package important note position */
 .inserted_package_important_note_position_div_class {
     background: white;
@@ -333,18 +226,6 @@
     padding: 5px 0;
     text-align: start;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Inserted package total price section */
 #package_total_price_div {
@@ -369,18 +250,6 @@
     border-radius: 7px;
     text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Inserted flight data position */
 .flight_row_class {
@@ -436,20 +305,6 @@
     flex-grow: 0.7;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Inserted transportation_plan data position */
 .clint_movements_row_class {
     background: white;
@@ -493,7 +348,6 @@
     flex-grow: 0.3;
 }
 
-
 .clint_movements_all_p_elements_div_class {
     display: flex;
     flex-direction: column;
@@ -503,45 +357,6 @@
     margin: 0;
     padding: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Delete box message */
 .ensure_your_delete_action {
@@ -574,31 +389,6 @@
     box-shadow: 0 0.5px 3px black;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Download pdf file */
 #export_package_pdf_div_id {
     width: 100%;
@@ -614,15 +404,6 @@
     box-shadow: 0 0 0 black;
     transition: all 0.2s ease-in-out;
 }
-
-
-
-
-
-
-
-
-
 
 /* Name pdf file box */
 #name_pdf_file_div {
@@ -676,72 +457,24 @@
     transition: all 0.1s ease-in-out;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Media Queries */
 /* 1250px */
-@media(max-width:1250px) {}
+@media (max-width: 1250px) {
+}
 
 /* 1040px */
-@media(max-width:1040px) {}
+@media (max-width: 1040px) {
+}
 
 /* 950px */
-@media(max-width:950px) {
+@media (max-width: 950px) {
     .inserted_company_name_logo {
         width: 25vw;
     }
 
-
-
-
-
-
-
-
-
-
     #clint_full_name_p {
         font-size: 2.5vw;
     }
-
-
-
-
-
-
-
-
-
 
     .pdf_section_title_div_class {
         padding: 6px;
@@ -756,28 +489,6 @@
         font-size: 5.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .inserted_package_including_and_not_icluding_data_div_class p {
         font-size: 2.5vw;
     }
@@ -786,31 +497,10 @@
         font-size: 2.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     .inserted_package_important_note_position_div_class p {
         font-size: 2.5vw;
         padding: 3px 0;
     }
-
-
-
-
-
-
-
-
-
-
 
     .ensure_your_delete_action button {
         font-size: 4vw;
@@ -835,14 +525,15 @@
 }
 
 /* 850px */
-@media(max-width:850px) {}
+@media (max-width: 850px) {
+}
 
 /* 760px */
-@media(max-width:760px) {}
+@media (max-width: 760px) {
+}
 
 /* 650px */
-@media(max-width:650px) {
-
+@media (max-width: 650px) {
     .ensure_your_delete_action {
         padding: 10px;
     }
@@ -857,41 +548,20 @@
     }
 }
 
-
 /* 580px */
-@media(max-width:580px) {
+@media (max-width: 580px) {
     .inserted_company_name_logo {
         width: 30vw;
         margin-bottom: 5px;
     }
 
-
-
-
-
-
-
-
-
     #clint_full_name_p {
         font-size: 3.5vw;
     }
 
-
-
-
-
-
-
     .clint_data_row_class p {
         font-size: 3.5vw;
     }
-
-
-
-
-
-
 
     .pdf_section_title_div_class {
         padding: 4px;
@@ -906,17 +576,6 @@
         font-size: 6.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     .hotel_row_class p {
         font-size: 2.6vw;
     }
@@ -925,70 +584,18 @@
         font-size: 2vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     .flight_row_class p {
         font-size: 2.5vw;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     .clint_movements_row_class p {
         font-size: 2.5vw;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     .inserted_package_important_note_position_div_class p {
         font-size: 3vw;
         padding: 2px 0;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     #name_pdf_file_div span {
         font-size: 7vw;
@@ -1005,32 +612,19 @@
 }
 
 /* 500px */
-@media(max-width:500px) {}
+@media (max-width: 500px) {
+}
 
 /* 400px */
-@media(max-width:400px) {
+@media (max-width: 400px) {
     .inserted_company_name_logo {
         width: 35vw;
         margin-bottom: 0px;
     }
 
-
-
-
-
-
-
-
     #clint_full_name_p {
         font-size: 4.5vw;
     }
-
-
-
-
-
-
-
 
     .inserted_package_including_and_not_icluding_data_div_class p {
         font-size: 3.2vw;
@@ -1042,72 +636,27 @@
         padding: 3px 0;
     }
 
-
-
-
-
     .hotel_row_class span {
         font-size: 2.4vw;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     #pdf_section_title_div_usuful_notes_id {
         margin-top: 10px;
     }
 
-
-
-
-
-
-
-
-
-
     .inserted_package_important_note_position_div_class p {
         font-size: 3.2vw;
     }
-
-
-
-
-
-
-
-
-
-
 
     #package_total_price_div h6 {
         font-size: 7vw;
         padding: 3px 10px;
     }
-    
+
     #package_total_price_div p {
         font-size: 7vw;
         padding: 3px 10px;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     .ensure_your_delete_action {
         padding: 5px;
@@ -1137,4 +686,5 @@
 }
 
 /* 320px */
-@media(max-width:320px) {}
+@media (max-width: 320px) {
+}
