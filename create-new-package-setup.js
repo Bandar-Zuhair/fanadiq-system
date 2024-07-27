@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-window.addEventListener('beforeunload', function (event) {
+/* window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-});
+}); */
 
 
 
@@ -210,6 +210,63 @@ clintPackageTypeDiv.forEach(checkbox => {
 
 
 
+/* Function for selecting and di-selecting checkbox packge including data */
+// Define colors in the correct order
+let colors = [
+    'rgb(255, 255, 255)', // White
+    'rgb(255, 0, 0)',     // Red
+    'rgb(0, 255, 0)'      // Green
+];
+
+// Define initial colors for specific checkboxes
+let initialColors = {
+    'privet_car_with_driver_to_welcome_and_etc_checkbox': 'rgb(0, 255, 0)', // Green
+    'hotel_booking_with_breakfast_for_2_people_checkbox': 'rgb(0, 255, 0)', // Green
+    'pertol_and_driver_living_cost_checkbox': 'rgb(0, 255, 0)', // Green
+    'welcome_goodbye_hotel_delivery_checkbox': 'rgb(0, 255, 0)', // Green
+    'customer_service_24_hour_checkbox': 'rgb(0, 255, 0)', // Green
+    'sms_card_with_internet_checkbox': 'rgb(0, 255, 0)', // Green
+    'all_taxes_covered_but_only_for_bali_no_checkbox': 'rgb(0, 255, 0)', // Green
+    'inner_flight_tickets_checkbox': 'rgb(0, 255, 0)', // Green
+    'outer_flight_tickets_checkbox': 'rgb(255, 0, 0)', // Red
+    'placese_visiting_cost_checkbox': 'rgb(255, 0, 0)' // Red
+};
+
+// Function to cycle through colors
+function cycleColor(event) {
+    let checkbox = event.target;
+    let label = checkbox.nextElementSibling; // Get the label element
+
+    // Get the current background color of the pseudo-element
+    let currentColor = window.getComputedStyle(label, '::before').backgroundColor;
+    
+    // Find the index of the current color
+    let currentIndex = colors.indexOf(currentColor);
+    // Determine the next color index
+    let nextIndex = (currentIndex + 1) % colors.length;
+    // Get the next color
+    let nextColor = colors[nextIndex];
+    
+    // Apply the next color
+    label.style.setProperty('--checkbox-color', nextColor);
+}
+
+// Add event listeners to all checkboxes
+document.querySelectorAll('#package_including_details_div input[type="checkbox"]').forEach(checkbox => {
+    // Set initial color based on the checkbox ID
+    let label = checkbox.nextElementSibling; // Get the label element
+    let checkboxId = checkbox.id;
+    let initialColor = initialColors[checkboxId] || 'rgb(255, 255, 255)'; // Default to white if not specified
+    label.style.setProperty('--checkbox-color', initialColor);
+    
+    // Add click event listener
+    checkbox.addEventListener('click', cycleColor);
+});
+
+
+
+
+
 
 
 
@@ -321,6 +378,14 @@ hotelUnitAmountInputOptions.forEach(option => {
         hideOverlay(); // Hide overlay after selection
     });
 });
+
+
+
+
+
+
+
+
 
 
 
@@ -807,29 +872,6 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
 
 
 
-
-/* Dropdown airport line names functionality */
-let carTypeInput = document.getElementById('car_type_input_id');
-
-// Get the options within the dropdown
-let carTypeInputOptions = document.querySelectorAll('#car_type_dropdown h3');
-
-carTypeInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-        if (option.textContent === 'حذف') {
-            /* Reset the input value if clicked on the 'حذف' h3 */
-            carTypeInput.value = '';
-
-        } else {
-            /* Set the input value with the clicked car type h3 innerText */
-            carTypeInput.value = option.textContent;
-
-        }
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
 
 
 
