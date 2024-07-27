@@ -87,7 +87,7 @@
 
 
         <div class="header_navbar_header">
-            <span class="header_navbar_title">انواع البكجات</span>
+            <span class="header_navbar_title">أقسام البكج</span>
             <ion-icon name="caret-down-outline"></ion-icon>
         </div>
 
@@ -256,7 +256,7 @@
 
 
     <!-- Create New Package Section -->
-    <section id="create_new_hotel_package_section">
+    <section id="create_new_hotel_package_section" style="display: none;">
 
 
         <div class="section_title_text_div" id="toggle_hotel_clint_elements">
@@ -270,12 +270,13 @@
                 <input type="text" id="package_clint_name_input_id" placeholder="اسم العميل" autocomplete="off">
 
 
-                <input type="text" id="adult_package_person_amount_input_id" placeholder="عدد البالغين" autocomplete="off"
-                    readonly onclick="showOverlay('adult_whole_package_people_amount_dropdown')"
+                <input type="text" id="adult_package_person_amount_input_id" placeholder="عدد البالغين"
+                    autocomplete="off" readonly onclick="showOverlay('adult_whole_package_people_amount_dropdown')"
                     style="cursor: pointer;">
 
 
-                <input type="text" id="kids_package_person_amount_input_id" placeholder="عدد الأطفال" autocomplete="off">
+                <input type="text" id="kids_package_person_amount_input_id" placeholder="عدد الأطفال"
+                    autocomplete="off">
 
 
                 <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
@@ -294,25 +295,27 @@
 
 
                 <div id="clint_package_type_div">
+
                     <div class="custom_checkbox">
-                        <input type="checkbox" id="honeymoon_checkbox" name="package_type">
+                        <input type="checkbox" id="honeymoon_checkbox">
                         <label for="honeymoon_checkbox">شهر عسل؟</label>
                     </div>
 
                     <div class="custom_checkbox">
-                        <input type="checkbox" id="guys_checkbox" name="package_type">
+                        <input type="checkbox" id="guys_checkbox">
                         <label for="guys_checkbox">شباب؟</label>
                     </div>
 
                     <div class="custom_checkbox">
-                        <input type="checkbox" id="family_checkbox" name="package_type">
+                        <input type="checkbox" id="family_checkbox">
                         <label for="family_checkbox">عائلة؟</label>
                     </div>
 
                     <div class="custom_checkbox">
-                        <input type="checkbox" id="two_people_checkbox" name="package_type">
+                        <input type="checkbox" id="two_people_checkbox">
                         <label for="two_people_checkbox">شخصين؟</label>
                     </div>
+
                 </div>
 
 
@@ -370,8 +373,8 @@
 
 
         <!-- Create hotel data section -->
-        <div class="section_title_text_div" id="toggle_hotel_elements">
-            <h1 class="section_title_text">تفاصيل الفندق</h1>
+        <div id="toggle_hotel_elements" class="section_title_text_div">
+            <h1 id="hotel_content_section_title_text_id" class="section_title_text">تفاصيل الفندق</h1>
         </div>
 
         <div id="dropdown_hotel_content" class="dropdown_content_div_class">
@@ -379,10 +382,10 @@
             <div class="package_info_input_div">
                 <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
                     onclick="showOverlay('hotel_location_dropdown')" style="cursor: pointer;">
-                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off"
-                    style="cursor: pointer;">
+                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off" disabled
+                    onclick="showOverlay('hotel_bali_area_dropdown')" style="cursor: pointer;">
                 <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
-                    style="cursor: pointer;">
+                    disabled onclick="toggleHotelNameDropdown()" style="cursor: pointer;">
 
 
                 <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
@@ -397,11 +400,23 @@
 
                 <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
                     autocomplete="off"
-                    onclick="createRoopTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                    onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
                     style="cursor: pointer;">
 
-                <input type="text" id="hotel_room_amount_input_id" placeholder="عدد الغرف" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_room_amount_dropdown')" style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
+                    autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
+                    style="cursor: pointer;">
+
+
+
+                <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_room_view_dropdown')" style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_unit_amount_dropdown')" style="cursor: pointer;">
 
 
                 <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
@@ -409,19 +424,50 @@
                     style="cursor: pointer;">
 
 
-                <textarea id="room_extra_info_textarea_id" class="package_details_input_class"
+                <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
                     placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('room_extra_info_textarea_id')"></ion-icon>
+                    onclick="toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
 
 
                 <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="hotel_inputs_submit_icon"
                         onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
                 </div>
+
+
+
+
+
+
+
+
+                <div class="edit_data_controll_icons_div">
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="checkmark-outline" id="confirm_new_hotel_data_row_icon"
+                            onclick="confirmNewHotelDataRow()" style="display: none;"></ion-icon>
+                    </div>
+
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="close-outline" id="cancel_new_hotel_data_row_icon"
+                            onclick="cancelNewHotelDataRow()" style=" display: none; background: red;"></ion-icon>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -455,8 +501,7 @@
 
                 <div id="package_including_details_div">
                     <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox"
-                            name="package_type" checked>
+                        <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox" checked>
                         <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
                             مايماثل حجمها) مع سائق طوال مدة
                             الرحلة</label>
@@ -526,6 +571,12 @@
 
 
 
+                <input type="text" id="car_type_input_id" placeholder="نوع السيارة؟"
+                    readonly autocomplete="off" onclick="showOverlay('car_type_dropdown')"
+                    style="cursor: pointer;">
+
+
+
                 <textarea id="package_details_textarea_id" class="package_details_input_class"
                     placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
@@ -589,17 +640,14 @@
 
 
 
-
-
-
-
-        <!-- Company names options -->
-        <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
+        <!-- Dropdown div for hotel locations -->
+        <div id="car_type_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
             </div>
-            <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>تويوتا افانزا</h3>
+                <h3>افانزا ريبون</h3>
             </div>
         </div>
 
@@ -613,13 +661,71 @@
 
 
 
+        <!-- Company names options -->
+        <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+                <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
+                    placeholder="بحث.." autocomplete="off">
+            </div>
+
+            <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
+            </div>
+
+        </div>
+
+
+
 
 
 
 
 
         <!-- Dropdown div for room amount -->
-        <div id="hotel_room_amount_dropdown" class="searchable_names_dropdown_class">
+        <div id="hotel_room_contain_pool_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>مسبح</h3>
+                <h3>مسبح خاص</h3>
+                <h3>مسبح عميق</h3>
+                <h3>مسبح عام</h3>
+            </div>
+        </div>
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_room_view_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>الطبيعة</h3>
+                <h3>المنتجع</h3>
+                <h3>الحديقة</h3>
+                <h3>الوادي</h3>
+                <h3>البحيرة</h3>
+                <h3>الجبل</h3>
+                <h3>الجبل والمسبح</h3>
+                <h3>المدينة</h3>
+                <h3>المحيط</h3>
+                <h3>المحيط (إطلالة جزئية)</h3>
+                <h3>البحر</h3>
+                <h3>النهر</h3>
+                <h3>الشاطئ</h3>
+                <h3>الشاطئ (إطلالة جزئية)</h3>
+                <h3>المسبح</h3>
+                <h3>النهر</h3>
+                <h3>المزرعة</h3>
+                <h3>مزرعة الأرز</h3>
+                <h3>الغابة</h3>
+            </div>
+        </div>
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_unit_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
             </div>
             <div class="company_names_options_dropdown_class">
@@ -804,6 +910,7 @@
                 <h3>كوتا</h3>
                 <h3>جيمباران</h3>
                 <h3>اولواتو</h3>
+                <h3>ليجين</h3>
             </div>
         </div>
 
@@ -952,6 +1059,20 @@
         </div>
 
 
+        <!-- Legian -->
+        <div id="legian_hotel_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+                <input type="text" id="legian_hotel_search_bar_input_id" class="search_bar_input_class"
+                    placeholder="بحث.." autocomplete="off">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>Eight Palms Villa</h3>
+                <h3>Jumeirah Bali</h3>
+                <h3>Renaissance Uluwatu</h3>
+            </div>
+        </div>
+
+
 
 
         <!-- Jakarta -->
@@ -999,8 +1120,9 @@
             <div class="company_names_options_dropdown_class">
                 <h3>Grand Aston</h3>
                 <h3>Le Eminence</h3>
-                <h3>Botanica Sanctuary</h3>
                 <h3>Pesona Alam</h3>
+                <h3>Botanica Sanctuary</h3>
+                <h3>Villa Marina</h3>
             </div>
         </div>
 
@@ -1039,24 +1161,23 @@
     </section>
 
 
+
+
+
+
+
+
+
     <!-- Delete the clicked company logo -->
     <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
         <button onclick="deleteClickedCompanyLogo()">حذف</button>
     </div>
 
-
-
-
-
     <!-- Delete the clicked inserted hotel data -->
-    <div id="ensure_delete_hotel_data_div" class="ensure_your_delete_action">
+    <div id="ensure_delet_or_edit_hotel_data_div" class="ensure_your_delete_action">
         <button onclick="runDeleteClickedHotelDataFunction()">حذف</button>
+        <button onclick="runEditClickedHotelDataFunction()">تعديل</button>
     </div>
-
-
-
-
-
 
 
 
@@ -1070,8 +1191,8 @@
     <!-- Create flight package data section -->
     <section id="create_new_flight_package_section" style="display: none;">
 
-        <div class="section_title_text_div" id="toggle_clint_flight_elements">
-            <h1 class="section_title_text">تفاصيل الطياران</h1>
+        <div id="toggle_clint_flight_elements" class="section_title_text_div">
+            <h1 id="flight_content_section_title_text_id" class="section_title_text">تفاصيل الطياران</h1>
         </div>
 
 
@@ -1083,12 +1204,12 @@
                 <input type="text" id="flight_air_line_input_id" placeholder="الخط الجوي" readonly autocomplete="off"
                     onclick="showOverlay('airport_line_name_dropdown')" style="cursor: pointer;">
 
-                <input type="text" id="adult_flight_person_amount_input_id" placeholder="عدد البغالين" readonly
-                    autocomplete="off" onclick="showOverlay('adult_flight_people_amount_dropdown')"
+                <input type="text" id="flight_adult_person_amount_input_id" placeholder="عدد البغالين" readonly
+                    autocomplete="off" onclick="showOverlay('flight_adult_people_amount_dropdown')"
                     style="cursor: pointer;">
 
-                <input type="text" id="infant_flight_person_amount_input_id" placeholder="عدد الرضاع" readonly
-                    autocomplete="off" onclick="showOverlay('infant_flight_people_amount_dropdown')"
+                <input type="text" id="flight_infant_person_amount_input_id" placeholder="عدد الرضاع" readonly
+                    autocomplete="off" onclick="showOverlay('flight_infant_people_amount_dropdown')"
                     style="cursor: pointer;">
 
                 <input type="text" id="flight_from_city_input_id" placeholder="من مدينة" readonly autocomplete="off"
@@ -1115,6 +1236,22 @@
                         onclick="checkInputsToInsertData('clint_flight_inputs_submit_icon')"></ion-icon>
                 </div>
 
+
+
+
+                <div class="edit_data_controll_icons_div">
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="checkmark-outline" id="confirm_new_flight_data_row_icon"
+                            onclick="confirmNewFlightDataRow()" style="display: none;"></ion-icon>
+                    </div>
+
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="close-outline" id="cancel_new_flight_data_row_icon"
+                            onclick="cancelNewFlightDataRow()" style=" display: none; background: red;"></ion-icon>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -1123,8 +1260,14 @@
 
 
 
+
+
+
+
+
+
         <!-- Dropdown Div For Hotel Locations -->
-        <div id="adult_flight_people_amount_dropdown" class="searchable_names_dropdown_class">
+        <div id="flight_adult_people_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
             </div>
             <div class="company_names_options_dropdown_class">
@@ -1151,7 +1294,7 @@
 
 
         <!-- Dropdown Div For Hotel Locations -->
-        <div id="infant_flight_people_amount_dropdown" class="searchable_names_dropdown_class">
+        <div id="flight_infant_people_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
             </div>
             <div class="company_names_options_dropdown_class">
@@ -1201,9 +1344,19 @@
     </section>
 
 
+
+
+
+
+
+
+
+
+
     <!-- Delete the clicked inserted flight data -->
-    <div id="ensure_delete_flight_data_div" class="ensure_your_delete_action">
+    <div id="ensure_delete_or_edit_flight_data_div" class="ensure_your_delete_action">
         <button onclick="runDeleteClickedFlightDataFunction()">حذف</button>
+        <button onclick="runEditClickedFlightDataFunction()">تعديل</button>
     </div>
 
 
@@ -1217,17 +1370,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
     <!-- Create clint movements plane data section -->
-    <section id="create_new_clint_movements_paln_section" style="display: none;">
+    <section id="create_new_clint_movements_paln_section">
 
 
         <div class="section_title_text_div" id="toggle_clint_movements_period_elements">
@@ -1244,6 +1388,8 @@
                 <input type="text" id="clint_movements_first_day_date_input_id" placeholder="اول يوم" readonly
                     autocomplete="off" style="cursor: pointer;">
                 <input type="text" id="clint_movements_last_day_date_input_id" placeholder="اخر يوم" readonly
+                    autocomplete="off" style="cursor: pointer;">
+                <input type="text" id="clint_movements_total_nights_input_id" placeholder="مجموع الليالي" readonly
                     autocomplete="off" style="cursor: pointer;">
 
 
@@ -1266,7 +1412,7 @@
 
 
         <div class="section_title_text_div" id="toggle_clint_movements_details_elements">
-            <h1 class="section_title_text">تفاصيل خط السير (يوم كامل)</h1>
+            <h1 id="clint_movements_content_section_title_text_id" class="section_title_text">تفاصيل خط السير (يوم كامل)</h1>
         </div>
 
 
@@ -1329,6 +1475,26 @@
                 </div>
 
 
+
+
+
+
+
+
+
+                <div class="edit_data_controll_icons_div">
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="checkmark-outline" id="confirm_new_clint_movements_data_row_icon"
+                            onclick="confirmNewClintMovementsDataRow()" style="display: none;"></ion-icon>
+                    </div>
+
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="close-outline" id="cancel_new_clint_movements_data_row_icon"
+                            onclick="cancelNewClintMovementsDataRow()" style=" display: none; background: red;"></ion-icon>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
@@ -1347,6 +1513,7 @@
                 <h3 style="color: red;">حذف</h3>
                 <h3>بالي</h3>
                 <h3>جاكرتا</h3>
+                <h3>باندونق</h3>
             </div>
         </div>
 
@@ -1388,46 +1555,103 @@
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>Komaneka Keramas</h3>
+                <h3>Four Seasons Sayan</h3>
                 <h3>Komaneka Tanggayuda</h3>
                 <h3>Samsara Ubud</h3>
                 <h3>Tejaprana</h3>
                 <h3>K Club</h3>
                 <h3>Ulaman Eco Luxury</h3>
                 <h3>Aksari Ubud</h3>
+                <h3>Amarea Ubud</h3>
+                <h3>Asvara Villa</h3>
+                <h3>Kaamala Resort</h3>
+                <h3>Natya Resort</h3>
+                <h3>Padma Resort</h3>
+                <h3>Seres Spring</h3>
+                <h3>The Westin Ubud</h3>
+                <h3>Black Penny</h3>
+                <h3>Dedary Resort</h3>
+                <h3>Komaneka Rasa Sayang</h3>
+                <h3>The Apurva Kempinski</h3>
                 <h3>Ulu Segara</h3>
                 <h3>Merusaka</h3>
-                <h3>The Apurva Kempinski</h3>
                 <h3>The Nest</h3>
-                <h3>Agranusa Signature Villa</h3>
+                <h3>Agranusa Villa</h3>
+                <h3>Renaissance Nusa Dua</h3>
+                <h3>Sofitel Nusa Dua</h3>
                 <h3>The Trans Bali</h3>
                 <h3>Indigo Bali</h3>
                 <h3>Sini Vie Villa</h3>
                 <h3>Aloft Seminyak</h3>
                 <h3>Impiana Villa</h3>
+                <h3>W Bali</h3>
                 <h3>Aleva Villa</h3>
                 <h3>Monolocale Resort</h3>
                 <h3>Ize Seminyak</h3>
-                <h3>Mamaka By Ovolo</h3>
+                <h3>Aksari Villa</h3>
+                <h3>Astera Villa</h3>
+                <h3>Ayona Villa</h3>
+                <h3>Cyrus Villa</h3>
+                <h3>Double Six Luxury</h3>
+                <h3>Potato Head Suites</h3>
+                <h3>Sana Vie Villa</h3>
+                <h3>Claremont Villa</h3>
+                <h3>Elysian Boutique Villa</h3>
+                <h3>Samaya Seminyak</h3>
+                <h3>Aloft Seminyak</h3>
+                <h3>La Mira Villa</h3>
+                <h3>Seminyak Sanctuary</h3>
+                <h3>Kolila Villa</h3>
+                <h3>La Vie Villa</h3>
+                <h3>Sheraton Kuta</h3>
                 <h3>Aryaduta Kuta</h3>
                 <h3>Tribe</h3>
                 <h3>Aloft Kuta</h3>
                 <h3>Paasha Atelier</h3>
+                <h3>Mamaka By Ovolo</h3>
+                <h3>Beachwalk Residence</h3>
+                <h3>Discovery Kartika Plaza</h3>
+                <h3>Ramayana Suites</h3>
+                <h3>The Anvaya Beach</h3>
+                <h3>Four Seasons Jimbaran</h3>
                 <h3>Movenpick Jimbaran</h3>
                 <h3>Platinum Jimbaran</h3>
+                <h3>Le Meridien</h3>
+                <h3>Intercontinental Bali</h3>
                 <h3>Umana Bali</h3>
+                <h3>Jumeirah Bali</h3>
+                <h3>Renaissance Uluwatu</h3>
+                <h3>Eight Palms Villa</h3>
+                <h3>Jumeirah Bali</h3>
+                <h3>Renaissance Uluwatu</h3>
+                <h3>Raffles Jakarta</h3>
                 <h3>Ascott Jakarta</h3>
                 <h3>Citadines Sudirman</h3>
                 <h3>Hilton DoubleTree</h3>
+                <h3>Ascott Sudirman</h3>
                 <h3>Parkroyal Serviced Suites</h3>
                 <h3>Somerset Sudirman</h3>
+                <h3>Kempinski Jakarta</h3>
+                <h3>Pullman Park</h3>
                 <h3>Aloft Wahied Hasiem</h3>
-                <h3>Ascott Sudirman</h3>
                 <h3>Vertu Harmoni</h3>
                 <h3>Pan Pacific</h3>
+                <h3>Ascott Kuningan</h3>
+                <h3>Grand Mercure</h3>
+                <h3>Parkroyal Suites</h3>
+                <h3>Sheraton Soekarno</h3>
+                <h3>Grove Suites</h3>
+                <h3>FM7 Tangerang</h3>
+                <h3>Merlynn Park</h3>
                 <h3>Grand Aston</h3>
                 <h3>Le Eminence</h3>
+                <h3>Pesona Alam</h3>
+                <h3>Botanica Sanctuary</h3>
+                <h3>Villa Marina</h3>
                 <h3>Courtyard Marriott</h3>
-                <h3>The Trans Luxury</h3>
+                <h3>Sheraton Bandung</h3>
+                <h3>Trans Luxury</h3>
+                <h3>Four Points Sheraton</h3>
                 <h3>Kalandara</h3>
             </div>
         </div>
@@ -1460,10 +1684,18 @@
     </section>
 
 
+
+
+
+
+
     <!-- Delete the clicked inserted flight data -->
-    <div id="ensure_delete_clint_movemnt_data_div" class="ensure_your_delete_action">
+    <div id="ensure_delete_or_edit_clint_movemnt_data_div" class="ensure_your_delete_action">
         <button onclick="runDeleteClickedClintMovementsDataFunction()">حذف</button>
+        <button onclick="runEditClickedClintMovementsDataFunction()">تعديل</button>
     </div>
+
+
 
 
 
@@ -1492,69 +1724,22 @@
 
 
             <div id="clint_movements_places_names_options_for_bali_area_2">
-                <h6>المنطقة الثانية <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
+                <h6>مزارات كوتا <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">الألعاب البحرية في منطقة نوسادوا</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ PANTAI PANDAWA</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ اطلاله الجرف الصخري ULUWATU</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ جمبران و الجلوس في احد المطاعم و مشاهدة الغروب
                     الجميل</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_3">
-                <h6>المنطقة الثالثة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة جزيرة NUSA PENIDA المشهورة بشواطئها الجميلة وتكون
                     الرحلة بالقوارب ويتم زيارة من 3 الى 4 شواطئ شاملة التوصيل من والى الفندق و المواصلات داخل الجزيرة
                 </p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_4">
-                <h6>المنطقة الرابعة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر تلاقاواجا</p>
                 <p onclick="pickThisClintMovementsPlace(this)">فعالية ركوب الخيل على الشاطئ الأسود</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_5">
-                <h6>المنطقة الخامسة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر تلاقاواجا</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة شمال الجزيرة المعروفة بأجوائها الساحرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرتين التوام</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة النباتات</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_6">
-                <h6>المنطقة السادسة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية وسط الطبيعه</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال تيغينونغان الجميل</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه ALOHA مراجيح الهواء</p>
-                <p onclick="pickThisClintMovementsPlace(this)">سنتر اوبود للغدا حسب الرغبة</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_7">
-                <h6>المنطقة السابعة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة احد اجمل المعالم قرية جاتلويه المشهورة بمدرجات
                     الأرز</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ The Beach Love والجلوس في الكافي المطل</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_8">
-                <h6>المنطقة الثامنة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة
-                </p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة Alas Harum اجمل مزرعة قهوة في بالي</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bali_area_9">
-                <h6>المنطقة التاسعة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية WATERBOM</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه DOLPIN WATERSPORT</p>
                 <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس ستديو</p>
@@ -1562,7 +1747,24 @@
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_bali_area_9"
+            <div id="clint_movements_places_names_options_for_bali_area_3">
+                <h6>مزارات اوبود <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
+                <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية وسط الطبيعه</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرتين التوام</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة النباتات</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال تيغينونغان الجميل</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه ALOHA مراجيح الهواء</p>
+                <p onclick="pickThisClintMovementsPlace(this)">سنتر اوبود للغدا حسب الرغبة</p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)">زيارة Alas Harum اجمل مزرعة قهوة في بالي</p>
+            </div>
+
+
+            <div id="clint_movements_places_names_options_for_bali_area_4"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
                 <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
@@ -1784,7 +1986,8 @@
         <p id="clint_full_name_p"></p>
 
 
-        <div id="clint_data_row_main_div_id" class="clint_data_row_class" style="background: rgb(0, 85, 149); color: white;">
+        <div id="clint_data_row_main_div_id" class="clint_data_row_class"
+            style="background: rgb(0, 85, 149); color: white;">
             <div>
                 <p>عدد الأشخاص</p>
             </div>
@@ -1910,16 +2113,13 @@
                 <p>عدد الليالي</p>
             </div>
             <div class="description_cell">
-                <p>نوع الغرفة/<br>الفيلا</p>
+                <p>الغرفة/<br>الفيلا</p>
             </div>
             <div>
-                <p>عدد الغرف</p>
+                <p>عدد الوحدات</p>
             </div>
             <div>
-                <p>المدينة</p>
-            </div>
-            <div>
-                <p>التقييم</p>
+                <p>المدينة/<br>التقييم</p>
             </div>
         </div>
 
@@ -2031,7 +2231,10 @@
         </div>
 
 
-        <p id="store_first_clint_movments_date" style="display: none;"></p>
+
+        <p id="store_localstorage_clint_movements_first_day_date_value" style="display: none;"></p>
+        <p id="store_localstorage_clint_movements_last_day_date_value" style="display: none;"></p>
+        <p id="store_localstorage_clint_movements_total_nights_day_date_value" style="display: none;"></p>
 
     </section>
 
@@ -2069,6 +2272,7 @@
                 البرنامج</p>
             <p><ion-icon name="checkmark-outline"></ion-icon>أسعار تذاكر الطيران غير ثابتة وقابلة للزيادة حسب سياسة
                 شركات الطيران</p>
+            <p><ion-icon name="checkmark-outline"></ion-icon>توقيت الطيران الداخلي </p>
             <p><ion-icon name="checkmark-outline"></ion-icon> إلغاء البرامج واستعادة المبلغ المدفوع للفنادق يعتمد على
                 سياسية الفندق حال الطلب، ولا تضمن الشركة استرجاع او تعديل الفندق في حالة الرفض من قبل الفندق</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الوزن المسموح به في الطيران الداخلي 20 كيلو الا اذا تم
@@ -2082,7 +2286,8 @@
                 مسؤولية عن ضياعها)</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> الرجاء الترتيب مع السائق بموعد خروجك لليوم التالي</p>
             <p><ion-icon name="checkmark-outline"></ion-icon> يتم تغيير السائق في كل مدينة</p>
-            <p style="width: 100%; text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف متاحة حتى يتم
+            <p style="width: 100%; text-align: center; font-weight: bolder;">هذا يعتبر عرض سعر فقط ولايعني ان الغرف
+                متاحة حتى يتم
                 التحقق
                 من الفنادق وإعتماد الطلب</p>
 
@@ -2122,7 +2327,8 @@
 
 
 
-        <img src="last-pdf-image.jpg" id="inserted_package_important_notes_data_section_page_image_id" class="inserted_package_data_section_page_image_class">
+        <img src="last-pdf-image.jpg" id="inserted_package_important_notes_data_section_page_image_id"
+            class="inserted_package_data_section_page_image_class">
 
 
     </section>
@@ -2149,11 +2355,13 @@
 
         <div id="package_total_price_div">
             <h6>الإجمالي</h6>
-            <p id="package_total_price_p_id" onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')" style="cursor: pointer;"></p>
+            <p id="package_total_price_p_id" onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')"
+                style="cursor: pointer;"></p>
         </div>
 
 
-        <img src="last-pdf-image.jpg" id="inserted_package_total_price_data_section_page_image_id" class="inserted_package_data_section_page_image_class">
+        <img src="last-pdf-image.jpg" id="inserted_package_total_price_data_section_page_image_id"
+            class="inserted_package_data_section_page_image_class">
 
     </section>
 
