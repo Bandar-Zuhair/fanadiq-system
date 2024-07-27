@@ -146,7 +146,8 @@
 
 
 .special_package_including_data_background_color_text {
-    background: rgb(124, 204, 231);
+    background: rgb(0, 93, 163);
+    color: white;
     border-radius: 7px;
 }
 
@@ -173,7 +174,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(224, 157, 0);
+    background: rgb(0, 56, 99);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -255,7 +256,6 @@
 
 .hotel_row_class div:last-child img {
     width: 100%;
-    border: 0.5px solid black;
     border-radius: 7px;
     cursor: pointer;
 }
@@ -270,36 +270,31 @@
     font-weight: 600;
 }
 
-/* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and "المدينة" cells */
+/* Reduce the width of "تاريخ الدخول وتاريخ الخروج" and cells */
 .hotel_row_class div:nth-child(2),
 .hotel_row_class div:nth-child(3) {
-    /* "عدد الليالي" cell */
     flex-grow: 0.6;
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
 .hotel_row_class div:nth-child(4) {
-    /* "عدد الليالي" cell */
     flex-grow: 0.5;
 }
 
 /* Reduce the width of "نوع الغرفة" and "المدينة" cells */
 .hotel_row_class div:nth-child(5) {
-    /* "عدد الليالي" cell */
     flex-grow: 1.2;
 }
 
 /* Reduce the width of "عدد الليالي" and "المدينة" cells */
 .hotel_row_class div:nth-child(6) {
-    /* "عدد الليالي" cell */
-    flex-grow: 0.4;
+    flex-grow: 0.5;
 }
 
 /* Reduce the width of "المدينة" cells */
 .hotel_row_class div:nth-child(7) {
     flex-grow: 0.6;
     font-size: 0.5vw;
-    border-left: none;
 }
 
 
@@ -477,9 +472,9 @@
     text-align: center;
 }
 
-.clint_movements_row_class div:first-child {
-    flex-grow: 0.9;
-    border-right: 0.5px solid black;
+.clint_movements_row_class h6 {
+    font-size: 2vw;
+    font-weight: 600;
 }
 
 .clint_movements_row_class p {
@@ -490,6 +485,7 @@
 /* Reduce the width of "من" cell */
 .clint_movements_row_class div:nth-child(1) {
     flex-grow: 0.2;
+    border-right: 0.5px solid black;
 }
 
 /* Reduce the width of "الى" cell */
@@ -498,7 +494,15 @@
 }
 
 
+.clint_movements_all_p_elements_div_class {
+    display: flex;
+    flex-direction: column;
+}
 
+.clint_movements_all_p_elements_div_class p {
+    margin: 0;
+    padding: 0;
+}
 
 
 
@@ -560,6 +564,7 @@
 
 .ensure_your_delete_action button {
     font-size: 3vw;
+    margin: 0 5px;
     padding: 5px;
     cursor: pointer;
     border-radius: 7px;
