@@ -694,27 +694,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                 };
 
                 // Function to handle flight row div click or touch
-                function flightRowAirLineControllerFunction(event) {
+                flightRowAirLineControllerFunction = function (event) {
                     let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
                     let clickedFlightDataDiv = event.target.closest(".flight_row_class");
 
                     if (clickedFlightDataDiv) {
                         currentFlightDataDivId = clickedFlightDataDiv.id;
 
-                        /* Function to run delete clicked flight row data */
-                        runDeleteClickedFlightDataFunction = function () {
-                            deleteClickedFlightData(currentFlightDataDivId);
-                        };
-
-                        /* Function to run delete clicked flight row data */
-                        runEditClickedFlightDataFunction = function () {
-                            editClickedFlightData(currentFlightDataDivId);
-                        };
-
                         // Check if the overlay already exists
                         let overlayLayer = document.querySelector(".black_overlay");
                         if (!overlayLayer) {
-                            let overlayLayer = document.createElement("div");
+                            overlayLayer = document.createElement("div");
                             overlayLayer.classList.add("black_overlay");
                             document.body.appendChild(overlayLayer);
 
@@ -728,7 +718,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                                 deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
                                 overlayLayer.style.opacity = "0";
                                 setTimeout(() => {
-                                    document.body.removeChild(overlayLayer);
+                                    // Only remove the overlay if it is still a child of the body
+                                    if (document.body.contains(overlayLayer)) {
+                                        document.body.removeChild(overlayLayer);
+                                    }
                                 }, 300);
                             };
 
@@ -739,8 +732,18 @@ checkInputsToInsertData = function (clickedButtonId) {
                                 event.stopPropagation();
                             });
                         }
+
+                        /* Function to run delete clicked flight row data */
+                        runDeleteClickedFlightDataFunction = function () {
+                            deleteClickedFlightData(currentFlightDataDivId);
+                        };
+
+                        /* Function to run delete clicked flight row data */
+                        runEditClickedFlightDataFunction = function () {
+                            editClickedFlightData(currentFlightDataDivId);
+                        };
                     }
-                }
+                };
 
                 // Praper drag-and-drop functionality for the newly added flight row
                 createFlightDragAndDropMood();
@@ -1278,16 +1281,37 @@ checkInputsToInsertData = function (clickedButtonId) {
                 if (clickedHotelDataDiv) {
                     currentHotelDataDivId = clickedHotelDataDiv.id;
 
-                    // Create an overlay layer for better visual effect
-                    let overlayLayer = document.createElement("div");
-                    overlayLayer.classList.add("black_overlay");
-                    document.body.appendChild(overlayLayer);
+                    // Check if the overlay already exists
+                    let overlayLayer = document.querySelector(".black_overlay");
+                    if (!overlayLayer) {
+                        overlayLayer = document.createElement("div");
+                        overlayLayer.classList.add("black_overlay");
+                        document.body.appendChild(overlayLayer);
 
-                    // Delayed opacity transition for smooth appearance
-                    setTimeout(() => {
-                        overlayLayer.style.opacity = "1";
-                        deleteHotelRowDiv.style.transform = "translate(-50%, -50%)"; // Center div
-                    }, 50);
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = "1";
+                            deleteHotelRowDiv.style.transform = "translate(-50%, -50%)";
+                        }, 50);
+
+                        // Handle both click and touch events on overlay for consistency
+                        let handleOverlayClick = () => {
+                            deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
+                            overlayLayer.style.opacity = "0";
+                            setTimeout(() => {
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
+                            }, 300);
+                        };
+
+                        overlayLayer.addEventListener("click", handleOverlayClick);
+                        overlayLayer.addEventListener("touchstart", handleOverlayClick); // Add touch event handling
+
+                        overlayLayer.addEventListener("click", (event) => {
+                            event.stopPropagation();
+                        });
+                    }
 
                     /* Function to run delete clikced hotel row data */
                     runDeleteClickedHotelDataFunction = function () {
@@ -1298,22 +1322,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     runEditClickedHotelDataFunction = function () {
                         editClickedHotelDataFunction(currentHotelDataDivId);
                     };
-
-                    // Click handler to close overlay and delete box div on click outside
-                    overlayLayer.onclick = () => {
-                        deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)"; // Slide out
-                        overlayLayer.style.opacity = "0"; // Hide overlay
-
-                        // Remove overlay and delete box div from DOM after transition
-                        setTimeout(() => {
-                            document.body.removeChild(overlayLayer);
-                        }, 300); // Match transition duration in CSS
-                    };
-
-                    // Prevent overlayLayer click propagation to avoid immediate closure
-                    overlayLayer.addEventListener("click", (event) => {
-                        event.stopPropagation(); // Prevent immediate closure of overlay on click
-                    });
                 }
             };
 
@@ -1619,6 +1627,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         // Create and append a new <p> element with the combined city text
                         let pElementCombinedCity = document.createElement("p");
                         pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.className = `clint_movements_row_controller`;
                         pElementCombinedCity.innerText = combinedCityText;
                         document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
 
@@ -1630,6 +1639,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         // Create and append a new <p> element with the combined city text
                         let pElementCombinedCity = document.createElement("p");
                         pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.className = `clint_movements_row_controller`;
                         pElementCombinedCity.innerText = combinedCityText;
                         document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
                     }
@@ -1652,8 +1662,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Get all dynamically created elements with the class 'clint_movements_row_controller'
                     let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll(".clint_movements_row_controller");
 
-                    // Function to handle touch events and distinguish between tap and scroll
-                    function handleTouchEvent(element) {
+                    // Function to handle touch events and distinguish between tap and scroll for flight row
+                    function handleClintMovementsTouchEvent(element) {
                         let touchStartX, touchStartY, touchStartTime;
 
                         // Record the starting touch position and time
@@ -1685,8 +1695,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                         });
                     }
 
-                    // Function to handle mouse events and distinguish between click and drag
-                    function handleMouseEvent(element) {
+                    // Function to handle mouse events and distinguish between click and drag for flight row
+                    function handleClintMovementsMouseEvent(element) {
                         let mouseStartX,
                             mouseStartY,
                             mouseStartTime,
@@ -1731,8 +1741,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Attach click and touch event listeners to each element
                     clintMovementsRowImageControllers.forEach((element) => {
-                        handleMouseEvent(element); // Handle mouse events with click detection
-                        handleTouchEvent(element); // Handle touch events with tap detection
+                        handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                        handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
                     });
 
                     /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
@@ -2111,7 +2121,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Check if the overlay already exists
                     let overlayLayer = document.querySelector(".black_overlay");
                     if (!overlayLayer) {
-                        let overlayLayer = document.createElement("div");
+                        overlayLayer = document.createElement("div");
                         overlayLayer.classList.add("black_overlay");
                         document.body.appendChild(overlayLayer);
 
@@ -2125,7 +2135,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                             deleteclintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
                             overlayLayer.style.opacity = "0";
                             setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
                             }, 300);
                         };
 
@@ -2503,11 +2516,15 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdfWidth = 210; // A4 width in mm
         let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
+        let padding = 2; // Padding in mm
+        let contentWidth = pdfWidth - 2 * padding; // Adjusted width with padding
+
         let pdf = new jsPDF("p", "mm", [pdfWidth, pdfHeight]);
 
         let imgData = combinedCanvas.toDataURL("image/jpeg", 0.4); // Compress image to reduce size
 
-        pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight, "", "FAST");
+        // Add the image to the PDF with padding
+        pdf.addImage(imgData, "JPEG", padding, 0, contentWidth, pdfHeight, "", "FAST");
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
