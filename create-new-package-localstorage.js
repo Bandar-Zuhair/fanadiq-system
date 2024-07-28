@@ -699,27 +699,17 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             };
 
             // Function to handle flight row div click or touch
-            function flightRowAirLineControllerFunction(event) {
+            flightRowAirLineControllerFunction = function (event) {
                 let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
                 let clickedFlightDataDiv = event.target.closest(".flight_row_class");
 
                 if (clickedFlightDataDiv) {
                     currentFlightDataDivId = clickedFlightDataDiv.id;
 
-                    /* Function to run delete clicked flight row data */
-                    runDeleteClickedFlightDataFunction = function () {
-                        deleteClickedFlightData(currentFlightDataDivId);
-                    };
-
-                    /* Function to run delete clicked flight row data */
-                    runEditClickedFlightDataFunction = function () {
-                        editClickedFlightData(currentFlightDataDivId);
-                    };
-
                     // Check if the overlay already exists
                     let overlayLayer = document.querySelector(".black_overlay");
                     if (!overlayLayer) {
-                        let overlayLayer = document.createElement("div");
+                        overlayLayer = document.createElement("div");
                         overlayLayer.classList.add("black_overlay");
                         document.body.appendChild(overlayLayer);
 
@@ -733,7 +723,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
                             overlayLayer.style.opacity = "0";
                             setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
                             }, 300);
                         };
 
@@ -744,8 +737,18 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             event.stopPropagation();
                         });
                     }
+
+                    /* Function to run delete clicked flight row data */
+                    runDeleteClickedFlightDataFunction = function () {
+                        deleteClickedFlightData(currentFlightDataDivId);
+                    };
+
+                    /* Function to run delete clicked flight row data */
+                    runEditClickedFlightDataFunction = function () {
+                        editClickedFlightData(currentFlightDataDivId);
+                    };
                 }
-            }
+            };
 
             // Praper drag-and-drop functionality for the newly added flight row
             createFlightDragAndDropMood();
@@ -1183,7 +1186,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Check if the overlay already exists
                     let overlayLayer = document.querySelector(".black_overlay");
                     if (!overlayLayer) {
-                        let overlayLayer = document.createElement("div");
+                        overlayLayer = document.createElement("div");
                         overlayLayer.classList.add("black_overlay");
                         document.body.appendChild(overlayLayer);
 
@@ -1197,7 +1200,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
                             overlayLayer.style.opacity = "0";
                             setTimeout(() => {
-                                document.body.removeChild(overlayLayer);
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
                             }, 300);
                         };
 
@@ -1398,8 +1404,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Get all dynamically created elements with the class 'clint_movements_row_controller'
             let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll(".clint_movements_row_controller");
 
-            // Function to handle touch events and distinguish between tap and scroll
-            function handleTouchEvent(element) {
+            // Function to handle touch events and distinguish between tap and scroll for flight row
+            function handleClintMovementsTouchEvent(element) {
                 let touchStartX, touchStartY, touchStartTime;
 
                 // Record the starting touch position and time
@@ -1431,8 +1437,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 });
             }
 
-            // Function to handle mouse events and distinguish between click and drag
-            function handleMouseEvent(element) {
+            // Function to handle mouse events and distinguish between click and drag for flight row
+            function handleClintMovementsMouseEvent(element) {
                 let mouseStartX,
                     mouseStartY,
                     mouseStartTime,
@@ -1477,8 +1483,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Attach click and touch event listeners to each element
             clintMovementsRowImageControllers.forEach((element) => {
-                handleMouseEvent(element); // Handle mouse events with click detection
-                handleTouchEvent(element); // Handle touch events with tap detection
+                handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
             });
 
             // Function to handle delete clicked clint movements data
@@ -1672,12 +1678,12 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                     // Create the HTML content for a new hotel row
                     let clintMovementsRowTableDivContent = `
-                    <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
-                    <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
-                    <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
-                    <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
-                    <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
-                `;
+                        <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
+                        <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
+                        <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
+                        <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                        <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                    `;
 
                     // Insert the updated HTML content into the current edithing div
                     clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
@@ -1797,7 +1803,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Attach click and touch event listeners to each element
                     clintMovementsRowImageControllers.forEach((element) => {
                         handleMouseEvent(element); // Handle mouse events with click detection
-                        handleTouchEvent(element); // Handle touch events with tap detection
                     });
 
                     /* Reset all variables for later refrence (when editing) */
@@ -1834,7 +1839,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Check if the overlay already exists
             let overlayLayer = document.querySelector(".black_overlay");
             if (!overlayLayer) {
-                let overlayLayer = document.createElement("div");
+                overlayLayer = document.createElement("div");
                 overlayLayer.classList.add("black_overlay");
                 document.body.appendChild(overlayLayer);
 
@@ -1848,7 +1853,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     deleteclintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
                     overlayLayer.style.opacity = "0";
                     setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
+                        // Only remove the overlay if it is still a child of the body
+                        if (document.body.contains(overlayLayer)) {
+                            document.body.removeChild(overlayLayer);
+                        }
                     }, 300);
                 };
 
