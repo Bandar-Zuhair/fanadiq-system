@@ -577,7 +577,7 @@ smsCardWithInternetAmountInputOptions.forEach((option) => {
                 // If the clicked h3 element's inner text is not "حذف"
                 if (lastClickedClintMovementsCityInput.id === "sms_card_with_internet_amount_input_id") {
                     // Set the value of the sms card input field with the selected option
-                    lastClickedClintMovementsCityInput.value = `شرائح إتصال مع نت مفتوح ل${option.textContent}`;
+                    lastClickedClintMovementsCityInput.value = `شرائح إنترنت ل${option.textContent}`;
                 } else if (lastClickedClintMovementsCityInput.id === "inner_flight_tickets_amount_input_id") {
                     // Set the value of the inner flight tickets input field with the selected option
                     lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
