@@ -308,6 +308,7 @@
 /* Inserted transportation_plan data position */
 .clint_movements_row_class {
     background: white;
+    min-height: 9vw;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
