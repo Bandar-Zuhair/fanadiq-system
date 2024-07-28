@@ -178,7 +178,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(90, 42, 5);
+    background: rgb(134, 62, 3);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -321,7 +321,6 @@
 
 
 
-
 /* Inserted package important note position */
 .inserted_package_important_note_position_div_class {
     background: white;
@@ -359,7 +358,7 @@
 }
 
 #package_total_price_div h6 {
-    background: rgb(90, 42, 5);
+    background: rgb(134, 62, 3);
     color: white;
     font-size: 5vw; 
     padding: 5px 15px;
