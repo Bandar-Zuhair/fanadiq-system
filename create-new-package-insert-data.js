@@ -282,7 +282,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 p.appendChild(icon); // Append the icon to the paragraph
 
                 if (id === "sms_card_with_internet_checkbox") {
-                    let textContent = smsCardWithInternetAmountInputReayText !== "" ? ` ${smsCardWithInternetAmountInputReayText}` : " شرائح إتصال مع نت مفتوح"; // Default text if input is empty
+                    let textContent = smsCardWithInternetAmountInputReayText !== "" ? ` ${smsCardWithInternetAmountInputReayText}` : " شرائح إنترنت"; // Default text if input is empty
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = "0 5px"; // Add padding to this p element
                 } else if (id === "inner_flight_tickets_checkbox") {
