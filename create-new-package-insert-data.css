@@ -178,7 +178,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(134, 62, 3);
+    background: rgb(0, 86, 60);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -250,8 +250,8 @@
 }
 
 .hotel_row_class div:first-child {
-    border-right: 0.5px solid black;
     flex-grow: 0.9;
+    border-right: 0.5px solid black;
 }
 
 .hotel_row_class div:last-child {
@@ -333,12 +333,13 @@
 .inserted_package_important_note_position_div_class p {
     width: fit-content;
     font-size: 2vw;
-    padding: 5px 0;
+    margin: 5px 0;
     text-align: start;
 }
 
-
-
+.inserted_package_including_data_text{
+    margin: 2px 0;
+}
 
 
 
@@ -358,7 +359,7 @@
 }
 
 #package_total_price_div h6 {
-    background: rgb(134, 62, 3);
+    background: rgb(0, 141, 99);
     color: white;
     font-size: 5vw; 
     padding: 5px 15px;
