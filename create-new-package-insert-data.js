@@ -591,8 +591,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Hide delete button div
                     let overlayLayer = document.querySelector(".black_overlay");
-                    let deleteHotelRowDiv = document.getElementById("ensure_delete_or_edit_clint_movements_data_div");
-                    deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
+                    let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
+                    deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
 
                     // Hide overlay layer with opacity transition
                     overlayLayer.style.opacity = "0";
@@ -1274,7 +1274,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             };
 
             // Function to show delete the inserted hotel data
-            hotelRowImageControllerFunction = function (event) {
+            function hotelRowImageControllerFunction(event) {
                 let deleteHotelRowDiv = document.getElementById("ensure_delet_or_edit_hotel_data_div");
                 let clickedHotelDataDiv = event.target.closest(".hotel_row_class");
 
@@ -1323,7 +1323,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         editClickedHotelDataFunction(currentHotelDataDivId);
                     };
                 }
-            };
+            }
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function createHotelDragAndDropMood() {
@@ -1568,7 +1568,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let clintMovementsRowTableDivContent = `
                         <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
                         <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
-                        <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
+                        <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller" style="cursor: pointer;"></div>
                         <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                         <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                     `;
@@ -1576,7 +1576,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Create a new div element to hold the hotel row
                     let clintMovementsRowTableDiv = document.createElement("div");
                     clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
-                    clintMovementsRowTableDiv.classList.add("clint_movements_row_class", "clint_movements_row_class_for_editing"); // Add a class to the div for styling
+                    clintMovementsRowTableDiv.classList.add("clint_movements_row_class", "clint_movements_row_class_for_editing"); // Add a class to the div for styling and for re-arranging the first and last clint movements dates
 
                     // Insert the HTML content into the newly created div
                     clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
@@ -1962,7 +1962,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         let clintMovementsRowTableDivContent = `
                             <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
                             <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
-                            <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller inserted_clint_movements_data_row" style="cursor: pointer;"></div>
+                            <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller" style="cursor: pointer;"></div>
                             <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                             <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                         `;
@@ -2084,8 +2084,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                         // Attach click and touch event listeners to each element
                         clintMovementsRowImageControllers.forEach((element) => {
-                            handleMouseEvent(element); // Handle mouse events with click detection
-                            handleTouchEvent(element); // Handle touch events with tap detection
+                            handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                            handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
                         });
 
                         /* Reset all variables for later refrence (when editing) */
@@ -2535,9 +2535,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         document.getElementById("downloaded_pdf_important_notes_data_page").style.display = "none"; // Hide the section after saving the PDF
 
-        if (document.getElementById("inserted_company_name_image_position_div")) {
-            document.getElementById("inserted_company_name_image_position_div").style.display = "flex"; // Show the section before checking visibility
-        }
+        document.getElementById("inserted_company_name_image_position_div").style.display = "flex"; // Show the section before checking visibility
 
         saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
     };
@@ -2550,11 +2548,9 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     document.getElementById("downloaded_pdf_important_notes_data_page").style.display = "block"; // Show the section before checking visibility
 
-    if (document.getElementById("inserted_company_name_image_position_div")) {
-        document.getElementById("inserted_company_name_image_position_div").style.display = "none"; // Show the section before checking visibility
-    }
+    document.getElementById("inserted_company_name_image_position_div").style.display = "none"; // Show the section before checking visibility
 
-    if (document.getElementById("package_totla_price_input_id").value !== "") {
+    if (document.getElementById("downloaded_pdf_total_price_data_page").style.display !== "none") {
         document.getElementById("inserted_package_total_price_data_section_page_image_id").style.display = "inline"; // Show the section before checking visibility
         document.getElementById("inserted_package_important_notes_data_section_page_image_id").style.display = "none"; // Show the section before checking visibility
     } else {
