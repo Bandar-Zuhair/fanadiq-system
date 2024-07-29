@@ -2869,7 +2869,6 @@ let isVisible = function (element) {
     return element && element.style.display !== 'none' && element.offsetParent !== null;
 };
 
-/* Download the pdf file with the given name */
 downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
@@ -2942,10 +2941,10 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData = combinedCanvas.toDataURL('image/png', 1.0); // Use PNG format for higher quality
 
         // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'PNG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
@@ -3027,3 +3026,4 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
+
