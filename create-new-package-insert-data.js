@@ -1,424 +1,90 @@
-/* Function to save new website localstorage data name */
-saveNewWebsiteLpcalStorageDataName = function () {
-    let storeLastClickedLocalstorageDataName = document.getElementById("store_last_clicked_localstorage_data_name");
-    let firstDiv = document.getElementById("first_div_in_localstorage_save_name_input_div");
+/* Variable to save a number for counting functionality (Ex: hotel row table unique id..?) */
+let insertedHotelDataDivUniqueId = 1;
+let insertedFlightDataDivUniqueId = 1;
+let insertedClintMovementsRowDivUniqueId = 1;
 
-    if (storeLastClickedLocalstorageDataName.innerText === "") {
-        firstDiv.style.display = "none";
-    } else {
-        firstDiv.style.display = "flex";
-    }
+/* Function for checking if ready or no to insert the data */
+// Function to check if all inputs have values
+checkInputsToInsertData = function (clickedButtonId) {
+    // Check if the clicked button is the 'clint_inputs_submit_icon'
+    if (clickedButtonId === "clint_inputs_submit_icon") {
+        // Get references to all input elements for later use
+        let packageClintNameInput = document.getElementById("package_clint_name_input_id").value;
+        let adultPackagePersonAmountInput = document.getElementById("adult_package_person_amount_input_id").value;
+        let kidsPackagePersonAmountInput = document.getElementById("kids_package_person_amount_input_id").value;
+        let packageStartDateInput = document.getElementById("package_start_date_input_id").value;
+        let packageEndDateInput = document.getElementById("package_end_date_input_id").value;
+        let clintCompanyNameInput = document.getElementById("clint_company_name_input_id").value;
+        let honeymoonCheckbox = document.getElementById("honeymoon_checkbox");
+        let guysCheckbox = document.getElementById("guys_checkbox");
+        let familyCheckbox = document.getElementById("family_checkbox");
+        let twoPeopleCheckbox = document.getElementById("two_people_checkbox");
 
-    /* Get the 'localstorage_save_name_input_div' and show it */
-    let localStorageStoreNewDataDiv = document.getElementById("localstorage_save_name_input_div");
-
-    // Create an overlay layer for better visual effect
-    let overlayLayer = document.createElement("div");
-    overlayLayer.classList.add("black_overlay");
-    document.body.appendChild(overlayLayer);
-
-    // Delayed opacity transition for smooth appearance
-    setTimeout(() => {
-        overlayLayer.style.opacity = "1";
-        localStorageStoreNewDataDiv.style.transform = "translate(-50%, -50%)"; // Center div
-    }, 50);
-
-    // Click handler to close overlay and delete box div on click outside
-    overlayLayer.onclick = () => {
-        localStorageStoreNewDataDiv.style.transform = "translate(-50%, -150vh)"; // Slide out
-        overlayLayer.style.opacity = "0"; // Hide overlay
-
-        // Remove overlay and delete box div from DOM after transition
+        // Change the submit icon color to green to indicate success
+        clint_inputs_submit_icon.style.backgroundColor = "rgb(0, 255, 0)";
+        // Set the background color of the submit icon back to default color
         setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-    };
-
-    // Prevent overlayLayer click propagation to avoid immediate closure
-    overlayLayer.addEventListener("click", (event) => {
-        event.stopPropagation(); // Prevent immediate closure of overlay on click
-    });
-
-    /* Save (New) website data to the localstorage */
-    saveNewWebsiteLocalStorageDataName = function () {
-        let localStorageNewSaveDataNameInput = document.getElementById("localstorage_new_save_data_name_input_id").value;
-        let localstorageNewSaveButton = document.getElementById("localstorage_new_save_button_id");
-
-        /* If there is no value in the 'localstorage_new_save_data_name_input_id' input, stop the process */
-        if (localStorageNewSaveDataNameInput === "" || localStorageNewSaveDataNameInput === "Last Download") {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = "red";
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = "darkorange";
-            }, 500);
-
-            return;
-        }
-
-        // Initialize an array in local storage if it doesn't exist
-        let savedWebsiteDataArray = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
-
-        // Create an object to store visible div elements
-        let newObject = {
-            name: localStorageNewSaveDataNameInput,
-            elements: {},
-        };
-
-        // List of div IDs to check visibility
-        let divIds = [
-            "downloaded_pdf_clint_data_page",
-            "downloaded_pdf_package_including_data_page",
-            "downloaded_pdf_flight_data_page",
-            "downloaded_pdf_hotel_data_page",
-            "downloaded_pdf_clint_movements_data_page",
-            "downloaded_pdf_total_price_data_page",
-        ];
-
-        // Check visibility of each div and add to the object if visible
-        let isAnyDivVisible = false;
-        divIds.forEach((divId) => {
-            let element = document.getElementById(divId);
-            if (element && element.style.display !== "none" && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                newObject.elements[divId] = element.outerHTML;
-                isAnyDivVisible = true;
-            }
-        });
-
-        // If no visible divs were found, change the submit icon background color and exit
-        if (!isAnyDivVisible) {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = "red";
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = "darkorange";
-            }, 500);
-
-            return;
-        }
-
-        // Check if an object with the same name already exists
-        let existingObjectIndex = savedWebsiteDataArray.findIndex((item) => item.name === localStorageNewSaveDataNameInput);
-
-        if (existingObjectIndex !== -1) {
-            // Replace the existing object with the new data
-            savedWebsiteDataArray[existingObjectIndex] = newObject;
-        } else {
-            // Add the new object to the array
-            savedWebsiteDataArray.push(newObject);
-        }
-
-        // Save the updated array to local storage
-        localStorage.setItem("Saved_Website_Data_Array", JSON.stringify(savedWebsiteDataArray));
-
-        // Change the submit icon background color to green
-        localstorageNewSaveButton.style.backgroundColor = "rgb(0, 255, 0)";
-
-        // Set the background color of the submit icon back to the default color
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = "darkorange";
+            clint_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
         }, 500);
 
-        localStorageStoreNewDataDiv.style.transform = "translate(-50%, -150vh)"; // Slide out
-        overlayLayer.style.opacity = "0"; // Hide overlay
+        if (clintCompanyNameInput !== "") {
+            // Create a new image element for the company logo
+            let insertedCompanyNameLogoImage = document.createElement("img");
+            // Replace spaces with dashes in the company name
+            let companyNameWithoutSpaces = clintCompanyNameInput.replace(/\s+/g, "-");
+            insertedCompanyNameLogoImage.src = `صور-الشركات/${companyNameWithoutSpaces}.jpg`; // Assuming this path is correct
+            insertedCompanyNameLogoImage.classList.add("inserted_company_name_logo");
+            insertedCompanyNameLogoImage.id = "inserted_company_name_logo_id";
+            insertedCompanyNameLogoImage.onclick = function (event) {
+                event.preventDefault(); // Prevent the default behavior of the click event
+                event.stopPropagation(); // Stop the event from propagating further
 
-        // Remove overlay and delete box div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
+                // Create overlay layer
+                let overlayLayer = document.createElement("div");
+                overlayLayer.className = "black_overlay";
+                overlayLayer.id = "black_overlay_id";
+                document.body.appendChild(overlayLayer);
 
-        /* Reset the input value after saving a new localStorage website data */
-        localstorage_new_save_data_name_input_id.value = "";
-    };
-
-    /* Save (Current) website data to the localstorage */
-    saveCurrentWebsiteLocalStorageDataName = function () {
-        let storeLastClickedLocalstorageDataName = document.getElementById("store_last_clicked_localstorage_data_name").innerText;
-        let localstorageNewSaveButton = document.getElementById("localstorage_new_save_button_id");
-
-        // Initialize an array in local storage if it doesn't exist
-        let savedWebsiteDataArray = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
-
-        // Create an object to store visible div elements
-        let newObject = {
-            name: storeLastClickedLocalstorageDataName,
-            elements: {},
-        };
-
-        // List of div IDs to check visibility
-        let divIds = [
-            "downloaded_pdf_clint_data_page",
-            "downloaded_pdf_package_including_data_page",
-            "downloaded_pdf_flight_data_page",
-            "downloaded_pdf_hotel_data_page",
-            "downloaded_pdf_clint_movements_data_page",
-            "downloaded_pdf_total_price_data_page",
-        ];
-
-        // Check visibility of each div and add to the object if visible
-        let isAnyDivVisible = false;
-        divIds.forEach((divId) => {
-            let element = document.getElementById(divId);
-            if (element && element.style.display !== "none" && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                newObject.elements[divId] = element.outerHTML;
-                isAnyDivVisible = true;
-            }
-        });
-
-        // If no visible divs were found, change the submit icon background color and exit
-        if (!isAnyDivVisible) {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = "red";
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = "darkorange";
-            }, 500);
-
-            return;
-        }
-
-        // Check if an object with the same name already exists
-        let existingObjectIndex = savedWebsiteDataArray.findIndex((item) => item.name === storeLastClickedLocalstorageDataName);
-
-        if (existingObjectIndex !== -1) {
-            // Replace the existing object with the new data
-            savedWebsiteDataArray[existingObjectIndex] = newObject;
-        } else {
-            // Add the new object to the array
-            savedWebsiteDataArray.push(newObject);
-        }
-
-        // Save the updated array to local storage
-        localStorage.setItem("Saved_Website_Data_Array", JSON.stringify(savedWebsiteDataArray));
-
-        // Change the submit icon background color to green
-        localstorageNewSaveButton.style.backgroundColor = "rgb(0, 255, 0)";
-
-        // Set the background color of the submit icon back to the default color
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = "darkorange";
-        }, 500);
-
-        localStorageStoreNewDataDiv.style.transform = "translate(-50%, -150vh)"; // Slide out
-        overlayLayer.style.opacity = "0"; // Hide overlay
-
-        // Remove overlay and delete box div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-    };
-};
-
-/* Function to update the displayed local storage data names */
-function updateLocalStorageDataNames(localStorageControllerDivId) {
-    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
-
-    // Clear existing <p> elements
-    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = "";
-
-    // Get the saved data array from local storage
-    let savedWebsiteDataArray = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
-
-    // Create new <p> elements based on the saved data array
-    savedWebsiteDataArray.forEach((data) => {
-        let pElement = document.createElement("h3");
-        pElement.innerText = data.name;
-        pElement.onclick = function () {
-            pickThisWebsiteLocalStorageDataName(pElement);
-        };
-        allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
-    });
-}
-
-/* Function to pick only one website localStorage data name */
-pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
-    // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
-    let allDataNames1 = document.querySelectorAll("#all_localstorage_stored_data_names_for_importing_data_div h3");
-    let allDataNames2 = document.querySelectorAll("#all_localstorage_stored_data_names_for_deleting_data_div h3");
-
-    // Loop through each <p> element
-    allDataNames1.forEach(function (dataName) {
-        // Reset the background color of all <p> elements to the default color
-        if (dataName !== clickedLocalStorageDataName) {
-            dataName.style.backgroundColor = "white";
-            dataName.style.color = "black";
-        }
-    });
-
-    // Loop through each <p> element
-    allDataNames2.forEach(function (dataName) {
-        // Reset the background color of all <p> elements to the default color
-        if (dataName !== clickedLocalStorageDataName) {
-            dataName.style.backgroundColor = "white";
-            dataName.style.color = "black";
-        }
-    });
-
-    // Change the background color of the clicked <p> element based on its current background color
-    if (clickedLocalStorageDataName.style.backgroundColor === "rgb(0, 155, 0)") {
-        clickedLocalStorageDataName.style.backgroundColor = "white";
-        clickedLocalStorageDataName.style.color = "black";
-    } else {
-        clickedLocalStorageDataName.style.backgroundColor = "rgb(0, 155, 0)";
-        clickedLocalStorageDataName.style.color = "white";
-    }
-};
-
-function importWebsiteLocalStorageDataName() {
-    // Re-enable scrolling
-    document.documentElement.style.overflow = "auto";
-
-    let allLocalStorageDataNamesDiv = document.querySelectorAll("#all_localstorage_stored_data_names_for_importing_data_div h3");
-    let found = false;
-
-    allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
-        if (clickedLocalStorageDataNameElement.style.backgroundColor === "rgb(0, 155, 0)") {
-            found = true;
-
-            let dropdownDivElements = document.querySelectorAll(".searchable_names_dropdown_class");
-            dropdownDivElements.forEach((dropdown) => {
-                dropdown.classList.remove("show");
-            });
-
-            overlayLayer.style.opacity = "0";
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300);
-
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
-            let clickedDataName = clickedLocalStorageDataNameElement.innerText;
-            let matchingObject = savedWebsiteDataArray.find((data) => data.name === clickedDataName);
-
-            if (matchingObject && matchingObject.elements) {
-                document.getElementById("inserted_clint_data_position_div").innerHTML = "";
-                document.getElementById("inserted_package_icluding_data_position_div").innerHTML = "";
-                document.getElementById("inserted_flight_data_position_div").innerHTML = "";
-                document.getElementById("inserted_hotel_data_position_div").innerHTML = "";
-                document.getElementById("inserted_clint_movements_data_position_div").innerHTML = "";
-
-                document.getElementById("downloaded_pdf_clint_data_page").style.display = "none";
-                document.getElementById("downloaded_pdf_package_including_data_page").style.display = "none";
-                document.getElementById("downloaded_pdf_flight_data_page").style.display = "none";
-                document.getElementById("downloaded_pdf_hotel_data_page").style.display = "none";
-                document.getElementById("downloaded_pdf_clint_movements_data_page").style.display = "none";
-                document.getElementById("downloaded_pdf_total_price_data_page").style.display = "none";
-
-                for (let divId in matchingObject.elements) {
-                    let htmlSectionPdfPageDiv = document.getElementById(divId);
-                    htmlSectionPdfPageDiv.style.display = "block";
-                    htmlSectionPdfPageDiv.innerHTML = matchingObject.elements[divId];
-                    reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
-                }
-
-                /* Store the clicked localstorage data name for later saving refrence */
-                store_last_clicked_localstorage_data_name.innerText = clickedDataName;
-
-                /* Show the download button */
-                document.getElementById("export_package_pdf_div_id").style.display = "block";
-
-                overlayLayer.style.opacity = "0";
+                // Show overlay layer with smooth opacity transition
                 setTimeout(() => {
-                    overlayLayer.style.display = "none";
-                }, 300);
-            }
-        }
-    });
+                    overlayLayer.style.opacity = "1"; // Delayed opacity transition for smooth appearance
+                }, 100);
 
-    if (!found) {
-        import_localstorage_data_name_submit_button_id.style.backgroundColor = "red";
-        setTimeout(() => {
-            import_localstorage_data_name_submit_button_id.style.backgroundColor = "darkorange";
-        }, 500);
-    }
-}
+                // Slide in delete box options div
+                let deleteHotelCardDiv = document.getElementById("ensure_delete_company_logo_div");
 
-/* Function to delete the saved website localstorage data name */
-deleteWebsiteLocalStorageDataName = function () {
-    // Re-enable scrolling
-    document.documentElement.style.overflow = "auto";
-
-    // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
-    let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById("all_localstorage_stored_data_names_for_deleting_data_div");
-
-    // Get all p elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
-    let pElements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName("h3");
-
-    // Loop through all p elements
-    for (let p of pElements) {
-        // Check the background color
-        let bgColor = window.getComputedStyle(p).backgroundColor;
-        if (bgColor === "rgb(0, 155, 0)") {
-            // Search and delete the object in localStorage
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
-            savedWebsiteDataArray = savedWebsiteDataArray.filter((item) => item.name !== p.innerText);
-            localStorage.setItem("Saved_Website_Data_Array", JSON.stringify(savedWebsiteDataArray));
-
-            /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
-            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll(".searchable_names_dropdown_class");
-            allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach((dropdown) => {
-                dropdown.classList.remove("show");
-            });
-
-            overlayLayer.style.opacity = "0"; // Hide overlay
-
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        } else {
-            // Change the submit button background color
-            delete_localstorage_data_name_submit_button_id.style.backgroundColor = "red";
-            setTimeout(() => {
-                delete_localstorage_data_name_submit_button_id.style.backgroundColor = "darkorange";
-            }, 500);
-        }
-    }
-};
-
-/* Function to re-active the drag and drop functionality (copied code for the main inserted daa js code) */
-reActiveDragAndDropFunctionality = function (visiableDivIdName) {
-    if (visiableDivIdName === "downloaded_pdf_clint_data_page") {
-        /* Function to reActive the company logo delete functionality */
-        document.getElementById("inserted_company_name_logo_id").onclick = function (event) {
-            event.preventDefault(); // Prevent the default behavior of the click event
-            event.stopPropagation(); // Stop the event from propagating further
-
-            // Create overlay layer
-            let overlayLayer = document.createElement("div");
-            overlayLayer.className = "black_overlay";
-            overlayLayer.id = "black_overlay_id";
-            document.body.appendChild(overlayLayer);
-
-            // Show overlay layer with smooth opacity transition
-            setTimeout(() => {
-                overlayLayer.style.opacity = "1"; // Delayed opacity transition for smooth appearance
-            }, 100);
-
-            // Slide in delete box options div
-            let deleteHotelCardDiv = document.getElementById("ensure_delete_company_logo_div");
-
-            // Smoothly slide to the middle of the screen
-            setTimeout(() => {
-                deleteHotelCardDiv.style.transform = "translate(-50%, -50%)"; // Slide to the center of the screen
-            }, 50); // Adjust timing as needed
-
-            // Event listener to close overlay and delete box div on click outside
-            overlayLayer.onclick = () => {
-                // Hide delete box options div
-                deleteHotelCardDiv.style.transform = "translate(-50%, -100vh)";
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = "0";
-
-                // Remove overlay and delete box div from DOM after transition
+                // Smoothly slide to the middle of the screen
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
+                    deleteHotelCardDiv.style.transform = "translate(-50%, -50%)"; // Slide to the center of the screen
+                }, 50); // Adjust timing as needed
+
+                // Event listener to close overlay and delete box div on click outside
+                overlayLayer.onclick = () => {
+                    // Hide delete box options div
+                    deleteHotelCardDiv.style.transform = "translate(-50%, -100vh)";
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = "0";
+
+                    // Remove overlay and delete box div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+                };
             };
-        };
+
+            // Clear previous company logo and insert the new logo div
+            if (document.getElementById("inserted_company_name_image_position_div")) {
+                document.getElementById("inserted_company_name_image_position_div").innerHTML = "";
+            }
+            document.getElementById("inserted_company_name_image_position_div").appendChild(insertedCompanyNameLogoImage);
+
+            // Set the 'welcome_pdf_first_page_image_id' src to the clicked company logo name
+            document.getElementById("welcome_pdf_first_page_image_id").src = `خلفية-الشركات/${companyNameWithoutSpaces}.jpg`;
+        } else {
+            // Reset the 'welcome_pdf_first_page_image_id' src to the default image
+            document.getElementById("welcome_pdf_first_page_image_id").src = "first-pdf-image.jpg";
+        }
 
         /* Function to delete company logo */
         deleteClickedCompanyLogo = function () {
@@ -426,6 +92,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Slide in delete box options div
             let deleteHotelCardDiv = document.getElementById("ensure_delete_company_logo_div");
+
+            // Reset the 'welcome_pdf_first_page_image_id' src to the default image
+            document.getElementById("welcome_pdf_first_page_image_id").src = "first-pdf-image.jpg";
 
             // Event listener to close overlay and delete box div on click outside
             // Hide delete box div
@@ -441,238 +110,301 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.body.removeChild(overlayLayer);
             }, 300); // Match transition duration in CSS
         };
-    } else if (visiableDivIdName === "downloaded_pdf_flight_data_page") {
-        // Get all elements with the class name 'flight_row_class'
-        let flightRowTableDivs = document.querySelectorAll(".flight_row_class");
 
-        // Loop through each 'flight_row_class' element
-        flightRowTableDivs.forEach((flightRowTableDiv) => {
-            // Get the dynamically created 'flightRowAirLineController' element
-            let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll(".flight_row_flight_arrival_time_controller");
+        let clintPackageTypeH6 = document.getElementById("clint_package_type_h6");
 
-            // Function to handle touch events and distinguish between tap and scroll for flight row
-            function handleFlightTouchEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
+        /* Check which checkbox is checked then include the text in the content */
+        if (honeymoonCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = "بكج شهر عسل";
+        } else if (guysCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = "بكج شباب";
+        } else if (familyCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = "بكج عائلة";
+        } else if (twoPeopleCheckbox.checked) {
+            clintPackageTypeH6.innerHTML = "بكج شخصين";
+        } else {
+            clintPackageTypeH6.innerHTML = "بكج جديد";
+        }
 
-                // Record the starting touch position and time
-                element.addEventListener("touchstart", (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                });
+        /* if there is any value in the 'packageClintNameInput' then change the border styling and set the innerText of the p element */
+        if (packageClintNameInput !== "") {
+            /* Set the innerText of the p element */
+            clint_full_name_p.innerText = `الأستاذ : ${packageClintNameInput}`;
 
-                // Compare the ending touch position and time to determine if it was a tap
-                element.addEventListener("touchend", (event) => {
-                    let touch = event.changedTouches[0];
-                    let touchEndX = touch.clientX;
-                    let touchEndY = touch.clientY;
-                    let touchEndTime = new Date().getTime();
+            /* Change the border styling for better looking */
+            pdf_clint_info_section_title_div_id.style.borderBottom = "0.5px solid black";
 
-                    let deltaX = touchEndX - touchStartX;
-                    let deltaY = touchEndY - touchStartY;
-                    let deltaTime = touchEndTime - touchStartTime;
+            /* Show the p element if it was hidden */
+            clint_full_name_p.style.display = "block";
 
-                    // Check if the touch event qualifies as a tap
-                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+            /* But if there is no any value in the 'packageClintNameInput' then do the following code */
+        } else {
+            clint_full_name_p.innerText = "";
 
-                    // If it's a tap, run the click function
-                    if (isTap) {
-                        flightRowAirLineControllerFunction(event);
-                    }
-                });
+            pdf_clint_info_section_title_div_id.style.borderBottom = "none";
+
+            clint_full_name_p.style.display = "none";
+        }
+
+        /* Create a new variable to build all the clint info content */
+        let insertedClintDataRowDivContent;
+
+        /* Check if there is no any data in the following inputs then hide the whole main clint row div */
+        if (adultPackagePersonAmountInput === "" && packageStartDateInput === "" && packageEndDateInput === "") {
+            /* Hide the 'clint_data_row_main_div_id' if there is no data at all */
+            document.getElementById("clint_data_row_main_div_id").style.display = "none";
+
+            /* Set the border bottom of the 'clint_full_name_p' if the table does not exist */
+            clint_full_name_p.style.borderBottom = "0.5px solid black";
+        } else {
+            /* Hide the border bottom of the 'clint_full_name_p' if the table exist */
+            clint_full_name_p.style.borderBottom = "none";
+
+            /* Check if there is any data in the 'kidsPackagePersonAmountInput' then combine adult and kids amounts values */
+            let combinedPersonAmount = `${adultPackagePersonAmountInput}`;
+            if (kidsPackagePersonAmountInput !== "") {
+                combinedPersonAmount += ` ${kidsPackagePersonAmountInput}`;
             }
 
-            // Function to handle mouse events and distinguish between click and drag for flight row
-            function handleFlightMouseEvent(element) {
-                let mouseStartX,
-                    mouseStartY,
-                    mouseStartTime,
-                    isDragging = false;
-
-                // Record the starting mouse position and time
-                element.addEventListener("mousedown", (event) => {
-                    mouseStartX = event.clientX;
-                    mouseStartY = event.clientY;
-                    mouseStartTime = new Date().getTime();
-                    isDragging = false;
-                });
-
-                // Mark as dragging if mouse moves significantly
-                element.addEventListener("mousemove", (event) => {
-                    let deltaX = event.clientX - mouseStartX;
-                    let deltaY = event.clientY - mouseStartY;
-                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                        isDragging = true;
-                    }
-                });
-
-                // Compare the ending mouse position and time to determine if it was a click
-                element.addEventListener("mouseup", (event) => {
-                    let mouseEndX = event.clientX;
-                    let mouseEndY = event.clientY;
-                    let mouseEndTime = new Date().getTime();
-
-                    let deltaX = mouseEndX - mouseStartX;
-                    let deltaY = mouseEndY - mouseStartY;
-                    let deltaTime = mouseEndTime - mouseStartTime;
-
-                    // Check if the mouse event qualifies as a click
-                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a click, run the click function
-                    if (isClick) {
-                        flightRowAirLineControllerFunction(event);
-                    }
-                });
+            /* Check if the 'storePackageTotalNights' is equal undefined or no */
+            if (storePackageTotalNights === undefined) {
+                insertedClintDataRowDivContent = `
+                <div>
+                    <p>${combinedPersonAmount}</p>
+                </div>
+                <div>
+                    <p>${packageStartDateInput}</p>
+                </div>
+                <div>
+                    <p>${packageEndDateInput}</p>
+                </div>
+                <div>
+                    <p></p>
+                </div>
+            `;
+            } else {
+                insertedClintDataRowDivContent = `
+                <div>
+                    <p>${combinedPersonAmount}</p>
+                </div>
+                <div>
+                    <p>${packageStartDateInput}</p>
+                </div>
+                <div>
+                    <p>${packageEndDateInput}</p>
+                </div>
+                <div>
+                    <p>${storePackageTotalNights}</p>
+                </div>
+            `;
             }
 
-            // Attach click and touch event listeners to each element
-            flightRowFlightArrivalTimeControllers.forEach((element) => {
-                handleFlightMouseEvent(element); // Handle mouse events with click detection
-                handleFlightTouchEvent(element); // Handle touch events with tap detection
+            /* Show the 'clint_data_row_main_div_id' if there is any data is inserted */
+            document.getElementById("clint_data_row_main_div_id").style.display = "flex";
+
+            let insertedClintDataRowDiv = document.createElement("div");
+            insertedClintDataRowDiv.className = "clint_data_row_class";
+            insertedClintDataRowDiv.innerHTML = insertedClintDataRowDivContent;
+
+            // Clear previous client data and insert the new data div
+            let insertedClintDataPositionDiv = document.getElementById("inserted_clint_data_position_div");
+            insertedClintDataPositionDiv.innerHTML = ""; // Clear the existing content
+            insertedClintDataPositionDiv.appendChild(insertedClintDataRowDiv);
+        }
+
+        /* Show up the 'downloaded_pdf_clint_data_page' section */
+        document.getElementById("downloaded_pdf_clint_data_page").style.display = "block";
+
+        /* Check if all package including data inputs are filled */
+    } else if (clickedButtonId === "package_including_data_inputs_submit_icon") {
+        // Array of checkbox IDs
+        let checkboxIds = [
+            "privet_car_with_driver_to_welcome_and_etc_checkbox",
+            "hotel_booking_with_breakfast_for_2_people_checkbox",
+            "welcome_goodbye_hotel_delivery_checkbox",
+            "customer_service_24_hour_checkbox",
+            "sms_card_with_internet_checkbox",
+            "inner_flight_tickets_checkbox",
+            "outer_flight_tickets_checkbox",
+            "placese_visiting_cost_checkbox",
+            "bali_taxes_not_covered_checkbox",
+        ];
+
+        // Get references to the text areas
+        let packageIncludingDataTextArea = document.getElementById("package_details_textarea_id").value;
+        let smsCardWithInternetAmountInputReayText = document.getElementById("sms_card_with_internet_amount_input_id").value;
+        let innerFlightTicketsAmountInputReayText = document.getElementById("inner_flight_tickets_amount_input_id").value;
+        let packageTotlaPriceInput = document.getElementById("package_totla_price_input_id").value;
+
+        // Show success message
+        package_including_data_inputs_submit_icon.style.backgroundColor = "rgb(0, 255, 0)";
+        setTimeout(() => {
+            package_including_data_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+        }, 500);
+
+        // Create new div elements for including and not including data
+        let insertedPackageIncludingDataDiv = document.createElement("div");
+        insertedPackageIncludingDataDiv.id = "inserted_package_including_data_div";
+        insertedPackageIncludingDataDiv.className = "inserted_package_including_and_not_icluding_data_div_class";
+
+        let insertedPackageNotIncludingDataDiv = document.createElement("div");
+        insertedPackageNotIncludingDataDiv.id = "inserted_package_not_including_data_div";
+        insertedPackageNotIncludingDataDiv.className = "inserted_package_including_and_not_icluding_data_div_class";
+
+        if (packageTotlaPriceInput !== "") {
+            downloaded_pdf_total_price_data_page.style.display = "block";
+            package_total_price_p_id.innerText = packageTotlaPriceInput;
+        } else {
+            downloaded_pdf_total_price_data_page.style.display = "none";
+        }
+
+        // Function to get the current color of the checkbox label pseudo-element
+        function getCheckboxColor(checkbox) {
+            let label = checkbox.nextElementSibling;
+            return window.getComputedStyle(label, "::before").backgroundColor;
+        }
+
+        // Loop over checkboxes
+        checkboxIds.forEach((id) => {
+            let checkbox = document.getElementById(id); // Get the checkbox element by its ID
+            let label = document.querySelector(`label[for="${id}"]`); // Get the associated label element
+            let labelText = label.innerHTML.split("<br>").map((text) => text.trim()); // Split label text by <br> and trim each part
+            let p = document.createElement("p"); // Create a new paragraph element
+            let icon = document.createElement("ion-icon"); // Create a new ion-icon element
+
+            // Determine the color of the checkbox
+            let color = getCheckboxColor(checkbox);
+
+            if (color === "rgb(0, 255, 0)") {
+                // If the checkbox color is green
+                icon.setAttribute("name", "checkmark-outline"); // Set the icon to a checkmark
+                p.appendChild(icon); // Append the icon to the paragraph
+
+                if (id === "sms_card_with_internet_checkbox") {
+                    let textContent = smsCardWithInternetAmountInputReayText !== "" ? ` ${smsCardWithInternetAmountInputReayText}` : " شرائح إنترنت"; // Default text if input is empty
+                    p.appendChild(document.createTextNode(textContent)); // Append the text
+                    p.style.padding = "0 5px"; // Add padding to this p element
+                } else if (id === "inner_flight_tickets_checkbox") {
+                    let textContent = innerFlightTicketsAmountInputReayText !== "" ? ` ${innerFlightTicketsAmountInputReayText}` : " تذاكر الطيران الداخلي"; // Default text if input is empty
+                    p.appendChild(document.createTextNode(textContent)); // Append the text
+                    p.style.padding = "0 5px"; // Add padding to this p element
+                } else {
+                    labelText.forEach((text, index) => {
+                        // Loop through the label text parts
+                        p.appendChild(document.createTextNode(` ${text}`)); // Append the text part
+                        if (index < labelText.length - 1) {
+                            p.appendChild(document.createElement("br")); // Append a line break except for the last part
+                        }
+                    });
+                }
+
+                p.className = "inserted_package_including_data_text"; // Set the class for the paragraph
+                if (id === "sms_card_with_internet_checkbox" || id === "inner_flight_tickets_checkbox") {
+                    p.classList.add("special_package_including_data_background_color_text"); // Add a special class for certain checkboxes
+                }
+                insertedPackageIncludingDataDiv.appendChild(p); // Append the paragraph to the including data div
+            } else if (color === "rgb(255, 0, 0)") {
+                // If the checkbox color is red
+                icon.setAttribute("name", "close-outline"); // Set the icon to a close mark
+                p.appendChild(icon); // Append the icon to the paragraph
+                labelText.forEach((text, index) => {
+                    // Loop through the label text parts
+                    p.appendChild(document.createTextNode(` ${text}`)); // Append the text part
+                    if (index < labelText.length - 1) {
+                        p.appendChild(document.createElement("br")); // Append a line break except for the last part
+                    }
+                });
+                p.className = "inserted_package_not_including_data_text"; // Set the class for the paragraph
+                if (id === "sms_card_with_internet_checkbox" || id === "inner_flight_tickets_checkbox") {
+                    p.classList.add("special_package_including_data_background_color_text"); // Add a special class for certain checkboxes
+                    p.style.padding = "0 5px"; // Add padding to this p element
+                }
+                insertedPackageNotIncludingDataDiv.appendChild(p); // Append the paragraph to the not including data div
+            }
+
+            p.setAttribute("onclick", "runDeleteThisPackageIncludingDataText(this)"); // Set the onclick attribute to delete the text
+        });
+
+        // Include package details text area if not empty
+        if (packageIncludingDataTextArea !== "") {
+            packageIncludingDataTextArea.split("\n").forEach((text) => {
+                // Split the textarea content by newlines
+                if (text.trim() !== "") {
+                    // For each non-empty line
+                    let p = document.createElement("p"); // Create a new paragraph element
+                    let icon = document.createElement("ion-icon"); // Create a new ion-icon element
+                    icon.setAttribute("name", "checkmark-outline"); // Set the icon to a checkmark
+                    p.appendChild(icon); // Append the icon to the paragraph
+                    p.appendChild(document.createTextNode(` ${text.trim()}`)); // Append the text line
+                    p.className = "inserted_package_including_data_text"; // Set the class for the paragraph
+                    p.setAttribute("onclick", "runDeleteThisPackageIncludingDataText(this)"); // Set the onclick attribute to delete the text
+                    p.classList.add("special_package_including_data_background_color_text"); // Add a special class for background color
+                    insertedPackageIncludingDataDiv.appendChild(p); // Append the paragraph to the including data div
+                }
             });
+        }
 
-            // Define a global variable to store the reference
-            let currentFlightDataDivId;
+        // Append the data to the respective divs
+        let insertedPackageIncludingDataPositionDiv = document.getElementById("inserted_package_icluding_data_position_div");
+        let insertedPackageNotIncludingDataPositionDiv = document.getElementById("inserted_package_not_icluding_data_position_div");
 
-            // Function to handle delete clicked hotel data
-            deleteClickedFlightData = function (clickedFlightDataDivId) {
-                let overlayLayer = document.querySelector(".black_overlay");
-                let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
+        insertedPackageIncludingDataPositionDiv.innerHTML = ""; // Clear the including data position div
+        insertedPackageIncludingDataPositionDiv.appendChild(insertedPackageIncludingDataDiv); // Append the including data div
 
-                if (clickedFlightDataElement) {
-                    clickedFlightDataElement.remove();
-                }
+        insertedPackageNotIncludingDataPositionDiv.innerHTML = ""; // Clear the not including data position div
+        insertedPackageNotIncludingDataPositionDiv.appendChild(insertedPackageNotIncludingDataDiv); // Append the not including data div
 
-                // Hide edit/delete options div
-                let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
-                deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
+        // Show or hide titles based on content
+        let pdfSectionPackageIncludingDataTitle = document.getElementById("pdf_section_package_icluding_data_title_id");
+        let pdfSectionPackageNotIncludingDataTitle = document.getElementById("pdf_section_package_not_icluding_data_title_id");
 
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = "0";
+        pdfSectionPackageIncludingDataTitle.style.display = insertedPackageIncludingDataDiv.children.length > 0 ? "flex" : "none"; // Show the including title if there is content
+        pdfSectionPackageNotIncludingDataTitle.style.display = insertedPackageNotIncludingDataDiv.children.length > 0 ? "flex" : "none"; // Show the not including title if there is content
 
-                // Remove overlay and edit/delete div from DOM after transition
+        // Show the 'downloaded_pdf_package_including_data_page'
+        document.getElementById("downloaded_pdf_package_including_data_page").style.display = "block"; // Show the page for the downloaded PDF
+    } else if (clickedButtonId === "clint_flight_inputs_submit_icon") {
+
+    /* Check if all hotel data inputs are filled */
+        // Get references to all input elements for later use
+        let flightAirLineInput = document.getElementById("flight_air_line_input_id").value;
+        let flightAdultPersonAmountInput = document.getElementById("flight_adult_person_amount_input_id").value;
+        let flightInfantPersonAmountInput = document.getElementById("flight_infant_person_amount_input_id").value;
+        let flightFromCityInput = document.getElementById("flight_from_city_input_id").value;
+        let flightToCityInput = document.getElementById("flight_to_city_input_id").value;
+        let flightDateInput = document.getElementById("flight_date_input_id").value;
+        let flightFlyAwayTimeInput = document.getElementById("flight_fly_away_time_input_id").value;
+        let flightArrivalTimeInput = document.getElementById("flight_arrival_time_input_id").value;
+
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (flightAirLineInput === "" || flightAdultPersonAmountInput === "" || flightFromCityInput === "" || flightToCityInput === "" || flightDateInput === "") {
+            /* Chnage the sumbit icon background color */
+            clint_flight_inputs_submit_icon.style.backgroundColor = "red";
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_flight_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+            }, 500);
+        } else {
+            /* in case if the two city inputs were the same then dont continue the process */
+            if (flightFromCityInput === flightToCityInput) {
+                /* Chnage the sumbit icon background color */
+                clint_flight_inputs_submit_icon.style.backgroundColor = "red";
+
+                // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Check if there are any remaining inserted flight data div (Searching by the second image class name)
-                let remainingFlightDataDivs = document.querySelectorAll(".inserted_flight_data_row");
-                if (remainingFlightDataDivs.length === 0) {
-                    // Hide section with id 'downloaded_pdf_flight_data_page'
-                    document.getElementById("downloaded_pdf_flight_data_page").style.display = "none";
-
-                    // Hide the download button if there are no other important data sections visible
-                    if (
-                        document.getElementById("downloaded_pdf_flight_data_page").style.display === "none" &&
-                        document.getElementById("downloaded_pdf_hotel_data_page").style.display === "none" &&
-                        document.getElementById("downloaded_pdf_clint_movements_data_page").style.display === "none"
-                    ) {
-                        document.getElementById("export_package_pdf_div_id").style.display = "none";
-                    }
-                }
-            };
-
-            /* Function to edit the clicked flight row data */
-            editClickedFlightData = function (clickedFlightDataDivIdName) {
-                /* Make sure the correct section is the one that is visiable */
-                create_new_hotel_package_section.style.display = "none";
-                create_new_flight_package_section.style.display = "flex";
-                create_new_clint_movements_paln_section.style.display = "none";
-
-                document.getElementById("clint_flight_inputs_submit_icon").style.display = "none";
-                document.getElementById("confirm_new_flight_data_row_icon").style.display = "block";
-                document.getElementById("cancel_new_flight_data_row_icon").style.display = "block";
-
-                document.getElementById("flight_content_section_title_text_id").innerText = "تعديل تفاصيل الطيران";
-                document.getElementById("flight_content_section_title_text_id").style.background = "rgb(0, 93, 163)";
-
-                document.getElementById("flight_dropdown_content").scrollIntoView({
-                    block: "center",
-                    inline: "center",
-                    behavior: "smooth",
-                });
-
-                // Hide delete button div
-                let overlayLayer = document.querySelector(".black_overlay");
-                let deleteHotelRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
-                deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = "0";
-
-                // Remove overlay and edit/delete div from DOM after transition
+                    clint_flight_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                }, 500);
+            } else {
+                /* Change the 'تم' button color */
+                clint_flight_inputs_submit_icon.style.backgroundColor = "rgb(0, 255, 0)";
+                // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
+                    clint_flight_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                }, 2000);
 
-                // Get the clicked hotel data row
-                let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
-                let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split("_").pop(); // Extract the unique ID from the clicked row ID
-
-                // Extract data using IDs
-                let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightDateInput = clickedFlightDataDiv.querySelector(`p[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-                let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
-
-                // Assign values to inputs
-                document.getElementById("flight_air_line_input_id").value = flightAirLineInput;
-                document.getElementById("flight_adult_person_amount_input_id").value = flightAdultPersonAmountInput;
-                document.getElementById("flight_infant_person_amount_input_id").value = flightInfantPersonAmountInput;
-                document.getElementById("flight_from_city_input_id").value = flightFromCityInput;
-                document.getElementById("flight_to_city_input_id").value = flightToCityInput;
-                document.getElementById("flight_date_input_id").value = flightDateInput;
-                document.getElementById("flight_fly_away_time_input_id").value = flightFlyAwayTimeInput;
-                document.getElementById("flight_arrival_time_input_id").value = flightArrivalTimeInput;
-
-                /* Function to cancel the flight row data editing process */
-                cancelNewFlightDataRow = function () {
-                    // Get references to all input elements and reset their values
-                    document.getElementById("flight_air_line_input_id").value = "";
-                    document.getElementById("flight_adult_person_amount_input_id").value = "";
-                    document.getElementById("flight_infant_person_amount_input_id").value = "";
-                    document.getElementById("flight_from_city_input_id").value = "";
-                    document.getElementById("flight_to_city_input_id").value = "";
-                    document.getElementById("flight_date_input_id").value = "";
-                    document.getElementById("flight_fly_away_time_input_id").value = "";
-                    document.getElementById("flight_arrival_time_input_id").value = "";
-
-                    /* Hide and show different icons */
-                    document.getElementById("clint_flight_inputs_submit_icon").style.display = "block";
-                    document.getElementById("confirm_new_flight_data_row_icon").style.display = "none";
-                    document.getElementById("cancel_new_flight_data_row_icon").style.display = "none";
-
-                    /* Reset the innerText and styling to defualt */
-                    document.getElementById("flight_content_section_title_text_id").innerText = "تفاصيل الطيران";
-                    document.getElementById("flight_content_section_title_text_id").style.background = "rgb(131, 0, 148)";
-                };
-
-                /* Function to confirm the new flight row data */
-                confirmNewFlightDataRow = function () {
-                    // Get the clicked hotel data row
-                    let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
-
-                    // Clear the old data
-                    clickedFlightDataDiv.innerHTML = "";
-
-                    // Extract the new data from the input fields
-                    let flightAirLineInput = document.getElementById("flight_air_line_input_id").value;
-                    let flightAdultPersonAmountInput = document.getElementById("flight_adult_person_amount_input_id").value;
-                    let flightInfantPersonAmountInput = document.getElementById("flight_infant_person_amount_input_id").value;
-                    let flightFromCityInput = document.getElementById("flight_from_city_input_id").value;
-                    let flightToCityInput = document.getElementById("flight_to_city_input_id").value;
-                    let flightDateInput = document.getElementById("flight_date_input_id").value;
-                    let flightFlyAwayTimeInput = document.getElementById("flight_fly_away_time_input_id").value;
-                    let flightArrivalTimeInput = document.getElementById("flight_arrival_time_input_id").value;
-
-                    // Create the HTML content for a new hotel row
-                    let flightRowTableDivContent = `
+                // Create the HTML content for a new hotel row
+                let flightRowTableDivContent = `
                     <div><p id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
                     <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
                     <div><p>20 كيلو للشخص</p></div>
@@ -683,201 +415,537 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
                 `;
 
-                    // Insert the HTML content into the newly created div
-                    clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
+                // Create a new div element to hold the flight row
+                let flightRowTableDiv = document.createElement("div");
+                flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`; // Set a unique ID for the hotel row div
+                flightRowTableDiv.classList.add("flight_row_class"); // Add a class to the div for styling
+                insertedFlightDataDivUniqueId++;
 
-                    // Reattach event listeners to the image controllers
-                    let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll(".flight_row_flight_arrival_time_controller");
-                    hotelRowImageControllers.forEach((element) => {
-                        handleFlightMouseEvent(element); // Handle mouse events with click detection
-                        handleFlightTouchEvent(element); // Handle touch events with tap detection
+                // Insert the HTML content into the newly created div
+                flightRowTableDiv.innerHTML = flightRowTableDivContent;
+
+                // Get the dynamically created 'flightRowAirLineController' element
+                let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll(".flight_row_flight_arrival_time_controller");
+
+                // Function to handle touch events and distinguish between tap and scroll for flight row
+                function handleFlightTouchEvent(element) {
+                    let touchStartX, touchStartY, touchStartTime;
+
+                    // Record the starting touch position and time
+                    element.addEventListener("touchstart", (event) => {
+                        let touch = event.touches[0];
+                        touchStartX = touch.clientX;
+                        touchStartY = touch.clientY;
+                        touchStartTime = new Date().getTime();
                     });
 
-                    // Clear the input after confirm the new flight data
-                    cancelNewFlightDataRow();
-                };
-            };
+                    // Compare the ending touch position and time to determine if it was a tap
+                    element.addEventListener("touchend", (event) => {
+                        let touch = event.changedTouches[0];
+                        let touchEndX = touch.clientX;
+                        let touchEndY = touch.clientY;
+                        let touchEndTime = new Date().getTime();
 
-            // Function to handle flight row div click or touch
-            flightRowAirLineControllerFunction = function (event) {
-                let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
-                let clickedFlightDataDiv = event.target.closest(".flight_row_class");
+                        let deltaX = touchEndX - touchStartX;
+                        let deltaY = touchEndY - touchStartY;
+                        let deltaTime = touchEndTime - touchStartTime;
 
-                if (clickedFlightDataDiv) {
-                    currentFlightDataDivId = clickedFlightDataDiv.id;
+                        // Check if the touch event qualifies as a tap
+                        let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
 
-                    // Check if the overlay already exists
+                        // If it's a tap, run the click function
+                        if (isTap) {
+                            flightRowAirLineControllerFunction(event);
+                        }
+                    });
+                }
+
+                // Function to handle mouse events and distinguish between click and drag for flight row
+                function handleFlightMouseEvent(element) {
+                    let mouseStartX,
+                        mouseStartY,
+                        mouseStartTime,
+                        isDragging = false;
+
+                    // Record the starting mouse position and time
+                    element.addEventListener("mousedown", (event) => {
+                        mouseStartX = event.clientX;
+                        mouseStartY = event.clientY;
+                        mouseStartTime = new Date().getTime();
+                        isDragging = false;
+                    });
+
+                    // Mark as dragging if mouse moves significantly
+                    element.addEventListener("mousemove", (event) => {
+                        let deltaX = event.clientX - mouseStartX;
+                        let deltaY = event.clientY - mouseStartY;
+                        if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                            isDragging = true;
+                        }
+                    });
+
+                    // Compare the ending mouse position and time to determine if it was a click
+                    element.addEventListener("mouseup", (event) => {
+                        let mouseEndX = event.clientX;
+                        let mouseEndY = event.clientY;
+                        let mouseEndTime = new Date().getTime();
+
+                        let deltaX = mouseEndX - mouseStartX;
+                        let deltaY = mouseEndY - mouseStartY;
+                        let deltaTime = mouseEndTime - mouseStartTime;
+
+                        // Check if the mouse event qualifies as a click
+                        let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                        // If it's a click, run the click function
+                        if (isClick) {
+                            flightRowAirLineControllerFunction(event);
+                        }
+                    });
+                }
+
+                // Attach click and touch event listeners to each element
+                flightRowFlightArrivalTimeControllers.forEach((element) => {
+                    handleFlightMouseEvent(element); // Handle mouse events with click detection
+                    handleFlightTouchEvent(element); // Handle touch events with tap detection
+                });
+
+                // Show and append the new flight data div
+                document.getElementById("downloaded_pdf_flight_data_page").style.display = "block";
+                document.getElementById("inserted_flight_data_position_div").appendChild(flightRowTableDiv);
+
+                /* Show the download button */
+                document.getElementById("export_package_pdf_div_id").style.display = "block";
+
+                // Get references to all input elements and reset their values thier
+                document.getElementById("flight_air_line_input_id").value = "";
+                document.getElementById("flight_adult_person_amount_input_id").value = "";
+                document.getElementById("flight_infant_person_amount_input_id").value = "";
+                document.getElementById("flight_from_city_input_id").value = "";
+                document.getElementById("flight_to_city_input_id").value = "";
+                document.getElementById("flight_date_input_id").value = "";
+                document.getElementById("flight_fly_away_time_input_id").value = "";
+                document.getElementById("flight_arrival_time_input_id").value = "";
+
+                // Define a global variable to store the reference
+                let currentFlightDataDivId;
+
+                // Function to handle delete clicked hotel data
+                deleteClickedFlightData = function (clickedFlightDataDivId) {
                     let overlayLayer = document.querySelector(".black_overlay");
-                    if (!overlayLayer) {
-                        overlayLayer = document.createElement("div");
-                        overlayLayer.classList.add("black_overlay");
-                        document.body.appendChild(overlayLayer);
+                    let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
 
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = "1";
-                            deleteFlightRowDiv.style.transform = "translate(-50%, -50%)";
-                        }, 50);
+                    if (clickedFlightDataElement) {
+                        clickedFlightDataElement.remove();
+                    }
 
-                        // Handle both click and touch events on overlay for consistency
-                        let handleOverlayClick = () => {
-                            deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
-                            overlayLayer.style.opacity = "0";
+                    // Hide edit/delete options div
+                    let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
+                    deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = "0";
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Check if there are any remaining inserted flight data div (Searching by the second image class name)
+                    let remainingFlightDataDivs = document.querySelectorAll(".inserted_flight_data_row");
+                    if (remainingFlightDataDivs.length === 0) {
+                        // Hide section with id 'downloaded_pdf_flight_data_page'
+                        document.getElementById("downloaded_pdf_flight_data_page").style.display = "none";
+
+                        // Hide the download button if there are no other important data sections visible
+                        if (
+                            document.getElementById("downloaded_pdf_flight_data_page").style.display === "none" &&
+                            document.getElementById("downloaded_pdf_hotel_data_page").style.display === "none" &&
+                            document.getElementById("downloaded_pdf_clint_movements_data_page").style.display === "none"
+                        ) {
+                            document.getElementById("export_package_pdf_div_id").style.display = "none";
+                        }
+                    }
+                };
+
+                /* Function to edit the clicked flight row data */
+                editClickedFlightData = function (clickedFlightDataDivIdName) {
+                    /* Make sure the correct section is the one that is visiable */
+                    create_new_hotel_package_section.style.display = "none";
+                    create_new_flight_package_section.style.display = "flex";
+                    create_new_clint_movements_paln_section.style.display = "none";
+
+                    document.getElementById("clint_flight_inputs_submit_icon").style.display = "none";
+                    document.getElementById("confirm_new_flight_data_row_icon").style.display = "block";
+                    document.getElementById("cancel_new_flight_data_row_icon").style.display = "block";
+
+                    document.getElementById("flight_content_section_title_text_id").innerText = "تعديل تفاصيل الطيران";
+                    document.getElementById("flight_content_section_title_text_id").style.background = "rgb(0, 93, 163)";
+
+                    document.getElementById("flight_dropdown_content").scrollIntoView({
+                        block: "center",
+                        inline: "center",
+                        behavior: "smooth",
+                    });
+
+                    // Hide delete button div
+                    let overlayLayer = document.querySelector(".black_overlay");
+                    let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
+                    deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = "0";
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Get the clicked flight data row
+                    let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
+                    let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split("_").pop(); // Extract the unique ID from the clicked row ID
+
+                    // Extract data using IDs
+                    let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightDateInput = clickedFlightDataDiv.querySelector(`p[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+                    let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || "";
+
+                    // Assign values to inputs
+                    document.getElementById("flight_air_line_input_id").value = flightAirLineInput;
+                    document.getElementById("flight_adult_person_amount_input_id").value = flightAdultPersonAmountInput;
+                    document.getElementById("flight_infant_person_amount_input_id").value = flightInfantPersonAmountInput;
+                    document.getElementById("flight_from_city_input_id").value = flightFromCityInput;
+                    document.getElementById("flight_to_city_input_id").value = flightToCityInput;
+                    document.getElementById("flight_date_input_id").value = flightDateInput;
+                    document.getElementById("flight_fly_away_time_input_id").value = flightFlyAwayTimeInput;
+                    document.getElementById("flight_arrival_time_input_id").value = flightArrivalTimeInput;
+
+                    /* Function to cancel the flight row data editing process */
+                    cancelNewFlightDataRow = function () {
+                        // Get references to all input elements and reset their values
+                        document.getElementById("flight_air_line_input_id").value = "";
+                        document.getElementById("flight_adult_person_amount_input_id").value = "";
+                        document.getElementById("flight_infant_person_amount_input_id").value = "";
+                        document.getElementById("flight_from_city_input_id").value = "";
+                        document.getElementById("flight_to_city_input_id").value = "";
+                        document.getElementById("flight_date_input_id").value = "";
+                        document.getElementById("flight_fly_away_time_input_id").value = "";
+                        document.getElementById("flight_arrival_time_input_id").value = "";
+
+                        /* Hide and show different icons */
+                        document.getElementById("clint_flight_inputs_submit_icon").style.display = "block";
+                        document.getElementById("confirm_new_flight_data_row_icon").style.display = "none";
+                        document.getElementById("cancel_new_flight_data_row_icon").style.display = "none";
+
+                        /* Reset the innerText and styling to defualt */
+                        document.getElementById("flight_content_section_title_text_id").innerText = "تفاصيل الطيران";
+                        document.getElementById("flight_content_section_title_text_id").style.background = "rgb(131, 0, 148)";
+                    };
+
+                    /* Function to confirm the new flight row data */
+                    confirmNewFlightDataRow = function () {
+                        // Get the clicked flight data row
+                        let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
+
+                        // Clear the old data
+                        clickedFlightDataDiv.innerHTML = "";
+
+                        // Extract the new data from the input fields
+                        let flightAirLineInput = document.getElementById("flight_air_line_input_id").value;
+                        let flightAdultPersonAmountInput = document.getElementById("flight_adult_person_amount_input_id").value;
+                        let flightInfantPersonAmountInput = document.getElementById("flight_infant_person_amount_input_id").value;
+                        let flightFromCityInput = document.getElementById("flight_from_city_input_id").value;
+                        let flightToCityInput = document.getElementById("flight_to_city_input_id").value;
+                        let flightDateInput = document.getElementById("flight_date_input_id").value;
+                        let flightFlyAwayTimeInput = document.getElementById("flight_fly_away_time_input_id").value;
+                        let flightArrivalTimeInput = document.getElementById("flight_arrival_time_input_id").value;
+
+                        // Create the HTML content for a new hotel row
+                        let flightRowTableDivContent = `
+                            <div><p id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
+                            <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
+                            <div><p>20 كيلو للشخص</p></div>
+                            <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
+                            <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
+                            <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                            <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
+                            <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
+                        `;
+
+                        // Insert the HTML content into the newly created div
+                        clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
+
+                        // Reattach event listeners to the image controllers
+                        let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll(".flight_row_flight_arrival_time_controller");
+                        hotelRowImageControllers.forEach((element) => {
+                            handleFlightMouseEvent(element); // Handle mouse events with click detection
+                            handleFlightTouchEvent(element); // Handle touch events with tap detection
+                        });
+
+                        // Clear the input after confirm the new flight data
+                        cancelNewFlightDataRow();
+                    };
+                };
+
+                // Function to handle flight row div click or touch
+                flightRowAirLineControllerFunction = function (event) {
+                    let deleteFlightRowDiv = document.getElementById("ensure_delete_or_edit_flight_data_div");
+                    let clickedFlightDataDiv = event.target.closest(".flight_row_class");
+
+                    if (clickedFlightDataDiv) {
+                        currentFlightDataDivId = clickedFlightDataDiv.id;
+
+                        // Check if the overlay already exists
+                        let overlayLayer = document.querySelector(".black_overlay");
+                        if (!overlayLayer) {
+                            overlayLayer = document.createElement("div");
+                            overlayLayer.classList.add("black_overlay");
+                            document.body.appendChild(overlayLayer);
+
                             setTimeout(() => {
-                                // Only remove the overlay if it is still a child of the body
-                                if (document.body.contains(overlayLayer)) {
-                                    document.body.removeChild(overlayLayer);
-                                }
-                            }, 300);
+                                overlayLayer.style.opacity = "1";
+                                deleteFlightRowDiv.style.transform = "translate(-50%, -50%)";
+                            }, 50);
+
+                            // Handle both click and touch events on overlay for consistency
+                            let handleOverlayClick = () => {
+                                deleteFlightRowDiv.style.transform = "translate(-50%, -100vh)";
+                                overlayLayer.style.opacity = "0";
+                                setTimeout(() => {
+                                    // Only remove the overlay if it is still a child of the body
+                                    if (document.body.contains(overlayLayer)) {
+                                        document.body.removeChild(overlayLayer);
+                                    }
+                                }, 300);
+                            };
+
+                            overlayLayer.addEventListener("click", handleOverlayClick);
+                            overlayLayer.addEventListener("touchstart", handleOverlayClick); // Add touch event handling
+
+                            overlayLayer.addEventListener("click", (event) => {
+                                event.stopPropagation();
+                            });
+                        }
+
+                        /* Function to run delete clicked flight row data */
+                        runDeleteClickedFlightDataFunction = function () {
+                            deleteClickedFlightData(currentFlightDataDivId);
                         };
 
-                        overlayLayer.addEventListener("click", handleOverlayClick);
-                        overlayLayer.addEventListener("touchstart", handleOverlayClick); // Add touch event handling
-
-                        overlayLayer.addEventListener("click", (event) => {
-                            event.stopPropagation();
-                        });
+                        /* Function to run delete clicked flight row data */
+                        runEditClickedFlightDataFunction = function () {
+                            editClickedFlightData(currentFlightDataDivId);
+                        };
                     }
+                };
 
-                    /* Function to run delete clicked flight row data */
-                    runDeleteClickedFlightDataFunction = function () {
-                        deleteClickedFlightData(currentFlightDataDivId);
-                    };
+                // Praper drag-and-drop functionality for the newly added flight row
+                createFlightDragAndDropMood();
 
-                    /* Function to run delete clicked flight row data */
-                    runEditClickedFlightDataFunction = function () {
-                        editClickedFlightData(currentFlightDataDivId);
-                    };
-                }
-            };
+                // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+                function createFlightDragAndDropMood() {
+                    // Common function to handle dragging logic
+                    function handleDrag(event, touch = false) {
+                        if (event.target.classList.contains("flight_row_flight_arrival_time_controller")) {
+                            event.preventDefault();
+                            let draggingElement = event.target.closest(".flight_row_class");
+                            draggingElement.classList.add("dragging");
+                            draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
+                            document.addEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
+                            document.addEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
 
-            // Praper drag-and-drop functionality for the newly added flight row
-            createFlightDragAndDropMood();
-
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-            function createFlightDragAndDropMood() {
-                // Common function to handle dragging logic
-                function handleDrag(event, touch = false) {
-                    if (event.target.classList.contains("flight_row_flight_arrival_time_controller")) {
-                        event.preventDefault();
-                        let draggingElement = event.target.closest(".flight_row_class");
-                        draggingElement.classList.add("dragging");
-                        draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
-                        document.addEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
-                        document.addEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
-
-                        // Disable scrolling
-                        document.body.style.overflow = "hidden";
-                    }
-                }
-
-                // Event listener for the drop zone
-                let flightDropZone = document.getElementById("inserted_flight_data_position_div");
-
-                // Function to handle mouse down event
-                function mouseDown(event) {
-                    handleDrag(event, false);
-                }
-
-                // Function to handle touch start event
-                function touchStart(event) {
-                    handleDrag(event, true);
-                }
-
-                // Function to handle move event
-                function move(event, touch = false) {
-                    let draggingElement = document.querySelector(".dragging");
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                    let dropElements = Array.from(flightDropZone.children);
-                    let currentIndex = dropElements.indexOf(draggingElement);
-
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect();
-                        if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
-                            if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
+                            // Disable scrolling
+                            document.body.style.overflow = "hidden";
                         }
                     }
 
-                    if (targetIndex !== currentIndex) {
-                        flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                    }
-                }
+                    // Event listener for the drop zone
+                    let flightDropZone = document.getElementById("inserted_flight_data_position_div");
 
-                // Function to handle mouse move event
-                function mouseMove(event) {
-                    move(event, false);
-                }
-
-                // Function to handle touch move event
-                function touchMove(event) {
-                    move(event, true);
-                }
-
-                // Function to handle end event
-                function end(event, touch = false) {
-                    let draggingElement = document.querySelector(".dragging");
-
-                    if (draggingElement) {
-                        draggingElement.classList.remove("dragging");
-                        draggingElement.style.transform = "";
-                        draggingElement.removeAttribute("data-start-y");
-
-                        draggingElement.classList.add("drop-transition");
-                        setTimeout(() => {
-                            draggingElement.classList.remove("drop-transition");
-                        }, 300);
+                    // Function to handle mouse down event
+                    function mouseDown(event) {
+                        handleDrag(event, false);
                     }
 
-                    document.removeEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
-                    document.removeEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
+                    // Function to handle touch start event
+                    function touchStart(event) {
+                        handleDrag(event, true);
+                    }
 
-                    document.body.style.overflow = "";
+                    // Function to handle move event
+                    function move(event, touch = false) {
+                        let draggingElement = document.querySelector(".dragging");
+                        let startY = parseInt(draggingElement.dataset.startY || 0);
+                        let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
+                        draggingElement.style.transform = `translateY(${deltaY}px)`;
+
+                        let dropElements = Array.from(flightDropZone.children);
+                        let currentIndex = dropElements.indexOf(draggingElement);
+
+                        let targetIndex = currentIndex;
+                        for (let i = 0; i < dropElements.length; i++) {
+                            let element = dropElements[i];
+                            let rect = element.getBoundingClientRect();
+                            if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
+                                if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
+                                    targetIndex = i + 1;
+                                } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
+                                    targetIndex = i;
+                                }
+                                break;
+                            }
+                        }
+
+                        if (targetIndex !== currentIndex) {
+                            flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                        }
+                    }
+
+                    // Function to handle mouse move event
+                    function mouseMove(event) {
+                        move(event, false);
+                    }
+
+                    // Function to handle touch move event
+                    function touchMove(event) {
+                        move(event, true);
+                    }
+
+                    // Function to handle end event
+                    function end(event, touch = false) {
+                        let draggingElement = document.querySelector(".dragging");
+
+                        if (draggingElement) {
+                            draggingElement.classList.remove("dragging");
+                            draggingElement.style.transform = "";
+                            draggingElement.removeAttribute("data-start-y");
+
+                            draggingElement.classList.add("drop-transition");
+                            setTimeout(() => {
+                                draggingElement.classList.remove("drop-transition");
+                            }, 300);
+                        }
+
+                        document.removeEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
+                        document.removeEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
+
+                        document.body.style.overflow = "";
+                    }
+
+                    // Function to handle mouse up event
+                    function mouseUp(event) {
+                        end(event, false);
+                    }
+
+                    // Function to handle touch end event
+                    function touchEnd(event) {
+                        end(event, true);
+                    }
+
+                    // Add event listeners for each insertedFlightDataDiv element
+                    let insertedFlightDataDivs = document.querySelectorAll(".flight_row_class");
+
+                    insertedFlightDataDivs.forEach((div) => {
+                        div.addEventListener("mousedown", mouseDown);
+                        div.addEventListener("touchstart", touchStart);
+                    });
                 }
-
-                // Function to handle mouse up event
-                function mouseUp(event) {
-                    end(event, false);
-                }
-
-                // Function to handle touch end event
-                function touchEnd(event) {
-                    end(event, true);
-                }
-
-                // Add event listeners for each insertedFlightDataDiv element
-                let insertedFlightDataDivs = document.querySelectorAll(".flight_row_class");
-
-                insertedFlightDataDivs.forEach((div) => {
-                    div.addEventListener("mousedown", mouseDown);
-                    div.addEventListener("touchstart", touchStart);
-                });
             }
-        });
-    } else if (visiableDivIdName === "downloaded_pdf_hotel_data_page") {
-        // Get all elements with the class name 'hotel_row_class'
-        let hotelRowTableDivs = document.querySelectorAll(".hotel_row_class");
+        }
 
-        // Loop through each 'hotel_row_class' element
-        hotelRowTableDivs.forEach((hotelRowTableDiv) => {
-            // Get the 'hotel_row_image_controller' elements inside each 'hotel_row_class' element
+        /* Check if all package data inputs are filled */
+    } else if (clickedButtonId === "hotel_inputs_submit_icon") {
+        // Get references to all input elements for later use
+        let hotelLocationReadyText = document.getElementById("hotel_location_input_id").value;
+        let hotelAreaReadyText = document.getElementById("hotel_area_input_id").value;
+        let hotelNameReadyText = document.getElementById("hotel_name_input_id").value;
+        let hotelCheckInReadyText = document.getElementById("hotel_check_in_input_id").value;
+        let hotelCheckOutReadyText = document.getElementById("hotel_check_out_input_id").value;
+        let hotelRoomTypeDescriptionInput = document.getElementById("hotel_room_type_description_input_id").value;
+        let hotelRoomContainPoolInput = document.getElementById("hotel_room_contain_pool_input_id").value;
+        let hotelRoomViewInput = document.getElementById("hotel_room_view_input_id").value;
+        let hotelUnitAmountInput = document.getElementById("hotel_unit_amount_input_id").value;
+        let hotelBreakfastPeopleAmountInput = document.getElementById("hotel_breakfast_people_amount_input_id").value;
+        let hotelRoomExtraInfoReadyText = document.getElementById("hotel_room_extra_info_textarea_id").value;
+
+        if (hotelLocationReadyText === "" || hotelNameReadyText === "" || hotelCheckInReadyText === "" || hotelCheckOutReadyText === "" || hotelRoomTypeDescriptionInput === "" || hotelUnitAmountInput === "") {
+            // Change the submit icon background color
+            hotel_inputs_submit_icon.style.backgroundColor = "red";
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                hotel_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+            }, 500);
+        } else {
+            // Change the submit icon background color
+            hotel_inputs_submit_icon.style.backgroundColor = "rgb(0, 255, 0)";
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                hotel_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+            }, 500);
+
+            // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
+            let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, "-");
+
+            // Create the HTML content for a new hotel row
+            let hotelRowTableDivContent = `
+                <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
+                <div><p id='hotel_check_in_${insertedHotelDataDivUniqueId}'>${hotelCheckInReadyText}</p></div>
+                <div><p style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}'>${hotelCheckOutReadyText}</p></div>
+                <div><p id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</p></div>
+                <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
+                <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
+                <div><p id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</p>${
+                hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ""
+            }</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+            `;
+
+            // Create a new div element to hold the hotel row
+            let hotelRowTableDiv = document.createElement("div");
+            hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`; // Set a unique ID for the hotel row div
+            hotelRowTableDiv.classList.add("hotel_row_class"); // Add a class to the div for styling
+
+            // Insert the HTML content into the newly created div
+            hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
+
+            // Append <p> elements for each input with text
+            if (hotelRoomContainPoolInput !== "") {
+                let poolP = document.createElement("span");
+                poolP.id = `hotel_pool_p_id_${insertedHotelDataDivUniqueId}`;
+                poolP.innerText = hotelRoomContainPoolInput;
+                hotelRowTableDiv.querySelector(".description_cell").appendChild(poolP);
+            }
+            if (hotelRoomViewInput !== "") {
+                let viewP = document.createElement("span");
+                viewP.id = `hotel_view_p_id_${insertedHotelDataDivUniqueId}`;
+                viewP.innerText = hotelRoomViewInput;
+                hotelRowTableDiv.querySelector(".description_cell").appendChild(viewP);
+            }
+            if (hotelBreakfastPeopleAmountInput !== "") {
+                let breakfastP = document.createElement("span");
+                breakfastP.id = `hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}`;
+                breakfastP.innerText = hotelBreakfastPeopleAmountInput;
+                hotelRowTableDiv.querySelector(".description_cell").appendChild(breakfastP);
+            }
+            if (hotelRoomExtraInfoReadyText !== "") {
+                let hotelExtraInfoSpan = document.createElement("span");
+                hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
+                hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
+                hotelExtraInfoSpan.style.background = "rgb(0, 93, 163)";
+                hotelExtraInfoSpan.style.color = "white";
+                hotelExtraInfoSpan.style.padding = "0 5px";
+                hotelRowTableDiv.querySelector(".description_cell").appendChild(hotelExtraInfoSpan);
+            }
+
+            insertedHotelDataDivUniqueId++;
+
+            // Get all dynamically created elements with the class 'hotelRowImageController'
             let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll(".hotel_row_image_controller");
-
-            // Loop through each 'hotel_row_image_controller' element
-            hotelRowImageControllers.forEach((hotelRowImageController) => {
-                /* Pass the div of the clicked 'hotel_row_image_controller' */
-                hotelRowImageController.onclick = function (event) {
-                    hotelRowImageControllerFunction(event);
-                };
-            });
 
             // Function to handle touch and mouse events to distinguish between click and drag
             function handleClickEvent(element) {
@@ -929,19 +997,45 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 handleClickEvent(element);
             });
 
+            // Append the new hotel row div to the parent div that holds all inserted hotel data
+            document.getElementById("inserted_hotel_data_position_div").appendChild(hotelRowTableDiv);
+
+            /* Show up the 'downloaded_pdf_hotel_data_page' section */
+            document.getElementById("downloaded_pdf_hotel_data_page").style.display = "block";
+
+            /* Show the download button */
+            document.getElementById("export_package_pdf_div_id").style.display = "block";
+
+            // Get references to all input elements and reset their values
+            document.getElementById("hotel_location_input_id").value = "";
+            document.getElementById("hotel_area_input_id").value = "";
+            document.getElementById("hotel_name_input_id").value = "";
+            document.getElementById("hotel_check_in_input_id").value = "";
+            document.getElementById("hotel_check_out_input_id").value = "";
+            document.getElementById("hotel_total_nights_input_id").value = "";
+            document.getElementById("hotel_room_type_description_input_id").value = "";
+            document.getElementById("hotel_room_contain_pool_input_id").value = "";
+            document.getElementById("hotel_room_view_input_id").value = "";
+            document.getElementById("hotel_unit_amount_input_id").value = "";
+            document.getElementById("hotel_breakfast_people_amount_input_id").value = "";
+            document.getElementById("hotel_room_extra_info_textarea_id").value = "";
+
+            // Disable the hotel_area_input_id and hotel_name_input_id inputs
+            document.getElementById("hotel_area_input_id").disabled = true;
+            document.getElementById("hotel_name_input_id").disabled = true;
+
             // Define a global variable to store the reference
             let currentHotelDataDivId;
 
             // Function to handle delete clicked hotel data
             deleteClickedHotelData = function (clickedHotelRowIdName) {
-                let overlayLayer = document.querySelector(".black_overlay");
-
                 let clickedHotelCardElement = document.getElementById(clickedHotelRowIdName);
                 if (clickedHotelCardElement) {
                     clickedHotelCardElement.remove();
                 }
 
                 // Hide delete button div
+                let overlayLayer = document.querySelector(".black_overlay");
                 let deleteHotelRowDiv = document.getElementById("ensure_delet_or_edit_hotel_data_div");
                 deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
 
@@ -977,12 +1071,16 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 create_new_flight_package_section.style.display = "none";
                 create_new_clint_movements_paln_section.style.display = "none";
 
+                /* Hide and show different icons */
                 document.getElementById("hotel_inputs_submit_icon").style.display = "none";
                 document.getElementById("confirm_new_hotel_data_row_icon").style.display = "block";
                 document.getElementById("cancel_new_hotel_data_row_icon").style.display = "block";
 
+                /* Change the innerText and the background color of the 'hotel_content_section_title_text_id' */
                 document.getElementById("hotel_content_section_title_text_id").innerText = "تعديل تفاصيل الفندق";
+                document.getElementById("hotel_content_section_title_text_id").style.background = "rgb(0, 93, 163)";
 
+                /* Scroll up to the middle of the 'toggle_hotel_elements' */
                 document.getElementById("toggle_hotel_elements").scrollIntoView({
                     block: "center",
                     inline: "center",
@@ -1013,7 +1111,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.getElementById("hotel_area_input_id").style.display = "block"; // Show the hotel area input
                 }
 
-                /* ALways Re-enable the hotel name input */
                 document.getElementById("hotel_name_input_id").disabled = false; // Re-enable hotel area input
 
                 // Extract data using IDs
@@ -1055,10 +1152,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById("hotel_breakfast_people_amount_input_id").value = hotelBreakfastPeopleAmountText;
                 document.getElementById("hotel_room_extra_info_textarea_id").value = hotelRoomExtraInfoText;
 
-                /* Restore the value in the viriables */
-                storeHotelTotalUnitNumber = hotelUnitAmountText;
-                storeHotelTotalNights = hotelTotalNightsText;
-
                 /* Function to cancel the hotel row data editing process */
                 cancelNewHotelDataRow = function () {
                     // Get references to all input elements and reset their values
@@ -1079,13 +1172,17 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.getElementById("hotel_area_input_id").disabled = true;
                     document.getElementById("hotel_name_input_id").disabled = true;
 
+                    /* Hide and show different icons */
                     document.getElementById("hotel_inputs_submit_icon").style.display = "block";
                     document.getElementById("confirm_new_hotel_data_row_icon").style.display = "none";
                     document.getElementById("cancel_new_hotel_data_row_icon").style.display = "none";
 
+                    /* Reset the innerText and styling to defualt */
                     document.getElementById("hotel_content_section_title_text_id").innerText = "تفاصيل الفندق";
+                    document.getElementById("hotel_content_section_title_text_id").style.background = "rgb(131, 0, 148)";
                 };
 
+                /* Function to confirm the new hotel row data */
                 confirmNewHotelDataRow = function () {
                     // Get the clicked hotel data row
                     let clickedHotelDataDiv = document.getElementById(currentHotelDataDivId);
@@ -1176,7 +1273,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             };
 
             // Function to show delete the inserted hotel data
-            hotelRowImageControllerFunction = function (event) {
+            function hotelRowImageControllerFunction(event) {
                 let deleteHotelRowDiv = document.getElementById("ensure_delet_or_edit_hotel_data_div");
                 let clickedHotelDataDiv = event.target.closest(".hotel_row_class");
 
@@ -1225,7 +1322,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         editClickedHotelDataFunction(currentHotelDataDivId);
                     };
                 }
-            };
+            }
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function createHotelDragAndDropMood() {
@@ -1387,282 +1484,60 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Call the createHotelDragAndDropMood function to set up delete and drag-and-drop functionality
             createHotelDragAndDropMood();
-        });
-    } else if (visiableDivIdName === "downloaded_pdf_clint_movements_data_page") {
-        // Get all elements with the class name 'flight_row_class'
-        let clintMovementsRowTableDiv = document.querySelectorAll(".clint_movements_row_class");
+        }
+    } else if (clickedButtonId === "clint_movements_details_inputs_submit_icon") {
+        // Get references to all input elements for later use
+        let clintMovementsCurrentDayDateInput = document.getElementById("clint_movements_current_day_date_input_id").value;
+        let clintMovementsNewCheckOutInput = document.getElementById("clint_movements_new_check_out_input_id").value;
+        let clintMovementsNextCityInput = document.getElementById("clint_movements_next_city_input_id").value;
+        let clintMovementsAirportWelcomeInput = document.getElementById("clint_movements_airport_welcome_input_id").value;
+        let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value;
+        let clintMovementsCurrentCityInput = document.getElementById("clint_movements_current_city_input_id").value;
+        let clintMovementsNewCheckInInput = document.getElementById("clint_movements_new_check_in_input_id").value;
 
-        document.getElementById("clint_movements_first_day_date_input_id").value = document.getElementById("store_localstorage_clint_movements_first_day_date_value").innerText;
-        document.getElementById("clint_movements_last_day_date_input_id").value = document.getElementById("store_localstorage_clint_movements_last_day_date_value").innerText;
-        document.getElementById("clint_movements_total_nights_input_id").value = document.getElementById("store_localstorage_clint_movements_total_nights_day_date_value").innerText;
+        // If Not All Inputs Are Valid, Show The Error Message
+        if (clintMovementsCurrentDayDateInput === "" || clintMovementsCurrentCityInput === "") {
+            // Change the submit icon background color
+            clint_movements_details_inputs_submit_icon.style.backgroundColor = "red";
 
-        // Define a global variable to store the reference
-        let currentClintMovementsDataDivId;
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+            }, 500);
+        } else {
+            // In case all 'استقبال في المطار', 'تسجيل خروج', 'تسجيل دخول', 'الذهاب لمدينة جديدة' inputs are empty then stop the process
+            if (clintMovementsNewCheckOutInput === "" && clintMovementsNewCheckInInput === "" && clintMovementsWholeDayActionsDetailsTextarea === "") {
+                // Change the submit icon background color
+                clint_movements_details_inputs_submit_icon.style.backgroundColor = "red";
 
-        // Loop through each 'flight_row_class' element
-        clintMovementsRowTableDiv.forEach((clintMovementsRowTableDiv) => {
-            // Get all dynamically created elements with the class 'clint_movements_row_controller'
-            let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll(".clint_movements_row_controller");
-
-            // Function to handle touch events and distinguish between tap and scroll for flight row
-            function handleClintMovementsTouchEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
-
-                // Record the starting touch position and time
-                element.addEventListener("touchstart", (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                });
-
-                // Compare the ending touch position and time to determine if it was a tap
-                element.addEventListener("touchend", (event) => {
-                    let touch = event.changedTouches[0];
-                    let touchEndX = touch.clientX;
-                    let touchEndY = touch.clientY;
-                    let touchEndTime = new Date().getTime();
-
-                    let deltaX = touchEndX - touchStartX;
-                    let deltaY = touchEndY - touchStartY;
-                    let deltaTime = touchEndTime - touchStartTime;
-
-                    // Check if the touch event qualifies as a tap
-                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a tap, run the click function
-                    if (isTap) {
-                        clintMovementsRowCityNameControllerFunction(event);
-                    }
-                });
-            }
-
-            // Function to handle mouse events and distinguish between click and drag for flight row
-            function handleClintMovementsMouseEvent(element) {
-                let mouseStartX,
-                    mouseStartY,
-                    mouseStartTime,
-                    isDragging = false;
-
-                // Record the starting mouse position and time
-                element.addEventListener("mousedown", (event) => {
-                    mouseStartX = event.clientX;
-                    mouseStartY = event.clientY;
-                    mouseStartTime = new Date().getTime();
-                    isDragging = false;
-                });
-
-                // Mark as dragging if mouse moves significantly
-                element.addEventListener("mousemove", (event) => {
-                    let deltaX = event.clientX - mouseStartX;
-                    let deltaY = event.clientY - mouseStartY;
-                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                        isDragging = true;
-                    }
-                });
-
-                // Compare the ending mouse position and time to determine if it was a click
-                element.addEventListener("mouseup", (event) => {
-                    let mouseEndX = event.clientX;
-                    let mouseEndY = event.clientY;
-                    let mouseEndTime = new Date().getTime();
-
-                    let deltaX = mouseEndX - mouseStartX;
-                    let deltaY = mouseEndY - mouseStartY;
-                    let deltaTime = mouseEndTime - mouseStartTime;
-
-                    // Check if the mouse event qualifies as a click
-                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a click, run the click function
-                    if (isClick) {
-                        clintMovementsRowCityNameControllerFunction(event);
-                    }
-                });
-            }
-
-            // Attach click and touch event listeners to each element
-            clintMovementsRowImageControllers.forEach((element) => {
-                handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
-                handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
-            });
-
-            // Function to handle delete clicked clint movements data
-            deleteClickedClintMovementsData = function (clickedClintMovementsRowdName) {
-                // Select the overlay layer element
-                let overlayLayer = document.querySelector(".black_overlay");
-
-                // Get the clicked element by its ID
-                let clickedHotelCardElement = document.getElementById(clickedClintMovementsRowdName);
-                if (clickedHotelCardElement) {
-                    // Remove the clicked element from the DOM
-                    clickedHotelCardElement.remove();
-                }
-
-                // Hide the delete confirmation div by translating it out of view
-                let deleteClintMovementsRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
-                deleteClintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
-
-                // Reduce the opacity of the overlay layer to 0 (for fade-out effect)
-                overlayLayer.style.opacity = "0";
-
-                // Remove overlay and edit/delete div from DOM after transition (300ms delay)
+                // Set the background color of the submit icon back to default color
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                }, 500);
+            } else {
+                // Get the current day date from the input field
+                let currentDayDate = new Date(clintMovementsCurrentDayDateInput.split("-").reverse().join("-"));
 
-                // Update dates after deleting a row
-                arrangeClintMovementsDates();
+                // Get the last day date from the input field
+                let clintMovementsLastDayDateInput = document.getElementById("clint_movements_last_day_date_input_id").value;
+                let lastDayDate = new Date(clintMovementsLastDayDateInput.split("-").reverse().join("-"));
 
-                // Reduce the date of clint_movements_current_day_date_input_id by one day
-                // Get the current day input element by its ID
-                let currentDayInput = document.getElementById("clint_movements_current_day_date_input_id");
-                // Convert the date string to a Date object
-                let currentDayDate = new Date(currentDayInput.value.split("-").reverse().join("-"));
-                // Reduce the date by one day
-                currentDayDate.setDate(currentDayDate.getDate() - 1);
-                // Format the new date in 'DD-MMM' format
-                let formattedDate = currentDayDate.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).replace(" ", "-");
-                // Set the new date value to the input element
-                currentDayInput.value = formattedDate;
+                if (currentDayDate > lastDayDate) {
+                    // Change the submit icon background color
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = "red";
 
-                // Check if there are any remaining clint movements data divs
-                let remainingClintMovementsDataDivs = document.querySelectorAll(".clint_movements_row_class");
-                if (remainingClintMovementsDataDivs.length === 1) {
-                    // Only the first element left
-                    // Hide section with id 'downloaded_pdf_clint_movements_data_page'
-                    document.getElementById("downloaded_pdf_clint_movements_data_page").style.display = "none";
+                    // Set the background color of the submit icon back to default color
+                    setTimeout(() => {
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                    }, 500);
 
-                    // Hide the download button if there are no other important data sections visible
-                    if (
-                        document.getElementById("downloaded_pdf_flight_data_page").style.display === "none" &&
-                        document.getElementById("downloaded_pdf_hotel_data_page").style.display === "none" &&
-                        document.getElementById("downloaded_pdf_clint_movements_data_page").style.display === "none"
-                    ) {
-                        document.getElementById("export_package_pdf_div_id").style.display = "none";
-                    }
-                }
-            };
-
-            // Function to handle delete clicked clint movements data
-            editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
-                /* Make sure the correct section is the one that is visiable */
-                create_new_hotel_package_section.style.display = "none";
-                create_new_flight_package_section.style.display = "none";
-                create_new_clint_movements_paln_section.style.display = "flex";
-
-                /* Show and hide different icons */
-                document.getElementById("clint_movements_details_inputs_submit_icon").style.display = "none";
-                document.getElementById("confirm_new_clint_movements_data_row_icon").style.display = "block";
-                document.getElementById("cancel_new_clint_movements_data_row_icon").style.display = "block";
-
-                /* Change the innerText and styling to defualt */
-                document.getElementById("clint_movements_content_section_title_text_id").innerText = "تعديل تفاصيل خط السير";
-                document.getElementById("clint_movements_content_section_title_text_id").style.background = "rgb(0, 93, 163)";
-
-                /* Scroll up to the middle of the 'clint_movements_details_dropdown_content' */
-                document.getElementById("clint_movements_details_dropdown_content").scrollIntoView({
-                    block: "center",
-                    inline: "center",
-                    behavior: "smooth",
-                });
-
-                /* Disable the clint movements dates when editing */
-                document.getElementById("clint_movements_first_day_date_input_id").disabled = true;
-                document.getElementById("clint_movements_last_day_date_input_id").disabled = true;
-
-                // Hide delete button div
-                let overlayLayer = document.querySelector(".black_overlay");
-                let deleteHotelRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
-                deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = "0";
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Get the clicked clint movements data row
-                let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
-                let insertedClintMovementsRowDivUniqueId = currentClintMovementsDataDivId.split("_").pop(); // Extract the unique ID from the clicked row ID
-
-                /* Store the (before editing day value) */
-                let clintMovementsBeforeEditingDayDateInput = document.getElementById("clint_movements_current_day_date_input_id").value;
-
-                // Extract data using IDs
-                let clintMovementsCurrentDayDateInput = clickedClintMovementsDataDiv.querySelector(`h6[id^='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsNewCheckOutInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsNextCityInput = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsAirportWelcomeInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsWholeDayActionsDetailsTextarea = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsNewCheckInInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsStoredCurrentCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-                let clintMovementsStoredNextCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
-
-                // Assign values to inputs
-                document.getElementById("clint_movements_current_day_date_input_id").value = clintMovementsCurrentDayDateInput;
-                document.getElementById("clint_movements_new_check_out_input_id").value = clintMovementsNewCheckOutInput;
-
-                if (clintMovementsNextCityInput !== "") {
-                    document.getElementById("clint_movements_next_city_input_id").value = `الذهاب الى ${clintMovementsNextCityInput}`;
-                }
-
-                document.getElementById("clint_movements_airport_welcome_input_id").value = clintMovementsAirportWelcomeInput;
-                document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = clintMovementsWholeDayActionsDetailsTextarea;
-                document.getElementById("clint_movements_new_check_in_input_id").value = clintMovementsNewCheckInInput;
-                document.getElementById("clint_movements_current_city_input_id").value = `المدينة الحالية ${clintMovementsStoredCurrentCityValue}`;
-
-                /* Function to cancel the clint movements row data editing process */
-                cancelNewClintMovementsDataRow = function () {
-                    // Get references to all input elements and reset their values
-                    document.getElementById("clint_movements_current_day_date_input_id").value = "";
-                    document.getElementById("clint_movements_new_check_out_input_id").value = "";
-                    document.getElementById("clint_movements_next_city_input_id").value = "";
-                    document.getElementById("clint_movements_airport_welcome_input_id").value = "";
-                    document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = "";
-                    document.getElementById("clint_movements_new_check_in_input_id").value = "";
-                    document.getElementById("clint_movements_current_city_input_id").value = "";
-                    document.getElementById("clint_movements_next_city_input_id").value = "";
-
-                    /* Hide and show different icons */
-                    document.getElementById("clint_movements_details_inputs_submit_icon").style.display = "block";
-                    document.getElementById("confirm_new_clint_movements_data_row_icon").style.display = "none";
-                    document.getElementById("cancel_new_clint_movements_data_row_icon").style.display = "none";
-
-                    /* Reset the innerText and styling to defualt */
-                    document.getElementById("clint_movements_content_section_title_text_id").innerText = "تفاصيل الطيران";
-                    document.getElementById("clint_movements_content_section_title_text_id").style.background = "rgb(131, 0, 148)";
-
-                    /* Restore the (before editing) current day date */
-                    document.getElementById("clint_movements_current_day_date_input_id").value = clintMovementsBeforeEditingDayDateInput;
-
-                    /* Re-enable the clint movements dates when editing */
-                    document.getElementById("clint_movements_first_day_date_input_id").disabled = false;
-                    document.getElementById("clint_movements_last_day_date_input_id").disabled = false;
-                };
-
-                /* Function to confirm the new clint movements row data */
-                confirmNewClintMovementsDataRow = function () {
-                    // Get the clicked clint movements data row
-                    let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
-
-                    // Clear the old data (and replace (the  inner data) later and not the whole div)
-                    clickedClintMovementsDataDiv.innerHTML = "";
-
-                    // Get references to all input elements for later use
-                    let clintMovementsCurrentDayDateInput = document.getElementById("clint_movements_current_day_date_input_id").value;
-                    let clintMovementsNewCheckOutInput = document.getElementById("clint_movements_new_check_out_input_id").value;
-                    let clintMovementsNextCityInput = document.getElementById("clint_movements_next_city_input_id").value;
-                    let clintMovementsAirportWelcomeInput = document.getElementById("clint_movements_airport_welcome_input_id").value;
-                    let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value;
-                    let clintMovementsNewCheckInInput = document.getElementById("clint_movements_new_check_in_input_id").value;
-
+                    /* Exit the function and stop processing */
+                    return;
+                } else {
                     /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
-                    if (clintMovementsNextCityInput === "الذهاب للمطار للمغادرة" || clintMovementsAirportWelcomeInput !== "" || clintMovementsNewCheckInInput !== "") {
+                    if (clintMovementsNextCityInput === "الذهاب للمطار للمغادرة") {
                         /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
-                        if (clintMovementsWholeDayActionsDetailsTextarea !== "") {
+                        if (clintMovementsAirportWelcomeInput !== "" || clintMovementsWholeDayActionsDetailsTextarea !== "" || clintMovementsNewCheckInInput !== "") {
                             // Change the submit icon background color
                             clint_movements_details_inputs_submit_icon.style.backgroundColor = "red";
 
@@ -1676,6 +1551,18 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         }
                     }
 
+                    // Change the submit icon background color
+                    clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(0, 255, 0)";
+                    // Set the background color of the submit icon back to default color
+                    setTimeout(() => {
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                    }, 500);
+
+                    // Add a new day to the value of the 'clint_movements_current_day_date_input_id'
+                    currentDayDate.setDate(currentDayDate.getDate() + 1);
+                    let newDayDate = currentDayDate.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).replace(" ", "-");
+                    document.getElementById("clint_movements_current_day_date_input_id").value = newDayDate;
+
                     // Create the HTML content for a new hotel row
                     let clintMovementsRowTableDivContent = `
                         <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
@@ -1685,8 +1572,16 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                     `;
 
-                    // Insert the updated HTML content into the current edithing div
-                    clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
+                    // Create a new div element to hold the hotel row
+                    let clintMovementsRowTableDiv = document.createElement("div");
+                    clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
+                    clintMovementsRowTableDiv.classList.add("clint_movements_row_class", "clint_movements_row_class_for_editing"); // Add a class to the div for styling and for re-arranging the first and last clint movements dates
+
+                    // Insert the HTML content into the newly created div
+                    clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
+
+                    // Append the new hotel row div to the parent div that holds all inserted hotel data
+                    document.getElementById("inserted_clint_movements_data_position_div").appendChild(clintMovementsRowTableDiv);
 
                     // Create and append each <p> element with unique ID
                     let pElements = [
@@ -1720,85 +1615,128 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     pElementConcatenated.innerText = concatenatedText;
                     document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
 
-                    let clintMovementsCurrentCityInputP = null;
-
-                    if (storeClintMovementsCurrentCityInput === null) {
-                        // Create a new <p> element for the current and next city
-                        clintMovementsCurrentCityInputP = document.createElement("p");
-                        clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
-                        clintMovementsCurrentCityInputP.innerText = clintMovementsStoredCurrentCityValue;
-                    } else {
-                        // Create a new <p> element for the current and next city
-                        clintMovementsCurrentCityInputP = document.createElement("p");
-                        clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
-                        clintMovementsCurrentCityInputP.innerText = storeClintMovementsCurrentCityInput;
-                    }
-
-                    /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' */
-                    document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredCurrentCityValue;
+                    /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' for later use (when editing) */
+                    document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsCurrentCityInput;
 
                     // Check if storeClintMovementsNextCityInput has a value
                     if (clintMovementsNextCityInput !== "" && clintMovementsNextCityInput !== "الذهاب للمطار للمغادرة") {
-                        if (storeClintMovementsNextCityInput === null) {
-                            if (storeClintMovementsCurrentCityInput === null) {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement("p");
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${clintMovementsStoredNextCityValue}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+                        // Create a variable that combines both values separated by a - sign
+                        let combinedCityText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
 
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
-                            } else {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement("p");
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${clintMovementsStoredNextCityValue}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+                        // Create and append a new <p> element with the combined city text
+                        let pElementCombinedCity = document.createElement("p");
+                        pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.className = `clint_movements_row_controller`;
+                        pElementCombinedCity.innerText = combinedCityText;
+                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
 
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
-                            }
-                        } else {
-                            if (storeClintMovementsCurrentCityInput === null) {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement("p");
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${storeClintMovementsNextCityInput}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                            } else {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement("p");
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                            }
-                        }
+                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
                     } else {
-                        /* if there is no inserted clint movements next city then dont include it */
-                        if (storeClintMovementsCurrentCityInput === null) {
-                            // Create and append a new <p> element with the concatenated text
-                            let pElementCombinedCity = document.createElement("p");
-                            pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                            pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}`;
-                            document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+                        // Create a variable that combines both values separated by a - sign
+                        let combinedCityText = `${storeClintMovementsCurrentCityInput}`;
 
-                            document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                        } else {
-                            // Create and append a new <p> element with the concatenated text
-                            let pElementCombinedCity = document.createElement("p");
-                            pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                            pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}`;
-                            document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                            document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                        }
+                        // Create and append a new <p> element with the combined city text
+                        let pElementCombinedCity = document.createElement("p");
+                        pElementCombinedCity.id = `clint_movements_combined_city_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementCombinedCity.className = `clint_movements_row_controller`;
+                        pElementCombinedCity.innerText = combinedCityText;
+                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
                     }
 
+                    // Clear the input values after adding the new hotel row
+                    document.getElementById("clint_movements_new_check_out_input_id").value = "";
+                    document.getElementById("clint_movements_next_city_input_id").value = "";
+                    document.getElementById("clint_movements_airport_welcome_input_id").value = "";
+                    document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = "";
+                    document.getElementById("clint_movements_current_city_input_id").value = "";
+                    document.getElementById("clint_movements_new_check_in_input_id").value = "";
+
+                    // Increment the unique ID for the next hotel row
+                    insertedClintMovementsRowDivUniqueId++;
+
+                    /* Reset all variables for later refrence (when editing) */
+                    storeClintMovementsCurrentCityInput = null;
+                    storeClintMovementsNextCityInput = null;
+
                     // Get all dynamically created elements with the class 'clint_movements_row_controller'
-                    let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll(".clint_movements_row_controller");
+                    let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll(".clint_movements_row_controller");
+
+                    // Function to handle touch events and distinguish between tap and scroll for flight row
+                    function handleClintMovementsTouchEvent(element) {
+                        let touchStartX, touchStartY, touchStartTime;
+
+                        // Record the starting touch position and time
+                        element.addEventListener("touchstart", (event) => {
+                            let touch = event.touches[0];
+                            touchStartX = touch.clientX;
+                            touchStartY = touch.clientY;
+                            touchStartTime = new Date().getTime();
+                        });
+
+                        // Compare the ending touch position and time to determine if it was a tap
+                        element.addEventListener("touchend", (event) => {
+                            let touch = event.changedTouches[0];
+                            let touchEndX = touch.clientX;
+                            let touchEndY = touch.clientY;
+                            let touchEndTime = new Date().getTime();
+
+                            let deltaX = touchEndX - touchStartX;
+                            let deltaY = touchEndY - touchStartY;
+                            let deltaTime = touchEndTime - touchStartTime;
+
+                            // Check if the touch event qualifies as a tap
+                            let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                            // If it's a tap, run the click function
+                            if (isTap) {
+                                clintMovementsRowCityNameControllerFunction(event);
+                            }
+                        });
+                    }
+
+                    // Function to handle mouse events and distinguish between click and drag for flight row
+                    function handleClintMovementsMouseEvent(element) {
+                        let mouseStartX,
+                            mouseStartY,
+                            mouseStartTime,
+                            isDragging = false;
+
+                        // Record the starting mouse position and time
+                        element.addEventListener("mousedown", (event) => {
+                            mouseStartX = event.clientX;
+                            mouseStartY = event.clientY;
+                            mouseStartTime = new Date().getTime();
+                            isDragging = false;
+                        });
+
+                        // Mark as dragging if mouse moves significantly
+                        element.addEventListener("mousemove", (event) => {
+                            let deltaX = event.clientX - mouseStartX;
+                            let deltaY = event.clientY - mouseStartY;
+                            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                                isDragging = true;
+                            }
+                        });
+
+                        // Compare the ending mouse position and time to determine if it was a click
+                        element.addEventListener("mouseup", (event) => {
+                            let mouseEndX = event.clientX;
+                            let mouseEndY = event.clientY;
+                            let mouseEndTime = new Date().getTime();
+
+                            let deltaX = mouseEndX - mouseStartX;
+                            let deltaY = mouseEndY - mouseStartY;
+                            let deltaTime = mouseEndTime - mouseStartTime;
+
+                            // Check if the mouse event qualifies as a click
+                            let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                            // If it's a click, run the click function
+                            if (isClick) {
+                                clintMovementsRowCityNameControllerFunction(event);
+                            }
+                        });
+                    }
 
                     // Attach click and touch event listeners to each element
                     clintMovementsRowImageControllers.forEach((element) => {
@@ -1806,183 +1744,845 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
                     });
 
-                    /* Reset all variables for later refrence (when editing) */
-                    storeClintMovementsCurrentCityInput = null;
-                    storeClintMovementsNextCityInput = null;
+                    /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
+                    document.getElementById("downloaded_pdf_clint_movements_data_page").style.display = "block";
 
-                    /* Recall the functionality of the 'clint_movements_row_controller' controller */
-                    arrangeClintMovementsDates();
-                    createClintMovementsDragAndDropMood();
+                    /* Show the download button */
+                    document.getElementById("export_package_pdf_div_id").style.display = "block";
 
-                    // Clear the input after confirm the new flight data
-                    cancelNewClintMovementsDataRow();
-                };
-            };
-        });
+                    // Get references to all input elements and reset their values
+                    document.getElementById("clint_movements_current_city_input_id").value = "";
+                    document.getElementById("clint_movements_new_check_out_input_id").value = "";
+                    document.getElementById("clint_movements_airport_welcome_input_id").value = "";
+                    document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = "";
+                    document.getElementById("clint_movements_next_city_input_id").value = "";
+                    document.getElementById("clint_movements_new_check_in_input_id").value = "";
 
-        // Function to handle clint movements row div click or touch
-        clintMovementsRowCityNameControllerFunction = function (event) {
-            let deleteclintMovementsRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
-            let clickedclintMovementsDataDiv = event.target.closest(".clint_movements_row_class");
-
-            currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
-
-            /* Function to run delete the clicked clint movements row data */
-            runDeleteClickedClintMovementsDataFunction = function () {
-                deleteClickedClintMovementsData(currentClintMovementsDataDivId);
-            };
-
-            /* Function to run edit the clicked clint movements row data */
-            runEditClickedClintMovementsDataFunction = function () {
-                editClickedClintMovementsData(currentClintMovementsDataDivId);
-            };
-
-            // Check if the overlay already exists
-            let overlayLayer = document.querySelector(".black_overlay");
-            if (!overlayLayer) {
-                overlayLayer = document.createElement("div");
-                overlayLayer.classList.add("black_overlay");
-                document.body.appendChild(overlayLayer);
-
-                setTimeout(() => {
-                    overlayLayer.style.opacity = "1";
-                    deleteclintMovementsRowDiv.style.transform = "translate(-50%, -50%)";
-                }, 50);
-
-                // Handle both click and touch events on overlay for consistency
-                let handleOverlayClick = () => {
-                    deleteclintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
-                    overlayLayer.style.opacity = "0";
-                    setTimeout(() => {
-                        // Only remove the overlay if it is still a child of the body
-                        if (document.body.contains(overlayLayer)) {
-                            document.body.removeChild(overlayLayer);
-                        }
-                    }, 300);
-                };
-
-                overlayLayer.addEventListener("click", handleOverlayClick);
-                overlayLayer.addEventListener("touchstart", handleOverlayClick); // Add touch event handling
-
-                overlayLayer.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                });
-            }
-        };
-
-        // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
-        function createClintMovementsDragAndDropMood() {
-            // Common function to handle dragging logic
-            function handleDrag(event, touch = false) {
-                if (event.target.classList.contains("clint_movements_row_controller")) {
-                    event.preventDefault();
-                    let draggingElement = event.target.closest(".clint_movements_row_class");
-                    draggingElement.classList.add("dragging");
-                    draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
-                    document.addEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
-                    document.addEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
-
-                    // Disable scrolling
-                    document.body.style.overflow = "hidden";
+                    /* Hide all the clint movements places names */
+                    bali_clint_movements_places_div.style.display = "none";
+                    jakarta_clint_movements_places_div.style.display = "none";
+                    puncak_clint_movements_places_div.style.display = "none";
+                    bandung_clint_movements_places_div.style.display = "none";
                 }
-            }
 
-            // Event listener for the drop zone
-            let flightDropZone = document.getElementById("inserted_clint_movements_data_position_div");
+                // Define a global variable to store the reference
+                let currentClintMovementsDataDivId;
 
-            // Function to handle mouse down event
-            function mouseDown(event) {
-                handleDrag(event, false);
-            }
+                // Function to handle delete clicked clint movements data
+                deleteClickedClintMovementsData = function (clickedClintMovementsRowdName) {
+                    // Select the overlay layer element
+                    let overlayLayer = document.querySelector(".black_overlay");
 
-            // Function to handle touch start event
-            function touchStart(event) {
-                handleDrag(event, true);
-            }
-
-            // Function to handle move event
-            function move(event, touch = false) {
-                let draggingElement = document.querySelector(".dragging");
-                let startY = parseInt(draggingElement.dataset.startY || 0);
-                let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
-                draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                let dropElements = Array.from(flightDropZone.children);
-                let currentIndex = dropElements.indexOf(draggingElement);
-
-                let targetIndex = currentIndex;
-                for (let i = 0; i < dropElements.length; i++) {
-                    let element = dropElements[i];
-                    let rect = element.getBoundingClientRect();
-                    if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
-                        if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
-                            targetIndex = i + 1;
-                        } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
-                            targetIndex = i;
-                        }
-                        break;
+                    // Get the clicked element by its ID
+                    let clickedHotelCardElement = document.getElementById(clickedClintMovementsRowdName);
+                    if (clickedHotelCardElement) {
+                        // Remove the clicked element from the DOM
+                        clickedHotelCardElement.remove();
                     }
-                }
 
-                if (targetIndex !== currentIndex) {
-                    flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+                    // Hide the delete confirmation div by translating it out of view
+                    let deleteClintMovementsRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
+                    deleteClintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
 
-                    /* Update the date arrangment in every drag and drop action */
-                    arrangeClintMovementsDates();
-                }
-            }
+                    // Reduce the opacity of the overlay layer to 0 (for fade-out effect)
+                    overlayLayer.style.opacity = "0";
 
-            // Function to handle mouse move event
-            function mouseMove(event) {
-                move(event, false);
-            }
-
-            // Function to handle touch move event
-            function touchMove(event) {
-                move(event, true);
-            }
-
-            // Function to handle end event
-            function end(event, touch = false) {
-                let draggingElement = document.querySelector(".dragging");
-
-                if (draggingElement) {
-                    draggingElement.classList.remove("dragging");
-                    draggingElement.style.transform = "";
-                    draggingElement.removeAttribute("data-start-y");
-
-                    draggingElement.classList.add("drop-transition");
+                    // Remove overlay and edit/delete div from DOM after transition (300ms delay)
                     setTimeout(() => {
-                        draggingElement.classList.remove("drop-transition");
-                    }, 300);
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Update dates after deleting a row
+                    arrangeClintMovementsDates();
+
+                    // Reduce the date of clint_movements_current_day_date_input_id by one day
+                    // Get the current day input element by its ID
+                    let currentDayInput = document.getElementById("clint_movements_current_day_date_input_id");
+                    // Convert the date string to a Date object
+                    let currentDayDate = new Date(currentDayInput.value.split("-").reverse().join("-"));
+                    // Reduce the date by one day
+                    currentDayDate.setDate(currentDayDate.getDate() - 1);
+                    // Format the new date in 'DD-MMM' format
+                    let formattedDate = currentDayDate.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }).replace(" ", "-");
+                    // Set the new date value to the input element
+                    currentDayInput.value = formattedDate;
+
+                    // Check if there are any remaining clint movements data divs
+                    let remainingClintMovementsDataDivs = document.querySelectorAll(".clint_movements_row_class");
+                    if (remainingClintMovementsDataDivs.length === 1) {
+                        // Only the first element left
+                        // Hide section with id 'downloaded_pdf_clint_movements_data_page'
+                        document.getElementById("downloaded_pdf_clint_movements_data_page").style.display = "none";
+
+                        // Hide the download button if there are no other important data sections visible
+                        if (
+                            document.getElementById("downloaded_pdf_flight_data_page").style.display === "none" &&
+                            document.getElementById("downloaded_pdf_hotel_data_page").style.display === "none" &&
+                            document.getElementById("downloaded_pdf_clint_movements_data_page").style.display === "none"
+                        ) {
+                            document.getElementById("export_package_pdf_div_id").style.display = "none";
+                        }
+                    }
+                };
+
+                // Function to handle delete clicked clint movements data
+                editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
+                    /* Make sure the correct section is the one that is visiable */
+                    create_new_hotel_package_section.style.display = "none";
+                    create_new_flight_package_section.style.display = "none";
+                    create_new_clint_movements_paln_section.style.display = "flex";
+
+                    /* Show and hide different icons */
+                    document.getElementById("clint_movements_details_inputs_submit_icon").style.display = "none";
+                    document.getElementById("confirm_new_clint_movements_data_row_icon").style.display = "block";
+                    document.getElementById("cancel_new_clint_movements_data_row_icon").style.display = "block";
+
+                    /* Change the innerText and styling to defualt */
+                    document.getElementById("clint_movements_content_section_title_text_id").innerText = "تعديل تفاصيل خط السير";
+                    document.getElementById("clint_movements_content_section_title_text_id").style.background = "rgb(0, 93, 163)";
+
+                    /* Scroll up to the middle of the 'clint_movements_details_dropdown_content' */
+                    document.getElementById("clint_movements_details_dropdown_content").scrollIntoView({
+                        block: "center",
+                        inline: "center",
+                        behavior: "smooth",
+                    });
+
+                    /* Disable the clint movements dates when editing */
+                    document.getElementById("clint_movements_first_day_date_input_id").disabled = true;
+                    document.getElementById("clint_movements_last_day_date_input_id").disabled = true;
+
+                    // Hide delete button div
+                    let overlayLayer = document.querySelector(".black_overlay");
+                    let deleteHotelRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
+                    deleteHotelRowDiv.style.transform = "translate(-50%, -100vh)";
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = "0";
+
+                    // Remove overlay and edit/delete div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+
+                    // Get the clicked clint movements data row
+                    let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
+                    let insertedClintMovementsRowDivUniqueId = currentClintMovementsDataDivId.split("_").pop(); // Extract the unique ID from the clicked row ID
+
+                    /* Store the (before editing day value) */
+                    let clintMovementsBeforeEditingDayDateInput = document.getElementById("clint_movements_current_day_date_input_id").value;
+
+                    // Extract data using IDs
+                    let clintMovementsCurrentDayDateInput = clickedClintMovementsDataDiv.querySelector(`h6[id^='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsNewCheckOutInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsNextCityInput = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsAirportWelcomeInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsWholeDayActionsDetailsTextarea = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsNewCheckInInput = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsStoredCurrentCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+                    let clintMovementsStoredNextCityValue = clickedClintMovementsDataDiv.querySelector(`p[id^='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || "";
+
+                    // Assign values to inputs
+                    document.getElementById("clint_movements_current_day_date_input_id").value = clintMovementsCurrentDayDateInput;
+                    document.getElementById("clint_movements_new_check_out_input_id").value = clintMovementsNewCheckOutInput;
+
+                    if (clintMovementsNextCityInput !== "") {
+                        document.getElementById("clint_movements_next_city_input_id").value = `الذهاب الى ${clintMovementsNextCityInput}`;
+                    }
+
+                    document.getElementById("clint_movements_airport_welcome_input_id").value = clintMovementsAirportWelcomeInput;
+                    document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = clintMovementsWholeDayActionsDetailsTextarea;
+                    document.getElementById("clint_movements_new_check_in_input_id").value = clintMovementsNewCheckInInput;
+                    document.getElementById("clint_movements_current_city_input_id").value = `المدينة الحالية ${clintMovementsStoredCurrentCityValue}`;
+
+                    /* Function to cancel the clint movements row data editing process */
+                    cancelNewClintMovementsDataRow = function () {
+                        // Get references to all input elements and reset their values
+                        document.getElementById("clint_movements_current_day_date_input_id").value = "";
+                        document.getElementById("clint_movements_new_check_out_input_id").value = "";
+                        document.getElementById("clint_movements_next_city_input_id").value = "";
+                        document.getElementById("clint_movements_airport_welcome_input_id").value = "";
+                        document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value = "";
+                        document.getElementById("clint_movements_new_check_in_input_id").value = "";
+                        document.getElementById("clint_movements_current_city_input_id").value = "";
+                        document.getElementById("clint_movements_next_city_input_id").value = "";
+
+                        /* Hide and show different icons */
+                        document.getElementById("clint_movements_details_inputs_submit_icon").style.display = "block";
+                        document.getElementById("confirm_new_clint_movements_data_row_icon").style.display = "none";
+                        document.getElementById("cancel_new_clint_movements_data_row_icon").style.display = "none";
+
+                        /* Reset the innerText and styling to defualt */
+                        document.getElementById("clint_movements_content_section_title_text_id").innerText = "تفاصيل الطيران";
+                        document.getElementById("clint_movements_content_section_title_text_id").style.background = "rgb(131, 0, 148)";
+
+                        /* Restore the (before editing) current day date */
+                        document.getElementById("clint_movements_current_day_date_input_id").value = clintMovementsBeforeEditingDayDateInput;
+
+                        /* Re-enable the clint movements dates when editing */
+                        document.getElementById("clint_movements_first_day_date_input_id").disabled = false;
+                        document.getElementById("clint_movements_last_day_date_input_id").disabled = false;
+                    };
+
+                    /* Function to confirm the new clint movements row data */
+                    confirmNewClintMovementsDataRow = function () {
+                        // Get the clicked clint movements data row
+                        let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
+
+                        // Clear the old data (and replace (the  inner data) later and not the whole div)
+                        clickedClintMovementsDataDiv.innerHTML = "";
+
+                        // Get references to all input elements for later use
+                        let clintMovementsCurrentDayDateInput = document.getElementById("clint_movements_current_day_date_input_id").value;
+                        let clintMovementsNewCheckOutInput = document.getElementById("clint_movements_new_check_out_input_id").value;
+                        let clintMovementsNextCityInput = document.getElementById("clint_movements_next_city_input_id").value;
+                        let clintMovementsAirportWelcomeInput = document.getElementById("clint_movements_airport_welcome_input_id").value;
+                        let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById("clint_movements_whole_day_actions_details_textarea_id").value;
+                        let clintMovementsNewCheckInInput = document.getElementById("clint_movements_new_check_in_input_id").value;
+
+                        /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
+                        if (clintMovementsNextCityInput === "الذهاب للمطار للمغادرة") {
+                            /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
+                            if (clintMovementsWholeDayActionsDetailsTextarea !== "" || clintMovementsAirportWelcomeInput !== "" || clintMovementsNewCheckInInput !== "") {
+                                // Change the submit icon background color
+                                clint_movements_details_inputs_submit_icon.style.backgroundColor = "red";
+
+                                // Set the background color of the submit icon back to default color
+                                setTimeout(() => {
+                                    clint_movements_details_inputs_submit_icon.style.backgroundColor = "rgb(255, 174, 0)";
+                                }, 500);
+
+                                /* Exit the function and stop processing */
+                                return;
+                            }
+                        }
+
+                        // Create the HTML content for a new hotel row
+                        let clintMovementsRowTableDivContent = `
+                            <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
+                            <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
+                            <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller" style="cursor: pointer;"></div>
+                            <p id='hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                            <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
+                        `;
+
+                        // Insert the updated HTML content into the current edithing div
+                        clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
+
+                        // Create and append each <p> element with unique ID
+                        let pElements = [
+                            { text: clintMovementsNewCheckOutInput, id: `clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsNextCityInput, id: `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsAirportWelcomeInput, id: `clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsWholeDayActionsDetailsTextarea, id: `clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}` },
+                            { text: clintMovementsNewCheckInInput, id: `clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}` },
+                        ];
+
+                        // Append each <p> element to the container
+                        pElements.forEach((pElement) => {
+                            if (pElement.text !== "") {
+                                let p = document.createElement("p");
+                                p.id = pElement.id;
+                                p.innerText = pElement.text;
+                                p.style.display = "none";
+                                document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(p);
+                            }
+                        });
+
+                        // Concatenate all texts with a + sign
+                        let concatenatedText = pElements
+                            .map((p) => p.text)
+                            .filter((text) => text !== "")
+                            .join("+");
+
+                        // Create and append a <p> element for the concatenated text
+                        let pElementConcatenated = document.createElement("p");
+                        pElementConcatenated.id = `clint_movements_concatenated_${insertedClintMovementsRowDivUniqueId}`;
+                        pElementConcatenated.innerText = concatenatedText;
+                        document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
+
+                        let clintMovementsCurrentCityInputP = null;
+
+                        if (storeClintMovementsCurrentCityInput === null) {
+                            // Create a new <p> element for the current and next city
+                            clintMovementsCurrentCityInputP = document.createElement("p");
+                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                            clintMovementsCurrentCityInputP.innerText = clintMovementsStoredCurrentCityValue;
+                        } else {
+                            // Create a new <p> element for the current and next city
+                            clintMovementsCurrentCityInputP = document.createElement("p");
+                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                            clintMovementsCurrentCityInputP.innerText = storeClintMovementsCurrentCityInput;
+                        }
+
+                        /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' */
+                        document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredCurrentCityValue;
+
+                        // Check if storeClintMovementsNextCityInput has a value
+                        if (clintMovementsNextCityInput !== "" && clintMovementsNextCityInput !== "الذهاب للمطار للمغادرة") {
+                            if (storeClintMovementsNextCityInput === null) {
+                                if (storeClintMovementsCurrentCityInput === null) {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement("p");
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${clintMovementsStoredNextCityValue}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                } else {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement("p");
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${clintMovementsStoredNextCityValue}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                }
+                            } else {
+                                if (storeClintMovementsCurrentCityInput === null) {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement("p");
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${storeClintMovementsNextCityInput}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                } else {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement("p");
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                }
+                            }
+                        } else {
+                            /* if there is no inserted clint movements next city then dont include it */
+                            if (storeClintMovementsCurrentCityInput === null) {
+                                // Create and append a new <p> element with the concatenated text
+                                let pElementCombinedCity = document.createElement("p");
+                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}`;
+                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                            } else {
+                                // Create and append a new <p> element with the concatenated text
+                                let pElementCombinedCity = document.createElement("p");
+                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}`;
+                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                            }
+                        }
+
+                        // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                        let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll(".clint_movements_row_controller");
+
+                        // Attach click and touch event listeners to each element
+                        clintMovementsRowImageControllers.forEach((element) => {
+                            handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                            handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
+                        });
+
+                        /* Reset all variables for later refrence (when editing) */
+                        storeClintMovementsCurrentCityInput = null;
+                        storeClintMovementsNextCityInput = null;
+
+                        /* Recall the functionality of the 'clint_movements_row_controller' controller */
+                        arrangeClintMovementsDates();
+                        createClintMovementsDragAndDropMood();
+
+                        // Clear the input after confirm the new flight data
+                        cancelNewClintMovementsDataRow();
+                    };
+                };
+
+                // Function to handle clint movements row div click or touch
+                clintMovementsRowCityNameControllerFunction = function (event) {
+                    let deleteclintMovementsRowDiv = document.getElementById("ensure_delete_or_edit_clint_movemnt_data_div");
+                    let clickedclintMovementsDataDiv = event.target.closest(".clint_movements_row_class");
+
+                    currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
+
+                    /* Function to run delete the clicked clint movements row data */
+                    runDeleteClickedClintMovementsDataFunction = function () {
+                        deleteClickedClintMovementsData(currentClintMovementsDataDivId);
+                    };
+
+                    /* Function to run edit the clicked clint movements row data */
+                    runEditClickedClintMovementsDataFunction = function () {
+                        editClickedClintMovementsData(currentClintMovementsDataDivId);
+                    };
+
+                    // Check if the overlay already exists
+                    let overlayLayer = document.querySelector(".black_overlay");
+                    if (!overlayLayer) {
+                        overlayLayer = document.createElement("div");
+                        overlayLayer.classList.add("black_overlay");
+                        document.body.appendChild(overlayLayer);
+
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = "1";
+                            deleteclintMovementsRowDiv.style.transform = "translate(-50%, -50%)";
+                        }, 50);
+
+                        // Handle both click and touch events on overlay for consistency
+                        let handleOverlayClick = () => {
+                            deleteclintMovementsRowDiv.style.transform = "translate(-50%, -100vh)";
+                            overlayLayer.style.opacity = "0";
+                            setTimeout(() => {
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
+                            }, 300);
+                        };
+
+                        overlayLayer.addEventListener("click", handleOverlayClick);
+                        overlayLayer.addEventListener("touchstart", handleOverlayClick); // Add touch event handling
+
+                        overlayLayer.addEventListener("click", (event) => {
+                            event.stopPropagation();
+                        });
+                    }
+                };
+
+                // Function to initialize drag and drop functionality for 'clint_movements_row_class' elements
+                function createClintMovementsDragAndDropMood() {
+                    // Common function to handle dragging logic
+                    function handleDrag(event, touch = false) {
+                        if (event.target.classList.contains("clint_movements_row_controller")) {
+                            event.preventDefault();
+                            let draggingElement = event.target.closest(".clint_movements_row_class");
+                            draggingElement.classList.add("dragging");
+                            draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
+                            document.addEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
+                            document.addEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
+
+                            // Disable scrolling
+                            document.body.style.overflow = "hidden";
+                        }
+                    }
+
+                    // Event listener for the drop zone
+                    let flightDropZone = document.getElementById("inserted_clint_movements_data_position_div");
+
+                    // Function to handle mouse down event
+                    function mouseDown(event) {
+                        handleDrag(event, false);
+                    }
+
+                    // Function to handle touch start event
+                    function touchStart(event) {
+                        handleDrag(event, true);
+                    }
+
+                    // Function to handle move event
+                    function move(event, touch = false) {
+                        let draggingElement = document.querySelector(".dragging");
+                        let startY = parseInt(draggingElement.dataset.startY || 0);
+                        let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
+                        draggingElement.style.transform = `translateY(${deltaY}px)`;
+
+                        let dropElements = Array.from(flightDropZone.children);
+                        let currentIndex = dropElements.indexOf(draggingElement);
+
+                        let targetIndex = currentIndex;
+                        for (let i = 0; i < dropElements.length; i++) {
+                            let element = dropElements[i];
+                            let rect = element.getBoundingClientRect();
+                            if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
+                                if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
+                                    targetIndex = i + 1;
+                                } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
+                                    targetIndex = i;
+                                }
+                                break;
+                            }
+                        }
+
+                        if (targetIndex !== currentIndex) {
+                            flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
+
+                            /* Update the date arrangment in every drag and drop action */
+                            arrangeClintMovementsDates();
+                        }
+                    }
+
+                    // Function to handle mouse move event
+                    function mouseMove(event) {
+                        move(event, false);
+                    }
+
+                    // Function to handle touch move event
+                    function touchMove(event) {
+                        move(event, true);
+                    }
+
+                    // Function to handle end event
+                    function end(event, touch = false) {
+                        let draggingElement = document.querySelector(".dragging");
+
+                        if (draggingElement) {
+                            draggingElement.classList.remove("dragging");
+                            draggingElement.style.transform = "";
+                            draggingElement.removeAttribute("data-start-y");
+
+                            draggingElement.classList.add("drop-transition");
+                            setTimeout(() => {
+                                draggingElement.classList.remove("drop-transition");
+                            }, 300);
+                        }
+
+                        document.removeEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
+                        document.removeEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
+
+                        document.body.style.overflow = "";
+                    }
+
+                    // Function to handle mouse up event
+                    function mouseUp(event) {
+                        end(event, false);
+                    }
+
+                    // Function to handle touch end event
+                    function touchEnd(event) {
+                        end(event, true);
+                    }
+
+                    // Add event listeners for each insertedFlightDataDiv element
+                    let insertedFlightDataDivs = document.querySelectorAll(".clint_movements_row_class");
+
+                    insertedFlightDataDivs.forEach((div) => {
+                        div.addEventListener("mousedown", mouseDown);
+                        div.addEventListener("touchstart", touchStart);
+                    });
                 }
 
-                document.removeEventListener(touch ? "touchmove" : "mousemove", touch ? touchMove : mouseMove);
-                document.removeEventListener(touch ? "touchend" : "mouseup", touch ? touchEnd : mouseUp);
+                // Initialize drag and drop functionality
+                createClintMovementsDragAndDropMood();
+            }
+        }
+    }
+};
 
-                document.body.style.overflow = "";
+/* Function to handel clicked clint movements rule element */
+runDeleteThisPackageIncludingDataText = function (clickedPackageIncludingDataText) {
+    // Create an overlay layer for better visual effect
+    let overlayLayer = document.createElement("div");
+    overlayLayer.classList.add("black_overlay");
+    document.body.appendChild(overlayLayer);
+
+    /* Function to delete the clint movements rule */
+    deleteClickedPackageIncludingDataText = function (clickedPackageIncludingDataText) {
+        clickedPackageIncludingDataText.remove();
+
+        ensure_delete_package_including_data_text_div.style.transform = "translate(-50%, -100vh)"; // Slide out
+        overlayLayer.style.opacity = "0"; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+
+        // Check if there are any remaining inserted package including data (Searching by the second class name)
+        let remainingPackageIncludingDataText = document.querySelectorAll(".inserted_package_including_data_text");
+        if (remainingPackageIncludingDataText.length === 0) {
+            // Hide section with id 'downloaded_pdf_package_including_data_page'
+            document.getElementById("downloaded_pdf_package_including_data_page").style.display = "none";
+        }
+    };
+
+    // Delayed opacity transition for smooth appearance
+    setTimeout(() => {
+        overlayLayer.style.opacity = "1";
+        ensure_delete_package_including_data_text_div.style.transform = "translate(-50%, -50%)"; // Center div
+    }, 50);
+
+    /* Function to pass the clicked clint movements rule element */
+    passClickedPackageIncludingDataText = function () {
+        if (clickedPackageIncludingDataText === "package_total_price_p_id") {
+            document.getElementById("downloaded_pdf_total_price_data_page").style.display = "none";
+
+            ensure_delete_package_including_data_text_div.style.transform = "translate(-50%, -100vh)"; // Slide out
+            overlayLayer.style.opacity = "0"; // Hide overlay
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+
+            // Check if there are any remaining inserted package including data (Searching by the second class name)
+            let remainingPackageIncludingDataText = document.querySelectorAll(".inserted_package_including_data_text");
+            if (remainingPackageIncludingDataText.length === 0) {
+                // Hide section with id 'downloaded_pdf_package_including_data_page'
+                document.getElementById("downloaded_pdf_package_including_data_page").style.display = "none";
             }
 
-            // Function to handle mouse up event
-            function mouseUp(event) {
-                end(event, false);
-            }
-
-            // Function to handle touch end event
-            function touchEnd(event) {
-                end(event, true);
-            }
-
-            // Add event listeners for each insertedFlightDataDiv element
-            let insertedFlightDataDivs = document.querySelectorAll(".clint_movements_row_class");
-
-            insertedFlightDataDivs.forEach((div) => {
-                div.addEventListener("mousedown", mouseDown);
-                div.addEventListener("touchstart", touchStart);
-            });
+            return;
         }
 
-        // Initialize drag and drop functionality
-        createClintMovementsDragAndDropMood();
+        deleteClickedPackageIncludingDataText(clickedPackageIncludingDataText);
+    };
+
+    // Click handler to close overlay and delete box div on click outside
+    overlayLayer.onclick = () => {
+        ensure_delete_package_including_data_text_div.style.transform = "translate(-50%, -100vh)"; // Slide out
+        overlayLayer.style.opacity = "0"; // Hide overlay
+
+        // Remove overlay and delete box div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    };
+
+    // Prevent overlayLayer click propagation to avoid immediate closure
+    overlayLayer.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevent immediate closure of overlay on click
+    });
+};
+
+/* Function to open choosing pdf file name box */
+openPdfDownloadBox = function () {
+    // Create overlay layer
+    let overlayLayer = document.createElement("div");
+    overlayLayer.className = "black_overlay";
+    document.body.appendChild(overlayLayer);
+
+    // Show overlay layer with smooth opacity transition
+    setTimeout(() => {
+        overlayLayer.style.opacity = "1"; // Delayed opacity transition for smooth appearance
+
+        // Slide to the center of the screen
+        namePdfBoxDiv.style.transform = "translate(-50%, -50%)";
+    }, 100);
+
+    // get the name pdf file box
+    let namePdfBoxDiv = document.getElementById("name_pdf_file_div");
+
+    /* Function to hide the name pdf file box */
+    closeDownloadPdfBox = function () {
+        // Hide edit/delete options div
+        namePdfBoxDiv.style.transform = "translate(-50%, -100vh)";
+
+        // Hide overlay layer with opacity transition
+        overlayLayer.style.opacity = "0";
+
+        // Remove overlay and edit/delete div from DOM after transition
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
+    };
+};
+
+/* Function to check if the 'pdf_file_name_input_id' input contain value or no */
+checkThePdfNameToDownload = function () {
+    /* If there is no value then change the 'check_pdf_name_button' color */
+    if (document.getElementById("pdf_file_name_input_id").value === "") {
+        document.getElementById("check_pdf_name_button").style.backgroundColor = "red";
+        setTimeout(() => {
+            document.getElementById("check_pdf_name_button").style.backgroundColor = "white";
+        }, 200);
+
+        /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
+    } else {
+        document.getElementById("check_pdf_name_button").style.backgroundColor = "rgb(0, 255, 0)";
+        setTimeout(() => {
+            document.getElementById("check_pdf_name_button").style.backgroundColor = "white";
+        }, 200);
+
+        let pdfNameReadyText = document.getElementById("pdf_file_name_input_id").value;
+        downloadPdfWithCustomName(`${pdfNameReadyText}`);
     }
+};
+
+/* Save the last PDF download data in localStorage */
+saveLastPdfDownloadData = function () {
+    let idsToCheck = [
+        "downloaded_pdf_clint_data_page",
+        "downloaded_pdf_package_including_data_page",
+        "downloaded_pdf_flight_data_page",
+        "downloaded_pdf_hotel_data_page",
+        "downloaded_pdf_clint_movements_data_page",
+        "downloaded_pdf_total_price_data_page",
+    ];
+
+    let visibleContent = [];
+
+    idsToCheck.forEach((id) => {
+        let element = document.getElementById(id);
+        if (isVisible(element)) {
+            visibleContent.push(element.outerHTML);
+        }
+    });
+
+    let savedData = JSON.parse(localStorage.getItem("Saved_Website_Data_Array")) || [];
+    let newEntry = {
+        name: "Last Download",
+        elements: {},
+    };
+
+    // Populate elements object with visible content
+    idsToCheck.forEach((id, index) => {
+        let element = document.getElementById(id);
+        if (isVisible(element)) {
+            newEntry.elements[id] = element.outerHTML;
+        }
+    });
+
+    // Remove any old object with the same name
+    savedData = savedData.filter((entry) => entry.name !== "Last Download");
+
+    // Add the new object at the top
+    savedData.unshift(newEntry);
+
+    localStorage.setItem("Saved_Website_Data_Array", JSON.stringify(savedData));
+};
+
+/* Function to check if an element is visible */
+let isVisible = function (element) {
+    return element && element.style.display !== "none" && element.offsetParent !== null;
+};
+
+/* Download the pdf file with the given name */
+downloadPdfWithCustomName = async function (pdfName) {
+    let { jsPDF } = window.jspdf;
+
+    /* Function to capture a canvas of a given section */
+    let captureCanvas = async function (section) {
+        try {
+            let canvas = await html2canvas(section, {
+                scale: 3.5, // Moderate scale for balanced quality and size
+                backgroundColor: null,
+                scrollY: 0, // Ensure capturing starts from the top of the element
+            });
+            return canvas;
+        } catch (error) {
+            console.error("Error capturing canvas:", error);
+        }
+    };
+
+    /* Function to combine multiple canvases into one */
+    let combineCanvases = function (canvases) {
+        if (canvases.length === 0) {
+            console.error("No canvases to combine");
+            return null;
+        }
+
+        let totalHeight = canvases.reduce((sum, canvas) => sum + canvas.height, 0);
+        let combinedCanvas = document.createElement("canvas");
+        combinedCanvas.width = canvases[0].width;
+        combinedCanvas.height = totalHeight;
+        let context = combinedCanvas.getContext("2d");
+
+        // Fill with default background color (e.g., white)
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
+
+        let yOffset = 0;
+        canvases.forEach((canvas) => {
+            context.drawImage(canvas, 0, yOffset);
+            yOffset += canvas.height;
+        });
+
+        return combinedCanvas;
+    };
+
+    /* Function to process all visible sections and generate the PDF */
+    let processSections = async function (sections) {
+        let canvases = [];
+
+        for (let section of sections) {
+            let canvas = await captureCanvas(section);
+            if (canvas) {
+                canvases.push(canvas);
+            }
+        }
+
+        if (canvases.length === 0) {
+            console.error("No canvases captured");
+            return;
+        }
+
+        let combinedCanvas = combineCanvases(canvases);
+        if (!combinedCanvas) {
+            console.error("Failed to combine canvases");
+            return;
+        }
+
+        let pdfWidth = 210; // A4 width in mm
+        let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
+        let padding = 2; // Padding in mm
+        let contentWidth = pdfWidth - 2 * padding; // Adjusted width with padding
+
+        let pdf = new jsPDF("p", "mm", [pdfWidth, pdfHeight]);
+
+        let imgData = combinedCanvas.toDataURL("image/jpeg", 0.4); // Compress image to reduce size
+
+        // Add the image to the PDF with padding
+        pdf.addImage(imgData, "JPEG", padding, 0, contentWidth, pdfHeight, "", "FAST");
+        pdf.save(pdfName);
+
+        // Hide all elements with the class name after saving the PDF
+        let images = document.querySelectorAll(".inserted_package_data_section_page_image_class");
+        images.forEach((img) => {
+            img.style.display = "none";
+        });
+
+        document.getElementById("downloaded_pdf_important_notes_data_page").style.display = "none"; // Hide the section after saving the PDF
+
+        document.getElementById("inserted_company_name_image_position_div").style.display = "flex"; // Show the section before checking visibility
+
+        saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+    };
+
+    // Show all elements with the class name before checking visibility
+    let images = document.querySelectorAll(".inserted_package_data_section_page_image_class");
+    images.forEach((img) => {
+        img.style.display = "inline";
+    });
+
+    document.getElementById("downloaded_pdf_important_notes_data_page").style.display = "block"; // Show the section before checking visibility
+
+    document.getElementById("inserted_company_name_image_position_div").style.display = "none"; // Show the section before checking visibility
+
+    if (document.getElementById("downloaded_pdf_total_price_data_page").style.display !== "none") {
+        document.getElementById("inserted_package_total_price_data_section_page_image_id").style.display = "inline"; // Show the section before checking visibility
+        document.getElementById("inserted_package_important_notes_data_section_page_image_id").style.display = "none"; // Show the section before checking visibility
+    } else {
+        document.getElementById("inserted_package_total_price_data_section_page_image_id").style.display = "none"; // Show the section before checking visibility
+        document.getElementById("inserted_package_important_notes_data_section_page_image_id").style.display = "inline"; // Show the section before checking visibility
+    }
+
+    // Define the class names to check
+    let divsIdNames = [
+        "downloaded_pdf_clint_data_page",
+        "downloaded_pdf_flight_data_page",
+        "downloaded_pdf_hotel_data_page",
+        "downloaded_pdf_package_including_data_page",
+        "downloaded_pdf_clint_movements_data_page",
+        "downloaded_pdf_important_notes_data_page",
+        "downloaded_pdf_total_price_data_page",
+    ];
+
+    let sections = [];
+
+    // Iterate through each class name and check visibility
+    divsIdNames.forEach((divsIdName) => {
+        let section = document.getElementById(divsIdName);
+        if (section && isVisible(section)) {
+            // Check if section exists and is visible
+            sections.push(section); // Add visible section to the array
+        }
+    });
+
+    if (sections.length === 0) {
+        console.error("No visible sections found");
+        return;
+    }
+
+    await processSections(sections); // Process visible sections to generate the PDF
 };
