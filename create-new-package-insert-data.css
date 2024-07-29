@@ -178,7 +178,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(0, 64, 68);
+    background: rgb(39, 56, 64);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -359,7 +359,7 @@
 }
 
 #package_total_price_div h6 {
-    background: rgb(9, 103, 108);
+    background: rgb(85, 127, 137);
     color: white;
     font-size: 5vw;
     padding: 5px 15px;
