@@ -506,7 +506,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
                     <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
                     <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
+                    <div style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
                 `;
 
 
@@ -813,7 +813,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
                             <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
                             <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                            <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
+                            <div style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
                         `;
 
 
@@ -3013,17 +3013,17 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page'
+        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', or 'downloaded_pdf_total_price_data_page'
         if (firstVisibleDiv) {
             let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
-            if (firstImg && firstVisibleDiv.id !== 'downloaded_pdf_clint_data_page') {
+            if (firstImg && !['downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(firstVisibleDiv.id)) {
                 firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
             }
         }
 
-        // Update the src value of images inside the rest of the visible divs
+        // Update the src value of images inside the rest of the visible divs, except for 'downloaded_pdf_important_notes_data_page' and 'downloaded_pdf_total_price_data_page'
         sections.forEach(section => {
-            if (section !== firstVisibleDiv) {
+            if (section !== firstVisibleDiv && !['downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(section.id)) {
                 let img = section.querySelector('.inserted_package_data_section_page_image_class');
                 if (img) {
                     img.src = "middle-pdf-image.jpg"; // Replace the src value for the rest of the visible imgs
@@ -3173,17 +3173,17 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page'
+        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', or 'downloaded_pdf_total_price_data_page'
         if (firstVisibleDiv) {
             let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
-            if (firstImg && firstVisibleDiv.id !== 'downloaded_pdf_clint_data_page') {
+            if (firstImg && !['downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(firstVisibleDiv.id)) {
                 firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
             }
         }
 
-        // Update the src value of images inside the rest of the visible divs
+        // Update the src value of images inside the rest of the visible divs, except for 'downloaded_pdf_important_notes_data_page' and 'downloaded_pdf_total_price_data_page'
         sections.forEach(section => {
-            if (section !== firstVisibleDiv) {
+            if (section !== firstVisibleDiv && !['downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(section.id)) {
                 let img = section.querySelector('.inserted_package_data_section_page_image_class');
                 if (img) {
                     img.src = "middle-pdf-image.jpg"; // Replace the src value for the rest of the visible imgs
@@ -3194,6 +3194,3 @@ downloadPdfWithCustomName = async function (pdfName) {
         await processSections(sections); // Process visible sections to generate the PDF
     }
 };
-
-
-
