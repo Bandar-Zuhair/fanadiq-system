@@ -2877,9 +2877,9 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section, scale) {
         try {
             let canvas = await html2canvas(section, {
-                scale: scale,
+                scale: scale, // Adjusted scale factor for higher quality
                 backgroundColor: null,
-                scrollY: 0
+                scrollY: 0 // Ensure capturing starts from the top of the element
             });
             return canvas;
         } catch (error) {
@@ -2900,6 +2900,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         combinedCanvas.height = totalHeight;
         let context = combinedCanvas.getContext('2d');
 
+        // Fill with default background color (e.g., white)
         context.fillStyle = '#ffffff';
         context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
 
@@ -2943,33 +2944,37 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let imgData = combinedCanvas.toDataURL('image/jpeg', 0.4); // Compress image to reduce size
 
+        // Add the image to the PDF with padding
         pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
+        // Hide all elements with the class name after saving the PDF
         let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
         images.forEach(img => {
             img.style.display = 'none';
         });
 
-        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
-        document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
+        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
+        document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
 
         saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
     };
 
+    // Show all elements with the class name before checking visibility
     let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
     images.forEach(img => {
         img.style.display = 'inline';
     });
 
-    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block';
-    document.getElementById('inserted_company_name_image_position_div').style.display = 'none';
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block'; // Show the section before checking visibility
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'none'; // Hide the section before checking visibility
 
     let totalPriceVisible = document.getElementById('downloaded_pdf_total_price_data_page').style.display !== 'none';
 
-    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none';
-    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline';
+    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none'; // Show or hide based on visibility
+    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline'; // Show or hide based on visibility
 
+    // Define the class names to check
     let divsIdNames = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_flight_data_page',
@@ -2983,13 +2988,14 @@ downloadPdfWithCustomName = async function (pdfName) {
     let sections = [];
     let firstVisibleDiv = null;
 
+    // Iterate through each class name and check visibility
     divsIdNames.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
-        if (section && isVisible(section)) {
+        if (section && isVisible(section)) { // Check if section exists and is visible
             if (!firstVisibleDiv) {
-                firstVisibleDiv = section;
+                firstVisibleDiv = section; // Capture the first visible div
             }
-            sections.push(section);
+            sections.push(section); // Add visible section to the array
         }
     });
 
@@ -2998,25 +3004,26 @@ downloadPdfWithCustomName = async function (pdfName) {
         return;
     }
 
+    // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', or 'downloaded_pdf_total_price_data_page'
     if (firstVisibleDiv) {
         let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
         if (firstImg && !['downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(firstVisibleDiv.id)) {
-            firstImg.src = "first-pdf-image.jpg";
+            firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
         }
     }
 
+    // Update the src value of images inside the rest of the visible divs, except for 'downloaded_pdf_important_notes_data_page' and 'downloaded_pdf_total_price_data_page'
     sections.forEach(section => {
         if (section !== firstVisibleDiv && !['downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(section.id)) {
             let img = section.querySelector('.inserted_package_data_section_page_image_class');
             if (img) {
-                img.src = "middle-pdf-image.jpg";
+                img.src = "middle-pdf-image.jpg"; // Replace the src value for the rest of the visible imgs
             }
         }
     });
 
-    let isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    let scale = isMobile ? 2 : 3.5;
+    // Determine the scale based on the device type
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
 
-    await processSections(sections, scale);
+    await processSections(sections, scale); // Process visible sections to generate the PDF
 };
-
