@@ -712,7 +712,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                 document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
-                document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(0, 93, 163)';
+                document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
 
 
                 document.getElementById('flight_dropdown_content').scrollIntoView({
@@ -1354,7 +1354,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             let hotelExtraInfoSpan = document.createElement('span');
                             hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
                             hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
-                            hotelExtraInfoSpan.style.background = 'rgb(0, 93, 163)';
+                            hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
                             hotelExtraInfoSpan.style.color = 'white';
                             hotelExtraInfoSpan.style.padding = '0 5px';
                             hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
@@ -1800,7 +1800,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                 /* Change the innerText and styling to defualt */
                 document.getElementById('clint_movements_content_section_title_text_id').innerText = 'تعديل تفاصيل خط السير';
-                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(0, 93, 163)';
+                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
 
 
                 /* Scroll up to the middle of the 'clint_movements_details_dropdown_content' */
