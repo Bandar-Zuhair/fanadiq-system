@@ -3013,10 +3013,10 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        // If a first visible div is found, update the image src inside it
+        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page'
         if (firstVisibleDiv) {
             let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
-            if (firstImg) {
+            if (firstImg && firstVisibleDiv.id !== 'downloaded_pdf_clint_data_page') {
                 firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
             }
         }
@@ -3173,10 +3173,10 @@ downloadPdfWithCustomName = async function (pdfName) {
             return;
         }
 
-        // If a first visible div is found, update the image src inside it
+        // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page'
         if (firstVisibleDiv) {
             let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
-            if (firstImg) {
+            if (firstImg && firstVisibleDiv.id !== 'downloaded_pdf_clint_data_page') {
                 firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
             }
         }
@@ -3194,5 +3194,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         await processSections(sections); // Process visible sections to generate the PDF
     }
 };
+
 
 
