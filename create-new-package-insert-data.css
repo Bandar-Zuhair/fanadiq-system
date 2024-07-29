@@ -178,7 +178,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(0, 86, 60);
+    background: rgb(0, 64, 68);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -337,7 +337,7 @@
     text-align: start;
 }
 
-.inserted_package_including_data_text{
+.inserted_package_including_data_text {
     margin: 2px 0;
 }
 
@@ -359,9 +359,9 @@
 }
 
 #package_total_price_div h6 {
-    background: rgb(0, 128, 90);
+    background: rgb(9, 103, 108);
     color: white;
-    font-size: 5vw; 
+    font-size: 5vw;
     padding: 5px 15px;
     border-radius: 7px;
     text-align: center;
