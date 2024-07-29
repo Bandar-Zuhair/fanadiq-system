@@ -2870,7 +2870,6 @@ let isVisible = function (element) {
 };
 
 /* Download the pdf file with the given name */
-/* Download the pdf file with the given name */
 downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
@@ -3024,7 +3023,9 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
+    let isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    let devicePixelRatio = window.devicePixelRatio || 1;
+    let scale = isMobile ? 5 * devicePixelRatio : 3.5; // Higher scale for mobile devices, adjusted for pixel ratio
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
