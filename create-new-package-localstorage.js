@@ -1802,7 +1802,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                     // Attach click and touch event listeners to each element
                     clintMovementsRowImageControllers.forEach((element) => {
-                        handleMouseEvent(element); // Handle mouse events with click detection
+                        handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                        handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
                     });
 
                     /* Reset all variables for later refrence (when editing) */
