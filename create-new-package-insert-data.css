@@ -127,7 +127,6 @@
 }
 
 .inserted_package_including_and_not_icluding_data_div_class h6 {
-    background: rgb(155, 209, 227);
     width: 100%;
     font-size: 2vw;
     padding: 5px 0;
@@ -150,7 +149,7 @@
 
 
 .special_package_including_data_background_color_text {
-    background: rgb(0, 93, 163);
+    background: rgb(85, 127, 137);
     color: white;
     border-radius: 7px;
 }
