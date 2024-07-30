@@ -2872,26 +2872,31 @@ let isVisible = function (element) {
 downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
-    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    /* Function to capture a canvas of a given section */
-    let captureCanvas = async function (section, scale) {
-        try {
-            let canvas = await html2canvas(section, {
-                scale: scale, // Adjusted scale factor for higher quality
-                backgroundColor: null,
-                scrollY: 0 // Ensure capturing starts from the top of the element
-            });
-            return canvas;
-        } catch (error) {
-            console.error('Error capturing canvas:', error);
+    const logError = (message, error = null) => {
+        console.error(message, error || '');
+        if (error) {
+            alert(`Error: ${message}. Check the console for more details.`);
         }
     };
 
-    /* Function to combine multiple canvases into one */
-    let combineCanvases = function (canvases) {
+    const captureCanvas = async (section, scale) => {
+        try {
+            console.log(`Capturing canvas for section: ${section.id}`);
+            let canvas = await html2canvas(section, {
+                scale: scale,
+                backgroundColor: null,
+                scrollY: -window.scrollY // Ensure capturing starts from the top of the element
+            });
+            console.log(`Captured canvas for section: ${section.id}`);
+            return canvas;
+        } catch (error) {
+            logError('Error capturing canvas', error);
+        }
+    };
+
+    const combineCanvases = (canvases) => {
         if (canvases.length === 0) {
-            console.error('No canvases to combine');
+            logError('No canvases to combine');
             return null;
         }
 
@@ -2901,7 +2906,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         combinedCanvas.height = totalHeight;
         let context = combinedCanvas.getContext('2d');
 
-        // Fill with default background color (e.g., white)
         context.fillStyle = '#ffffff';
         context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
 
@@ -2911,11 +2915,11 @@ downloadPdfWithCustomName = async function (pdfName) {
             yOffset += canvas.height;
         });
 
+        console.log('Combined all canvases into one');
         return combinedCanvas;
     };
 
-    /* Function to process all visible sections and generate the PDF */
-    let processSections = async function (sections, scale) {
+    const processSections = async (sections, scale) => {
         let canvases = [];
 
         for (let section of sections) {
@@ -2926,56 +2930,52 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
 
         if (canvases.length === 0) {
-            console.error('No canvases captured');
+            logError('No canvases captured');
             return;
         }
 
         let combinedCanvas = combineCanvases(canvases);
         if (!combinedCanvas) {
-            console.error('Failed to combine canvases');
+            logError('Failed to combine canvases');
             return;
         }
 
         let pdfWidth = 210; // A4 width in mm
         let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
         let padding = 2; // Padding in mm
-        let contentWidth = pdfWidth - (2 * padding); // Adjusted width with padding
+        let contentWidth = pdfWidth - (2 * padding);
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7);
 
-        // Add the image to the PDF with padding
         pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
-        // Hide all elements with the class name after saving the PDF
-        let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
-        images.forEach(img => {
+        console.log('PDF saved successfully');
+
+        document.querySelectorAll('.inserted_package_data_section_page_image_class').forEach(img => {
             img.style.display = 'none';
         });
 
-        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
-        document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
+        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
+        document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-        saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+        saveLastPdfDownloadData();
     };
 
-    // Show all elements with the class name before checking visibility
-    let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
-    images.forEach(img => {
+    document.querySelectorAll('.inserted_package_data_section_page_image_class').forEach(img => {
         img.style.display = 'inline';
     });
 
-    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block'; // Show the section before checking visibility
-    document.getElementById('inserted_company_name_image_position_div').style.display = 'none'; // Hide the section before checking visibility
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block';
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'none';
 
     let totalPriceVisible = document.getElementById('downloaded_pdf_total_price_data_page').style.display !== 'none';
 
-    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none'; // Show or hide based on visibility
-    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline'; // Show or hide based on visibility
+    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none';
+    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline';
 
-    // Define the class names to check
     let divsIdNames = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_flight_data_page',
@@ -2989,48 +2989,38 @@ downloadPdfWithCustomName = async function (pdfName) {
     let sections = [];
     let firstVisibleDiv = null;
 
-    // Iterate through each class name and check visibility
     divsIdNames.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
-        if (section && isVisible(section)) { // Check if section exists and is visible
+        if (section && isVisible(section)) {
             if (!firstVisibleDiv) {
-                firstVisibleDiv = section; // Capture the first visible div
+                firstVisibleDiv = section;
             }
-            sections.push(section); // Add visible section to the array
+            sections.push(section);
         }
     });
 
     if (sections.length === 0) {
-        console.error('No visible sections found');
+        logError('No visible sections found');
         return;
     }
 
-    // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', or 'downloaded_pdf_total_price_data_page'
     if (firstVisibleDiv) {
         let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
         if (firstImg && !['downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(firstVisibleDiv.id)) {
-            firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
+            firstImg.src = "first-pdf-image.jpg";
         }
     }
 
-    // Update the src value of images inside the rest of the visible divs, except for 'downloaded_pdf_important_notes_data_page' and 'downloaded_pdf_total_price_data_page'
     sections.forEach(section => {
         if (section !== firstVisibleDiv && !['downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(section.id)) {
             let img = section.querySelector('.inserted_package_data_section_page_image_class');
             if (img) {
-                img.src = "middle-pdf-image.jpg"; // Replace the src value for the rest of the visible imgs
+                img.src = "middle-pdf-image.jpg";
             }
         }
     });
 
-    // Determine the scale based on the device type
-    let scale = isIOS ? 3.5 : (/Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5); // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5;
 
-    // Log the scale and sections for debugging on iOS
-    if (isIOS) {
-        console.log('iOS detected. Scale:', scale);
-        console.log('Sections:', sections);
-    }
-
-    await processSections(sections, scale); // Process visible sections to generate the PDF
+    await processSections(sections, scale);
 };
