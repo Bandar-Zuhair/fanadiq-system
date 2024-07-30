@@ -2872,6 +2872,8 @@ let isVisible = function (element) {
 downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
     /* Function to capture a canvas of a given section */
     let captureCanvas = async function (section, scale) {
         try {
@@ -3022,7 +3024,13 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
+    let scale = isIOS ? 3.5 : (/Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5); // Higher scale for mobile devices
+
+    // Log the scale and sections for debugging on iOS
+    if (isIOS) {
+        console.log('iOS detected. Scale:', scale);
+        console.log('Sections:', sections);
+    }
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
