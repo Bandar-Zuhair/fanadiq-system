@@ -2876,10 +2876,13 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section, scale) {
         try {
             let canvas = await html2canvas(section, {
-                scale: scale, // Adjusted scale factor for higher quality
+                useCORS: true,
+                allowTaint: true,
                 backgroundColor: null,
-                scrollY: 0 // Ensure capturing starts from the top of the element
+                scale: scale,
+                logging: true
             });
+            console.log('Captured canvas:', canvas);
             return canvas;
         } catch (error) {
             console.error('Error capturing canvas:', error);
@@ -2941,10 +2944,10 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData = combinedCanvas.toDataURL('image/png', 0.7); // Adjust JPEG quality for better balance
 
         // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'PNG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
