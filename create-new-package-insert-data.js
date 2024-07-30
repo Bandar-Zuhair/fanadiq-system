@@ -2941,7 +2941,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.4); // Compress image to reduce size
 
         // Add the image to the PDF with padding
         pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
