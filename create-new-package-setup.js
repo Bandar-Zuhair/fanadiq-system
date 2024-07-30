@@ -1161,6 +1161,8 @@ clintMovementsNextCityInputOptions.forEach(option => {
 /* Function to show clint movements places page */
 showClintMovemtsPlacesPage = function () {
 
+    // Disable scrolling
+    document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
 
     /* in case if the 'clint_movements_next_city_input_id' was empty then use the value of the 'clint_movements_current_city_input_id' */
     if (storeClintMovementsNextCityInput === null) {
@@ -1271,6 +1273,10 @@ showClintMovemtsPlacesPage = function () {
 
         insertClintMovementsPlacesIcon.remove();
         exitClintMovementsPlacesPage.remove();
+
+
+        // Enable scrolling
+        document.body.style.overflow = ''; // Re-enable page scrolling
     }
 
 
@@ -1281,19 +1287,24 @@ showClintMovemtsPlacesPage = function () {
 
         insertClintMovementsPlacesIcon.remove();
         exitClintMovementsPlacesPage.remove();
+
+
+        // Enable scrolling
+        document.body.style.overflow = ''; // Re-enable page scrolling
     }
 }
 
 
 /* Function to show the clint movements tutorial page */
 showClintMovemtsTutorialPage = function () {
+    
+    // Disable scrolling
+    document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+
+    /* Show the 'clint_movements_tutorial_page_div' div */
     let clintMovementsTutorialPageDiv = document.getElementById('clint_movements_tutorial_page_div');
-
-
     clintMovementsTutorialPageDiv.style.display = 'flex';
 
-    // Disable scrolling
-    body.style.overflow = 'hidden';
 
 
     let exitClintMovementsTutorialPage = document.createElement('ion-icon');
@@ -1302,12 +1313,13 @@ showClintMovemtsTutorialPage = function () {
     document.body.appendChild(exitClintMovementsTutorialPage);
 
 
+    /* Funnction to handle exit clint movements tutorial page */
     exitClintMovementsTutorialPage.onclick = function () {
         clintMovementsTutorialPageDiv.style.display = 'none';
         exitClintMovementsTutorialPage.remove();
 
-        // Re-enable scrolling
-        body.style.overflow = 'auto';
+        // Enable scrolling
+        document.body.style.overflow = ''; // Re-enable page scrolling
     }
 }
 
@@ -1405,51 +1417,53 @@ function setTheFirstClintMovemnetsDate() {
 
         // Get all div elements with the class name 'clint_movements_row_class_for_editing'
         let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
+        let topClintMovementsRowH6Element = null; // Define outside the scope
 
-        // Variable to store the h6 element inside the topmost div
-        let topClintMovementsRowH6Element;
+        // Function to delete divs with h6 dates ahead of the last day date input
+        function deleteAheadDivs() {
+            // Re-fetch the divs after any deletion
+            clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
+            
+            if (clintMovementsRowDivs.length > 0) {
+                let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
+                let lastClintMovementsRowH6Element = lastClintMovementsRowDiv.querySelector('h6');
+                
+                if (lastClintMovementsRowH6Element && new Date(lastClintMovementsRowH6Element.innerText) > new Date(clintMovementsLastDayDateInput)) {
+                    document.getElementById('clint_movements_current_day_date_input_id').value = lastClintMovementsRowH6Element.innerText
+                    lastClintMovementsRowDiv.remove();
+                    deleteAheadDivs();
+                }
+            }
+        }
 
         // Check if there are any divs with the class name 'clint_movements_row_class_for_editing'
         if (clintMovementsRowDivs.length > 0) {
             // Target the topmost div
             let topClintMovementsRowDiv = clintMovementsRowDivs[0];
-
-            // Get the h6 element inside the topmost div
             topClintMovementsRowH6Element = topClintMovementsRowDiv.querySelector('h6');
 
-            // Check if the h6 element exists before accessing its innerText
             if (topClintMovementsRowH6Element) {
-
-                // If the h6 element's text is not equal to the first day date input
                 if (topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
-
-
-                    topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput
-
-                    // Set the current day date input to the first day date input
+                    topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput;
                     clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
-
                     arrangeClintMovementsDates();
-
-                    /* Exit and stop the process */
                     return;
                 }
-
             }
         }
 
         // Set the new value of the 'clint_movements_first_day_date_input_id' inside 'clint_movements_current_day_date_input_id'
-        // Only if it's not equal to topClintMovementsRowH6Element.innerText
         if (!topClintMovementsRowH6Element || topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
             clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
         }
 
+        // Perform the deletion check for divs with dates ahead of the last day date input
+        deleteAheadDivs();
 
-        /* Store the saved first and last clint movements date (for localstorage use) */
+        // Store the saved first and last clint movements date (for localstorage use)
         document.getElementById('store_localstorage_clint_movements_first_day_date_value').innerText = clintMovementsFirstDayDateInput;
         document.getElementById('store_localstorage_clint_movements_last_day_date_value').innerText = clintMovementsLastDayDateInput;
         document.getElementById('store_localstorage_clint_movements_total_nights_day_date_value').innerText = document.getElementById('clint_movements_total_nights_input_id').value;
-
 
     } else {
         // Change the submit icon background color to red
@@ -1461,6 +1475,7 @@ function setTheFirstClintMovemnetsDate() {
         }, 500);
     }
 }
+
 
 
 
