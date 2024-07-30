@@ -106,9 +106,6 @@
 
 
 
-
-
-
 /* Inserted package including data position */
 .inserted_package_including_and_not_icluding_data_div_class {
     background: white;
@@ -177,7 +174,7 @@
 }
 
 .pdf_section_title_div_class h6 {
-    background: rgb(86, 0, 86);
+    background: rgb(182, 54, 15);
     width: fit-content;
     color: white;
     font-size: 2.5vw;
@@ -358,7 +355,7 @@
 }
 
 #package_total_price_div h6 {
-    background: rgb(85, 127, 137);
+    background: rgb(182, 54, 15);
     color: white;
     font-size: 5vw;
     padding: 5px 15px;
