@@ -1740,8 +1740,7 @@ function updateWholeClintMovementsTotalNights() {
     if (startDate !== '' && endDate !== '') {
         let totalNights = calculateDaysDifference(startDate, endDate);
 
-        // Store the package total nights for later use
-        storePackageTotalNights = totalNights;
+        // Set the total clint movements night (just to show the user the different)
         totalNightsInput.value = `${totalNights} ليالي`;
 
         // Ensure the end date is not earlier than or equal to the start date
@@ -1926,13 +1925,6 @@ var wholePackageEndDatePicker = new Pikaday({
 /* Store the hotel total nights for later use */
 let storeHotelTotalNights;
 
-// Function to parse the Arabic date input
-function parseArabicDate(dateStr) {
-    let [day, monthName] = dateStr.split(' ');
-    let month = arabicMonthsReverse[monthName];
-    return new Date(`${month} ${day}, ${new Date().getFullYear()}`);
-}
-
 // Function to update the total nights input
 function updateHotelTotalNights() {
     let startDateInput = document.getElementById('hotel_check_in_input_id');
@@ -1981,7 +1973,7 @@ var hotelStartDatePicker = new Pikaday({
     minDate: today,
     toString(date, format) {
         let day = date.getDate();
-        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
     onSelect: function() {
@@ -1999,7 +1991,7 @@ var hotelEndDatePicker = new Pikaday({
     minDate: today,
     toString(date, format) {
         let day = date.getDate();
-        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
