@@ -396,6 +396,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     p.className = 'inserted_package_including_data_text'; // Set the class for the paragraph
                     p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)'); // Set the onclick attribute to delete the text
                     p.classList.add('special_package_including_data_background_color_text'); // Add a special class for background color
+                    p.style.padding = '0 5px'; // Add padding to this p element
                     insertedPackageIncludingDataDiv.appendChild(p); // Append the paragraph to the including data div
                 }
             });
