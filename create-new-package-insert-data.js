@@ -2878,7 +2878,10 @@ downloadPdfWithCustomName = async function (pdfName) {
             let canvas = await html2canvas(section, {
                 scale: scale, // Adjusted scale factor for higher quality
                 backgroundColor: null,
-                scrollY: 0 // Ensure capturing starts from the top of the element
+                scrollY: 0, // Ensure capturing starts from the top of the element
+                useCORS: true, // Enable cross-origin resource sharing if needed
+                allowTaint: false, // Disable tainting
+                logging: true // Enable logging for debugging
             });
             return canvas;
         } catch (error) {
@@ -2941,7 +2944,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 1.0); // Set JPEG quality to maximum
 
         // Add the image to the PDF with padding
         pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
