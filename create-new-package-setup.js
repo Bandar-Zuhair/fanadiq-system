@@ -1483,13 +1483,13 @@ function setTheFirstClintMovemnetsDate() {
 
 
 
-/* Function to arrange dates in the clint movements */
+// Function to arrange dates in the client movements
 arrangeClintMovementsDates = function() {
     // Get the value from the input field
     let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
 
-    // Convert the input value to a Date object
-    let currentDate = new Date(clintMovementsFirstDayDateInput);
+    // Parse the input value to a Date object using the parseDate function
+    let currentDate = parseDate(clintMovementsFirstDayDateInput);
 
     // Get all div elements with the class name 'clint_movements_row_class'
     let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class');
@@ -1501,9 +1501,9 @@ arrangeClintMovementsDates = function() {
 
         // Check if the h6 element exists
         if (h6Element) {
-            // Format the current date to 'DD-M'
+            // Format the current date to 'DD-MMM'
             let day = currentDate.getDate(); // Get the day
-            let month = currentDate.toLocaleString('default', { month: 'short' }); // Get the month in short format
+            let month = currentDate.toLocaleString('en', { month: 'short' }); // Get the month in short format
             let formattedDate = `${day}-${month}`; // Return formatted date
 
             // Set the innerText of the h6 element to the formatted date
@@ -1523,20 +1523,21 @@ arrangeClintMovementsDates = function() {
     // Check if the last h6 element exists
     if (lastH6Element) {
         // Parse the date from the lastH6Element
-        let lastH6Date = new Date(`${lastH6Element.innerText}-${new Date().getFullYear()}`);
+        let lastH6Date = parseDate(lastH6Element.innerText);
 
         // Add one day to the date
         lastH6Date.setDate(lastH6Date.getDate() + 1);
 
         // Format the new date
         let newDay = lastH6Date.getDate();
-        let newMonth = lastH6Date.toLocaleString('default', { month: 'short' });
+        let newMonth = lastH6Date.toLocaleString('en', { month: 'short' });
         let newFormattedDate = `${newDay}-${newMonth}`;
 
         // Set the new date to clint_movements_current_day_date_input_id
         document.getElementById('clint_movements_current_day_date_input_id').value = newFormattedDate;
     }
 }
+
 
 
 
