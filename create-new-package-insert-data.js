@@ -2878,12 +2878,7 @@ downloadPdfWithCustomName = async function (pdfName) {
             let canvas = await html2canvas(section, {
                 scale: scale, // Adjusted scale factor for higher quality
                 backgroundColor: null,
-                scrollY: 0, // Ensure capturing starts from the top of the element
-                useCORS: true, // Enable cross-origin resource sharing if needed
-                allowTaint: false, // Disable tainting
-                logging: true, // Enable logging for debugging
-                imageTimeout: 0, // Ensure images are fully loaded
-                ignoreElements: element => element.classList.contains('ignore-for-capture'), // Optional: ignore elements by class name
+                scrollY: 0 // Ensure capturing starts from the top of the element
             });
             return canvas;
         } catch (error) {
@@ -2946,10 +2941,10 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/png'); // Use PNG format for better quality
+        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
 
         // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'PNG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
@@ -3027,7 +3022,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 2 : 2; // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
