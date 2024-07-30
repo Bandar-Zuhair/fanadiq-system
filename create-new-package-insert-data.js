@@ -3022,7 +3022,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 3 : 3.5; // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 2 : 2; // Higher scale for mobile devices
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
