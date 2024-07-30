@@ -2881,7 +2881,9 @@ downloadPdfWithCustomName = async function (pdfName) {
                 scrollY: 0, // Ensure capturing starts from the top of the element
                 useCORS: true, // Enable cross-origin resource sharing if needed
                 allowTaint: false, // Disable tainting
-                logging: true // Enable logging for debugging
+                logging: true, // Enable logging for debugging
+                imageTimeout: 0, // Ensure images are fully loaded
+                ignoreElements: element => element.classList.contains('ignore-for-capture'), // Optional: ignore elements by class name
             });
             return canvas;
         } catch (error) {
@@ -2944,10 +2946,10 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
 
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 1.0); // Set JPEG quality to maximum
+        let imgData = combinedCanvas.toDataURL('image/png'); // Use PNG format for better quality
 
         // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
+        pdf.addImage(imgData, 'PNG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
         pdf.save(pdfName);
 
         // Hide all elements with the class name after saving the PDF
@@ -3029,3 +3031,4 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
+
