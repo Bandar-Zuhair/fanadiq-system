@@ -1724,99 +1724,6 @@ function calculateDaysDifference(startDate, endDate) {
 
 
 
-
-
-/* Function to pick the first and last clint movemennts dates */
-
-// Function to update the total nights input
-function updateWholeClintMovementsTotalNights() {
-    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id');
-    let endDateInput = document.getElementById('clint_movements_last_day_date_input_id');
-    let totalNightsInput = document.getElementById('clint_movements_total_nights_input_id');
-
-    let startDate = startDateInput.value;
-    let endDate = endDateInput.value;
-
-    if (startDate !== '' && endDate !== '') {
-        let totalNights = calculateDaysDifference(startDate, endDate);
-
-        // Set the total clint movements night (just to show the user the different)
-        totalNightsInput.value = `${totalNights} ليالي`;
-
-        // Ensure the end date is not earlier than or equal to the start date
-        if (new Date(startDate) >= new Date(endDate)) {
-            endDateInput.value = '';
-            totalNightsInput.value = '';
-        }
-    } else {
-        totalNightsInput.value = '';
-    }
-}
-
-// Function to disable specific dates
-function disableSpecificDates(date) {
-    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
-    if (startDateInput) {
-        let startDate = new Date(startDateInput);
-        return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
-    }
-    return false;
-}
-
-// Get today's date
-var today = new Date();
-
-// Prepare Pikaday for the first day input
-var clintMovementsFirstDayPicker = new Pikaday({
-    field: document.getElementById('clint_movements_first_day_date_input_id'), // Field to attach the date picker
-    format: 'DD-M', // Format to display only day and month
-    minDate: today, // Set minimum date to today
-    toString(date, format) { // Function to format the date
-        let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format
-        return `${day}-${month}`; // Return formatted date
-    },
-    onSelect: function() {
-        updateWholeClintMovementsTotalNights();
-        let selectedDate = this.getDate();
-        let minEndDate = new Date(selectedDate);
-        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
-        clintMovementsLastDayPicker.setMinDate(minEndDate); // Update min date for the second picker
-    }
-});
-
-// Prepare the second date picker (clint_movements_last_day_date_input_id)
-var clintMovementsLastDayPicker = new Pikaday({
-    field: document.getElementById('clint_movements_last_day_date_input_id'), // Field to attach the date picker
-    format: 'DD-M', // Format to display only day and month
-    minDate: today, // Set minimum date to today (will be updated dynamically)
-    toString(date, format) { // Function to format the date
-        let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format
-        return `${day}-${month}`; // Return formatted date
-    },
-    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: updateWholeClintMovementsTotalNights // Call 'updateWholeClintMovementsTotalNights' when a date is selected
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Store the package total nights for later use */
 let storePackageTotalNights;
 
@@ -2025,7 +1932,7 @@ var startDatePicker = new Pikaday({
     minDate: new Date(),
     toString(date, format) {
         let day = date.getDate();
-        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
 });
@@ -2068,6 +1975,78 @@ $(document).ready(function () {
 
 
 
+/* Function to pick the first and last clint movemennts dates */
+
+// Function to update the total nights input
+function updateWholeClintMovementsTotalNights() {
+    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id');
+    let endDateInput = document.getElementById('clint_movements_last_day_date_input_id');
+    let totalNightsInput = document.getElementById('clint_movements_total_nights_input_id');
+
+    let startDate = startDateInput.value;
+    let endDate = endDateInput.value;
+
+    if (startDate !== '' && endDate !== '') {
+        let totalNights = calculateDaysDifference(startDate, endDate);
+
+        // Set the total clint movements night (just to show the user the difference)
+        totalNightsInput.value = `${totalNights} ليالي`;
+
+        // Ensure the end date is not earlier than or equal to the start date
+        if (parseArabicDate(startDate) >= parseArabicDate(endDate)) {
+            endDateInput.value = '';
+            totalNightsInput.value = '';
+        }
+    } else {
+        totalNightsInput.value = '';
+    }
+}
+
+// Function to disable specific dates
+function disableSpecificDates(date) {
+    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+    if (startDateInput) {
+        let startDate = parseArabicDate(startDateInput);
+        return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
+    }
+    return false;
+}
+
+// Get today's date
+var today = new Date();
+
+// Prepare Pikaday for the first day input
+var clintMovementsFirstDayPicker = new Pikaday({
+    field: document.getElementById('clint_movements_first_day_date_input_id'), // Field to attach the date picker
+    format: 'DD-M', // Format to display only day and month
+    minDate: today, // Set minimum date to today
+    toString(date, format) { // Function to format the date
+        let day = date.getDate(); // Get the day
+        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format (English)
+        return `${day}-${month}`; // Return formatted date
+    },
+    onSelect: function() {
+        updateWholeClintMovementsTotalNights();
+        let selectedDate = this.getDate();
+        let minEndDate = new Date(selectedDate);
+        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
+        clintMovementsLastDayPicker.setMinDate(minEndDate); // Update min date for the second picker
+    }
+});
+
+// Prepare the second date picker (clint_movements_last_day_date_input_id)
+var clintMovementsLastDayPicker = new Pikaday({
+    field: document.getElementById('clint_movements_last_day_date_input_id'), // Field to attach the date picker
+    format: 'DD-M', // Format to display only day and month
+    minDate: today, // Set minimum date to today (will be updated dynamically)
+    toString(date, format) { // Function to format the date
+        let day = date.getDate(); // Get the day
+        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format (English)
+        return `${day}-${month}`; // Return formatted date
+    },
+    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
+    onSelect: updateWholeClintMovementsTotalNights // Call 'updateWholeClintMovementsTotalNights' when a date is selected
+});
 
 
 
