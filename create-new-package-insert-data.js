@@ -2050,6 +2050,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                     puncak_clint_movements_places_div.style.display = 'none';
                     bandung_clint_movements_places_div.style.display = 'none';
 
+                    // Get all div elements with ids starting with 'clint_movements_places_names_options_for'
+                    var allDivs = document.querySelectorAll('[id^="clint_movements_places_names_options_for"]');
+
+                    // Iterate through all divs
+                    allDivs.forEach(function (div) {
+                        // Get all p elements within the div
+                        var pElements = div.getElementsByTagName('p');
+
+                        // Reset the background color of all p elements to darkred
+                        for (var i = 0; i < pElements.length; i++) {
+                            pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
+                        }
+                    });
                 }
 
 
@@ -2808,10 +2821,11 @@ checkThePdfNameToDownload = function () {
 
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
     } else {
-        document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(0, 255, 0)';
-        setTimeout(() => {
+        document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(85, 127, 137)';
+        document.getElementById('check_pdf_name_button').innerText = 'جاري التحميل..';
+        /* setTimeout(() => {
             document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
-        }, 200);
+        }, 200); */
 
 
         let pdfNameReadyText = document.getElementById('pdf_file_name_input_id').value;
@@ -2957,6 +2971,10 @@ downloadPdfWithCustomName = async function (pdfName) {
         document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
 
         saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+
+        /* Reset the text and color of the download button */
+        document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
+        document.getElementById('check_pdf_name_button').innerText = 'تحميل';
     };
 
     // Show all elements with the class name before checking visibility
@@ -2999,7 +3017,6 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     if (sections.length === 0) {
-        console.error('No visible sections found');
         return;
     }
 
@@ -3022,7 +3039,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     });
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 3 : 3; // Higher scale for mobile devices
 
     await processSections(sections, scale); // Process visible sections to generate the PDF
 };
