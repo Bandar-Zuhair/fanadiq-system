@@ -2822,6 +2822,7 @@ checkThePdfNameToDownload = function () {
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
     } else {
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(85, 127, 137)';
+        document.getElementById('check_pdf_name_button').style.color = 'white';
         document.getElementById('check_pdf_name_button').innerText = 'جاري التحميل..';
         /* setTimeout(() => {
             document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
@@ -2974,6 +2975,7 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         /* Reset the text and color of the download button */
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
+        document.getElementById('check_pdf_name_button').style.color = 'black';
         document.getElementById('check_pdf_name_button').innerText = 'تحميل';
     };
 
