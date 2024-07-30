@@ -1690,6 +1690,15 @@ let arabicMonthsReverse = {
     'ديسمبر': 'December'
 };
 
+// Helper function to get Arabic month name
+function getArabicMonthName(monthIndex) {
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return arabicMonths[monthNames[monthIndex]];
+}
+
 // Function to calculate the difference in days between two dates
 function calculateDaysDifference(startDate, endDate) {
     if (!startDate || !endDate) return '';
@@ -1876,7 +1885,7 @@ var wholePackageStartDatePicker = new Pikaday({
     minDate: today,
     toString(date, format) {
         let day = date.getDate();
-        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
     onSelect: function() {
@@ -1894,7 +1903,7 @@ var wholePackageEndDatePicker = new Pikaday({
     minDate: today,
     toString(date, format) {
         let day = date.getDate();
-        let month = arabicMonths[date.toLocaleString('default', { month: 'long' })];
+        let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
@@ -2031,61 +2040,6 @@ var startDatePicker = new Pikaday({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Time picker for flight fly and arravial time */
 $(document).ready(function () {
     $('#flight_fly_away_time_input_id').pickatime({
@@ -2102,6 +2056,61 @@ $(document).ready(function () {
         max: [23, 59]
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
