@@ -1977,6 +1977,23 @@ $(document).ready(function () {
 
 /* Function to pick the first and last clint movemennts dates */
 
+// Function to parse Arabic date strings (if needed)
+function parseArabicDate(dateStr) {
+    let parts = dateStr.split('-');
+    let day = parseInt(parts[0]);
+    let month = arabicMonths[parts[1]]; // Assuming you have an object mapping Arabic month names to numbers
+    let year = new Date().getFullYear(); // Assuming the current year
+    return new Date(year, month - 1, day);
+}
+
+// Function to calculate the difference in days between two dates
+function calculateDaysDifference(startDate, endDate) {
+    let start = parseArabicDate(startDate);
+    let end = parseArabicDate(endDate);
+    let diff = end - start;
+    return Math.round(diff / (1000 * 60 * 60 * 24));
+}
+
 // Function to update the total nights input
 function updateWholeClintMovementsTotalNights() {
     let startDateInput = document.getElementById('clint_movements_first_day_date_input_id');
@@ -2022,7 +2039,7 @@ var clintMovementsFirstDayPicker = new Pikaday({
     minDate: today, // Set minimum date to today
     toString(date, format) { // Function to format the date
         let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format (English)
+        let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
         return `${day}-${month}`; // Return formatted date
     },
     onSelect: function() {
@@ -2041,12 +2058,13 @@ var clintMovementsLastDayPicker = new Pikaday({
     minDate: today, // Set minimum date to today (will be updated dynamically)
     toString(date, format) { // Function to format the date
         let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('default', { month: 'short' }); // Get the month in short format (English)
+        let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
         return `${day}-${month}`; // Return formatted date
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: updateWholeClintMovementsTotalNights // Call 'updateWholeClintMovementsTotalNights' when a date is selected
 });
+
 
 
 
