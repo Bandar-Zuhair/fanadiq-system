@@ -1397,58 +1397,86 @@ setTheClickedClintMovementsPlace = function () {
 
 
 
-/* Function to set the clint movements date */
+// Function to parse date strings in the format "DD-MMM"
+function parseDate(dateStr) {
+    let parts = dateStr.split('-');
+    let day = parseInt(parts[0]);
+    let monthShortNames = { "Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5, "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11 };
+    let month = monthShortNames[parts[1]];
+    let year = new Date().getFullYear(); // Assuming the current year
+    return new Date(year, month, day);
+}
+
+// Function to format a Date object to "DD-MMM"
+function formatDate(date) {
+    let day = date.getDate();
+    let month = date.toLocaleString('en', { month: 'short' }); // English month name
+    return `${day}-${month}`;
+}
+
+// Ensure to use parseDate and formatDate consistently
+// Example: let dateObj = parseDate(dateStr); let formattedDate = formatDate(dateObj);
+
+// Function to arrange dates in the client movements
+function arrangeClintMovementsDates() {
+    let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
+    let currentDate = parseDate(clintMovementsFirstDayDateInput);
+    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class');
+
+    for (let i = 0; i < clintMovementsRowDivs.length; i++) {
+        let h6Element = clintMovementsRowDivs[i].querySelector('h6');
+        if (h6Element) {
+            h6Element.innerText = formatDate(currentDate);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+    }
+
+    let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
+    let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
+    if (lastH6Element) {
+        let lastH6Date = parseDate(lastH6Element.innerText);
+        lastH6Date.setDate(lastH6Date.getDate() + 1);
+        document.getElementById('clint_movements_current_day_date_input_id').value = formatDate(lastH6Date);
+    }
+}
+
+// Example usage of date functions in other parts of your code
 function setTheFirstClintMovemnetsDate() {
-    // Get the values from the input fields
     let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
     let clintMovementsLastDayDateInput = document.getElementById('clint_movements_last_day_date_input_id').value;
     let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id');
     let clintMovementsPeriodInputsSubmitIcon = document.getElementById('clint_movements_period_inputs_submit_icon');
 
-    // Check if both date inputs are filled
     if (clintMovementsFirstDayDateInput !== '' && clintMovementsLastDayDateInput !== '') {
-        // Change the submit icon background color to green
         clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(0, 255, 0)';
-
-        // Reset the background color of the submit icon to dark orange after 500ms
         setTimeout(() => {
             clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
 
-        // Get all div elements with the class name 'clint_movements_row_class_for_editing'
         let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
-        let topClintMovementsRowH6Element = null; // Define outside the scope
+        let topClintMovementsRowH6Element = null; // Ensure initialization
 
-        // Function to delete divs with h6 dates ahead of the last day date input
         function deleteAheadDivs() {
-            // Re-fetch the divs after any deletion
             clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
-            
             if (clintMovementsRowDivs.length > 0) {
                 let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
                 let lastClintMovementsRowH6Element = lastClintMovementsRowDiv.querySelector('h6');
-                
-                if (lastClintMovementsRowH6Element && new Date(lastClintMovementsRowH6Element.innerText) > new Date(clintMovementsLastDayDateInput)) {
-                    document.getElementById('clint_movements_current_day_date_input_id').value = lastClintMovementsRowH6Element.innerText
+                if (lastClintMovementsRowH6Element && parseDate(lastClintMovementsRowH6Element.innerText) > parseDate(clintMovementsLastDayDateInput)) {
+                    document.getElementById('clint_movements_current_day_date_input_id').value = lastClintMovementsRowH6Element.innerText;
                     lastClintMovementsRowDiv.remove();
                     deleteAheadDivs();
                 }
             }
         }
 
-        // Check if there are any divs with the class name 'clint_movements_row_class_for_editing'
         if (clintMovementsRowDivs.length > 0) {
-            // Target the topmost div
             let topClintMovementsRowDiv = clintMovementsRowDivs[0];
             topClintMovementsRowH6Element = topClintMovementsRowDiv.querySelector('h6');
-
-            if (topClintMovementsRowH6Element) {
-                if (topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
-                    topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput;
-                    clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
-                    arrangeClintMovementsDates();
-                    return;
-                }
+            if (topClintMovementsRowH6Element && topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
+                topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput;
+                clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
+                arrangeClintMovementsDates();
+                return;
             }
         }
 
@@ -1457,19 +1485,14 @@ function setTheFirstClintMovemnetsDate() {
             clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
         }
 
-        // Perform the deletion check for divs with dates ahead of the last day date input
         deleteAheadDivs();
 
-        // Store the saved first and last clint movements date (for localstorage use)
         document.getElementById('store_localstorage_clint_movements_first_day_date_value').innerText = clintMovementsFirstDayDateInput;
         document.getElementById('store_localstorage_clint_movements_last_day_date_value').innerText = clintMovementsLastDayDateInput;
         document.getElementById('store_localstorage_clint_movements_total_nights_day_date_value').innerText = document.getElementById('clint_movements_total_nights_input_id').value;
 
     } else {
-        // Change the submit icon background color to red
         clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'red';
-
-        // Reset the background color of the submit icon to dark orange after 500ms
         setTimeout(() => {
             clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
         }, 500);
@@ -1477,66 +1500,6 @@ function setTheFirstClintMovemnetsDate() {
 }
 
 
-
-
-
-
-
-
-// Function to arrange dates in the client movements
-arrangeClintMovementsDates = function() {
-    // Get the value from the input field
-    let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
-
-    // Parse the input value to a Date object using the parseDate function
-    let currentDate = parseDate(clintMovementsFirstDayDateInput);
-
-    // Get all div elements with the class name 'clint_movements_row_class'
-    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class');
-
-    // Iterate through each div
-    for (let i = 0; i < clintMovementsRowDivs.length; i++) {
-        // Get the h6 element inside the current div
-        let h6Element = clintMovementsRowDivs[i].querySelector('h6');
-
-        // Check if the h6 element exists
-        if (h6Element) {
-            // Format the current date to 'DD-MMM'
-            let day = currentDate.getDate(); // Get the day
-            let month = currentDate.toLocaleString('en', { month: 'short' }); // Get the month in short format
-            let formattedDate = `${day}-${month}`; // Return formatted date
-
-            // Set the innerText of the h6 element to the formatted date
-            h6Element.innerText = formattedDate;
-
-            // Move to the next day
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-    }
-
-    // Get the last div element with the class name 'clint_movements_row_class'
-    let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
-
-    // Get the h6 element inside the last div
-    let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
-
-    // Check if the last h6 element exists
-    if (lastH6Element) {
-        // Parse the date from the lastH6Element
-        let lastH6Date = parseDate(lastH6Element.innerText);
-
-        // Add one day to the date
-        lastH6Date.setDate(lastH6Date.getDate() + 1);
-
-        // Format the new date
-        let newDay = lastH6Date.getDate();
-        let newMonth = lastH6Date.toLocaleString('en', { month: 'short' });
-        let newFormattedDate = `${newDay}-${newMonth}`;
-
-        // Set the new date to clint_movements_current_day_date_input_id
-        document.getElementById('clint_movements_current_day_date_input_id').value = newFormattedDate;
-    }
-}
 
 
 
