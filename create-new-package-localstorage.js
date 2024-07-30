@@ -816,15 +816,15 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                     // Create the HTML content for a new hotel row
                     let flightRowTableDivContent = `
-                    <div><p id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
-                    <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
-                    <div><p>20 كيلو للشخص</p></div>
-                    <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
-                    <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                    <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
-                    <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                    <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}' class="flight_row_flight_arrival_time_controller inserted_flight_data_row">${flightArrivalTimeInput}</p></div>
-                `;
+                        <div><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;" id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
+                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
+                        <div><p>20 كيلو للشخص</p></div>
+                        <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
+                        <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
+                        <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                        <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
+                        <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
+                    `;
 
 
                     // Insert the HTML content into the newly created div
@@ -1438,8 +1438,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function createHotelDragAndDropMood() {
-
-
                 // Event listener for the drop zone (inserted_hotel_data_position_div)
                 let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
 
@@ -1465,7 +1463,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         let draggingElement = touch.target.closest('.hotel_row_class'); // Get the parent div being dragged
                         draggingElement.classList.add('dragging'); // Add dragging class for styling
                         draggingElement.dataset.startY = touch.clientY; // Store initial touch position
-                        document.addEventListener('touchmove', touchMove); // Listen for touch move events
+                        document.addEventListener('touchmove', touchMove, { passive: false }); // Listen for touch move events
                         document.addEventListener('touchend', touchEnd); // Listen for touch end events
 
                         // Disable scrolling
@@ -1507,6 +1505,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                 // Function to handle touch move event
                 function touchMove(event) {
+                    event.preventDefault(); // Prevent default behavior to stop scrolling
                     let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
                     let touch = event.touches[0]; // Get the first touch
                     let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial touch position
@@ -1596,7 +1595,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Call the createHotelDragAndDropMood function to set up delete and drag-and-drop functionality
             createHotelDragAndDropMood();
-
         });
 
 
