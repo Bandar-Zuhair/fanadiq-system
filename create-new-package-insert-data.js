@@ -203,38 +203,42 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Check if the 'storePackageTotalNights' is equal undefined or no */
             if (storePackageTotalNights === undefined) {
                 insertedClintDataRowDivContent = `
-                <div>
-                    <p>${combinedPersonAmount}</p>
-                </div>
-                <div>
-                    <p>${packageStartDateInput}</p>
-                </div>
-                <div>
-                    <p>${packageEndDateInput}</p>
-                </div>
-                <div>
-                    <p></p>
-                </div>
-            `;
+                    <div>
+                        <p>${combinedPersonAmount}</p>
+                    </div>
+                    <div>
+                        <p>${packageStartDateInput}</p>
+                    </div>
+                    <div>
+                        <p>${packageEndDateInput}</p>
+                    </div>
+                    <div onclick="deleteClintPackageDataRow()" style="cursor: pointer;">
+                        <p></p>
+                    </div>
+                `;
 
 
             } else {
                 insertedClintDataRowDivContent = `
-                <div>
-                    <p>${combinedPersonAmount}</p>
-                </div>
-                <div>
-                    <p>${packageStartDateInput}</p>
-                </div>
-                <div>
-                    <p>${packageEndDateInput}</p>
-                </div>
-                <div>
-                    <p>${storePackageTotalNights}</p>
-                </div>
-            `;
-
+                    <div>
+                        <p>${combinedPersonAmount}</p>
+                    </div>
+                    <div>
+                        <p>${packageStartDateInput}</p>
+                    </div>
+                    <div>
+                        <p>${packageEndDateInput}</p>
+                    </div>
+                    <div onclick="deleteClintPackageDataRow()" style="cursor: pointer;">
+                        <p>${storePackageTotalNights}</p>
+                    </div>
+                `;
             }
+
+
+
+
+
 
             /* Show the 'clint_data_row_main_div_id' if there is any data is inserted */
             document.getElementById('clint_data_row_main_div_id').style.display = 'flex';
@@ -248,6 +252,63 @@ checkInputsToInsertData = function (clickedButtonId) {
             let insertedClintDataPositionDiv = document.getElementById('inserted_clint_data_position_div');
             insertedClintDataPositionDiv.innerHTML = ''; // Clear the existing content
             insertedClintDataPositionDiv.appendChild(insertedClintDataRowDiv);
+
+
+
+
+            /* Function to delete the clint package data row */
+            deleteClintPackageDataRow = function () {
+
+                let deleteclintPackageDataDiv = document.getElementById('ensure_delete_clint_clint_package_data_div');
+
+                /* Function to run delete the clicked clint row data */
+                runDeleteClintPackageDataRow = function () {
+
+                    /* Hide the 'clint_data_row_main_div_id' if there is any data is inserted */
+                    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+
+                    deleteclintPackageDataDiv.style.transform = 'translate(-50%, -100vh)';
+                    overlayLayer.style.opacity = '0';
+                    setTimeout(() => {
+                        // Only remove the overlay if it is still a child of the body
+                        if (document.body.contains(overlayLayer)) {
+                            document.body.removeChild(overlayLayer);
+                        }
+                    }, 300);
+                }
+
+                // Check if the overlay already exists
+                let overlayLayer = document.querySelector('.black_overlay');
+                if (!overlayLayer) {
+                    overlayLayer = document.createElement('div');
+                    overlayLayer.classList.add('black_overlay');
+                    document.body.appendChild(overlayLayer);
+
+                    setTimeout(() => {
+                        overlayLayer.style.opacity = '1';
+                        deleteclintPackageDataDiv.style.transform = 'translate(-50%, -50%)';
+                    }, 50);
+
+                    // Handle both click and touch events on overlay for consistency
+                    let handleOverlayClick = () => {
+                        deleteclintPackageDataDiv.style.transform = 'translate(-50%, -100vh)';
+                        overlayLayer.style.opacity = '0';
+                        setTimeout(() => {
+                            // Only remove the overlay if it is still a child of the body
+                            if (document.body.contains(overlayLayer)) {
+                                document.body.removeChild(overlayLayer);
+                            }
+                        }, 300);
+                    };
+
+                    overlayLayer.addEventListener('click', handleOverlayClick);
+                    overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
+
+                    overlayLayer.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                    });
+                }
+            }
         }
 
         /* Show up the 'downloaded_pdf_clint_data_page' section */
