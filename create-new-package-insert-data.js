@@ -3108,10 +3108,17 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     let pdf = new jsPDF('p', 'mm', 'a4');
     let pdfWidth = 210; // A4 width in mm
+    let pdfHeight = 297; // A4 height in mm
 
     // Add the first page if available
     if (combinedCanvas1) {
         let pdfHeight1 = (combinedCanvas1.height * pdfWidth) / combinedCanvas1.width;
+
+        // Ensure page height is at least A4 height
+        if (pdfHeight1 < pdfHeight) {
+            pdfHeight1 = pdfHeight;
+        }
+
         pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight1]);
         let imgData1 = combinedCanvas1.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
         pdf.addImage(imgData1, 'JPEG', 0, 0, pdfWidth, pdfHeight1, '', 'FAST');
@@ -3120,6 +3127,12 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Add the second page if available
     if (combinedCanvas2) {
         let pdfHeight2 = (combinedCanvas2.height * pdfWidth) / combinedCanvas2.width;
+
+        // Ensure page height is at least A4 height
+        if (pdfHeight2 < pdfHeight) {
+            pdfHeight2 = pdfHeight;
+        }
+
         pdf.addPage([pdfWidth, pdfHeight2]);
         let imgData2 = combinedCanvas2.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
         pdf.addImage(imgData2, 'JPEG', 0, 0, pdfWidth, pdfHeight2, '', 'FAST');
@@ -3142,3 +3155,5 @@ downloadPdfWithCustomName = async function (pdfName) {
     document.getElementById('check_pdf_name_button').style.color = 'black';
     document.getElementById('check_pdf_name_button').innerText = 'تحميل';
 };
+
+
