@@ -298,7 +298,7 @@ pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
 
     } else if (parentDivId === 'all_localstorage_stored_data_names_for_deleting_data_div') {
         // If the clicked element is inside the deleting data div (multiple selection)
-        
+
         // Toggle the background and text color of the clicked <p> element
         if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
             clickedLocalStorageDataName.style.backgroundColor = 'white';
@@ -391,13 +391,13 @@ function importWebsiteLocalStorageDataName() {
 
 
     /* Set the package including sms + inner tickets + package total price inputs values */
-    if(document.getElementById('store_localstorage_package_including_sms_value').innerText !== ''){
+    if (document.getElementById('store_localstorage_package_including_sms_value').innerText !== '') {
         document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
     }
-    if(document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== ''){
+    if (document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== '') {
         document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
     }
-    if(document.getElementById('store_localstorage_package_total_price_value').innerText !== ''){
+    if (document.getElementById('store_localstorage_package_total_price_value').innerText !== '') {
         document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
     }
 }
@@ -496,43 +496,46 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
     if (visiableDivIdName === 'downloaded_pdf_clint_data_page') {
 
         /* Function to reActive the company logo delete functionality */
-        document.getElementById('inserted_company_name_logo_id').onclick = function (event) {
-            event.preventDefault(); // Prevent the default behavior of the click event
-            event.stopPropagation(); // Stop the event from propagating further
+        if (document.getElementById('inserted_company_name_logo_id')) {
+            
+            document.getElementById('inserted_company_name_logo_id').onclick = function (event) {
+                event.preventDefault(); // Prevent the default behavior of the click event
+                event.stopPropagation(); // Stop the event from propagating further
 
-            // Create overlay layer
-            let overlayLayer = document.createElement('div');
-            overlayLayer.className = 'black_overlay';
-            overlayLayer.id = 'black_overlay_id';
-            document.body.appendChild(overlayLayer);
+                // Create overlay layer
+                let overlayLayer = document.createElement('div');
+                overlayLayer.className = 'black_overlay';
+                overlayLayer.id = 'black_overlay_id';
+                document.body.appendChild(overlayLayer);
 
-            // Show overlay layer with smooth opacity transition
-            setTimeout(() => {
-                overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
-            }, 100);
-
-            // Slide in delete box options div
-            let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
-
-            // Smoothly slide to the middle of the screen
-            setTimeout(() => {
-                deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
-            }, 50); // Adjust timing as needed
-
-            // Event listener to close overlay and delete box div on click outside
-            overlayLayer.onclick = () => {
-                // Hide delete box options div
-                deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and delete box div from DOM after transition
+                // Show overlay layer with smooth opacity transition
                 setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
+                    overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
+                }, 100);
+
+                // Slide in delete box options div
+                let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
+
+                // Smoothly slide to the middle of the screen
+                setTimeout(() => {
+                    deleteHotelCardDiv.style.transform = 'translate(-50%, -50%)'; // Slide to the center of the screen
+                }, 50); // Adjust timing as needed
+
+                // Event listener to close overlay and delete box div on click outside
+                overlayLayer.onclick = () => {
+                    // Hide delete box options div
+                    deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
+
+                    // Hide overlay layer with opacity transition
+                    overlayLayer.style.opacity = '0';
+
+                    // Remove overlay and delete box div from DOM after transition
+                    setTimeout(() => {
+                        document.body.removeChild(overlayLayer);
+                    }, 300); // Match transition duration in CSS
+                };
             };
-        };
+        }
 
 
         /* Function to delete company logo */
