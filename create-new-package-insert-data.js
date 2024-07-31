@@ -3157,7 +3157,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     }
 
     // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 4 : 3.5; // Higher scale for mobile devices
 
     // Process visible sections to generate canvases
     let combinedCanvas1 = await processSections(sections1, scale);
