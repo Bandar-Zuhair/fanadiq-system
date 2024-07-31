@@ -5,8 +5,6 @@ let insertedClintMovementsRowDivUniqueId;
 
 
 
-
-
 /* Function for checking if ready or no to insert the data */
 // Function to check if all inputs have values
 checkInputsToInsertData = function (clickedButtonId) {
@@ -26,8 +24,6 @@ checkInputsToInsertData = function (clickedButtonId) {
         let guysCheckbox = document.getElementById('guys_checkbox');
         let familyCheckbox = document.getElementById('family_checkbox');
         let twoPeopleCheckbox = document.getElementById('two_people_checkbox');
-
-
 
 
         // Change the submit icon color to green to indicate success
@@ -129,7 +125,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-
+        /* Get the h6 element to set the package type text */
         let clintPackageTypeH6 = document.getElementById('clint_package_type_h6');
 
         /* Check which checkbox is checked then include the text in the content */
@@ -200,7 +196,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Check if there is any data in the 'kidsPackagePersonAmountInput' then combine adult and kids amounts values */
             let combinedPersonAmount = `${adultPackagePersonAmountInput}`;
             if (kidsPackagePersonAmountInput !== '') {
-                combinedPersonAmount += ` ${kidsPackagePersonAmountInput}`;
+                combinedPersonAmount += ` + ${kidsPackagePersonAmountInput}`;
             }
 
 
