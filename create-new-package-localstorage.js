@@ -388,6 +388,18 @@ function importWebsiteLocalStorageDataName() {
             import_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
         }, 500);
     }
+
+
+    /* Set the package including sms + inner tickets + package total price inputs values */
+    if(document.getElementById('store_localstorage_package_including_sms_value').innerText !== ''){
+        document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
+    }
+    if(document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== ''){
+        document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
+    }
+    if(document.getElementById('store_localstorage_package_total_price_value').innerText !== ''){
+        document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
+    }
 }
 
 
