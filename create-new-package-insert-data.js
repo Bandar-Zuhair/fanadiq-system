@@ -1,7 +1,8 @@
 /* Variable to save a number for counting functionality (Ex: hotel row table unique id..?) */
-let insertedHotelDataDivUniqueId = 1;
-let insertedFlightDataDivUniqueId = 1;
-let insertedClintMovementsRowDivUniqueId = 1;
+let insertedFlightDataDivUniqueId;
+let insertedHotelDataDivUniqueId;
+let insertedClintMovementsRowDivUniqueId;
+
 
 
 /* Function for checking if ready or no to insert the data */
@@ -495,6 +496,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+                /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
+                if (document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText !== '') {
+                    insertedFlightDataDivUniqueId = document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText;
+                } else {
+                    insertedFlightDataDivUniqueId = 1;
+                }
 
 
 
@@ -523,6 +530,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                 insertedFlightDataDivUniqueId++;
 
 
+                /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
+                document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText = insertedFlightDataDivUniqueId;
 
 
                 // Insert the HTML content into the newly created div
@@ -1077,6 +1086,14 @@ checkInputsToInsertData = function (clickedButtonId) {
             let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
 
+            /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
+            if (document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText !== '') {
+                insertedHotelDataDivUniqueId = document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText;
+            } else {
+                insertedHotelDataDivUniqueId = 1;
+            }
+
+
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
                 <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
@@ -1129,6 +1146,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             insertedHotelDataDivUniqueId++;
 
 
+            /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
+            document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText = insertedHotelDataDivUniqueId;
 
 
             // Get all dynamically created elements with the class 'hotelRowImageController'
@@ -1283,8 +1302,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 /* Change the innerText and the background color of the 'hotel_content_section_title_text_id' */
+                document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
                 document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
-                document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
 
 
                 /* Scroll up to the middle of the 'toggle_hotel_elements' */
@@ -1390,8 +1409,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* Reset the innerText and styling to defualt */
-                    document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
                     document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+                    document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
                 };
 
 
@@ -1399,7 +1418,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 /* Function to confirm the new hotel row data */
                 confirmNewHotelDataRow = function () {
                     // Get the clicked hotel data row
-                    let clickedHotelDataDiv = document.getElementById(currentHotelDataDivId);
+                    let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
 
                     // Clear the old data
                     clickedHotelDataDiv.innerHTML = '';
@@ -1473,7 +1492,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
                             hotelExtraInfoSpan.style.color = 'white';
                             hotelExtraInfoSpan.style.padding = '0 5px';
-                            hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
                         }
 
                         // Reattach event listeners to the image controllers
@@ -1821,6 +1840,18 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let newDayDate = currentDayDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).replace(' ', '-');
                     document.getElementById('clint_movements_current_day_date_input_id').value = newDayDate;
 
+
+                    /* Store the new current clint movements day date in the 'store_localstorage_clint_movements_current_day_date_value' for later use (when importing data) */
+                    document.getElementById('store_localstorage_clint_movements_current_day_date_value').innerText = newDayDate;
+
+
+                    /* Set the 'insertedClintMovementsRowDivUniqueId' value based on the following condition */
+                    if (document.getElementById('store_localstorage_clint_movements_uniuqe_id_name_value').innerText !== '') {
+                        insertedClintMovementsRowDivUniqueId = document.getElementById('store_localstorage_clint_movements_uniuqe_id_name_value').innerText;
+                    } else {
+                        insertedClintMovementsRowDivUniqueId = 1;
+                    }
+
                     // Create the HTML content for a new hotel row
                     let clintMovementsRowTableDivContent = `
                         <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
@@ -1830,10 +1861,12 @@ checkInputsToInsertData = function (clickedButtonId) {
                         <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                     `;
 
+
                     // Create a new div element to hold the hotel row
                     let clintMovementsRowTableDiv = document.createElement('div');
                     clintMovementsRowTableDiv.id = `clint_movements_row_id_${insertedClintMovementsRowDivUniqueId}`; // Set a unique ID for the hotel row div
                     clintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing'); // Add a class to the div for styling and for re-arranging the first and last clint movements dates
+
 
                     // Insert the HTML content into the newly created div
                     clintMovementsRowTableDiv.innerHTML = clintMovementsRowTableDivContent;
@@ -1917,6 +1950,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     insertedClintMovementsRowDivUniqueId++;
 
 
+                    /* Store the new unique id name 'insertedClintMovementsRowDivUniqueId' for later refrence and use (when importing data) */
+                    document.getElementById('store_localstorage_clint_movements_uniuqe_id_name_value').innerText = insertedClintMovementsRowDivUniqueId;
 
 
                     /* Reset all variables for later refrence (when editing) */
@@ -2286,25 +2321,37 @@ checkInputsToInsertData = function (clickedButtonId) {
                         let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
                         let clintMovementsNewCheckInInput = document.getElementById('clint_movements_new_check_in_input_id').value;
 
-                        /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
-                        if (clintMovementsNextCityInput === 'الذهاب للمطار للمغادرة') {
-                            /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
-                            if (clintMovementsWholeDayActionsDetailsTextarea !== '' || clintMovementsAirportWelcomeInput !== '' || clintMovementsNewCheckInInput !== '') {
-                                // Change the submit icon background color
-                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
 
-                                // Set the background color of the submit icon back to default color
-                                setTimeout(() => {
-                                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                                }, 500);
+                        // In case all 'استقبال في المطار', 'تسجيل خروج', 'تسجيل دخول', 'الذهاب لمدينة جديدة' inputs are empty then stop the process
+                        if (clintMovementsNewCheckOutInput === '' && clintMovementsNewCheckInInput === '' && clintMovementsWholeDayActionsDetailsTextarea === '') {
+                            // Change the submit icon background color
+                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
 
-                                /* Exit the function and stop processing */
-                                return;
+                            // Set the background color of the submit icon back to default color
+                            setTimeout(() => {
+                                clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                            }, 500);
+
+                        } else {
+                            /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
+                            if (clintMovementsNextCityInput === 'الذهاب للمطار للمغادرة') {
+                                /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
+                                if (clintMovementsWholeDayActionsDetailsTextarea !== '' || clintMovementsAirportWelcomeInput !== '' || clintMovementsNewCheckInInput !== '') {
+                                    // Change the submit icon background color
+                                    clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                                    // Set the background color of the submit icon back to default color
+                                    setTimeout(() => {
+                                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                                    }, 500);
+
+                                    /* Exit the function and stop processing */
+                                    return;
+                                }
                             }
-                        }
 
-                        // Create the HTML content for a new hotel row
-                        let clintMovementsRowTableDivContent = `
+                            // Create the HTML content for a new hotel row
+                            let clintMovementsRowTableDivContent = `
                             <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'>${clintMovementsCurrentDayDateInput}</h6></div>
                             <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_all_p_elements_div_class"></div>
                             <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller" style="cursor: pointer;"></div>
@@ -2312,146 +2359,147 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <p id='hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}' style="display: none"></p>
                         `;
 
-                        // Insert the updated HTML content into the current edithing div
-                        clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
+                            // Insert the updated HTML content into the current edithing div
+                            clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
 
-                        // Create and append each <p> element with unique ID
-                        let pElements = [
-                            { text: clintMovementsNewCheckOutInput, id: `clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}` },
-                            { text: clintMovementsNextCityInput, id: `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}` },
-                            { text: clintMovementsAirportWelcomeInput, id: `clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}` },
-                            { text: clintMovementsWholeDayActionsDetailsTextarea, id: `clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}` },
-                            { text: clintMovementsNewCheckInInput, id: `clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}` }
-                        ];
+                            // Create and append each <p> element with unique ID
+                            let pElements = [
+                                { text: clintMovementsNewCheckOutInput, id: `clint_movements_new_check_out_${insertedClintMovementsRowDivUniqueId}` },
+                                { text: clintMovementsNextCityInput, id: `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}` },
+                                { text: clintMovementsAirportWelcomeInput, id: `clint_movements_airport_welcome_${insertedClintMovementsRowDivUniqueId}` },
+                                { text: clintMovementsWholeDayActionsDetailsTextarea, id: `clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}` },
+                                { text: clintMovementsNewCheckInInput, id: `clint_movements_new_check_in_${insertedClintMovementsRowDivUniqueId}` }
+                            ];
 
-                        // Append each <p> element to the container
-                        pElements.forEach(pElement => {
-                            if (pElement.text !== '') {
-                                let p = document.createElement('p');
-                                p.id = pElement.id;
-                                p.innerText = pElement.text;
-                                p.style.display = 'none';
-                                document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(p);
-                            }
-                        });
-
-                        // Concatenate all texts with a + sign
-                        let concatenatedText = pElements.map(p => p.text).filter(text => text !== '').join('+');
-
-                        // Create and append a <p> element for the concatenated text
-                        let pElementConcatenated = document.createElement('p');
-                        pElementConcatenated.id = `clint_movements_concatenated_${insertedClintMovementsRowDivUniqueId}`;
-                        pElementConcatenated.innerText = concatenatedText;
-                        document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
-
-                        let clintMovementsCurrentCityInputP = null;
-
-                        if (storeClintMovementsCurrentCityInput === null) {
-                            // Create a new <p> element for the current and next city
-                            clintMovementsCurrentCityInputP = document.createElement('p');
-                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
-                            clintMovementsCurrentCityInputP.innerText = clintMovementsStoredCurrentCityValue;
-                        } else {
-                            // Create a new <p> element for the current and next city
-                            clintMovementsCurrentCityInputP = document.createElement('p');
-                            clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
-                            clintMovementsCurrentCityInputP.innerText = storeClintMovementsCurrentCityInput;
-                        }
-
-                        /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' */
-                        document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredCurrentCityValue;
-
-                        // Check if storeClintMovementsNextCityInput has a value
-                        if (clintMovementsNextCityInput !== '' && clintMovementsNextCityInput !== 'الذهاب للمطار للمغادرة') {
-
-
-                            if (storeClintMovementsNextCityInput === null) {
-                                if (storeClintMovementsCurrentCityInput === null) {
-                                    // Create and append a new <p> element with the concatenated text
-                                    let pElementCombinedCity = document.createElement('p');
-                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${clintMovementsStoredNextCityValue}`;
-                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
-                                } else {
-                                    // Create and append a new <p> element with the concatenated text
-                                    let pElementCombinedCity = document.createElement('p');
-                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${clintMovementsStoredNextCityValue}`;
-                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                            // Append each <p> element to the container
+                            pElements.forEach(pElement => {
+                                if (pElement.text !== '') {
+                                    let p = document.createElement('p');
+                                    p.id = pElement.id;
+                                    p.innerText = pElement.text;
+                                    p.style.display = 'none';
+                                    document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(p);
                                 }
-                            } else {
-                                if (storeClintMovementsCurrentCityInput === null) {
-                                    // Create and append a new <p> element with the concatenated text
-                                    let pElementCombinedCity = document.createElement('p');
-                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${storeClintMovementsNextCityInput}`;
-                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+                            });
 
-                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                                } else {
-                                    // Create and append a new <p> element with the concatenated text
-                                    let pElementCombinedCity = document.createElement('p');
-                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
-                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+                            // Concatenate all texts with a + sign
+                            let concatenatedText = pElements.map(p => p.text).filter(text => text !== '').join('+');
 
-                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
-                                }
-                            }
-                        } else {
+                            // Create and append a <p> element for the concatenated text
+                            let pElementConcatenated = document.createElement('p');
+                            pElementConcatenated.id = `clint_movements_concatenated_${insertedClintMovementsRowDivUniqueId}`;
+                            pElementConcatenated.innerText = concatenatedText;
+                            document.getElementById(`clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementConcatenated);
 
-                            /* if there is no inserted clint movements next city then dont include it */
+                            let clintMovementsCurrentCityInputP = null;
+
                             if (storeClintMovementsCurrentCityInput === null) {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement('p');
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                // Create a new <p> element for the current and next city
+                                clintMovementsCurrentCityInputP = document.createElement('p');
+                                clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                                clintMovementsCurrentCityInputP.innerText = clintMovementsStoredCurrentCityValue;
                             } else {
-                                // Create and append a new <p> element with the concatenated text
-                                let pElementCombinedCity = document.createElement('p');
-                                pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
-                                pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}`;
-                                document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
-
-                                document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                // Create a new <p> element for the current and next city
+                                clintMovementsCurrentCityInputP = document.createElement('p');
+                                clintMovementsCurrentCityInputP.id = `clint_movements_current_city_${insertedClintMovementsRowDivUniqueId}`;
+                                clintMovementsCurrentCityInputP.innerText = storeClintMovementsCurrentCityInput;
                             }
+
+                            /* Store the clint movements current city value inside the 'hidden_clint_movements_stored_current_city_' */
+                            document.getElementById(`hidden_clint_movements_stored_current_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredCurrentCityValue;
+
+                            // Check if storeClintMovementsNextCityInput has a value
+                            if (clintMovementsNextCityInput !== '' && clintMovementsNextCityInput !== 'الذهاب للمطار للمغادرة') {
+
+
+                                if (storeClintMovementsNextCityInput === null) {
+                                    if (storeClintMovementsCurrentCityInput === null) {
+                                        // Create and append a new <p> element with the concatenated text
+                                        let pElementCombinedCity = document.createElement('p');
+                                        pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                        pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${clintMovementsStoredNextCityValue}`;
+                                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                    } else {
+                                        // Create and append a new <p> element with the concatenated text
+                                        let pElementCombinedCity = document.createElement('p');
+                                        pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                        pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${clintMovementsStoredNextCityValue}`;
+                                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = clintMovementsStoredNextCityValue;
+                                    }
+                                } else {
+                                    if (storeClintMovementsCurrentCityInput === null) {
+                                        // Create and append a new <p> element with the concatenated text
+                                        let pElementCombinedCity = document.createElement('p');
+                                        pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                        pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}-${storeClintMovementsNextCityInput}`;
+                                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                    } else {
+                                        // Create and append a new <p> element with the concatenated text
+                                        let pElementCombinedCity = document.createElement('p');
+                                        pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                        pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}-${storeClintMovementsNextCityInput}`;
+                                        document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                        document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                    }
+                                }
+                            } else {
+
+                                /* if there is no inserted clint movements next city then dont include it */
+                                if (storeClintMovementsCurrentCityInput === null) {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${clintMovementsStoredCurrentCityValue}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                } else {
+                                    // Create and append a new <p> element with the concatenated text
+                                    let pElementCombinedCity = document.createElement('p');
+                                    pElementCombinedCity.id = `clint_movements_next_city_${insertedClintMovementsRowDivUniqueId}`;
+                                    pElementCombinedCity.innerText = `${storeClintMovementsCurrentCityInput}`;
+                                    document.getElementById(`clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}`).appendChild(pElementCombinedCity);
+
+                                    document.getElementById(`hidden_clint_movements_stored_next_city_${insertedClintMovementsRowDivUniqueId}`).innerText = storeClintMovementsNextCityInput;
+                                }
+                            }
+
+
+
+
+
+                            // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                            let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll('.clint_movements_row_controller');
+
+
+                            // Attach click and touch event listeners to each element
+                            clintMovementsRowImageControllers.forEach(element => {
+                                handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
+                                handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
+                            });
+
+
+
+
+                            /* Reset all variables for later refrence (when editing) */
+                            storeClintMovementsCurrentCityInput = null;
+                            storeClintMovementsNextCityInput = null;
+
+
+                            /* Recall the functionality of the 'clint_movements_row_controller' controller */
+                            arrangeClintMovementsDates()
+                            createClintMovementsDragAndDropMood()
+
+                            // Clear the input after confirm the new flight data
+                            cancelNewClintMovementsDataRow()
                         }
-
-
-
-
-
-                        // Get all dynamically created elements with the class 'clint_movements_row_controller'
-                        let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll('.clint_movements_row_controller');
-
-
-                        // Attach click and touch event listeners to each element
-                        clintMovementsRowImageControllers.forEach(element => {
-                            handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
-                            handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
-                        });
-
-
-
-
-                        /* Reset all variables for later refrence (when editing) */
-                        storeClintMovementsCurrentCityInput = null;
-                        storeClintMovementsNextCityInput = null;
-
-
-                        /* Recall the functionality of the 'clint_movements_row_controller' controller */
-                        arrangeClintMovementsDates()
-                        createClintMovementsDragAndDropMood()
-
-                        // Clear the input after confirm the new flight data
-                        cancelNewClintMovementsDataRow()
                     }
                 }
 
@@ -2940,43 +2988,10 @@ downloadPdfWithCustomName = async function (pdfName) {
 
         if (canvases.length === 0) {
             console.error('No canvases captured');
-            return;
+            return null;
         }
 
-        let combinedCanvas = combineCanvases(canvases);
-        if (!combinedCanvas) {
-            console.error('Failed to combine canvases');
-            return;
-        }
-
-        let pdfWidth = 210; // A4 width in mm
-        let pdfHeight = (combinedCanvas.height * pdfWidth) / combinedCanvas.width;
-        let padding = 2; // Padding in mm
-        let contentWidth = pdfWidth - (2 * padding); // Adjusted width with padding
-
-        let pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
-
-        let imgData = combinedCanvas.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
-
-        // Add the image to the PDF with padding
-        pdf.addImage(imgData, 'JPEG', padding, 0, contentWidth, pdfHeight, '', 'FAST');
-        pdf.save(pdfName);
-
-        // Hide all elements with the class name after saving the PDF
-        let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
-        images.forEach(img => {
-            img.style.display = 'none';
-        });
-
-        document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
-        document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
-
-        saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
-
-        /* Reset the text and color of the download button */
-        document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
-        document.getElementById('check_pdf_name_button').style.color = 'black';
-        document.getElementById('check_pdf_name_button').innerText = 'تحميل';
+        return combineCanvases(canvases);
     };
 
     // Show all elements with the class name before checking visibility
@@ -2993,55 +3008,87 @@ downloadPdfWithCustomName = async function (pdfName) {
     document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none'; // Show or hide based on visibility
     document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline'; // Show or hide based on visibility
 
-    // Define the class names to check
-    let divsIdNames = [
+    // Define the class names for each page
+    let page1Divs = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_flight_data_page',
         'downloaded_pdf_hotel_data_page',
-        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_package_including_data_page'
+    ];
+
+    let page2Divs = [
         'downloaded_pdf_clint_movements_data_page',
         'downloaded_pdf_important_notes_data_page',
         'downloaded_pdf_total_price_data_page'
     ];
 
-    let sections = [];
-    let firstVisibleDiv = null;
+    let sections1 = [];
+    let sections2 = [];
 
-    // Iterate through each class name and check visibility
-    divsIdNames.forEach(divsIdName => {
+    // Iterate through each class name and check visibility for page 1
+    page1Divs.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
         if (section && isVisible(section)) { // Check if section exists and is visible
-            if (!firstVisibleDiv) {
-                firstVisibleDiv = section; // Capture the first visible div
-            }
-            sections.push(section); // Add visible section to the array
+            sections1.push(section); // Add visible section to the array
         }
     });
 
-    if (sections.length === 0) {
+    // Iterate through each class name and check visibility for page 2
+    page2Divs.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
+        if (section && isVisible(section)) { // Check if section exists and is visible
+            sections2.push(section); // Add visible section to the array
+        }
+    });
+
+    if (sections1.length === 0 && sections2.length === 0) {
         return;
     }
 
-    // If a first visible div is found, update the image src inside it unless it's the 'downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', or 'downloaded_pdf_total_price_data_page'
-    if (firstVisibleDiv) {
-        let firstImg = firstVisibleDiv.querySelector('.inserted_package_data_section_page_image_class');
-        if (firstImg && !['downloaded_pdf_clint_data_page', 'downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(firstVisibleDiv.id)) {
-            firstImg.src = "first-pdf-image.jpg"; // Replace the src value for the first visible img
-        }
+    // Determine the scale based on the device type
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5; // Higher scale for mobile devices
+
+    // Process visible sections to generate canvases
+    let combinedCanvas1 = await processSections(sections1, scale);
+    let combinedCanvas2 = await processSections(sections2, scale);
+
+    if (!combinedCanvas1 && !combinedCanvas2) {
+        return;
     }
 
-    // Update the src value of images inside the rest of the visible divs, except for 'downloaded_pdf_important_notes_data_page' and 'downloaded_pdf_total_price_data_page'
-    sections.forEach(section => {
-        if (section !== firstVisibleDiv && !['downloaded_pdf_important_notes_data_page', 'downloaded_pdf_total_price_data_page'].includes(section.id)) {
-            let img = section.querySelector('.inserted_package_data_section_page_image_class');
-            if (img) {
-                img.src = "middle-pdf-image.jpg"; // Replace the src value for the rest of the visible imgs
-            }
-        }
+    let pdf = new jsPDF('p', 'mm', 'a4');
+    let pdfWidth = 210; // A4 width in mm
+
+    // Add the first page if available
+    if (combinedCanvas1) {
+        let pdfHeight1 = (combinedCanvas1.height * pdfWidth) / combinedCanvas1.width;
+        pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight1]);
+        let imgData1 = combinedCanvas1.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        pdf.addImage(imgData1, 'JPEG', 0, 0, pdfWidth, pdfHeight1, '', 'FAST');
+    }
+
+    // Add the second page if available
+    if (combinedCanvas2) {
+        let pdfHeight2 = (combinedCanvas2.height * pdfWidth) / combinedCanvas2.width;
+        pdf.addPage([pdfWidth, pdfHeight2]);
+        let imgData2 = combinedCanvas2.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        pdf.addImage(imgData2, 'JPEG', 0, 0, pdfWidth, pdfHeight2, '', 'FAST');
+    }
+
+    pdf.save(pdfName);
+
+    // Hide all elements with the class name after saving the PDF
+    images.forEach(img => {
+        img.style.display = 'none';
     });
 
-    // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 3 : 3; // Higher scale for mobile devices
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
 
-    await processSections(sections, scale); // Process visible sections to generate the PDF
+    saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+
+    /* Reset the text and color of the download button */
+    document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
+    document.getElementById('check_pdf_name_button').style.color = 'black';
+    document.getElementById('check_pdf_name_button').innerText = 'تحميل';
 };
