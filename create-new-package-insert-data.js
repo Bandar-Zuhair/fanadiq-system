@@ -2965,12 +2965,12 @@ checkThePdfNameToDownload = function () {
             if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'block') {
                 inserted_package_flight_data_section_page_image_id.src = 'first-pdf-image.jpg';
                 inserted_package_hotel_data_section_page_image_id.src = 'middle-pdf-image.jpg';
-                inserted_package_clint_movements_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_clint_movements_data_section_page_image_id.src = '';
 
             } else if (document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'block') {
                 inserted_package_flight_data_section_page_image_id.src = 'middle-pdf-image.jpg';
                 inserted_package_hotel_data_section_page_image_id.src = 'first-pdf-image.jpg';
-                inserted_package_clint_movements_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_clint_movements_data_section_page_image_id.src = '';
 
             } else if (document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'block') {
                 inserted_package_flight_data_section_page_image_id.src = 'middle-pdf-image.jpg';
@@ -3046,13 +3046,13 @@ let isVisible = function (element) {
 downloadPdfWithCustomName = async function (pdfName) {
     let { jsPDF } = window.jspdf;
 
-    /* Function to capture a canvas of a given section */
+    // Function to capture a canvas of a given section
     let captureCanvas = async function (section, scale) {
         try {
             let canvas = await html2canvas(section, {
-                scale: scale, // Adjusted scale factor for higher quality
+                scale: scale,
                 backgroundColor: null,
-                scrollY: 0 // Ensure capturing starts from the top of the element
+                scrollY: 0
             });
             return canvas;
         } catch (error) {
@@ -3060,7 +3060,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
     };
 
-    /* Function to combine multiple canvases into one */
+    // Function to combine multiple canvases into one
     let combineCanvases = function (canvases) {
         if (canvases.length === 0) {
             console.error('No canvases to combine');
@@ -3073,7 +3073,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         combinedCanvas.height = totalHeight;
         let context = combinedCanvas.getContext('2d');
 
-        // Fill with default background color (e.g., white)
         context.fillStyle = '#ffffff';
         context.fillRect(0, 0, combinedCanvas.width, combinedCanvas.height);
 
@@ -3086,7 +3085,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         return combinedCanvas;
     };
 
-    /* Function to process all visible sections and generate the PDF */
+    // Function to process all visible sections and generate the PDF
     let processSections = async function (sections, scale) {
         let canvases = [];
 
@@ -3105,21 +3104,46 @@ downloadPdfWithCustomName = async function (pdfName) {
         return combineCanvases(canvases);
     };
 
+    // Ensure the downloaded_pdf_clint_movements_data_page section has a consistent aspect ratio
+    let adjustClintMovementsCanvas = function (canvas) {
+        let pdfWidth = 210; // A4 width in mm
+        let pdfHeight = 297; // A4 height in mm
+        let scaleFactor = canvas.width / pdfWidth;
+
+        // Calculate the minimum required height in pixels for the A4 page
+        let minHeight = pdfHeight * scaleFactor;
+
+        // If the canvas is shorter than the minimum height, pad it with empty space
+        if (canvas.height < minHeight) {
+            let paddedCanvas = document.createElement('canvas');
+            paddedCanvas.width = canvas.width;
+            paddedCanvas.height = minHeight;
+
+            let context = paddedCanvas.getContext('2d');
+            context.fillStyle = '#ffffff'; // Set background color to white
+            context.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+            context.drawImage(canvas, 0, 0);
+
+            return paddedCanvas;
+        }
+
+        return canvas;
+    };
+
     // Show all elements with the class name before checking visibility
     let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
     images.forEach(img => {
         img.style.display = 'inline';
     });
 
-    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block'; // Show the section before checking visibility
-    document.getElementById('inserted_company_name_image_position_div').style.display = 'none'; // Hide the section before checking visibility
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'block';
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'none';
 
     let totalPriceVisible = document.getElementById('downloaded_pdf_total_price_data_page').style.display !== 'none';
 
-    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none'; // Show or hide based on visibility
-    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline'; // Show or hide based on visibility
+    document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none';
+    document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline';
 
-    // Define the id names for each page
     let page1Divs = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_flight_data_page',
@@ -3128,81 +3152,96 @@ downloadPdfWithCustomName = async function (pdfName) {
     ];
 
     let page2Divs = [
-        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_clint_movements_data_page' // Add only to page 2
+    ];
+
+    let page3Divs = [
         'downloaded_pdf_important_notes_data_page',
         'downloaded_pdf_total_price_data_page'
     ];
 
     let sections1 = [];
     let sections2 = [];
+    let sections3 = [];
 
-    // Iterate through each class name and check visibility for page 1
+    // Check visibility for page 1 sections
     page1Divs.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
-        if (section && isVisible(section)) { // Check if section exists and is visible
-            sections1.push(section); // Add visible section to the array
+        if (section && isVisible(section)) {
+            sections1.push(section);
         }
     });
 
-    // Iterate through each class name and check visibility for page 2
+    // Check visibility for page 2 sections
     page2Divs.forEach(divsIdName => {
         let section = document.getElementById(divsIdName);
-        if (section && isVisible(section)) { // Check if section exists and is visible
-            sections2.push(section); // Add visible section to the array
+        if (section && isVisible(section)) {
+            sections2.push(section);
         }
     });
 
-    if (sections1.length === 0 && sections2.length === 0) {
+    // Check visibility for page 3 sections
+    page3Divs.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
+        if (section && isVisible(section)) {
+            sections3.push(section);
+        }
+    });
+
+    if (sections1.length === 0 && sections2.length === 0 && sections3.length === 0) {
         return;
     }
 
-    // Determine the scale based on the device type
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 4 : 3.5; // Higher scale for mobile devices
+    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5;
 
     // Process visible sections to generate canvases
     let combinedCanvas1 = await processSections(sections1, scale);
     let combinedCanvas2 = await processSections(sections2, scale);
+    if (combinedCanvas2) {
+        combinedCanvas2 = adjustClintMovementsCanvas(combinedCanvas2); // Adjust the canvas for page 2
+    }
+    let combinedCanvas3 = await processSections(sections3, scale);
 
-    if (!combinedCanvas1 && !combinedCanvas2) {
+    if (!combinedCanvas1 && !combinedCanvas2 && !combinedCanvas3) {
         return;
     }
 
     let pdf = new jsPDF('p', 'mm', 'a4');
-    let pdfWidth = 210; // A4 width in mm
+    let pdfWidth = 210;
 
-    // Add the first page if available
     if (combinedCanvas1) {
         let pdfHeight1 = (combinedCanvas1.height * pdfWidth) / combinedCanvas1.width;
         pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight1]);
-        let imgData1 = combinedCanvas1.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData1 = combinedCanvas1.toDataURL('image/jpeg', 0.7);
         pdf.addImage(imgData1, 'JPEG', 0, 0, pdfWidth, pdfHeight1, '', 'FAST');
     }
 
-    // Add the second page if available
     if (combinedCanvas2) {
         let pdfHeight2 = (combinedCanvas2.height * pdfWidth) / combinedCanvas2.width;
         pdf.addPage([pdfWidth, pdfHeight2]);
-        let imgData2 = combinedCanvas2.toDataURL('image/jpeg', 0.7); // Adjust JPEG quality for better balance
+        let imgData2 = combinedCanvas2.toDataURL('image/jpeg', 0.7);
         pdf.addImage(imgData2, 'JPEG', 0, 0, pdfWidth, pdfHeight2, '', 'FAST');
+    }
+
+    if (combinedCanvas3) {
+        let pdfHeight3 = (combinedCanvas3.height * pdfWidth) / combinedCanvas3.width;
+        pdf.addPage([pdfWidth, pdfHeight3]);
+        let imgData3 = combinedCanvas3.toDataURL('image/jpeg', 0.7);
+        pdf.addImage(imgData3, 'JPEG', 0, 0, pdfWidth, pdfHeight3, '', 'FAST');
     }
 
     pdf.save(pdfName);
 
-    // Hide all elements with the class name after saving the PDF
     images.forEach(img => {
         img.style.display = 'none';
     });
 
-    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none'; // Hide the section after saving the PDF
-    document.getElementById('inserted_company_name_image_position_div').style.display = 'flex'; // Show the section before checking visibility
+    document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-    saveLastPdfDownloadData(); // Save the last PDF download data in localStorage
+    saveLastPdfDownloadData();
 
-    /* Reset the text and color of the download button */
     document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
     document.getElementById('check_pdf_name_button').style.color = 'black';
     document.getElementById('check_pdf_name_button').innerText = 'تحميل';
 };
-
-
-
