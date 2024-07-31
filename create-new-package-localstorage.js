@@ -1167,8 +1167,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'block';
                 document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'block';
 
-                document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
                 document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
+                document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
 
                 document.getElementById('toggle_hotel_elements').scrollIntoView({
                     block: 'center',
