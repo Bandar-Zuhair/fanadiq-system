@@ -5,6 +5,8 @@ let insertedClintMovementsRowDivUniqueId;
 
 
 
+
+
 /* Function for checking if ready or no to insert the data */
 // Function to check if all inputs have values
 checkInputsToInsertData = function (clickedButtonId) {
