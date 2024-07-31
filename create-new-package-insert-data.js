@@ -306,11 +306,17 @@ checkInputsToInsertData = function (clickedButtonId) {
         insertedPackageNotIncludingDataDiv.id = 'inserted_package_not_including_data_div';
         insertedPackageNotIncludingDataDiv.className = 'inserted_package_including_and_not_icluding_data_div_class';
 
+
+        /* in case there is a package total price in the 'packageTotlaPriceInput' */
         if (packageTotlaPriceInput !== '') {
-            downloaded_pdf_total_price_data_page.style.display = 'block';
-            package_total_price_p_id.innerText = packageTotlaPriceInput;
+            document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'block';
+            document.getElementById('package_total_price_p_id').innerText = packageTotlaPriceInput;
+            document.getElementById('store_localstorage_package_total_price_value').innerText = packageTotlaPriceInput;
+
         } else {
-            downloaded_pdf_total_price_data_page.style.display = 'none';
+            document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+            document.getElementById('store_localstorage_package_total_price_value').innerText = '';
+
         }
 
         // Function to get the current color of the checkbox label pseudo-element
@@ -340,12 +346,22 @@ checkInputsToInsertData = function (clickedButtonId) {
                         : ' شرائح إنترنت'; // Default text if input is empty
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
+
+                    // Update the store_localstorage_package_including_sms_value element
+                    let smsDateValueElement = document.getElementById('store_localstorage_package_including_sms_value');
+                    smsDateValueElement.innerText = smsCardWithInternetAmountInputReayText !== '' ? smsCardWithInternetAmountInputReayText : '';
+
                 } else if (id === 'inner_flight_tickets_checkbox') {
                     let textContent = innerFlightTicketsAmountInputReayText !== ''
                         ? ` ${innerFlightTicketsAmountInputReayText}`
                         : ' تذاكر الطيران الداخلي'; // Default text if input is empty
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
+
+                    // Update the store_localstorage_package_including_inner_tickets_value element
+                    let innerTicketsDateValueElement = document.getElementById('store_localstorage_package_including_inner_tickets_value');
+                    innerTicketsDateValueElement.innerText = innerFlightTicketsAmountInputReayText !== '' ? innerFlightTicketsAmountInputReayText : '';
+
                 } else {
                     labelText.forEach((text, index) => { // Loop through the label text parts
                         p.appendChild(document.createTextNode(` ${text}`)); // Append the text part
@@ -380,6 +396,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             p.setAttribute('onclick', 'runDeleteThisPackageIncludingDataText(this)'); // Set the onclick attribute to delete the text
         });
+
 
 
 
@@ -2870,15 +2887,50 @@ checkThePdfNameToDownload = function () {
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(85, 127, 137)';
         document.getElementById('check_pdf_name_button').style.color = 'white';
         document.getElementById('check_pdf_name_button').innerText = 'جاري التحميل..';
-        /* setTimeout(() => {
-            document.getElementById('check_pdf_name_button').style.backgroundColor = 'white';
-        }, 200); */
 
 
+
+
+        /* Reset all images src value */
+        inserted_package_flight_data_section_page_image_id.src = '';
+        inserted_package_hotel_data_section_page_image_id.src = '';
+        inserted_package_clint_movements_data_section_page_image_id.src = '';
+
+
+        /* in case the 'downloaded_pdf_clint_data_page' div was hidden then set the images src */
+        if (downloaded_pdf_clint_data_page.style.display === 'none') {
+
+            /* set the scr value for the divs based on their availability */
+            if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'block') {
+                inserted_package_flight_data_section_page_image_id.src = 'first-pdf-image.jpg';
+                inserted_package_hotel_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_clint_movements_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+
+            } else if (document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'block') {
+                inserted_package_flight_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_hotel_data_section_page_image_id.src = 'first-pdf-image.jpg';
+                inserted_package_clint_movements_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+
+            } else if (document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'block') {
+                inserted_package_flight_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_hotel_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+                inserted_package_clint_movements_data_section_page_image_id.src = 'first-pdf-image.jpg';
+
+            }
+
+        } else {
+            /* Set all images values to 'middle-pdf-image.jpg' */
+            inserted_package_flight_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+            inserted_package_hotel_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+            inserted_package_clint_movements_data_section_page_image_id.src = 'middle-pdf-image.jpg';
+        }
+
+
+
+        /* Run the 'downloadPdfWithCustomName' and pass the inserted name */
         let pdfNameReadyText = document.getElementById('pdf_file_name_input_id').value;
         downloadPdfWithCustomName(`${pdfNameReadyText}`);
     }
-
 }
 
 /* Save the last PDF download data in localStorage */
@@ -3006,7 +3058,7 @@ downloadPdfWithCustomName = async function (pdfName) {
     document.getElementById('inserted_package_total_price_data_section_page_image_id').style.display = totalPriceVisible ? 'inline' : 'none'; // Show or hide based on visibility
     document.getElementById('inserted_package_important_notes_data_section_page_image_id').style.display = totalPriceVisible ? 'none' : 'inline'; // Show or hide based on visibility
 
-    // Define the class names for each page
+    // Define the id names for each page
     let page1Divs = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_flight_data_page',
