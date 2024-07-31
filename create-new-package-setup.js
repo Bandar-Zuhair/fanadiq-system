@@ -1476,6 +1476,9 @@ function setTheFirstClintMovemnetsDate() {
                 topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput;
                 clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
                 arrangeClintMovementsDates();
+
+                /* Make sure to delet all 'clint_movements_row_class_for_editing' that have a date ahead the date exist in the 'clint_movements_last_day_date_input_id' */
+                deleteAheadDivs();
                 return;
             }
         }
