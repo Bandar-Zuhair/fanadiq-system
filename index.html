@@ -596,10 +596,7 @@
 
 
 
-        <!-- Delete the clicked inserted flight data -->
-        <div id="ensure_delete_package_including_data_text_div" class="ensure_your_delete_action">
-            <button onclick="passClickedPackageIncludingDataText()">حذف</button>
-        </div>
+
 
 
 
@@ -1167,6 +1164,10 @@
     </div>
 
 
+    <!-- Delete the clicked inserted flight data -->
+    <div id="ensure_delete_package_including_data_text_div" class="ensure_your_delete_action">
+        <button onclick="passClickedPackageIncludingDataText()">حذف</button>
+    </div>
 
 
 
@@ -2183,6 +2184,12 @@
 
 
 
+        <!-- Store the values for later refrence (when importing data) -->
+        <p id="store_localstorage_package_including_sms_value" style="display: none;"></p>
+        <p id="store_localstorage_package_including_inner_tickets_value" style="display: none;"></p>
+
+
+
     </section>
 
 
@@ -2348,6 +2355,12 @@
 
         <img src="last-pdf-image.jpg" id="inserted_package_total_price_data_section_page_image_id"
             class="inserted_package_data_section_page_image_class">
+
+
+
+        <!-- Element to store the last created flight unique id name -->
+        <p id="store_localstorage_package_total_price_value" style="display: none;"></p>
+
 
     </section>
 
