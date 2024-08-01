@@ -1748,6 +1748,10 @@ function calculateDaysDifference(startDate, endDate) {
 /* Store the package total nights for later use */
 let storePackageTotalNights;
 
+// Variables to track the visibility of the date pickers
+var isWholePackageStartDatePickerVisible = false;
+var isWholePackageEndDatePickerVisible = false;
+
 // Function to calculate the difference in days
 function wholePackageAndHotelCalculateDaysDifference(startDate, endDate) {
     let start = new Date(startDate);
@@ -1805,7 +1809,7 @@ function disableSpecificDates(date) {
 // Get today's date
 var today = new Date();
 
-/* Inputs date for whole package start and end period */
+/* Inputs date for whole package start period */
 var wholePackageStartDatePicker = new Pikaday({
     field: document.getElementById('package_start_date_input_id'),
     format: 'DD-M',
@@ -1816,6 +1820,7 @@ var wholePackageStartDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     onSelect: function() {
+        isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights();
         let selectedDate = this.getDate();
         let minEndDate = new Date(selectedDate);
@@ -1824,6 +1829,7 @@ var wholePackageStartDatePicker = new Pikaday({
     }
 });
 
+/* Inputs date for whole package end period */
 var wholePackageEndDatePicker = new Pikaday({
     field: document.getElementById('package_end_date_input_id'),
     format: 'DD-M',
@@ -1834,8 +1840,58 @@ var wholePackageEndDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: updateWholePackageTotalNights // Call 'updateWholePackageTotalNights' when a date is selected
+    onSelect: function() {
+        isWholePackageEndDatePickerVisible = false; // Reset visibility state on date selection
+        updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
+    }
 });
+
+// Toggle the whole package start date picker on input field click
+document.getElementById('package_start_date_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isWholePackageStartDatePickerVisible) {
+        wholePackageStartDatePicker.hide();
+        isWholePackageStartDatePickerVisible = false;
+    } else {
+        if (isWholePackageEndDatePickerVisible) {
+            wholePackageEndDatePicker.hide();
+            isWholePackageEndDatePickerVisible = false;
+        }
+        wholePackageStartDatePicker.show();
+        isWholePackageStartDatePickerVisible = true;
+    }
+});
+
+// Toggle the whole package end date picker on input field click
+document.getElementById('package_end_date_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isWholePackageEndDatePickerVisible) {
+        wholePackageEndDatePicker.hide();
+        isWholePackageEndDatePickerVisible = false;
+    } else {
+        if (isWholePackageStartDatePickerVisible) {
+            wholePackageStartDatePicker.hide();
+            isWholePackageStartDatePickerVisible = false;
+        }
+        wholePackageEndDatePicker.show();
+        isWholePackageEndDatePickerVisible = true;
+    }
+});
+
+// Optional: Hide the date pickers when clicking outside, but don't toggle state
+document.addEventListener('click', function() {
+    if (isWholePackageStartDatePickerVisible) {
+        wholePackageStartDatePicker.hide();
+        isWholePackageStartDatePickerVisible = false;
+    }
+    if (isWholePackageEndDatePickerVisible) {
+        wholePackageEndDatePicker.hide();
+        isWholePackageEndDatePickerVisible = false;
+    }
+});
+
 
 
 
@@ -1852,6 +1908,10 @@ var wholePackageEndDatePicker = new Pikaday({
 
 /* Store the hotel total nights for later use */
 let storeHotelTotalNights;
+
+// Variables to track the visibility of the date pickers
+var isHotelStartDatePickerVisible = false;
+var isHotelEndDatePickerVisible = false;
 
 // Function to update the total nights input
 function updateHotelTotalNights() {
@@ -1894,7 +1954,7 @@ function disableSpecificDates(date) {
 // Get today's date
 var today = new Date();
 
-/* Inputs date for hotel start and end period */
+/* Inputs date for hotel start period */
 var hotelStartDatePicker = new Pikaday({
     field: document.getElementById('hotel_check_in_input_id'),
     format: 'DD-M',
@@ -1905,6 +1965,7 @@ var hotelStartDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     onSelect: function() {
+        isHotelStartDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights();
         let selectedDate = this.getDate();
         let minEndDate = new Date(selectedDate);
@@ -1913,6 +1974,7 @@ var hotelStartDatePicker = new Pikaday({
     }
 });
 
+/* Inputs date for hotel end period */
 var hotelEndDatePicker = new Pikaday({
     field: document.getElementById('hotel_check_out_input_id'),
     format: 'DD-M',
@@ -1923,8 +1985,58 @@ var hotelEndDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: updateHotelTotalNights // Call 'updateHotelTotalNights' when a date is selected
+    onSelect: function() {
+        isHotelEndDatePickerVisible = false; // Reset visibility state on date selection
+        updateHotelTotalNights(); // Call 'updateHotelTotalNights' when a date is selected
+    }
 });
+
+// Toggle the hotel check-in date picker on input field click
+document.getElementById('hotel_check_in_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isHotelStartDatePickerVisible) {
+        hotelStartDatePicker.hide();
+        isHotelStartDatePickerVisible = false;
+    } else {
+        if (isHotelEndDatePickerVisible) {
+            hotelEndDatePicker.hide();
+            isHotelEndDatePickerVisible = false;
+        }
+        hotelStartDatePicker.show();
+        isHotelStartDatePickerVisible = true;
+    }
+});
+
+// Toggle the hotel check-out date picker on input field click
+document.getElementById('hotel_check_out_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isHotelEndDatePickerVisible) {
+        hotelEndDatePicker.hide();
+        isHotelEndDatePickerVisible = false;
+    } else {
+        if (isHotelStartDatePickerVisible) {
+            hotelStartDatePicker.hide();
+            isHotelStartDatePickerVisible = false;
+        }
+        hotelEndDatePicker.show();
+        isHotelEndDatePickerVisible = true;
+    }
+});
+
+// Optional: Hide the date pickers when clicking outside, but don't toggle state
+document.addEventListener('click', function() {
+    if (isHotelStartDatePickerVisible) {
+        hotelStartDatePicker.hide();
+        isHotelStartDatePickerVisible = false;
+    }
+    if (isHotelEndDatePickerVisible) {
+        hotelEndDatePicker.hide();
+        isHotelEndDatePickerVisible = false;
+    }
+});
+
 
 
 
@@ -1956,7 +2068,33 @@ var startDatePicker = new Pikaday({
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
+    onSelect: function() {
+        isDatePickerVisible = false; // Reset the visibility state when a date is selected
+    }
 });
+
+var isDatePickerVisible = false;
+
+document.getElementById('flight_date_input_id').addEventListener('click', function(e) {
+    e.stopPropagation(); // Prevent the click event from propagating
+
+    if (isDatePickerVisible) {
+        startDatePicker.hide();
+    } else {
+        startDatePicker.show();
+    }
+
+    isDatePickerVisible = !isDatePickerVisible;
+});
+
+// Optional: Hide the date picker when clicking outside, but don't toggle state
+document.addEventListener('click', function() {
+    if (isDatePickerVisible) {
+        startDatePicker.hide();
+        isDatePickerVisible = false;
+    }
+});
+
 
 
 
@@ -1997,6 +2135,10 @@ $(document).ready(function () {
 
 
 /* Function to pick the first and last clint movemennts dates */
+
+// Variables to track the visibility of the date pickers
+var isClintMovementsFirstDayPickerVisible = false;
+var isClintMovementsLastDayPickerVisible = false;
 
 // Function to parse date strings in the format "DD-MMM"
 function parseDate(dateStr) {
@@ -2065,6 +2207,7 @@ var clintMovementsFirstDayPicker = new Pikaday({
         return `${day}-${month}`; // Return formatted date
     },
     onSelect: function() {
+        isClintMovementsFirstDayPickerVisible = false; // Reset visibility state on date selection
         updateWholeClintMovementsTotalNights();
         let selectedDate = this.getDate();
         let minEndDate = new Date(selectedDate);
@@ -2084,8 +2227,58 @@ var clintMovementsLastDayPicker = new Pikaday({
         return `${day}-${month}`; // Return formatted date
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: updateWholeClintMovementsTotalNights // Call 'updateWholeClintMovementsTotalNights' when a date is selected
+    onSelect: function() {
+        isClintMovementsLastDayPickerVisible = false; // Reset visibility state on date selection
+        updateWholeClintMovementsTotalNights(); // Call 'updateWholeClintMovementsTotalNights' when a date is selected
+    }
 });
+
+// Toggle the Clint Movements First Day date picker on input field click
+document.getElementById('clint_movements_first_day_date_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isClintMovementsFirstDayPickerVisible) {
+        clintMovementsFirstDayPicker.hide();
+        isClintMovementsFirstDayPickerVisible = false;
+    } else {
+        if (isClintMovementsLastDayPickerVisible) {
+            clintMovementsLastDayPicker.hide();
+            isClintMovementsLastDayPickerVisible = false;
+        }
+        clintMovementsFirstDayPicker.show();
+        isClintMovementsFirstDayPickerVisible = true;
+    }
+});
+
+// Toggle the Clint Movements Last Day date picker on input field click
+document.getElementById('clint_movements_last_day_date_input_id').addEventListener('click', function(e) {
+    e.stopPropagation();
+
+    if (isClintMovementsLastDayPickerVisible) {
+        clintMovementsLastDayPicker.hide();
+        isClintMovementsLastDayPickerVisible = false;
+    } else {
+        if (isClintMovementsFirstDayPickerVisible) {
+            clintMovementsFirstDayPicker.hide();
+            isClintMovementsFirstDayPickerVisible = false;
+        }
+        clintMovementsLastDayPicker.show();
+        isClintMovementsLastDayPickerVisible = true;
+    }
+});
+
+// Optional: Hide the date pickers when clicking outside, but don't toggle state
+document.addEventListener('click', function() {
+    if (isClintMovementsFirstDayPickerVisible) {
+        clintMovementsFirstDayPicker.hide();
+        isClintMovementsFirstDayPickerVisible = false;
+    }
+    if (isClintMovementsLastDayPickerVisible) {
+        clintMovementsLastDayPicker.hide();
+        isClintMovementsLastDayPickerVisible = false;
+    }
+});
+
 
 
 
