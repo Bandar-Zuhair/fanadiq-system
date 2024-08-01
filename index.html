@@ -33,18 +33,19 @@
             <h1>Fanadiq Indonesia</h1>
         </div>
 
-        <div class="header_navbar_section" onclick="toggleLinks('other_pages')">
+        <div class="header_navbar_section" onclick="toggleLinks('package_type')">
 
 
             <div class="header_navbar_header">
+                <span class="header_navbar_title">أقسام البكج</span>
                 <ion-icon name="caret-down-outline"></ion-icon>
-                <span class="header_navbar_title">Work Flow Sections</span>
             </div>
-
-
-            <div class="header_navbar_links" id="other_pages">
-                <a href="فوتشر/voucher.html">Create New Voucher</a>
-                <a href="توافرات-الفنادق/hotel-availability.html">Check Hotel Availability</a>
+    
+    
+            <div class="header_navbar_links" id="package_type" style="text-align: left;">
+                <a onclick="showPackageTypeSection('hotel')">Hotel</a>
+                <a onclick="showPackageTypeSection('flight')">Flight</a>
+                <a onclick="showPackageTypeSection('transportation')">Transportation</a>
             </div>
 
         </div>
@@ -79,26 +80,6 @@
 
 
 
-
-
-
-
-    <div class="header_navbar_section" onclick="toggleLinks('package_type')">
-
-
-        <div class="header_navbar_header">
-            <span class="header_navbar_title">أقسام البكج</span>
-            <ion-icon name="caret-down-outline"></ion-icon>
-        </div>
-
-
-        <div class="header_navbar_links" id="package_type" style="text-align: left;">
-            <a onclick="showPackageTypeSection('hotel')">Hotel</a>
-            <a onclick="showPackageTypeSection('flight')">Flight</a>
-            <a onclick="showPackageTypeSection('transportation')">Transportation</a>
-        </div>
-
-    </div>
 
 
 
