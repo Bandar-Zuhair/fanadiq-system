@@ -72,6 +72,13 @@ body {
 
 
 
+
+
+
+
+
+
+
 /* Special Effects */
 .black_overlay {
     z-index: 999;
@@ -217,7 +224,7 @@ body {
 
 
 /* Exported pdf file element */
-.inserted_package_data_section_page_image_class{
+.inserted_package_data_section_page_image_class {
     display: none;
     width: 100%;
     padding: 100px 0;
@@ -505,8 +512,10 @@ body {
     border: 0.5px solid black;
     border-radius: 7px;
     cursor: pointer;
-    align-self: flex-start; /* Position the button to the right */
-    margin-right: 5px; /* Adjust margin as needed */
+    align-self: flex-start;
+    /* Position the button to the right */
+    margin-right: 5px;
+    /* Adjust margin as needed */
 }
 
 
@@ -693,8 +702,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .package_including_data_custom_checkbox {
     display: flex;
-    align-items: flex-start; /* Align items to the top */
-    justify-content: flex-start; /* Align items to the left */
+    align-items: flex-start;
+    /* Align items to the top */
+    justify-content: flex-start;
+    /* Align items to the left */
     margin: 10px;
 }
 
@@ -713,7 +724,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 3vw;
     display: inline-block;
     border-radius: 50%;
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Prevent shrinking */
     transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -723,7 +735,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .package_including_data_custom_checkbox label span {
     display: block;
-    line-height: 1.2; /* Adjust line height if necessary */
+    line-height: 1.2;
+    /* Adjust line height if necessary */
 }
 
 
@@ -767,7 +780,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .show_package_total_price_checkbox_div label::before {
-    background-color: var(--checkbox-color, white); /* Default to white if not set */
+    background-color: var(--checkbox-color, white);
+    /* Default to white if not set */
     content: '';
     width: 3vw;
     height: 3vw;
@@ -778,7 +792,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .show_package_total_price_checkbox_div input[type="checkbox"]:checked+label::before {
-    background-color: var(--checkbox-color, rgb(0, 255, 0)); /* Default to green if checked */
+    background-color: var(--checkbox-color, rgb(0, 255, 0));
+    /* Default to green if checked */
 }
 
 
@@ -815,17 +830,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-.edit_data_controll_icons_div{
+.edit_data_controll_icons_div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.edit_data_controll_icons_div div{
+.edit_data_controll_icons_div div {
     margin: 10px 5px 0;
 }
 
- 
+
 
 
 
@@ -1032,7 +1047,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .clint_movements_places_full_page_div h6 {
-    background: rgb(207, 233, 242); 
+    background: rgb(207, 233, 242);
     width: 100%;
     font-size: 2vw;
     text-align: center;
@@ -1064,11 +1079,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 /* Searchable dropdown input filter h3 */
-.clear_searchable_dropdown_input_filter_h3_value_div{
+.clear_searchable_dropdown_input_filter_h3_value_div {
     width: 99%;
 }
 
-.clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+.clear_searchable_dropdown_input_filter_h3_value_div ion-icon {
     background: rgb(255, 0, 0);
     color: white;
     font-size: 5vw;
@@ -1078,6 +1093,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 7px;
     cursor: pointer;
 }
+
+
 
 
 
@@ -1182,10 +1199,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     /* Inserted images in exported pdf */
-    .inserted_package_data_section_page_image_class{
+    .inserted_package_data_section_page_image_class {
         padding: 50px 0;
     }
-    
+
 
 
 
@@ -1251,7 +1268,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .package_including_data_custom_checkbox label {
         font-size: 2.5vw;
     }
-    
+
     .package_including_data_custom_checkbox label::before {
         width: 4vw;
         height: 4vw;
@@ -1260,7 +1277,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .show_package_total_price_checkbox_div label {
         font-size: 3vw;
     }
-    
+
     .show_package_total_price_checkbox_div label::before {
         width: 5vw;
         height: 5vw;
@@ -1331,7 +1348,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon {
         font-size: 7vw;
     }
 }
@@ -1421,7 +1438,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     /* Inserted images in exported pdf */
-    .inserted_package_data_section_page_image_class{
+    .inserted_package_data_section_page_image_class {
         padding: 30px 0;
     }
 
@@ -1496,7 +1513,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .package_including_data_custom_checkbox label {
         font-size: 3vw;
     }
-    
+
     .package_including_data_custom_checkbox label::before {
         width: 5vw;
         height: 5vw;
@@ -1505,7 +1522,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .show_package_total_price_checkbox_div label {
         font-size: 5.5vw;
     }
-    
+
     .show_package_total_price_checkbox_div label::before {
         width: 6vw;
         height: 6vw;
@@ -1577,7 +1594,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon {
         font-size: 9vw;
     }
 }
@@ -1659,10 +1676,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     /* Inserted images in exported pdf */
-    .inserted_package_data_section_page_image_class{
+    .inserted_package_data_section_page_image_class {
         padding: 20px 0;
     }
-    
+
 
 
 
@@ -1806,7 +1823,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon {
         font-size: 11vw;
     }
 }
