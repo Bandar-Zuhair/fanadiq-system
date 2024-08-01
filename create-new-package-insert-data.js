@@ -3059,9 +3059,6 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Function to capture a canvas of a given section
     let captureCanvas = async function (section, scale) {
         try {
-            // Ensure resources are loaded and elements are visible before capturing
-            await new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms
-
             let canvas = await html2canvas(section, {
                 scale: scale,
                 backgroundColor: null,
@@ -3069,12 +3066,14 @@ downloadPdfWithCustomName = async function (pdfName) {
             });
             return canvas;
         } catch (error) {
+            console.error('Error capturing canvas:', error);
         }
     };
 
     // Function to combine multiple canvases into one
     let combineCanvases = function (canvases) {
         if (canvases.length === 0) {
+            console.error('No canvases to combine');
             return null;
         }
 
@@ -3108,6 +3107,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
 
         if (canvases.length === 0) {
+            console.error('No canvases captured');
             return null;
         }
 
@@ -3175,24 +3175,24 @@ downloadPdfWithCustomName = async function (pdfName) {
     let sections3 = [];
 
     // Check visibility for page 1 sections
-    page1Divs.forEach(divIdName => {
-        let section = document.getElementById(divIdName);
+    page1Divs.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
         if (section && isVisible(section)) {
             sections1.push(section);
         }
     });
 
     // Check visibility for page 2 sections
-    page2Divs.forEach(divIdName => {
-        let section = document.getElementById(divIdName);
+    page2Divs.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
         if (section && isVisible(section)) {
             sections2.push(section);
         }
     });
 
     // Check visibility for page 3 sections
-    page3Divs.forEach(divIdName => {
-        let section = document.getElementById(divIdName);
+    page3Divs.forEach(divsIdName => {
+        let section = document.getElementById(divsIdName);
         if (section && isVisible(section)) {
             sections3.push(section);
         }
@@ -3211,6 +3211,10 @@ downloadPdfWithCustomName = async function (pdfName) {
         combinedCanvas2 = adjustClintMovementsCanvas(combinedCanvas2); // Adjust the canvas for page 2
     }
     let combinedCanvas3 = await processSections(sections3, scale);
+
+    if (!combinedCanvas1 && !combinedCanvas2 && !combinedCanvas3) {
+        return;
+    }
 
     let pdf = new jsPDF('p', 'mm', 'a4');
     let pdfWidth = 210;
