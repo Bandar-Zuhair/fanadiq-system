@@ -2989,6 +2989,15 @@ checkThePdfNameToDownload = function () {
 
 
 
+
+        if (document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'block') {
+            document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'none';
+
+        } else {
+            document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'inline';
+
+        }
+
         /* Run the 'downloadPdfWithCustomName' and pass the inserted name */
         let pdfNameReadyText = document.getElementById('pdf_file_name_input_id').value;
         downloadPdfWithCustomName(`${pdfNameReadyText}`);
@@ -3050,11 +3059,15 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Function to capture a canvas of a given section
     let captureCanvas = async function (section, scale) {
         try {
+            // Ensure resources are loaded and elements are visible before capturing
+            await new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms
+
             let canvas = await html2canvas(section, {
                 scale: scale,
                 backgroundColor: null,
                 scrollY: 0
             });
+            console.log('Canvas captured:', canvas);
             return canvas;
         } catch (error) {
             console.error('Error capturing canvas:', error);
@@ -3233,10 +3246,16 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     pdf.save(pdfName);
 
+    /* Hide all images with class name of 'inserted_package_data_section_page_image_class' */
     images.forEach(img => {
         img.style.display = 'none';
     });
 
+    /* Hide the 'pdf_section_package_icluding_data_title_id_2' image */
+    document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'none';
+
+
+    
     document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
     document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
