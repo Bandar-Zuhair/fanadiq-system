@@ -1140,16 +1140,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* Add padding to header cells */
 }
 
-/* Highlight the current day */
-.pika-single .pika-table .is-today {
-    background-color: #00cbb3;
-    /* Background color for today */
-    color: white;
-    /* Text color for today */
-    font-weight: bold;
-    /* Bold text for today */
-}
-
 /* Highlight the selected day */
 .pika-single .pika-table .is-selected {
     color: white;
