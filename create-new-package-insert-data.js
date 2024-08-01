@@ -1904,6 +1904,32 @@ checkInputsToInsertData = function (clickedButtonId) {
                         }
                     }
 
+
+                    if (clintMovementsNewCheckOutInput !== '' && clintMovementsNewCheckInInput === '') {
+                        // Change the submit icon background color
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                        // Set the background color of the submit icon back to default color
+                        setTimeout(() => {
+                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                        }, 500);
+
+                        return;
+                    }
+
+                    if (clintMovementsNewCheckInInput !== '' && clintMovementsNewCheckOutInput === '') {
+                        // Change the submit icon background color
+                        clint_movements_details_inputs_submit_icon.style.backgroundColor = 'red';
+
+                        // Set the background color of the submit icon back to default color
+                        setTimeout(() => {
+                            clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                        }, 500);
+
+                        return;
+                    }
+
+                    
                     // Change the submit icon background color
                     clint_movements_details_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                     // Set the background color of the submit icon back to default color
