@@ -3067,17 +3067,14 @@ downloadPdfWithCustomName = async function (pdfName) {
                 backgroundColor: null,
                 scrollY: 0
             });
-            console.log('Canvas captured:', canvas);
             return canvas;
         } catch (error) {
-            console.error('Error capturing canvas:', error);
         }
     };
 
     // Function to combine multiple canvases into one
     let combineCanvases = function (canvases) {
         if (canvases.length === 0) {
-            console.error('No canvases to combine');
             return null;
         }
 
@@ -3111,7 +3108,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
 
         if (canvases.length === 0) {
-            console.error('No canvases captured');
             return null;
         }
 
@@ -3179,24 +3175,24 @@ downloadPdfWithCustomName = async function (pdfName) {
     let sections3 = [];
 
     // Check visibility for page 1 sections
-    page1Divs.forEach(divsIdName => {
-        let section = document.getElementById(divsIdName);
+    page1Divs.forEach(divIdName => {
+        let section = document.getElementById(divIdName);
         if (section && isVisible(section)) {
             sections1.push(section);
         }
     });
 
     // Check visibility for page 2 sections
-    page2Divs.forEach(divsIdName => {
-        let section = document.getElementById(divsIdName);
+    page2Divs.forEach(divIdName => {
+        let section = document.getElementById(divIdName);
         if (section && isVisible(section)) {
             sections2.push(section);
         }
     });
 
     // Check visibility for page 3 sections
-    page3Divs.forEach(divsIdName => {
-        let section = document.getElementById(divsIdName);
+    page3Divs.forEach(divIdName => {
+        let section = document.getElementById(divIdName);
         if (section && isVisible(section)) {
             sections3.push(section);
         }
@@ -3215,10 +3211,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         combinedCanvas2 = adjustClintMovementsCanvas(combinedCanvas2); // Adjust the canvas for page 2
     }
     let combinedCanvas3 = await processSections(sections3, scale);
-
-    if (!combinedCanvas1 && !combinedCanvas2 && !combinedCanvas3) {
-        return;
-    }
 
     let pdf = new jsPDF('p', 'mm', 'a4');
     let pdfWidth = 210;
@@ -3246,16 +3238,14 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     pdf.save(pdfName);
 
-    /* Hide all images with class name of 'inserted_package_data_section_page_image_class' */
+    // Hide all images with class name of 'inserted_package_data_section_page_image_class'
     images.forEach(img => {
         img.style.display = 'none';
     });
 
-    /* Hide the 'pdf_section_package_icluding_data_title_id_2' image */
+    // Hide the 'pdf_section_package_icluding_data_title_id_2' image
     document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'none';
 
-
-    
     document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
     document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
