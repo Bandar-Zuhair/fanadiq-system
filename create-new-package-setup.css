@@ -40,6 +40,7 @@ body {
     opacity: 0;
     background: rgb(215, 232, 244);
     color: black;
+    margin-bottom: 200px;
     transition: all 0.5s ease-in-out;
 }
 
@@ -149,7 +150,7 @@ body {
     z-index: 1001;
     background-color: rgb(255, 174, 0);
     color: white;
-    font-size: 2.5vw;
+    font-size: 3vw;
     padding: 15px;
     position: fixed;
     top: 20px;
@@ -308,11 +309,11 @@ body {
 }
 
 .header_navbar_title {
-    font-size: 2vw;
+    font-size: 2.5vw;
 }
 
 .header_navbar_header ion-icon {
-    font-size: 1.5vw;
+    font-size: 1.8vw;
 }
 
 .header_navbar_links {
@@ -333,7 +334,7 @@ body {
 .header_navbar_links a {
     text-decoration: none;
     color: rgb(0, 102, 255);
-    font-size: 1.5vw;
+    font-size: 2vw;
     padding-left: 20px;
     /* Add padding for spacing */
     transition: all 0.1s ease-in-out;
@@ -383,7 +384,7 @@ body {
 /* Website localstorage controller */
 #localstorage_data_controller_div {
     width: 100%;
-    padding: 10px 0 5px;
+    padding: 25px 0 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -677,13 +678,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
 }
 
-.package_including_data_custom_checkbox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-}
-
 .package_including_data_custom_checkbox input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -697,27 +691,41 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     order: 1;
 }
 
+.package_including_data_custom_checkbox {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    justify-content: flex-start; /* Align items to the left */
+    margin: 10px;
+}
+
 .package_including_data_custom_checkbox label {
     font-size: 2vw;
     display: flex;
+    flex-direction: row;
     align-items: center;
     cursor: pointer;
 }
 
 .package_including_data_custom_checkbox label::before {
-    background-color: var(--checkbox-color, white); /* Default to white if not set */
+    background-color: var(--checkbox-color, white);
     content: '';
     width: 3vw;
     height: 3vw;
-    margin-left: 2px;
     display: inline-block;
     border-radius: 50%;
+    flex-shrink: 0; /* Prevent shrinking */
     transition: background-color 0.3s, border-color 0.3s;
 }
 
 .package_including_data_custom_checkbox input[type="checkbox"]:checked+label::before {
-    background-color: var(--checkbox-color, rgb(0, 255, 0)); /* Default to green if checked */
+    background-color: var(--checkbox-color, rgb(0, 255, 0));
 }
+
+.package_including_data_custom_checkbox label span {
+    display: block;
+    line-height: 1.2; /* Adjust line height if necessary */
+}
+
 
 
 
@@ -1055,6 +1063,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+/* Searchable dropdown input filter h3 */
+.clear_searchable_dropdown_input_filter_h3_value_div{
+    width: 99%;
+}
+
+.clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+    background: rgb(255, 0, 0);
+    color: white;
+    font-size: 5vw;
+    padding: 1px 5px;
+    text-align: center;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1088,15 +1120,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .header_navbar_title {
-        font-size: 2.5vw;
+        font-size: 3vw;
     }
 
     .header_navbar_header ion-icon {
-        font-size: 2.5vw;
+        font-size: 3vw;
     }
 
     .header_navbar_links a {
-        font-size: 2.5vw;
+        font-size: 3.5vw;
     }
 
     .section_title_text {
@@ -1238,7 +1270,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     .textarea_open_fullscreen_icon_class {
-        font-size: 4vw;
+        font-size: 5vw;
         padding: 3px;
     }
 
@@ -1271,7 +1303,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     #clint_movements_place_options_and_tuorial p {
         font-size: 3vw;
-        padding: 1px 3px;
     }
 
     .clint_movements_tutorial_full_page_div p {
@@ -1288,6 +1319,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .clint_movements_places_full_page_div p {
         font-size: 2.5vw;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+        font-size: 7vw;
     }
 }
 
@@ -1316,15 +1361,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .header_navbar_title {
-        font-size: 3.5vw;
+        font-size: 4vw;
     }
 
     .header_navbar_header ion-icon {
-        font-size: 3.5vw;
+        font-size: 4vw;
     }
 
     .header_navbar_links a {
-        font-size: 3.5vw;
+        font-size: 4.5vw;
     }
 
 
@@ -1430,7 +1475,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .submit_package_pdf_div ion-icon {
-        font-size: 6.5vw;
+        font-size: 7vw;
         padding: 5px;
     }
 
@@ -1473,7 +1518,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     .textarea_open_fullscreen_icon_class {
-        font-size: 5vw;
+        font-size: 7vw;
     }
 
     .exit_full_screen_icon {
@@ -1506,7 +1551,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     #clint_movements_place_options_and_tuorial p {
         font-size: 4vw;
-        padding: 3px;
+        padding: 1px 5px;
     }
 
     .clint_movements_tutorial_full_page_div p {
@@ -1523,6 +1568,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .clint_movements_places_full_page_div p {
         font-size: 3vw;
+    }
+
+
+
+
+
+
+
+
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+        font-size: 9vw;
     }
 }
 
@@ -1552,19 +1608,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .header_navbar_title {
-        font-size: 4.5vw;
+        font-size: 5vw;
     }
 
     .header_navbar_header ion-icon {
-        font-size: 4.5vw;
+        font-size: 5vw;
     }
 
     .header_navbar_links a {
-        font-size: 4.5vw;
+        font-size: 5.5vw;
     }
 
     #localstorage_data_controller_div p {
-        font-size: 4vw;
+        font-size: 5vw;
+        padding: 0;
     }
 
     #localstorage_save_name_input_div {
@@ -1641,11 +1698,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .package_details_input_class::placeholder {
-        font-size: 5vw;
+        font-size: 5.5vw;
     }
 
     .submit_package_pdf_div ion-icon {
-        font-size: 8vw;
+        font-size: 9.5vw;
     }
 
 
@@ -1669,9 +1726,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         margin: 5px;
     }
 
+    .package_including_data_custom_checkbox label {
+        font-size: 4.5vw;
+    }
+
     .package_including_data_custom_checkbox label::before {
-        width: 6vw;
-        height: 6vw;
+        width: 7vw;
+        height: 7vw;
     }
 
     .show_package_total_price_checkbox_div label::before {
@@ -1689,16 +1750,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     .textarea_open_fullscreen_icon_class {
-        font-size: 6vw;
+        font-size: 9vw;
     }
 
     .exit_full_screen_icon {
-        font-size: 9vw;
+        font-size: 10vw;
         padding: 3px;
     }
 
     .insert_clint_movements_places_icon {
-        font-size: 9vw;
+        font-size: 10vw;
         padding: 3px;
     }
 
@@ -1712,7 +1773,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .company_names_options_dropdown_class h3 {
-        font-size: 5.5vw;
+        font-size: 6.5vw;
         margin: 3px;
         padding: 0 5px;
     }
@@ -1726,15 +1787,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .clint_movements_places_full_page_div h5 {
-        font-size: 4.5vw;
+        font-size: 5vw;
     }
 
     .clint_movements_places_full_page_div h6 {
-        font-size: 4.5vw;
+        font-size: 5vw;
     }
 
     .clint_movements_places_full_page_div p {
-        font-size: 4.5vw;
+        font-size: 5vw;
+    }
+
+
+
+
+
+
+
+
+
+    .clear_searchable_dropdown_input_filter_h3_value_div ion-icon{
+        font-size: 11vw;
     }
 }
 
