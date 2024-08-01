@@ -1677,7 +1677,19 @@ function hideOverlay() {
 
 
 
+// Arabic month names
+const innerDatePickerArabicMonths = [
+    'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+    'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+];
 
+// Arabic day names
+const arabicDays = ['أحد', 'إثنين', 'ثلوث', 'ربوع', 'خميس', 'جمعة', 'سبت'];
+
+// Function to get Arabic month name
+function getArabicMonthName(monthIndex) {
+    return innerDatePickerArabicMonths[monthIndex];
+}
 
 // Arabic month names
 let arabicMonths = {
@@ -1711,14 +1723,6 @@ let arabicMonthsReverse = {
     'ديسمبر': 'December'
 };
 
-// Helper function to get Arabic month name
-function getArabicMonthName(monthIndex) {
-    const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return arabicMonths[monthNames[monthIndex]];
-}
 
 // Function to calculate the difference in days between two dates
 function calculateDaysDifference(startDate, endDate) {
@@ -1747,6 +1751,7 @@ function calculateDaysDifference(startDate, endDate) {
 
 /* Store the package total nights for later use */
 let storePackageTotalNights;
+
 
 // Variables to track the visibility of the date pickers
 var isWholePackageStartDatePickerVisible = false;
@@ -1809,7 +1814,7 @@ function disableSpecificDates(date) {
 // Get today's date
 var today = new Date();
 
-/* Inputs date for whole package start period */
+// Initialize Pikaday for the start date
 var wholePackageStartDatePicker = new Pikaday({
     field: document.getElementById('package_start_date_input_id'),
     format: 'DD-M',
@@ -1818,6 +1823,13 @@ var wholePackageStartDatePicker = new Pikaday({
         let day = date.getDate();
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
+    },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
     },
     onSelect: function() {
         isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
@@ -1829,7 +1841,7 @@ var wholePackageStartDatePicker = new Pikaday({
     }
 });
 
-/* Inputs date for whole package end period */
+// Initialize Pikaday for the end date
 var wholePackageEndDatePicker = new Pikaday({
     field: document.getElementById('package_end_date_input_id'),
     format: 'DD-M',
@@ -1838,6 +1850,13 @@ var wholePackageEndDatePicker = new Pikaday({
         let day = date.getDate();
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
+    },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: function() {
@@ -1880,13 +1899,18 @@ document.getElementById('package_end_date_input_id').addEventListener('click', f
     }
 });
 
-// Optional: Hide the date pickers when clicking outside, but don't toggle state
-document.addEventListener('click', function() {
-    if (isWholePackageStartDatePickerVisible) {
+// Function to check if click is inside the date picker
+function isClickInsideDatePicker(event, picker) {
+    return picker.el.contains(event.target);
+}
+
+// Hide the date pickers when clicking outside, but don't toggle state
+document.addEventListener('click', function(e) {
+    if (isWholePackageStartDatePickerVisible && !isClickInsideDatePicker(e, wholePackageStartDatePicker)) {
         wholePackageStartDatePicker.hide();
         isWholePackageStartDatePickerVisible = false;
     }
-    if (isWholePackageEndDatePickerVisible) {
+    if (isWholePackageEndDatePickerVisible && !isClickInsideDatePicker(e, wholePackageEndDatePicker)) {
         wholePackageEndDatePicker.hide();
         isWholePackageEndDatePickerVisible = false;
     }
@@ -1906,12 +1930,34 @@ document.addEventListener('click', function() {
 
 
 
+
+
 /* Store the hotel total nights for later use */
 let storeHotelTotalNights;
+
 
 // Variables to track the visibility of the date pickers
 var isHotelStartDatePickerVisible = false;
 var isHotelEndDatePickerVisible = false;
+
+// Function to parse date strings in the format "DD-MMM"
+function parseArabicDate(dateStr) {
+    let parts = dateStr.split(' ');
+    let day = parseInt(parts[0]);
+    let monthShortNames = {
+        "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3, "مايو": 4, "يونيو": 5,
+        "يوليو": 6, "أغسطس": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
+    };
+    let month = monthShortNames[parts[1]];
+    let year = new Date().getFullYear(); // Assuming the current year
+    return new Date(year, month, day);
+}
+
+// Function to calculate the difference in days between two dates
+function wholePackageAndHotelCalculateDaysDifference(startDate, endDate) {
+    let diff = endDate - startDate;
+    return Math.round(diff / (1000 * 60 * 60 * 24));
+}
 
 // Function to update the total nights input
 function updateHotelTotalNights() {
@@ -1964,6 +2010,13 @@ var hotelStartDatePicker = new Pikaday({
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
+    },
     onSelect: function() {
         isHotelStartDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights();
@@ -1983,6 +2036,13 @@ var hotelEndDatePicker = new Pikaday({
         let day = date.getDate();
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
+    },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: function() {
@@ -2025,7 +2085,15 @@ document.getElementById('hotel_check_out_input_id').addEventListener('click', fu
     }
 });
 
-// Optional: Hide the date pickers when clicking outside, but don't toggle state
+// Prevent the date pickers from hiding when clicking inside them
+hotelStartDatePicker.el.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+hotelEndDatePicker.el.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+// Hide the date pickers when clicking outside
 document.addEventListener('click', function() {
     if (isHotelStartDatePickerVisible) {
         hotelStartDatePicker.hide();
@@ -2058,7 +2126,11 @@ document.addEventListener('click', function() {
 
 
 
-/* Inputs date for flight date */
+
+
+
+
+// Function to initialize Pikaday with Arabic support
 var startDatePicker = new Pikaday({
     field: document.getElementById('flight_date_input_id'),
     format: 'DD-M',
@@ -2070,6 +2142,13 @@ var startDatePicker = new Pikaday({
     },
     onSelect: function() {
         isDatePickerVisible = false; // Reset the visibility state when a date is selected
+    },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
     }
 });
 
@@ -2087,13 +2166,19 @@ document.getElementById('flight_date_input_id').addEventListener('click', functi
     isDatePickerVisible = !isDatePickerVisible;
 });
 
-// Optional: Hide the date picker when clicking outside, but don't toggle state
+// Prevent the date picker from hiding when clicking inside it
+startDatePicker.el.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+// Hide the date picker when clicking outside
 document.addEventListener('click', function() {
     if (isDatePickerVisible) {
         startDatePicker.hide();
         isDatePickerVisible = false;
     }
 });
+
 
 
 
@@ -2135,6 +2220,9 @@ $(document).ready(function () {
 
 
 /* Function to pick the first and last clint movemennts dates */
+
+
+
 
 // Variables to track the visibility of the date pickers
 var isClintMovementsFirstDayPickerVisible = false;
@@ -2206,6 +2294,13 @@ var clintMovementsFirstDayPicker = new Pikaday({
         let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
         return `${day}-${month}`; // Return formatted date
     },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
+    },
     onSelect: function() {
         isClintMovementsFirstDayPickerVisible = false; // Reset visibility state on date selection
         updateWholeClintMovementsTotalNights();
@@ -2225,6 +2320,13 @@ var clintMovementsLastDayPicker = new Pikaday({
         let day = date.getDate(); // Get the day
         let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
         return `${day}-${month}`; // Return formatted date
+    },
+    i18n: {
+        previousMonth: 'الشهر السابق',
+        nextMonth: 'الشهر التالي',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: function() {
@@ -2267,7 +2369,15 @@ document.getElementById('clint_movements_last_day_date_input_id').addEventListen
     }
 });
 
-// Optional: Hide the date pickers when clicking outside, but don't toggle state
+// Prevent the date pickers from hiding when clicking inside them
+clintMovementsFirstDayPicker.el.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+clintMovementsLastDayPicker.el.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+// Hide the date pickers when clicking outside
 document.addEventListener('click', function() {
     if (isClintMovementsFirstDayPickerVisible) {
         clintMovementsFirstDayPicker.hide();
@@ -2278,6 +2388,9 @@ document.addEventListener('click', function() {
         isClintMovementsLastDayPickerVisible = false;
     }
 });
+
+
+
 
 
 
