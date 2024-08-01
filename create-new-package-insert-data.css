@@ -569,6 +569,7 @@
     padding: 5px;
     cursor: pointer;
     border-radius: 7px;
+    border: 0.5px solid black;
 }
 
 .ensure_your_delete_action button:hover {
@@ -606,6 +607,8 @@
 }
 
 #export_package_pdf_div_id button {
+    background: white;
+    color: black;
     width: 100%;
     font-size: 3vw;
     text-align: center;
@@ -1123,7 +1126,7 @@
     }
 
     .ensure_your_delete_action button {
-        font-size: 6vw;
+        font-size: 7vw;
         padding: 2px;
     }
 
