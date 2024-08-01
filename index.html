@@ -161,7 +161,6 @@
         </div>
 
 
-
         <p id="import_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
             onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
 
@@ -503,8 +502,8 @@
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox">
                         <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
-                            مايماثل حجمها) مع سائق طوال مدة
-                            الرحلة</label>
+                            مايماثل حجمها) مع سائق خاص طوال مدة
+                            الرحلة ولا توجد أيام حره في البرنامج</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
@@ -651,6 +650,10 @@
                     placeholder="بحث.." autocomplete="off">
             </div>
 
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
             </div>
 
@@ -758,6 +761,11 @@
                 <input type="text" id="company_names_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('company_names_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>اجواء السماء</h3>
@@ -854,6 +862,8 @@
                 <h3>نجوم السفر</h3>
                 <h3>اركاب</h3>
                 <h3>تارجت جلوبال</h3>
+                <h3>رحلات العالم</h3>
+                <h3>سكاي وايز</h3>
                 <h3>gv</h3>
                 <h3>sstr</h3>
             </div>
@@ -886,6 +896,11 @@
                 <input type="text" id="hotel_bali_area_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('hotel_bali_area_search_bar_input_id')"></ion-icon>
+            </div>
+            
             <div class="company_names_options_dropdown_class">
                 <h3>كيراماس</h3>
                 <h3>اوبود</h3>
@@ -905,6 +920,12 @@
                 <input type="text" id="keramas_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('keramas_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
+
             <div class="company_names_options_dropdown_class">
                 <h3>Komaneka Keramas</h3>
             </div>
@@ -917,6 +938,11 @@
                 <input type="text" id="ubud_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('ubud_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Four Seasons Sayan</h3>
                 <h3>Komaneka Tanggayuda</h3>
@@ -935,6 +961,8 @@
                 <h3>Black Penny</h3>
                 <h3>Dedary Resort</h3>
                 <h3>Komaneka Rasa Sayang</h3>
+                <h3>Nau Villa</h3>
+                <h3>Tanadewa Ubud</h3>
             </div>
         </div>
 
@@ -945,6 +973,11 @@
                 <input type="text" id="nusa_dua_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('nusa_dua_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>The Apurva Kempinski</h3>
                 <h3>Ulu Segara</h3>
@@ -953,6 +986,7 @@
                 <h3>Agranusa Villa</h3>
                 <h3>Renaissance Nusa Dua</h3>
                 <h3>Sofitel Nusa Dua</h3>
+                <h3>Tanadewa Nusa Dua</h3>
             </div>
         </div>
 
@@ -963,6 +997,11 @@
                 <input type="text" id="seminyak_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('seminyak_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>The Trans Bali</h3>
                 <h3>Indigo Bali</h3>
@@ -983,11 +1022,11 @@
                 <h3>Claremont Villa</h3>
                 <h3>Elysian Boutique Villa</h3>
                 <h3>Samaya Seminyak</h3>
-                <h3>Aloft Seminyak</h3>
                 <h3>La Mira Villa</h3>
                 <h3>Seminyak Sanctuary</h3>
                 <h3>Kolila Villa</h3>
                 <h3>La Vie Villa</h3>
+                <h3>Courtyard Seminyak</h3>
             </div>
         </div>
 
@@ -998,6 +1037,11 @@
                 <input type="text" id="kuta_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('kuta_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Sheraton Kuta</h3>
                 <h3>Aryaduta Kuta</h3>
@@ -1019,6 +1063,11 @@
                 <input type="text" id="jimbaran_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('jimbaran_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Four Seasons Jimbaran</h3>
                 <h3>Movenpick Jimbaran</h3>
@@ -1035,6 +1084,11 @@
                 <input type="text" id="uluwatu_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('uluwatu_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Umana Bali</h3>
                 <h3>Jumeirah Bali</h3>
@@ -1049,6 +1103,11 @@
                 <input type="text" id="legian_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('legian_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Eight Palms Villa</h3>
                 <h3>Jumeirah Bali</h3>
@@ -1065,6 +1124,11 @@
                 <input type="text" id="jakarta_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('jakarta_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Raffles Jakarta</h3>
                 <h3>Ascott Jakarta</h3>
@@ -1084,6 +1148,7 @@
                 <h3>Sheraton Soekarno</h3>
                 <h3>Grove Suites</h3>
                 <h3>FM7 Tangerang</h3>
+                <h3>Harris Hotel</h3>
 
 
 
@@ -1101,6 +1166,11 @@
                 <input type="text" id="puncak_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('puncak_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Grand Aston</h3>
                 <h3>Le Eminence</h3>
@@ -1120,8 +1190,13 @@
                 <input type="text" id="bandung_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('bandung_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
-                <h3>Courtyard Marriott</h3>
+                <h3>Courtyard Bandung</h3>
                 <h3>Sheraton Bandung</h3>
                 <h3>Trans Luxury</h3>
                 <h3>Four Points Sheraton</h3>
@@ -1136,6 +1211,11 @@
                 <input type="text" id="lombok_hotel_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('lombok_hotel_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3>Kalandara</h3>
             </div>
@@ -1547,6 +1627,11 @@
                 <input type="text" id="clint_movements_hotel_names_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('clint_movements_hotel_names_search_bar_input_id')"></ion-icon>
+            </div>
+
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>Komaneka Keramas</h3>
@@ -1567,6 +1652,8 @@
                 <h3>Black Penny</h3>
                 <h3>Dedary Resort</h3>
                 <h3>Komaneka Rasa Sayang</h3>
+                <h3>Nau Villa</h3>
+                <h3>Tanadewa Ubud</h3>
                 <h3>The Apurva Kempinski</h3>
                 <h3>Ulu Segara</h3>
                 <h3>Merusaka</h3>
@@ -1574,6 +1661,7 @@
                 <h3>Agranusa Villa</h3>
                 <h3>Renaissance Nusa Dua</h3>
                 <h3>Sofitel Nusa Dua</h3>
+                <h3>Tanadewa Nusa Dua</h3>
                 <h3>The Trans Bali</h3>
                 <h3>Indigo Bali</h3>
                 <h3>Sini Vie Villa</h3>
@@ -1593,11 +1681,11 @@
                 <h3>Claremont Villa</h3>
                 <h3>Elysian Boutique Villa</h3>
                 <h3>Samaya Seminyak</h3>
-                <h3>Aloft Seminyak</h3>
                 <h3>La Mira Villa</h3>
                 <h3>Seminyak Sanctuary</h3>
                 <h3>Kolila Villa</h3>
                 <h3>La Vie Villa</h3>
+                <h3>Courtyard Seminyak</h3>
                 <h3>Sheraton Kuta</h3>
                 <h3>Aryaduta Kuta</h3>
                 <h3>Tribe</h3>
@@ -1643,7 +1731,7 @@
                 <h3>Pesona Alam</h3>
                 <h3>Botanica Sanctuary</h3>
                 <h3>Villa Marina</h3>
-                <h3>Courtyard Marriott</h3>
+                <h3>Courtyard Bandung</h3>
                 <h3>Sheraton Bandung</h3>
                 <h3>Trans Luxury</h3>
                 <h3>Four Points Sheraton</h3>
@@ -1702,7 +1790,9 @@
 
     <div id="clint_movements_tutorial_page_div" class="clint_movements_tutorial_full_page_div">
         <p># اذا استخدمت تسجيل الخروج ف لازم تستخدم تسجيل الدخول في نفس خط سير اليوم</p>
-        <p># اهم اربع قواعد هي الاستقبال وتسجيل الدخول وتسجيل الخروج والمزارات</p>
+        <p># اهم ثلاث قواعد هي المدينة الحالية + تسجيل الدخول والخروج + المزارات</p>
+        <p># إذا بتستخدم الذهاب للمطار للمغادرة فماينفع تحط في خط سير اليوم اي مزار</p>
+        <p># إذا بتستخدم الذهاب للمطار للمغادرة فماينفع تحط في خط سير اليوم اي مزار</p>
     </div>
 
 
