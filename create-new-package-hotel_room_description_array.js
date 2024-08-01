@@ -533,6 +533,10 @@ let hotelRoomTypesDescriptionArray = [
         hotelName: 'Kalandara',
         hotelRoomTypes: ['فيلا من غرفة نوم واحدة'],
     },
+    {
+        hotelName: 'The Kayana Lombok',
+        hotelRoomTypes: ['فيلا ديلوكس', 'فيلا دوبلكس', 'فيلا من غرفة نوم واحدة', 'فيلا هيل سايد من غرفة نوم واحدة'],
+    },
 
 
 ];
