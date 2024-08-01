@@ -116,7 +116,6 @@ toggleDropdownContent('toggle_clint_movements_period_elements', 'clint_movements
 
 
 
-
 /* Dropdown airport line names functionality */
 let adultPackagePersonAmountInput = document.getElementById('adult_package_person_amount_input_id');
 
@@ -631,6 +630,46 @@ function filterOptions(inputId, dropdownId) {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to clear searchable dropdown input filter h3 */
+clearSearchableDropDownInputValue = function(targetInputToClear) {
+    // Clear the input value
+    document.getElementById(targetInputToClear).value = '';
+
+    // Get the dropdown div associated with the input
+    let dropdownDiv = document.getElementById(targetInputToClear).closest('.searchable_names_dropdown_class');
+
+    // Select all <h3> elements within the same dropdown div
+    let options = dropdownDiv.querySelectorAll('h3');
+
+    // Reset the display of all <h3> elements
+    options.forEach(option => {
+        option.style.display = 'block'; // Show all options
+    });
+};
+
+
+
+
+
+
+
+
+
+
 
 
 // Select all elements with the class 'search_bar_input_class'
