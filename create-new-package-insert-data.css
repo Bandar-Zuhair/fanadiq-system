@@ -25,8 +25,6 @@
     font-size: 2vw;
     padding: 3px 0;
     text-align: center;
-    border-right: 0.5px solid black;
-    border-left: 0.5px solid black;
     border-bottom: 0.5px solid black;
 }
 
@@ -50,7 +48,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    border: 0.5px solid black;
+    border-bottom: 0.5px solid black;
 }
 
 .clint_data_row_class div {
@@ -74,7 +72,7 @@
     font-size: 2.5vw;
 }
 
-/* Reduce the width of "المدينة" cells */
+/* Reduce the width of "من" and "الى" cells */
 .clint_data_row_class div:nth-child(2),
 .clint_data_row_class div:nth-child(3) {
     flex-grow: 0.5;
@@ -85,7 +83,7 @@
     flex-grow: 0.4;
 }
 
-/* Reduce the width of "المدينة" cells */
+/* Reduce the width of "مجموع الليالي" cells */
 .clint_data_row_class div:nth-child(4) {
     border-left: none;
 }
