@@ -1128,8 +1128,6 @@ checkInputsToInsertData = function (clickedButtonId) {
         /* Check if all package data inputs are filled */
     } else if (clickedButtonId === 'hotel_inputs_submit_icon') {
         // Get references to all input elements for later use
-        let hotelLocationReadyText = document.getElementById('hotel_location_input_id').value;
-        let hotelAreaReadyText = document.getElementById('hotel_area_input_id').value;
         let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
@@ -1140,7 +1138,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
         let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
 
-        if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
+        if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
 
             // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'red';
@@ -1170,6 +1168,20 @@ checkInputsToInsertData = function (clickedButtonId) {
             }
 
 
+            let hotelLocationReadyText = '';
+            let hotelAreaReadyText = '';
+
+            for (let hotelData of allHotelDataArray) {
+                if (hotelData.hotelName === hotelNameReadyText) {
+                    hotelLocationReadyText = hotelData.hotelLocation;
+                    if (hotelData.hasOwnProperty('hotelArea')) {
+                        hotelAreaReadyText = hotelData.hotelArea;
+                    }
+                    break;
+                }
+            }
+
+
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
                 <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
@@ -1180,6 +1192,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
                 <div><p id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</p>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
             `;
+
+
 
             // Create a new div element to hold the hotel row
             let hotelRowTableDiv = document.createElement('div');
@@ -1295,8 +1309,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             // Get references to all input elements and reset their values
-            document.getElementById('hotel_location_input_id').value = '';
-            document.getElementById('hotel_area_input_id').value = '';
             document.getElementById('hotel_name_input_id').value = '';
             document.getElementById('hotel_check_in_input_id').value = '';
             document.getElementById('hotel_check_out_input_id').value = '';
@@ -1309,9 +1321,6 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
-            // Disable the hotel_area_input_id and hotel_name_input_id inputs
-            document.getElementById('hotel_area_input_id').disabled = true;
-            document.getElementById('hotel_name_input_id').disabled = true;
 
 
 
@@ -1407,29 +1416,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
                 let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
 
-                // If the selected location is not "بالي"
-                if (document.getElementById('hotel_location_input_id').value.trim() != "بالي") {
-                    document.getElementById('hotel_area_input_id').style.display = 'none'; // Hide the hotel area input
-                } else {
-                    document.getElementById('hotel_area_input_id').style.display = 'block'; // Show the hotel area input
-                }
 
-                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel area input
+                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel name input
 
 
-                // Extract data using IDs
-                let hotelLocationText = clickedHotelDataDiv.querySelector(`p[id^='hotel_location_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-
-                /* Praper a variable for hotel area value (if exist) */
-                let hotelAreaText = null;
-
-                /* Check if there is any value in the hotel area input then store in the 'hotelAreaText' variable */
-                if (clickedHotelDataDiv.querySelector(`p[id^='hotel_area_${insertedHotelDataDivUniqueId}']`)) {
-                    hotelAreaText = clickedHotelDataDiv.querySelector(`p[id^='hotel_area_${insertedHotelDataDivUniqueId}']`).innerText;
-
-                    document.getElementById('hotel_area_input_id').style.display = 'block'; // Show the hotel area input
-                    document.getElementById('hotel_area_input_id').disabled = false; // Re-Enable hotel name input
-                }
 
                 let hotelNameText = clickedHotelDataDiv.querySelector(`p[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckInText = clickedHotelDataDiv.querySelector(`p[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
@@ -1443,8 +1433,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
                 // Assign values to inputs
-                document.getElementById('hotel_location_input_id').value = hotelLocationText;
-                document.getElementById('hotel_area_input_id').value = hotelAreaText;
                 document.getElementById('hotel_name_input_id').value = hotelNameText;
                 document.getElementById('hotel_check_in_input_id').value = hotelCheckInText;
                 document.getElementById('hotel_check_out_input_id').value = hotelCheckOutText;
@@ -1461,8 +1449,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 /* Function to cancel the hotel row data editing process */
                 cancelNewHotelDataRow = function () {
                     // Get references to all input elements and reset their values
-                    document.getElementById('hotel_location_input_id').value = '';
-                    document.getElementById('hotel_area_input_id').value = '';
                     document.getElementById('hotel_name_input_id').value = '';
                     document.getElementById('hotel_check_in_input_id').value = '';
                     document.getElementById('hotel_check_out_input_id').value = '';
@@ -1474,9 +1460,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
-                    // Disable the hotel_area_input_id and hotel_name_input_id inputs
-                    document.getElementById('hotel_area_input_id').disabled = true;
-                    document.getElementById('hotel_name_input_id').disabled = true;
 
                     /* Hide and show different icons */
                     document.getElementById('hotel_inputs_submit_icon').style.display = 'block';
@@ -1500,8 +1483,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     clickedHotelDataDiv.innerHTML = '';
 
                     // Extract the new data from the input fields
-                    let hotelLocationReadyText = document.getElementById('hotel_location_input_id').value;
-                    let hotelAreaReadyText = document.getElementById('hotel_area_input_id').value;
                     let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
                     let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
                     let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
@@ -1513,7 +1494,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* if one of the inputs is empty then stop the process */
-                    if (hotelLocationReadyText === '' || hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
+                    if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
 
                         // Change the submit icon background color
                         confirm_new_hotel_data_row_icon.style.backgroundColor = 'red';
@@ -1527,6 +1508,21 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                         // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
                         let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
+
+
+                        let hotelLocationReadyText = '';
+                        let hotelAreaReadyText = '';
+
+                        for (let hotelData of allHotelDataArray) {
+                            if (hotelData.hotelName === hotelNameReadyText) {
+                                hotelLocationReadyText = hotelData.hotelLocation;
+                                if (hotelData.hasOwnProperty('hotelArea')) {
+                                    hotelAreaReadyText = hotelData.hotelArea;
+                                }
+                                break;
+                            }
+                        }
+
 
                         // Create the HTML content for a new hotel row
                         let hotelRowTableDivContent = `
