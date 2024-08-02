@@ -454,7 +454,7 @@ body {
     border-top-right-radius: 7px;
 }
 
-#localstorage_save_name_input_div p {
+#localstorage_save_name_input_div button {
     background: rgb(85, 127, 137);
     width: fit-content;
     color: white;
@@ -1190,7 +1190,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 3vw;
     }
 
-    #localstorage_save_name_input_div p {
+    #localstorage_save_name_input_div button {
         font-size: 3vw;
     }
 
@@ -1420,7 +1420,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 4vw;
     }
 
-    #localstorage_save_name_input_div p {
+    #localstorage_save_name_input_div button {
         font-size: 4vw;
     }
 
@@ -1669,7 +1669,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 6vw;
     }
 
-    #localstorage_save_name_input_div p {
+    #localstorage_save_name_input_div button {
         font-size: 6vw;
     }
 
