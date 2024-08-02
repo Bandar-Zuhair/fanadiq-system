@@ -1,11 +1,32 @@
-async function saveNewWebsiteData() {
+// Open or create an IndexedDB database
+const dbName = 'WebsiteDataDB';
+const storeName = 'SavedWebsiteData';
+
+let db;
+const request = indexedDB.open(dbName, 1);
+
+request.onupgradeneeded = function (event) {
+    db = event.target.result;
+    db.createObjectStore(storeName, { keyPath: 'name' });
+};
+
+request.onsuccess = function (event) {
+    db = event.target.result;
+};
+
+request.onerror = function (event) {
+    console.error('Database error:', event.target.errorCode);
+};
+
+// Function to save new website data to IndexedDB
+function saveNewWebsiteData() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
     if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
         localstorageNewSaveButton.style.backgroundColor = 'red';
         setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
         }, 500);
         return;
     }
@@ -41,61 +62,69 @@ async function saveNewWebsiteData() {
         return;
     }
 
-    // Create a blob from the JSON object
-    const jsonString = JSON.stringify(newObject);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    const transaction = db.transaction([storeName], 'readwrite');
+    const store = transaction.objectStore(storeName);
 
-    // Create a link element to download the file
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${localStorageNewSaveDataNameInput}.json`;
+    const getRequest = store.get(localStorageNewSaveDataNameInput);
 
-    // Append the link to the document and simulate a click
-    document.body.appendChild(a);
-    a.click();
+    getRequest.onsuccess = function (event) {
+        const existingData = event.target.result;
 
-    // Clean up
-    setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }, 0);
+        if (existingData) {
+            // Update existing data
+            store.put(newObject);
+        } else {
+            // Add new data
+            store.add(newObject);
+        }
 
-    // Provide feedback to the user
-    localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-    setTimeout(() => {
-        localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-    }, 500);
 
-    /* Get the 'localstorage_save_name_input_div' and show it */
-    let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
+        /* Get the 'localstorage_save_name_input_div' and show it */
+        let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
 
-    // Check if the overlay already exists
-    let overlayLayer = document.querySelector('.black_overlay');
+        // Hide delete button div
+        let overlayLayer = document.querySelector('.black_overlay');
 
-    localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-    if (overlayLayer) {
-        overlayLayer.style.opacity = '0'; // Hide overlay
-        setTimeout(() => {
-            if (overlayLayer) {
+
+
+        transaction.oncomplete = function () {
+            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+            overlayLayer.style.opacity = '0'; // Hide overlay
+
+            setTimeout(() => {
                 document.body.removeChild(overlayLayer);
-            }
-        }, 300); // Match transition duration in CSS
-    }
+            }, 300); // Match transition duration in CSS
 
-    document.getElementById('localstorage_new_save_data_name_input_id').value = '';
+            document.getElementById('localstorage_new_save_data_name_input_id').value = '';
+        };
+
+        transaction.onerror = function (event) {
+            console.error('Transaction error:', event.target.errorCode);
+        };
+    };
+
+    getRequest.onerror = function (event) {
+        console.error('Get request error:', event.target.errorCode);
+    };
 }
-
-// Ensure the function is called correctly on mobile devices
-document.getElementById('localstorage_new_save_button_id').addEventListener('touchstart', saveNewWebsiteData);
-document.getElementById('localstorage_new_save_button_id').addEventListener('click', saveNewWebsiteData);
-
-
 
 
 
 /* Function to save new website localstorage data name */
-openSaveNewWebsiteFileDataName = function () {
+openSaveNewWebsiteLocalStorageDataName = function () {
+    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
+    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
+
+    if (storeLastClickedLocalstorageDataName.innerText === '') {
+        firstDiv.style.display = 'none';
+    } else {
+        firstDiv.style.display = 'flex';
+    }
 
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -138,77 +167,95 @@ openSaveNewWebsiteFileDataName = function () {
 
 
 
+// Function to update existing website data in IndexedDB
+function saveUpdatedWebsiteData() {
+    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
+    let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
+    // Create an object to store visible div elements
+    let newObject = {
+        name: storeLastClickedLocalstorageDataName,
+        elements: {}
+    };
 
+    // List of div IDs to check visibility
+    let divIds = [
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_total_price_data_page'
+    ];
 
+    // Check visibility of each div and add to the object if visible
+    let isAnyDivVisible = false;
+    divIds.forEach(divId => {
+        let element = document.getElementById(divId);
+        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+            newObject.elements[divId] = element.outerHTML;
+            isAnyDivVisible = true;
+        }
+    });
 
+    // If no visible divs were found, change the submit icon background color and exit
+    if (!isAnyDivVisible) {
+        // Change the submit icon background color
+        localstorageNewSaveButton.style.backgroundColor = 'red';
 
+        // Set the background color of the submit icon back to the default color
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
 
-
-
-
-
-
-
-
-document.getElementById('restoreDataButton').addEventListener('click', () => {
-    document.getElementById('fileInput').click();
-});
-
-document.getElementById('fileInput').addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            try {
-                const fileData = JSON.parse(event.target.result);
-
-                // Clear the current website data
-                clearCurrentData();
-
-                // Assuming the data structure matches your expected format
-                if (fileData && fileData.elements) {
-                    for (let divId in fileData.elements) {
-                        let htmlSectionPdfPageDiv = document.getElementById(divId);
-                        htmlSectionPdfPageDiv.style.display = 'block';
-                        htmlSectionPdfPageDiv.innerHTML = fileData.elements[divId];
-                        reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
-                    }
-
-                    // Show the download button if needed
-                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-
-                    // Get the file name without the extension
-                    const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "");
-                    // Set the input value as the imported file name without the extension
-                    document.getElementById('localstorage_new_save_data_name_input_id').value = fileNameWithoutExtension;
-
-                } else {
-                    console.error('Invalid file data format');
-                }
-            } catch (error) {
-                console.error('Error parsing JSON file:', error);
-            }
-        };
-        reader.readAsText(file);
+        return;
     }
-});
 
-// Function to clear current website data
-function clearCurrentData() {
-    document.getElementById('inserted_clint_data_position_div').innerHTML = '';
-    document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
-    document.getElementById('inserted_flight_data_position_div').innerHTML = '';
-    document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
-    document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
+    const transaction = db.transaction([storeName], 'readwrite');
+    const store = transaction.objectStore(storeName);
 
-    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
-    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
-    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
-    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
-    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
-    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+    const getRequest = store.get(storeLastClickedLocalstorageDataName);
+
+    getRequest.onsuccess = function (event) {
+        const existingData = event.target.result;
+
+        if (existingData) {
+            // Update existing data
+            store.put(newObject);
+
+            // Change the submit icon background color to green
+            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+
+            // Set the background color of the submit icon back to the default color
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            /* Get the 'localstorage_save_name_input_div' and show it */
+            let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
+
+            // Hide delete button div
+            let overlayLayer = document.querySelector('.black_overlay');
+
+            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+            overlayLayer.style.opacity = '0'; // Hide overlay
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+        } else {
+            console.error('No existing data found to update');
+        }
+    };
+
+    getRequest.onerror = function (event) {
+        console.error('Get request error:', event.target.errorCode);
+    };
+
+    transaction.onerror = function (event) {
+        console.error('Transaction error:', event.target.errorCode);
+    };
 }
 
 
@@ -222,6 +269,302 @@ function clearCurrentData() {
 
 
 
+function importIndexedDBDataName() {
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
+
+    /* Clear the previous input text */
+    document.getElementById('import_localstorage_data_names_search_bar_input_id').value = '';
+
+    let allLocalStorageDataNamesDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+    let found = false;
+
+    allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
+        if (clickedLocalStorageDataNameElement.style.backgroundColor === 'rgb(0, 155, 0)') {
+            found = true;
+
+            let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
+            dropdownDivElements.forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+
+            overlayLayer.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300);
+
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const clickedDataName = clickedLocalStorageDataNameElement.innerText;
+
+            // Retrieve the specific object by name
+            const getRequest = store.get(clickedDataName);
+
+            getRequest.onsuccess = function (event) {
+                const matchingObject = event.target.result;
+
+                if (matchingObject && matchingObject.elements) {
+                    document.getElementById('inserted_clint_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_flight_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
+
+                    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+
+                    for (let divId in matchingObject.elements) {
+                        let htmlSectionPdfPageDiv = document.getElementById(divId);
+                        htmlSectionPdfPageDiv.style.display = 'block';
+                        htmlSectionPdfPageDiv.innerHTML = matchingObject.elements[divId];
+                        reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                    }
+
+                    /* Store the clicked localstorage data name for later saving reference */
+                    store_last_clicked_localstorage_data_name.innerText = clickedDataName;
+
+                    /* Show the download button */
+                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+                    overlayLayer.style.opacity = '0';
+                    setTimeout(() => {
+                        overlayLayer.style.display = 'none';
+                    }, 300);
+                }
+            };
+
+            getRequest.onerror = function (event) {
+                console.error('Error fetching data from IndexedDB:', event.target.errorCode);
+            };
+        }
+    });
+
+    if (!found) {
+        import_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
+        setTimeout(() => {
+            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
+        }, 500);
+    }
+
+    /* Set the package including sms + inner tickets + package total price inputs values */
+    if (document.getElementById('store_localstorage_package_including_sms_value').innerText !== '') {
+        document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
+    }
+    if (document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== '') {
+        document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
+    }
+    if (document.getElementById('store_localstorage_package_total_price_value').innerText !== '') {
+        document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
+    }
+}
+
+
+
+
+
+
+
+// Function to update the displayed IndexedDB data names
+function updateIndexedDBDataNames(localStorageControllerDivId) {
+    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
+
+    // Clear existing <p> elements
+    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
+
+    // Open a transaction to read from the IndexedDB
+    const transaction = db.transaction([storeName], 'readonly');
+    const store = transaction.objectStore(storeName);
+
+    // Get all data from the object store
+    const getAllRequest = store.getAll();
+
+    getAllRequest.onsuccess = function (event) {
+        const savedWebsiteDataArray = event.target.result;
+
+        // Create new <h3> elements based on the saved data array
+        savedWebsiteDataArray.forEach(data => {
+            let pElement = document.createElement('h3');
+            pElement.innerText = data.name;
+            pElement.onclick = function () {
+                pickThisWebsiteLocalStorageDataName(pElement);
+            };
+            allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+        });
+    };
+
+    getAllRequest.onerror = function (event) {
+        console.error('Error fetching data from IndexedDB:', event.target.errorCode);
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to pick website localStorage data names */
+pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
+    // Identify the parent div of the clicked <p> element
+    let parentDivId = clickedLocalStorageDataName.parentElement.id;
+
+    // If the clicked element is inside the importing data div (single selection)
+    if (parentDivId === 'all_localstorage_stored_data_names_for_importing_data_div') {
+        // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
+        let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+
+        // Loop through each <p> element to reset their styles
+        allDataNames.forEach(function (dataName) {
+            dataName.style.backgroundColor = 'white';
+            dataName.style.color = 'black';
+        });
+
+        // Set the background color and text color of the clicked <p> element
+        clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+        clickedLocalStorageDataName.style.color = 'white';
+
+    } else if (parentDivId === 'all_localstorage_stored_data_names_for_deleting_data_div') {
+        // If the clicked element is inside the deleting data div (multiple selection)
+
+        // Toggle the background and text color of the clicked <p> element
+        if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
+            clickedLocalStorageDataName.style.backgroundColor = 'white';
+            clickedLocalStorageDataName.style.color = 'black';
+        } else {
+            clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+            clickedLocalStorageDataName.style.color = 'white';
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to open IndexedDB and return the database instance
+function openDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('Bandar_Website_DataBase_Name', 1);
+
+        request.onupgradeneeded = function (event) {
+            const db = event.target.result;
+            // Create an object store with a key path 'name'
+            if (!db.objectStoreNames.contains('Bandar_Saved_Website_DataBase_Object')) {
+                db.createObjectStore('Bandar_Saved_Website_DataBase_Object', { keyPath: 'name' });
+            }
+        };
+
+        request.onsuccess = function (event) {
+            resolve(event.target.result);
+        };
+
+        request.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+// Function to delete data from IndexedDB
+async function deleteFromIndexedDB(name) {
+    const db = await openDB();
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('Bandar_Saved_Website_DataBase_Object', 'readwrite');
+        const objectStore = transaction.objectStore('Bandar_Saved_Website_DataBase_Object');
+        const request = objectStore.delete(name);
+
+        request.onsuccess = function () {
+            resolve();
+        };
+
+        request.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+// Function to delete the saved website data name
+async function deleteWebsiteDataName() {
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
+
+    /* Clear the previous input text */
+    document.getElementById('delete_localstorage_data_names_search_bar_input_id').value = '';
+
+    // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
+    let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
+
+    // Get all h3 elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
+    let h3Elements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName('h3');
+
+    let deletePromises = [];
+    let found = false;
+
+    // Loop through all h3 elements
+    for (let h3 of h3Elements) {
+        // Check the background color
+        let bgColor = window.getComputedStyle(h3).backgroundColor;
+        if (bgColor === 'rgb(0, 155, 0)') {
+            found = true;
+
+            // Delete from IndexedDB
+            deletePromises.push(deleteFromIndexedDB(h3.innerText));
+        }
+    }
+
+    if (found) {
+        // Wait for all delete operations to complete
+        await Promise.all(deletePromises);
+
+        /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
+        let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.searchable_names_dropdown_class');
+        allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Check if overlayLayer exists in the DOM before trying to remove it
+        setTimeout(() => {
+            if (document.body.contains(overlayLayer)) {
+                document.body.removeChild(overlayLayer);
+            }
+        }, 300); // Match transition duration in CSS
+    } else {
+        // Change the submit button background color
+        document.getElementById('delete_localstorage_data_name_submit_button_id').style.backgroundColor = 'red';
+        setTimeout(() => {
+            document.getElementById('delete_localstorage_data_name_submit_button_id').style.backgroundColor = 'darkorange';
+        }, 500);
+    }
+}
 
 
 
