@@ -294,6 +294,30 @@ document.querySelectorAll('#package_including_details_div input[type="checkbox"]
 
 
 
+/* Function to store the clicked hotel unit amount */
+
+
+/* Dropdown airport line names functionality */
+let hotelNameInput = document.getElementById('hotel_name_input_id');
+
+// Get the options within the dropdown
+let hotelNameInputOptions = document.querySelectorAll('#all_hotel_names_dropdown h3');
+
+hotelNameInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelNameInput.value = option.textContent;
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
 
 
 
@@ -484,148 +508,6 @@ let overlayLayer = null;
 
 
 
-// Get the following elements for later use
-let hotelLocationInput = document.getElementById('hotel_location_input_id');
-let hotelAreaInput = document.getElementById('hotel_area_input_id');
-let hotelNameInput = document.getElementById('hotel_name_input_id');
-
-// Get the options within the dropdowns
-let hotelLocationInputOptions = document.querySelectorAll('#hotel_location_dropdown h3');
-let hotelAreaInputOptions = document.querySelectorAll('#hotel_bali_area_dropdown h3');
-
-
-// Add event listener for each location option in the dropdown
-hotelLocationInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-
-        /* Check if the clicked h3 innerText is the same existing value of the 'hotel_location_input_id' */
-        if (hotelLocationInput.value === option.textContent) {
-            hideOverlay(); // Hide overlay after selection
-
-            /* Exist the function and stop the process of reseting the inputs */
-            return;
-        }
-
-        hotelLocationInput.value = option.textContent; // Set input value to selected option
-
-        // check the clicked h3 innerText
-        if (option.textContent === "بالي") {
-            hotelAreaInput.style.display = 'block'; // Show the hotel area input
-            hotelAreaInput.disabled = false; // Re-Enable hotel name input
-            hotelNameInput.disabled = true; // Disable hotel name input if hotel area input is visible and empty
-
-        } else {
-            hotelAreaInput.style.display = 'none'; // Hide the hotel area input
-            hotelNameInput.disabled = false; // Re-Enable hotel name input
-        }
-
-
-        hotelAreaInput.value = ''; // Clear the hotel area input
-        hotelNameInput.value = ''; // Clear the hotel name input
-
-
-        document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
-
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
-
-// Add event listeners for each area option in the dropdown
-hotelAreaInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-        /* Check if the clicked h3 innerText is the same existing value of the 'hotel_area_input_id' */
-        if (hotelAreaInput.value === option.textContent) {
-            hideOverlay(); // Hide overlay after selection
-
-            /* Exist the function and stop the process of reseting the inputs */
-            return;
-        }
-
-
-        hotelAreaInput.value = option.textContent; // Set input value to selected option
-
-
-        hotelNameInput.value = ''; // Clear the hotel name input
-
-
-        document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
-
-
-        hideOverlay(); // Hide overlay after selection
-
-
-        hotelNameInput.disabled = false; // Re-Enable hotel name input
-    });
-});
-
-
-// Function to toggle visibility of the correct hotel name dropdown
-toggleHotelNameDropdown = function () {
-    let location = hotelLocationInput.value.trim(); // Get the current location value
-    let area = hotelAreaInput.value.trim(); // Get the current area value
-    let dropdownToShow = null; // Initialize variable for the dropdown to show
-
-    // Determine which dropdown to show based on location input or area input values
-    switch (location) {
-        case "جاكرتا":
-            dropdownToShow = 'jakarta_hotel_dropdown';
-            break;
-        case "باندونق":
-            dropdownToShow = 'bandung_hotel_dropdown';
-            break;
-        case "لومبوك":
-            dropdownToShow = 'lombok_hotel_dropdown';
-            break;
-        case "بونشاك":
-            dropdownToShow = 'puncak_hotel_dropdown';
-            break;
-        case "بالي":
-            switch (area) {
-                case "كيراماس":
-                    dropdownToShow = 'keramas_hotel_dropdown';
-                    break;
-                case "اوبود":
-                    dropdownToShow = 'ubud_hotel_dropdown';
-                    break;
-                case "نوسا دوا":
-                    dropdownToShow = 'nusa_dua_hotel_dropdown';
-                    break;
-                case "سيمنياك":
-                    dropdownToShow = 'seminyak_hotel_dropdown';
-                    break;
-                case "كوتا":
-                    dropdownToShow = 'kuta_hotel_dropdown';
-                    break;
-                case "جيمباران":
-                    dropdownToShow = 'jimbaran_hotel_dropdown';
-                    break;
-                case "اولواتو":
-                    dropdownToShow = 'uluwatu_hotel_dropdown';
-                    break;
-                case "ليجين":
-                    dropdownToShow = 'legian_hotel_dropdown';
-                    break;
-            }
-            break;
-    }
-
-    /* Pass the 'dropdownToShow' value to the 'showOverlay' function */
-    showOverlay(dropdownToShow);
-
-
-    // Add event listeners for each hotel name option in the dropdown
-    let dropdownHotelOptions = document.getElementById(`${dropdownToShow}`).querySelectorAll('h3');
-    dropdownHotelOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            hotelNameInput.value = option.textContent; // Set input value to selected option
-            document.getElementById('hotel_room_type_description_input_id').value = ''; // Reset the value of the hotel room type dscription
-            hideOverlay(); // Hide overlay after selection
-        });
-    });
-}
 
 
 
@@ -754,62 +636,8 @@ searchBarInputElements.forEach(input => {
 document.getElementById('company_names_search_bar_input_id').addEventListener('input', () => {
     filterOptions('company_names_search_bar_input_id', 'company_names_dropdown');
 });
-
-
-
-
-
-/* Hotel dropdown info */
-document.getElementById('hotel_bali_area_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('hotel_bali_area_search_bar_input_id', 'hotel_bali_area_dropdown');
-});
-
-document.getElementById('keramas_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('keramas_hotel_search_bar_input_id', 'keramas_hotel_dropdown');
-});
-
-document.getElementById('ubud_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('ubud_hotel_search_bar_input_id', 'ubud_hotel_dropdown');
-});
-
-document.getElementById('nusa_dua_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('nusa_dua_hotel_search_bar_input_id', 'nusa_dua_hotel_dropdown');
-});
-
-document.getElementById('seminyak_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('seminyak_hotel_search_bar_input_id', 'seminyak_hotel_dropdown');
-});
-
-document.getElementById('kuta_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('kuta_hotel_search_bar_input_id', 'kuta_hotel_dropdown');
-});
-
-document.getElementById('jimbaran_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('jimbaran_hotel_search_bar_input_id', 'jimbaran_hotel_dropdown');
-});
-
-document.getElementById('uluwatu_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('uluwatu_hotel_search_bar_input_id', 'uluwatu_hotel_dropdown');
-});
-
-document.getElementById('legian_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('legian_hotel_search_bar_input_id', 'legian_hotel_dropdown');
-});
-
-document.getElementById('jakarta_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('jakarta_hotel_search_bar_input_id', 'jakarta_hotel_dropdown');
-});
-
-document.getElementById('puncak_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('puncak_hotel_search_bar_input_id', 'puncak_hotel_dropdown');
-});
-
-document.getElementById('bandung_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('bandung_hotel_search_bar_input_id', 'bandung_hotel_dropdown');
-});
-
-document.getElementById('lombok_hotel_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('lombok_hotel_search_bar_input_id', 'lombok_hotel_dropdown');
+document.getElementById('all_hotel_names_search_bar_input_id').addEventListener('input', () => {
+    filterOptions('all_hotel_names_search_bar_input_id', 'all_hotel_names_dropdown');
 });
 
 
