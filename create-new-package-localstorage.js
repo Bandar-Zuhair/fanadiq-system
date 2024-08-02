@@ -78,13 +78,14 @@ async function saveNewWebsiteData() {
     let overlayLayer = document.querySelector('.black_overlay');
 
     localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-    overlayLayer.style.opacity = '0'; // Hide overlay
-
-    setTimeout(() => {
-        if (overlayLayer) {
-            document.body.removeChild(overlayLayer);
-        }
-    }, 300); // Match transition duration in CSS
+    if (overlayLayer) {
+        overlayLayer.style.opacity = '0'; // Hide overlay
+        setTimeout(() => {
+            if (overlayLayer) {
+                document.body.removeChild(overlayLayer);
+            }
+        }, 300); // Match transition duration in CSS
+    }
 
     document.getElementById('localstorage_new_save_data_name_input_id').value = '';
 }
@@ -92,6 +93,7 @@ async function saveNewWebsiteData() {
 // Ensure the function is called correctly on mobile devices
 document.getElementById('localstorage_new_save_button_id').addEventListener('touchstart', saveNewWebsiteData);
 document.getElementById('localstorage_new_save_button_id').addEventListener('click', saveNewWebsiteData);
+
 
 
 
