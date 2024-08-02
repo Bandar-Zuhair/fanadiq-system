@@ -34,12 +34,12 @@
         </div>
 
         <div class="header_navbar_links">
-            <a onclick="showPackageTypeSection('hotel', this)">الفنادق</a>
+            <a onclick="showPackageTypeSection('hotel', this)" style="color: rgb(255, 145, 0);">الفنادق</a>
             <a onclick="showPackageTypeSection('flight', this)">الطيران</a>
             <a onclick="showPackageTypeSection('transportation', this)">التحركات</a>
         </div>
-        
-        
+
+
         <!-- Add more sections as needed -->
 
     </header>
@@ -83,88 +83,19 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p style="user-select: none;" onclick="saveNewWebsiteLpcalStorageDataName()">تخزين</p>
-        <p style="user-select: none;"
-            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateLocalStorageDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
-            إستعادة</p>
-        <p style="user-select: none;"
-            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateLocalStorageDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
-            حذف</p>
+        <p style="user-select: none;" onclick="openSaveNewWebsiteFileDataName()">حفظ</p>
+
+        <p id="restoreDataButton" style="user-select: none; cursor: pointer;">إستعادة</p>
+        <input type="file" id="fileInput" accept=".json" style="display: none;" />
     </div>
 
-
-
-
-
-
     <div id="localstorage_save_name_input_div">
-        <div id="first_div_in_localstorage_save_name_input_div">
-            <p onclick="saveCurrentWebsiteLocalStorageDataName()">حفظ التقدم</p>
-        </div>
         <div>
             <h6>تخزين جديد</h6>
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
                 autocomplete="off">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteLocalStorageDataName()">تخزين جديد</p>
-        </div>
-    </div>
-
-    <p id="store_last_clicked_localstorage_data_name" style="display: none;"></p>
-
-
-
-
-
-
-
-
-
-
-    <!-- Dropdown Div For Hotel Locations -->
-    <div id="import_localstorage_data_names_dropdown"
-        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
-        <h6>إستعادة البيانات</h6>
-
-
-        <div class="search_bar_div_class">
-            <input type="text" id="import_localstorage_data_names_search_bar_input_id" class="search_bar_input_class"
-                placeholder="بحث.." autocomplete="off">
-        </div>
-
-
-        <p id="import_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
-            onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
-
-
-        <div id="all_localstorage_stored_data_names_for_importing_data_div"
-            class="company_names_options_dropdown_class">
-            <!-- Dynamic JS Code Here -->
-        </div>
-    </div>
-
-
-
-
-    <!-- Dropdown Div For Hotel Locations -->
-    <div id="delete_localstorage_data_names_dropdown"
-        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
-        <h6>حذف البيانات</h6>
-
-
-        <div class="search_bar_div_class">
-            <input type="text" id="delete_localstorage_data_names_search_bar_input_id" class="search_bar_input_class"
-                placeholder="بحث.." autocomplete="off">
-        </div>
-
-
-
-        <p id="delete_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
-            onclick="deleteWebsiteLocalStorageDataName()">حذف</p>
-
-
-        <div id="all_localstorage_stored_data_names_for_deleting_data_div" class="company_names_options_dropdown_class">
-            <!-- Dynamic JS Code Here -->
+                onclick="saveNewWebsiteData()">تأكيد</p>
         </div>
     </div>
 
@@ -191,28 +122,15 @@
 
 
 
-    <div id="localstorage_delete_stored_data_names_div" class="localstorage_controller_import_and_delete_div_class"
-        style="display: none;">
-        <h6>حذف البيانات</h6>
 
 
 
-        <input type="text" id="localstorage_names_search_bar_input_id" placeholder="بحث.." autocomplete="off">
-
-        <p id="localstorage_import_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button"
-            onclick="importWebsiteLocalStorageDataName()">تأكيد</p>
 
 
 
-        <div id="all_localstorage_stored_data_names_for_deleting_data_div"
-            class="all_localstorage_stored_data_names_div_class">
-            <!-- JS  Dynamic JS Code Here -->
-        </div>
 
 
-        <p id="localstorage_delete_saved_localstorage_data_name_button_id" class="localstorage_data_name_submit_button"
-            onclick="deleteWebsiteLocalStorageDataName()">حذف</p>
-    </div>
+
 
 
 
@@ -623,7 +541,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
@@ -735,7 +654,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('company_names_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('company_names_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -870,9 +790,10 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('hotel_bali_area_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('hotel_bali_area_search_bar_input_id')"></ion-icon>
             </div>
-            
+
             <div class="company_names_options_dropdown_class">
                 <h3>كيراماس</h3>
                 <h3>اوبود</h3>
@@ -894,7 +815,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('keramas_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('keramas_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
 
@@ -912,7 +834,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('ubud_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('ubud_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -947,7 +870,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('nusa_dua_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('nusa_dua_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -971,7 +895,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('seminyak_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('seminyak_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1011,7 +936,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('kuta_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('kuta_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1037,7 +963,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('jimbaran_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('jimbaran_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1058,7 +985,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('uluwatu_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('uluwatu_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1077,7 +1005,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('legian_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('legian_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1098,7 +1027,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('jakarta_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('jakarta_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1140,7 +1070,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('puncak_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('puncak_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1164,7 +1095,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('bandung_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('bandung_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1185,7 +1117,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('lombok_hotel_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('lombok_hotel_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1602,7 +1535,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('clint_movements_hotel_names_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('clint_movements_hotel_names_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -2256,7 +2190,8 @@
 
 
 
-        <img src="middle-pdf-image.jpg" id="pdf_section_package_icluding_data_title_id_2" class="inserted_package_data_section_page_image_class_2">
+        <img src="middle-pdf-image.jpg" id="pdf_section_package_icluding_data_title_id_2"
+            class="inserted_package_data_section_page_image_class_2">
 
 
 
@@ -2335,7 +2270,7 @@
 
     <section id="downloaded_pdf_important_notes_data_page" style="display: none;">
 
-        
+
 
 
         <div class="pdf_section_title_div_class">
@@ -2427,7 +2362,8 @@
 
 
         <div id="package_total_price_div">
-            <h6 onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')" style="cursor: pointer;">الإجمالي</h6>
+            <h6 onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')" style="cursor: pointer;">
+                الإجمالي</h6>
             <p id="package_total_price_p_id" onclick="runDeleteThisPackageIncludingDataText('package_total_price_p_id')"
                 style="cursor: pointer;"></p>
         </div>
