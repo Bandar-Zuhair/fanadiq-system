@@ -3059,6 +3059,9 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Function to capture a canvas of a given section
     let captureCanvas = async function (section, scale) {
         try {
+            // Ensure resources are loaded and elements are visible before capturing
+            await new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms
+
             let canvas = await html2canvas(section, {
                 scale: scale,
                 backgroundColor: null,
@@ -3066,14 +3069,12 @@ downloadPdfWithCustomName = async function (pdfName) {
             });
             return canvas;
         } catch (error) {
-            console.error('Error capturing canvas:', error);
         }
     };
 
     // Function to combine multiple canvases into one
     let combineCanvases = function (canvases) {
         if (canvases.length === 0) {
-            console.error('No canvases to combine');
             return null;
         }
 
@@ -3107,7 +3108,6 @@ downloadPdfWithCustomName = async function (pdfName) {
         }
 
         if (canvases.length === 0) {
-            console.error('No canvases captured');
             return null;
         }
 
@@ -3250,6 +3250,8 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Hide the 'pdf_section_package_icluding_data_title_id_2' image
     document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'none';
 
+
+
     document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
     document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
@@ -3259,3 +3261,4 @@ downloadPdfWithCustomName = async function (pdfName) {
     document.getElementById('check_pdf_name_button').style.color = 'black';
     document.getElementById('check_pdf_name_button').innerText = 'تحميل';
 };
+
