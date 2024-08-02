@@ -86,6 +86,12 @@ showPackageTypeSection = function (packageType, clickedElement) {
 
 
 
+
+
+
+
+
+
 /* Function To Drop Down Elements */
 function toggleDropdownContent(toggleButtonId, dropdownContentId) {
     let toggleButton = document.getElementById(toggleButtonId);
@@ -850,13 +856,6 @@ document.getElementById('clint_movements_hotel_names_search_bar_input_id').addEv
 
 
 
-/* LocalStorage import and delete dropdown */
-document.getElementById('import_localstorage_data_names_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('import_localstorage_data_names_search_bar_input_id', 'import_localstorage_data_names_dropdown');
-});
-document.getElementById('delete_localstorage_data_names_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('delete_localstorage_data_names_search_bar_input_id', 'delete_localstorage_data_names_dropdown');
-});
 
 
 
