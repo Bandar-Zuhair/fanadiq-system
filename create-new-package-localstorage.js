@@ -471,13 +471,13 @@ pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
 // Function to open IndexedDB and return the database instance
 function openDB() {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open('Bandar_Website_DataBase_Name', 1);
+        const request = indexedDB.open('WebsiteDataDB', 1);
 
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
             // Create an object store with a key path 'name'
-            if (!db.objectStoreNames.contains('Bandar_Saved_Website_DataBase_Object')) {
-                db.createObjectStore('Bandar_Saved_Website_DataBase_Object', { keyPath: 'name' });
+            if (!db.objectStoreNames.contains('SavedWebsiteData')) {
+                db.createObjectStore('SavedWebsiteData', { keyPath: 'name' });
             }
         };
 
@@ -496,8 +496,8 @@ async function deleteFromIndexedDB(name) {
     const db = await openDB();
 
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction('Bandar_Saved_Website_DataBase_Object', 'readwrite');
-        const objectStore = transaction.objectStore('Bandar_Saved_Website_DataBase_Object');
+        const transaction = db.transaction('SavedWebsiteData', 'readwrite');
+        const objectStore = transaction.objectStore('SavedWebsiteData');
         const request = objectStore.delete(name);
 
         request.onsuccess = function () {
@@ -516,7 +516,7 @@ async function deleteWebsiteDataName() {
     document.documentElement.style.overflow = 'auto';
 
     /* Clear the previous input text */
-    document.getElementById('delete_localstorage_data_names_search_bar_input_id').value = '';
+    document.getElementById('fileInput').value = '';
 
     // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
     let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
