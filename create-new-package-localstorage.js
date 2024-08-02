@@ -1,4 +1,3 @@
-// Function to save new website data to a file using the File System Access API
 async function saveNewWebsiteData() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
@@ -72,7 +71,6 @@ async function saveNewWebsiteData() {
         localstorageNewSaveButton.style.backgroundColor = 'darkorange';
     }, 500);
 
-
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
 
@@ -83,11 +81,18 @@ async function saveNewWebsiteData() {
     overlayLayer.style.opacity = '0'; // Hide overlay
 
     setTimeout(() => {
-        document.body.removeChild(overlayLayer);
+        if (overlayLayer) {
+            document.body.removeChild(overlayLayer);
+        }
     }, 300); // Match transition duration in CSS
 
     document.getElementById('localstorage_new_save_data_name_input_id').value = '';
 }
+
+// Ensure the function is called correctly on mobile devices
+document.getElementById('localstorage_new_save_button_id').addEventListener('touchstart', saveNewWebsiteData);
+document.getElementById('localstorage_new_save_button_id').addEventListener('click', saveNewWebsiteData);
+
 
 
 /* Function to save new website localstorage data name */
@@ -179,7 +184,7 @@ document.getElementById('fileInput').addEventListener('change', function () {
                     const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "");
                     // Set the input value as the imported file name without the extension
                     document.getElementById('localstorage_new_save_data_name_input_id').value = fileNameWithoutExtension;
-                    
+
                 } else {
                     console.error('Invalid file data format');
                 }
