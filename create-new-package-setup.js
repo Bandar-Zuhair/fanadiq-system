@@ -13,12 +13,18 @@
 /* Header Nav Bar */
 function toggleLinks(id) {
     var links = document.getElementById(id);
+    var icon = document.getElementById("package_types_dropdown_icon_id");
+
     if (links.style.maxHeight) {
         links.style.maxHeight = null;
+        icon.classList.remove("rotate");
     } else {
         links.style.maxHeight = links.scrollHeight + "px";
+        icon.classList.add("rotate");
     }
 }
+
+
 
 
 /* Page Load Header Fade Animation */
@@ -43,7 +49,7 @@ setTimeout(function () {
 
 
 /* Function to show and hide different pachage details sections */
-showPackageTypeSection = function (packageType) {
+showPackageTypeSection = function (packageType, clickedElement) {
 
     if (packageType === 'hotel') {
         create_new_hotel_package_section.style.display = 'flex';
@@ -61,6 +67,13 @@ showPackageTypeSection = function (packageType) {
         create_new_clint_movements_paln_section.style.display = 'flex';
 
     }
+
+
+    // Change the color of the clicked element to red and reset others to black
+    var links = document.querySelectorAll('.header_navbar_links a');
+    links.forEach(function(link) {
+        link.style.color = (link === clickedElement) ? 'rgb(255, 145, 0)' : 'black';
+    });
 }
 
 
