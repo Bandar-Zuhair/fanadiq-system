@@ -30,25 +30,16 @@
 
         <div id="header_div">
             <img src="فنادق-اندونيسيا/فنادق-اندونيسيا.png">
-            <h1>Fanadiq Indonesia</h1>
+            <h1>FANADIQ INDONESIA</h1>
         </div>
 
-        <div class="header_navbar_section" onclick="toggleLinks('package_type')">
-
-
-            <div class="header_navbar_header">
-                <span class="header_navbar_title">أقسام البكج</span>
-                <ion-icon name="caret-down-outline"></ion-icon>
-            </div>
-    
-    
-            <div class="header_navbar_links" id="package_type" style="text-align: left;">
-                <a onclick="showPackageTypeSection('hotel')">Hotel</a>
-                <a onclick="showPackageTypeSection('flight')">Flight</a>
-                <a onclick="showPackageTypeSection('transportation')">Transportation</a>
-            </div>
-
+        <div class="header_navbar_links">
+            <a onclick="showPackageTypeSection('hotel', this)">الفنادق</a>
+            <a onclick="showPackageTypeSection('flight', this)">الطيران</a>
+            <a onclick="showPackageTypeSection('transportation', this)">التحركات</a>
         </div>
+        
+        
         <!-- Add more sections as needed -->
 
     </header>
