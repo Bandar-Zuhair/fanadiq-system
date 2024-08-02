@@ -427,8 +427,8 @@ let createRoomTypeDescripyionDropDown = function () {
         // Clear any existing content in the h3 elements div
         hotelRoomTypeDescriptionH3ElementsDiv.innerHTML = '';
 
-        // Find the hotel object in the hotelRoomTypesDescriptionArray that matches the hotel name input value
-        let hotel = hotelRoomTypesDescriptionArray.find(hotel => hotel.hotelName === hotelNameInput);
+        // Find the hotel object in the 'allHotelDataArray' that matches the hotel name input value
+        let hotel = allHotelDataArray.find(hotel => hotel.hotelName === hotelNameInput);
 
         // If a matching hotel object is found
         if (hotel) {
