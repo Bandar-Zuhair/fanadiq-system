@@ -247,7 +247,6 @@
 
 .hotel_row_class div:first-child {
     flex-grow: 0.9;
-    border-right: 0.5px solid black;
 }
 
 .hotel_row_class div:last-child {
@@ -295,6 +294,7 @@
 .hotel_row_class div:nth-child(7) {
     flex-grow: 0.6;
     font-size: 0.5vw;
+    border-left: none;
 }
 
 
@@ -406,7 +406,6 @@
 
 .flight_row_class div:first-child {
     flex-grow: 0.9;
-    border-right: 0.5px solid black;
 }
 
 .flight_row_class p {
@@ -434,6 +433,11 @@
 .flight_row_class div:nth-child(7),
 .flight_row_class div:nth-child(8) {
     flex-grow: 0.7;
+}
+
+/* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
+.flight_row_class div:nth-child(8) {
+    border-left: none;
 }
 
 
@@ -486,12 +490,12 @@
 /* Reduce the width of "من" cell */
 .clint_movements_row_class div:nth-child(1) {
     flex-grow: 0.2;
-    border-right: 0.5px solid black;
 }
 
 /* Reduce the width of "الى" cell */
 .clint_movements_row_class div:nth-child(3) {
     flex-grow: 0.3;
+    border-left: none;
 }
 
 
