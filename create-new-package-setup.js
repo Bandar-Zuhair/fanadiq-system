@@ -1684,7 +1684,7 @@ const innerDatePickerArabicMonths = [
 ];
 
 // Arabic day names
-const arabicDays = ['أحد', 'إثنين', 'ثلوث', 'ربوع', 'خميس', 'جمعة', 'سبت'];
+const arabicDays = ['أحد', 'إثن', 'ثلو', 'ربو', 'خمي', 'جمع', 'سبت'];
 
 // Function to get Arabic month name
 function getArabicMonthName(monthIndex) {
