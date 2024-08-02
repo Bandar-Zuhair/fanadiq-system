@@ -1110,59 +1110,52 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-/* Increase the size of day cells and add more space between them */
+/* Increase the size of the day cells and add more padding */
 .pika-single .pika-table td {
-    padding: 10px;
-    /* Add more padding to increase space */
-    text-align: center;
-    /* Center the text */
     width: 3vw;
-    /* Increase the width of the cells */
-    height: 50px;
-    /* Increase the height of the cells */
-    line-height: 50px;
-    /* Center the text vertically */
+    /* Adjust width for larger click area */
+    height: 3vw;
+    /* Adjust height for larger click area */
+    padding: 10px;
+    /* Add more padding */
+    text-align: center;
+    vertical-align: middle;
     box-sizing: border-box;
-    /* Ensure padding and border are included in the width and height */
+    /* Ensure padding is included in width/height */
+}
+
+/* Increase the clickable area for the header cells */
+.pika-single .pika-table th {
+    padding: 10px;
+    font-size: 1.2rem;
+    /* Increase font size for header */
+}
+
+/* Ensure the date picker container is wide enough */
+.pika-single .pika-lendar {
+    width: 100%;
 }
 
 /* Adjust the overall size of the date picker */
 .pika-single {
-    padding: 5px;
-    /* Add padding to the entire date picker */
+    padding: 10px;
     width: auto;
-    /* Automatically adjust the width */
-}
-
-/* Ensure the date picker container is wide enough to fit the day buttons */
-.pika-single .pika-lendar {
-    width: 100%;
-    /* Ensure the calendar takes full width */
-}
-
-/* Style for the header cells */
-.pika-single .pika-table th {
-    padding: 5px;
-    /* Add padding to header cells */
+    max-width: 100%;
 }
 
 /* Highlight the selected day */
 .pika-single .pika-table .is-selected {
     color: white;
-    /* Text color for selected day */
     font-weight: bold;
-    /* Bold text for selected day */
 }
 
-/* Style disabled days */
+/* Style for disabled days */
 .pika-single .pika-table .is-disabled {
     background-color: #f0f0f0;
-    /* Background color for disabled days */
     color: #bcbcbc;
-    /* Text color for disabled days */
     cursor: not-allowed;
-    /* Change cursor for disabled days */
 }
+
 
 
 
@@ -1515,6 +1508,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .inserted_package_data_section_page_image_class {
         padding: 30px 0;
     }
+
     .inserted_package_data_section_page_image_class_2 {
         padding: 30px 0;
     }
@@ -1913,45 +1907,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     /* Increase the size of day cells and add more space between them */
     .pika-single .pika-table td {
-        padding: 5.5px;
-        /* Center the text */
-        width: 1vw;
-        /* Increase the width of the cells */
-        height: 0px;
-        /* Increase the height of the cells */
-        line-height: 0px;
-        /* Center the text vertically */
-        box-sizing: border-box;
-        /* Ensure padding and border are included in the width and height */
-    }
-
-    .pika-single {
-        padding: 0px;
-    }
-
-    .pika-single .pika-table th {
-        padding: 0px;
-    }
-
-    /* Ensure the date picker container is wide enough to fit the day buttons */
-    .pika-single .pika-lendar {
-        width: 95%;
-        /* Ensure the calendar takes full width */
-    }
-}
-
-/* 320px */
-@media(max-width:320px) {
-    .package_info_input_div input {
-        height: 35px;
-    }
-}
-
-
-/* 290px */
-@media(max-width:290px) {
-    /* Increase the size of day cells and add more space between them */
-    .pika-single .pika-table td {
         padding: 2px;
         /* Center the text */
         width: auto;
@@ -1973,5 +1928,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .pika-single .pika-lendar {
         width: 95%;
         /* Ensure the calendar takes full width */
+    }
+}
+
+/* 320px */
+@media(max-width:320px) {
+    .package_info_input_div input {
+        height: 35px;
     }
 }
