@@ -332,7 +332,6 @@ body {
 
 .header_navbar_links {
     width: 100%;
-    padding: 0 10px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid black;
@@ -340,7 +339,9 @@ body {
 
 .header_navbar_links a {
     text-decoration: none;
+    width: 100%;
     font-size: 3vw;
+    text-align: center;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
 }
@@ -442,12 +443,6 @@ body {
     margin: 50px 0;
 }
 
-#first_div_in_localstorage_save_name_input_div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #localstorage_save_name_input_div h6 {
     background: darkred;
     color: white;
@@ -460,7 +455,7 @@ body {
 }
 
 #localstorage_save_name_input_div p {
-    background: rgb(255, 174, 0);
+    background: rgb(85, 127, 137);
     width: fit-content;
     color: white;
     font-size: 2vw;
@@ -489,37 +484,6 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-
-
-
-
-
-
-
-/* Importing and deleting data from localStorage */
-.localstorage_dropdown_div_class h6 {
-    background: darkred;
-    color: white;
-    width: 100%;
-    font-size: 2vw;
-    text-align: center;
-    border: 0.5px solid black;
-}
-
-.localstorage_dropdown_div_class p {
-    background: rgb(255, 174, 0);
-    color: white;
-    font-size: 2.5vw;
-    padding: 1px 5px;
-    text-align: center;
-    border: 0.5px solid black;
-    border-radius: 7px;
-    cursor: pointer;
-    align-self: flex-start;
-    /* Position the button to the right */
-    margin-right: 5px;
-    /* Adjust margin as needed */
-}
 
 
 
@@ -1218,15 +1182,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
     /* LocalStorage Elements */
+    #localstorage_data_controller_div p {
+        font-size: 3vw;
+    }
+
     #localstorage_save_name_input_div h6 {
         font-size: 3vw;
     }
 
     #localstorage_save_name_input_div p {
-        font-size: 3vw;
-    }
-
-    #localstorage_data_controller_div p {
         font-size: 3vw;
     }
 
@@ -1236,17 +1200,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     #localstorage_save_name_input_div input::placeholder {
         font-size: 4.5vw;
-    }
-
-
-
-
-    .localstorage_dropdown_div_class h6 {
-        font-size: 3vw;
-    }
-
-    .localstorage_dropdown_div_class p {
-        font-size: 3vw;
     }
 
 
@@ -1481,15 +1434,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
-    .localstorage_dropdown_div_class h6 {
-        font-size: 4vw;
-    }
-
-    .localstorage_dropdown_div_class p {
-        font-size: 4.5vw;
-    }
-
-
 
 
 
@@ -1703,6 +1647,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .header_navbar_links a {
         font-size: 5.5vw;
     }
+
+
+
+
+
+
+
+
 
     #localstorage_data_controller_div p {
         font-size: 5vw;
