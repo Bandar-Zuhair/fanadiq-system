@@ -1,25 +1,8 @@
-// Open or create an IndexedDB database
-const dbName = 'WebsiteDataDB';
-const storeName = 'SavedWebsiteData';
 
-let db;
-const request = indexedDB.open(dbName, 1);
 
-request.onupgradeneeded = function (event) {
-    db = event.target.result;
-    db.createObjectStore(storeName, { keyPath: 'name' });
-};
 
-request.onsuccess = function (event) {
-    db = event.target.result;
-};
-
-request.onerror = function (event) {
-    console.error('Database error:', event.target.errorCode);
-};
-
-// Function to save new website data to IndexedDB
-function saveNewWebsiteDataBase() {
+// Function to save new website data to a file with directory selection
+async function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
@@ -62,22 +45,30 @@ function saveNewWebsiteDataBase() {
         return;
     }
 
-    const transaction = db.transaction([storeName], 'readwrite');
-    const store = transaction.objectStore(storeName);
+    // Convert the data to JSON format
+    let dataStr = JSON.stringify(newObject, null, 2);
+    let dataBlob = new Blob([dataStr], { type: 'application/json' });
 
-    const getRequest = store.get(localStorageNewSaveDataNameInput);
+    try {
+        // Show the directory picker and save the file in the selected directory
+        const handle = await window.showSaveFilePicker({
+            suggestedName: `${localStorageNewSaveDataNameInput}.json`,
+            types: [{
+                description: 'JSON Files',
+                accept: { 'application/json': ['.json'] },
+            }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(dataBlob);
+        await writable.close();
 
-    getRequest.onsuccess = function (event) {
-        const existingData = event.target.result;
+        // Provide feedback and reset input
+        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
 
-        if (existingData) {
-            // Update existing data
-            store.put(newObject);
-        } else {
-            // Add new data
-            store.add(newObject);
-        }
-
+        document.getElementById('localstorage_new_save_data_name_input_id').value = '';
 
         /* Get the 'localstorage_save_name_input_div' and show it */
         let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -85,33 +76,23 @@ function saveNewWebsiteDataBase() {
         // Hide delete button div
         let overlayLayer = document.querySelector('.black_overlay');
 
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+        overlayLayer.style.opacity = '0'; // Hide overlay
 
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300); // Match transition duration in CSS
 
-        transaction.oncomplete = function () {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
-
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-
-            document.getElementById('localstorage_new_save_data_name_input_id').value = '';
-        };
-
-        transaction.onerror = function (event) {
-            console.error('Transaction error:', event.target.errorCode);
-        };
-    };
-
-    getRequest.onerror = function (event) {
-        console.error('Get request error:', event.target.errorCode);
-    };
+    } catch (error) {
+        console.error('File save error:', error);
+        localstorageNewSaveButton.style.backgroundColor = 'red';
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
+    }
 }
+
+
 
 
 
@@ -211,13 +192,13 @@ function saveUpdatedWebsiteDataBase() {
         return;
     }
 
-    const transaction = db.transaction([storeName], 'readwrite');
-    const store = transaction.objectStore(storeName);
+    let transaction = db.transaction([storeName], 'readwrite');
+    let store = transaction.objectStore(storeName);
 
-    const getRequest = store.get(storeLastClickedLocalstorageDataName);
+    let getRequest = store.get(storeLastClickedLocalstorageDataName);
 
     getRequest.onsuccess = function (event) {
-        const existingData = event.target.result;
+        let existingData = event.target.result;
 
         if (existingData) {
             // Update existing data
@@ -293,15 +274,15 @@ function importSavedDataBaseName() {
                 document.body.removeChild(overlayLayer);
             }, 300);
 
-            const transaction = db.transaction([storeName], 'readonly');
-            const store = transaction.objectStore(storeName);
-            const clickedDataName = clickedLocalStorageDataNameElement.innerText;
+            let transaction = db.transaction([storeName], 'readonly');
+            let store = transaction.objectStore(storeName);
+            let clickedDataName = clickedLocalStorageDataNameElement.innerText;
 
             // Retrieve the specific object by name
-            const getRequest = store.get(clickedDataName);
+            let getRequest = store.get(clickedDataName);
 
             getRequest.onsuccess = function (event) {
-                const matchingObject = event.target.result;
+                let matchingObject = event.target.result;
 
                 if (matchingObject && matchingObject.elements) {
                     document.getElementById('inserted_clint_data_position_div').innerHTML = '';
@@ -376,14 +357,14 @@ function updateDataBaseSavedDataNames(localStorageControllerDivId) {
     allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
 
     // Open a transaction to read from the IndexedDB
-    const transaction = db.transaction([storeName], 'readonly');
-    const store = transaction.objectStore(storeName);
+    let transaction = db.transaction([storeName], 'readonly');
+    let store = transaction.objectStore(storeName);
 
     // Get all data from the object store
-    const getAllRequest = store.getAll();
+    let getAllRequest = store.getAll();
 
     getAllRequest.onsuccess = function (event) {
-        const savedWebsiteDataArray = event.target.result;
+        let savedWebsiteDataArray = event.target.result;
 
         // Create new <h3> elements based on the saved data array
         savedWebsiteDataArray.forEach(data => {
@@ -471,10 +452,10 @@ pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
 // Function to open IndexedDB and return the database instance
 function openDB() {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open('WebsiteDataDB', 1);
+        let request = indexedDB.open('WebsiteDataDB', 1);
 
         request.onupgradeneeded = function (event) {
-            const db = event.target.result;
+            let db = event.target.result;
             // Create an object store with a key path 'name'
             if (!db.objectStoreNames.contains('SavedWebsiteData')) {
                 db.createObjectStore('SavedWebsiteData', { keyPath: 'name' });
@@ -493,12 +474,12 @@ function openDB() {
 
 // Function to delete data from IndexedDB
 async function deleteFromIndexedDB(name) {
-    const db = await openDB();
+    let db = await openDB();
 
     return new Promise((resolve, reject) => {
-        const transaction = db.transaction('SavedWebsiteData', 'readwrite');
-        const objectStore = transaction.objectStore('SavedWebsiteData');
-        const request = objectStore.delete(name);
+        let transaction = db.transaction('SavedWebsiteData', 'readwrite');
+        let objectStore = transaction.objectStore('SavedWebsiteData');
+        let request = objectStore.delete(name);
 
         request.onsuccess = function () {
             resolve();
@@ -1366,7 +1347,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                 /* ALways Re-enable the hotel name input */
-                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel area input
+                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel name input
 
 
 
