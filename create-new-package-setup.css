@@ -327,36 +327,33 @@ body {
 
 .header_navbar_header ion-icon {
     font-size: 1.8vw;
+    transition: transform 0.3s ease;
 }
 
 .header_navbar_links {
-    max-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    /* Reverse the order of links */
-    gap: 10px;
-    margin-top: 10px;
-    transition: max-height 0.2s ease-in-out;
-    align-items: flex-end;
-    /* Align links to the right */
     width: 100%;
-    /* Take full width of the container */
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
 }
 
 .header_navbar_links a {
     text-decoration: none;
-    color: rgb(0, 102, 255);
-    font-size: 2vw;
-    padding-left: 20px;
-    /* Add padding for spacing */
+    font-size: 3vw;
+    cursor: pointer;
     transition: all 0.1s ease-in-out;
 }
 
 .header_navbar_links a:hover {
-    color: black;
-    letter-spacing: 1px;
+    transform: scale(1.015);
 }
+
+
+.rotate {
+    transform: rotate(180deg);
+}
+
 
 #fanadiqindonesia_error_page_go_back_button {
     background: black;
@@ -397,7 +394,7 @@ body {
 /* Website localstorage controller */
 #localstorage_data_controller_div {
     width: 100%;
-    padding: 25px 0 5px;
+    padding: 10px 0 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
