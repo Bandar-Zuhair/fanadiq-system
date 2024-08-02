@@ -1,13 +1,97 @@
-/* Function to save new website localstorage data name */
-saveNewWebsiteLpcalStorageDataName = function () {
-    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
-    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
+// Function to save new website data to a file using the File System Access API
+async function saveNewWebsiteData() {
+    let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
+    let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
-    if (storeLastClickedLocalstorageDataName.innerText === '') {
-        firstDiv.style.display = 'none';
-    } else {
-        firstDiv.style.display = 'flex';
+    if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
+        localstorageNewSaveButton.style.backgroundColor = 'red';
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
+        }, 500);
+        return;
     }
+
+    let newObject = {
+        name: localStorageNewSaveDataNameInput,
+        elements: {}
+    };
+
+    let divIds = [
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_total_price_data_page'
+    ];
+
+    let isAnyDivVisible = false;
+    divIds.forEach(divId => {
+        let element = document.getElementById(divId);
+        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+            newObject.elements[divId] = element.outerHTML;
+            isAnyDivVisible = true;
+        }
+    });
+
+    if (!isAnyDivVisible) {
+        localstorageNewSaveButton.style.backgroundColor = 'red';
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
+        return;
+    }
+
+    // Request a file handle from the user
+    let fileHandle;
+    try {
+        fileHandle = await window.showSaveFilePicker({
+            suggestedName: localStorageNewSaveDataNameInput + ".json",
+            types: [{
+                description: 'JSON File',
+                accept: { 'application/json': ['.json'] },
+            }]
+        });
+    } catch (error) {
+        console.error('File save operation was cancelled or failed:', error);
+        return;
+    }
+
+    // Create a writable stream
+    const writableStream = await fileHandle.createWritable();
+
+    // Write the data to the file as JSON
+    await writableStream.write(JSON.stringify(newObject));
+
+    // Close the file
+    await writableStream.close();
+
+    // Provide feedback to the user
+    localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+    setTimeout(() => {
+        localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+    }, 500);
+
+
+    /* Get the 'localstorage_save_name_input_div' and show it */
+    let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
+
+    // Check if the overlay already exists
+    let overlayLayer = document.querySelector('.black_overlay');
+
+    localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+    overlayLayer.style.opacity = '0'; // Hide overlay
+
+    setTimeout(() => {
+        document.body.removeChild(overlayLayer);
+    }, 300); // Match transition duration in CSS
+
+    document.getElementById('localstorage_new_save_data_name_input_id').value = '';
+}
+
+
+/* Function to save new website localstorage data name */
+openSaveNewWebsiteFileDataName = function () {
 
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -38,194 +122,6 @@ saveNewWebsiteLpcalStorageDataName = function () {
     overlayLayer.addEventListener('click', (event) => {
         event.stopPropagation(); // Prevent immediate closure of overlay on click
     });
-
-
-
-
-
-
-
-
-
-    /* Save (New) website data to the localstorage */
-    saveNewWebsiteLocalStorageDataName = function () {
-        let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
-        let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
-
-        /* If there is no value in the 'localstorage_new_save_data_name_input_id' input, stop the process */
-        if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = 'red';
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            return;
-        }
-
-        // Initialize an array in local storage if it doesn't exist
-        let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
-
-        // Create an object to store visible div elements
-        let newObject = {
-            name: localStorageNewSaveDataNameInput,
-            elements: {}
-        };
-
-        // List of div IDs to check visibility
-        let divIds = [
-            'downloaded_pdf_clint_data_page',
-            'downloaded_pdf_package_including_data_page',
-            'downloaded_pdf_flight_data_page',
-            'downloaded_pdf_hotel_data_page',
-            'downloaded_pdf_clint_movements_data_page',
-            'downloaded_pdf_total_price_data_page'
-        ];
-
-        // Check visibility of each div and add to the object if visible
-        let isAnyDivVisible = false;
-        divIds.forEach(divId => {
-            let element = document.getElementById(divId);
-            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                newObject.elements[divId] = element.outerHTML;
-                isAnyDivVisible = true;
-            }
-        });
-
-        // If no visible divs were found, change the submit icon background color and exit
-        if (!isAnyDivVisible) {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = 'red';
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            return;
-        }
-
-        // Check if an object with the same name already exists
-        let existingObjectIndex = savedWebsiteDataArray.findIndex(item => item.name === localStorageNewSaveDataNameInput);
-
-        if (existingObjectIndex !== -1) {
-            // Replace the existing object with the new data
-            savedWebsiteDataArray[existingObjectIndex] = newObject;
-        } else {
-            // Add the new object to the array
-            savedWebsiteDataArray.push(newObject);
-        }
-
-        // Save the updated array to local storage
-        localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
-
-        // Change the submit icon background color to green
-        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-
-        // Set the background color of the submit icon back to the default color
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
-
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-        overlayLayer.style.opacity = '0'; // Hide overlay
-
-        // Remove overlay and delete box div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-
-        /* Reset the input value after saving a new localStorage website data */
-        localstorage_new_save_data_name_input_id.value = '';
-    }
-
-
-
-
-
-
-
-
-
-    /* Save (Current) website data to the localstorage */
-    saveCurrentWebsiteLocalStorageDataName = function () {
-        let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
-        let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
-
-        // Initialize an array in local storage if it doesn't exist
-        let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
-
-        // Create an object to store visible div elements
-        let newObject = {
-            name: storeLastClickedLocalstorageDataName,
-            elements: {}
-        };
-
-        // List of div IDs to check visibility
-        let divIds = [
-            'downloaded_pdf_clint_data_page',
-            'downloaded_pdf_package_including_data_page',
-            'downloaded_pdf_flight_data_page',
-            'downloaded_pdf_hotel_data_page',
-            'downloaded_pdf_clint_movements_data_page',
-            'downloaded_pdf_total_price_data_page'
-        ];
-
-        // Check visibility of each div and add to the object if visible
-        let isAnyDivVisible = false;
-        divIds.forEach(divId => {
-            let element = document.getElementById(divId);
-            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                newObject.elements[divId] = element.outerHTML;
-                isAnyDivVisible = true;
-            }
-        });
-
-        // If no visible divs were found, change the submit icon background color and exit
-        if (!isAnyDivVisible) {
-            // Change the submit icon background color
-            localstorageNewSaveButton.style.backgroundColor = 'red';
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            return;
-        }
-
-        // Check if an object with the same name already exists
-        let existingObjectIndex = savedWebsiteDataArray.findIndex(item => item.name === storeLastClickedLocalstorageDataName);
-
-        if (existingObjectIndex !== -1) {
-            // Replace the existing object with the new data
-            savedWebsiteDataArray[existingObjectIndex] = newObject;
-        } else {
-            // Add the new object to the array
-            savedWebsiteDataArray.push(newObject);
-        }
-
-        // Save the updated array to local storage
-        localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
-
-        // Change the submit icon background color to green
-        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-
-        // Set the background color of the submit icon back to the default color
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
-
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-        overlayLayer.style.opacity = '0'; // Hide overlay
-
-        // Remove overlay and delete box div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-    }
 }
 
 
@@ -251,155 +147,64 @@ saveNewWebsiteLpcalStorageDataName = function () {
 
 
 
-/* Function to update the displayed local storage data names */
-function updateLocalStorageDataNames(localStorageControllerDivId) {
+document.getElementById('restoreDataButton').addEventListener('click', () => {
+    document.getElementById('fileInput').click();
+});
 
-    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
+document.getElementById('fileInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            try {
+                const fileData = JSON.parse(event.target.result);
 
+                // Clear the current website data
+                clearCurrentData();
 
-    // Clear existing <p> elements
-    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
+                // Assuming the data structure matches your expected format
+                if (fileData && fileData.elements) {
+                    for (let divId in fileData.elements) {
+                        let htmlSectionPdfPageDiv = document.getElementById(divId);
+                        htmlSectionPdfPageDiv.style.display = 'block';
+                        htmlSectionPdfPageDiv.innerHTML = fileData.elements[divId];
+                        reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                    }
 
-    // Get the saved data array from local storage
-    let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
-
-    // Create new <p> elements based on the saved data array
-    savedWebsiteDataArray.forEach(data => {
-        let pElement = document.createElement('h3');
-        pElement.innerText = data.name;
-        pElement.onclick = function () {
-            pickThisWebsiteLocalStorageDataName(pElement);
-        };
-        allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
-    });
-}
-
-
-
-/* Function to pick website localStorage data names */
-pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
-    // Identify the parent div of the clicked <p> element
-    let parentDivId = clickedLocalStorageDataName.parentElement.id;
-
-    // If the clicked element is inside the importing data div (single selection)
-    if (parentDivId === 'all_localstorage_stored_data_names_for_importing_data_div') {
-        // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
-        let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
-
-        // Loop through each <p> element to reset their styles
-        allDataNames.forEach(function (dataName) {
-            dataName.style.backgroundColor = 'white';
-            dataName.style.color = 'black';
-        });
-
-        // Set the background color and text color of the clicked <p> element
-        clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-        clickedLocalStorageDataName.style.color = 'white';
-
-    } else if (parentDivId === 'all_localstorage_stored_data_names_for_deleting_data_div') {
-        // If the clicked element is inside the deleting data div (multiple selection)
-
-        // Toggle the background and text color of the clicked <p> element
-        if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
-            clickedLocalStorageDataName.style.backgroundColor = 'white';
-            clickedLocalStorageDataName.style.color = 'black';
-        } else {
-            clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-            clickedLocalStorageDataName.style.color = 'white';
-        }
-    }
-};
+                    // Show the download button if needed
+                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
 
 
-
-
-
-
-function importWebsiteLocalStorageDataName() {
-
-    // Re-enable scrolling
-    document.documentElement.style.overflow = 'auto';
-
-
-    let allLocalStorageDataNamesDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
-    let found = false;
-
-    allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
-        if (clickedLocalStorageDataNameElement.style.backgroundColor === 'rgb(0, 155, 0)') {
-            found = true;
-
-
-            let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
-            dropdownDivElements.forEach(dropdown => {
-                dropdown.classList.remove('show');
-            });
-
-            overlayLayer.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300);
-
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
-            let clickedDataName = clickedLocalStorageDataNameElement.innerText;
-            let matchingObject = savedWebsiteDataArray.find(data => data.name === clickedDataName);
-
-            if (matchingObject && matchingObject.elements) {
-                document.getElementById('inserted_clint_data_position_div').innerHTML = '';
-                document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
-                document.getElementById('inserted_flight_data_position_div').innerHTML = '';
-                document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
-                document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
-
-                document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
-                document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
-                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
-                document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
-                document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
-                document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
-
-                for (let divId in matchingObject.elements) {
-                    let htmlSectionPdfPageDiv = document.getElementById(divId);
-                    htmlSectionPdfPageDiv.style.display = 'block';
-                    htmlSectionPdfPageDiv.innerHTML = matchingObject.elements[divId];
-                    reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                    // Get the file name without the extension
+                    const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "");
+                    // Set the input value as the imported file name without the extension
+                    document.getElementById('localstorage_new_save_data_name_input_id').value = fileNameWithoutExtension;
+                    
+                } else {
+                    console.error('Invalid file data format');
                 }
-
-
-                /* Store the clicked localstorage data name for later saving refrence */
-                store_last_clicked_localstorage_data_name.innerText = clickedDataName;
-
-
-
-                /* Show the download button */
-                document.getElementById('export_package_pdf_div_id').style.display = 'block';
-
-
-                overlayLayer.style.opacity = '0';
-                setTimeout(() => {
-                    overlayLayer.style.display = 'none';
-                }, 300);
+            } catch (error) {
+                console.error('Error parsing JSON file:', error);
             }
-        }
-    });
+        };
+        reader.readAsText(file);
+    }
+});
 
-    if (!found) {
-        import_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
-        setTimeout(() => {
-            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
-        }, 500);
-    }
+// Function to clear current website data
+function clearCurrentData() {
+    document.getElementById('inserted_clint_data_position_div').innerHTML = '';
+    document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
+    document.getElementById('inserted_flight_data_position_div').innerHTML = '';
+    document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
+    document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
 
-
-    /* Set the package including sms + inner tickets + package total price inputs values */
-    if (document.getElementById('store_localstorage_package_including_sms_value').innerText !== '') {
-        document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
-    }
-    if (document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== '') {
-        document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
-    }
-    if (document.getElementById('store_localstorage_package_total_price_value').innerText !== '') {
-        document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
-    }
+    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
 }
 
 
@@ -414,56 +219,6 @@ function importWebsiteLocalStorageDataName() {
 
 
 
-
-
-
-
-/* Function to delete the saved website localstorage data name */
-deleteWebsiteLocalStorageDataName = function () {
-    // Re-enable scrolling
-    document.documentElement.style.overflow = 'auto';
-
-    // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
-    let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
-
-    // Get all p elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
-    let pElements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName('h3');
-
-    // Loop through all p elements
-    for (let p of pElements) {
-        // Check the background color
-        let bgColor = window.getComputedStyle(p).backgroundColor;
-        if (bgColor === 'rgb(0, 155, 0)') {
-
-            // Search and delete the object in localStorage
-            let savedWebsiteDataArray = JSON.parse(localStorage.getItem('Saved_Website_Data_Array')) || [];
-            savedWebsiteDataArray = savedWebsiteDataArray.filter(item => item.name !== p.innerText);
-            localStorage.setItem('Saved_Website_Data_Array', JSON.stringify(savedWebsiteDataArray));
-
-            /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
-            let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.searchable_names_dropdown_class');
-            allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach(dropdown => {
-                dropdown.classList.remove('show');
-            });
-
-            overlayLayer.style.opacity = '0'; // Hide overlay
-
-            // Check if overlayLayer exists in the DOM before trying to remove it
-            setTimeout(() => {
-                if (document.body.contains(overlayLayer)) {
-                    document.body.removeChild(overlayLayer);
-                }
-            }, 300); // Match transition duration in CSS
-
-        } else {
-            // Change the submit button background color
-            delete_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
-            setTimeout(() => {
-                delete_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
-            }, 500);
-        }
-    }
-}
 
 
 
