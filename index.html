@@ -143,8 +143,8 @@
         </div>
 
 
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button"
-            onclick="importIndexedDBDataName()">تأكيد</p>
+        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importIndexedDBDataName()">تأكيد
+        </p>
 
 
         <div id="all_localstorage_stored_data_names_for_importing_data_div"
@@ -163,8 +163,7 @@
 
 
         <div class="search_bar_div_class">
-            <input type="text" id="fileInput" class="search_bar_input_class"
-                placeholder="بحث.." autocomplete="off">
+            <input type="text" id="fileInput" class="search_bar_input_class" placeholder="بحث.." autocomplete="off">
         </div>
 
 
@@ -331,12 +330,8 @@
         <div id="dropdown_hotel_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
-                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_location_dropdown')" style="cursor: pointer;">
-                <input type="text" id="hotel_area_input_id" placeholder="المنطقة" readonly autocomplete="off" disabled
-                    onclick="showOverlay('hotel_bali_area_dropdown')" style="cursor: pointer;">
                 <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
-                    disabled onclick="toggleHotelNameDropdown()" style="cursor: pointer;">
+                    onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
 
 
                 <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
@@ -830,77 +825,21 @@
 
 
 
-        <!-- Dropdown Div For Hotel Locations -->
-        <div id="hotel_location_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3>بالي</h3>
-                <h3>جاكرتا</h3>
-                <h3>بونشاك</h3>
-                <h3>باندونق</h3>
-                <h3>لومبوك</h3>
-            </div>
-        </div>
 
-
-        <!-- Dropdown Div For Hotel Area -->
-        <div id="hotel_bali_area_dropdown" class="searchable_names_dropdown_class">
+        <!-- Company names options -->
+        <div id="all_hotel_names_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-                <input type="text" id="hotel_bali_area_search_bar_input_id" class="search_bar_input_class"
+                <input type="text" id="all_hotel_names_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." autocomplete="off">
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
                 <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('hotel_bali_area_search_bar_input_id')"></ion-icon>
+                    onclick="clearSearchableDropDownInputValue('all_hotel_names_search_bar_input_id')"></ion-icon>
             </div>
-
-            <div class="company_names_options_dropdown_class">
-                <h3>كيراماس</h3>
-                <h3>اوبود</h3>
-                <h3>نوسا دوا</h3>
-                <h3>سيمنياك</h3>
-                <h3>كوتا</h3>
-                <h3>جيمباران</h3>
-                <h3>اولواتو</h3>
-                <h3>ليجين</h3>
-            </div>
-        </div>
-
-
-        <!-- Keramas -->
-        <div id="keramas_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="keramas_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('keramas_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
 
             <div class="company_names_options_dropdown_class">
                 <h3>Komaneka Keramas</h3>
-            </div>
-        </div>
-
-
-        <!-- Ubud -->
-        <div id="ubud_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="ubud_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('ubud_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Four Seasons Sayan</h3>
                 <h3>Komaneka Tanggayuda</h3>
                 <h3>Samsara Ubud</h3>
@@ -920,23 +859,6 @@
                 <h3>Komaneka Rasa Sayang</h3>
                 <h3>Nau Villa</h3>
                 <h3>Tanadewa Ubud</h3>
-            </div>
-        </div>
-
-
-        <!-- Nusa Dua -->
-        <div id="nusa_dua_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="nusa_dua_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('nusa_dua_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>The Apurva Kempinski</h3>
                 <h3>Ulu Segara</h3>
                 <h3>Merusaka</h3>
@@ -945,23 +867,6 @@
                 <h3>Renaissance Nusa Dua</h3>
                 <h3>Sofitel Nusa Dua</h3>
                 <h3>Tanadewa Nusa Dua</h3>
-            </div>
-        </div>
-
-
-        <!-- Seminyak -->
-        <div id="seminyak_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="seminyak_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('seminyak_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>The Trans Bali</h3>
                 <h3>Indigo Bali</h3>
                 <h3>Sini Vie Villa</h3>
@@ -986,23 +891,6 @@
                 <h3>Kolila Villa</h3>
                 <h3>La Vie Villa</h3>
                 <h3>Courtyard Seminyak</h3>
-            </div>
-        </div>
-
-
-        <!-- Kuta -->
-        <div id="kuta_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="kuta_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('kuta_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Sheraton Kuta</h3>
                 <h3>Aryaduta Kuta</h3>
                 <h3>Tribe</h3>
@@ -1013,87 +901,17 @@
                 <h3>Discovery Kartika Plaza</h3>
                 <h3>Ramayana Suites</h3>
                 <h3>The Anvaya Beach</h3>
-            </div>
-        </div>
-
-
-        <!-- Jimbaran -->
-        <div id="jimbaran_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="jimbaran_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('jimbaran_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Four Seasons Jimbaran</h3>
                 <h3>Movenpick Jimbaran</h3>
                 <h3>Platinum Jimbaran</h3>
                 <h3>Le Meridien</h3>
                 <h3>Intercontinental Bali</h3>
-            </div>
-        </div>
-
-
-        <!-- Uluwatu -->
-        <div id="uluwatu_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="uluwatu_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('uluwatu_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Umana Bali</h3>
                 <h3>Jumeirah Bali</h3>
                 <h3>Renaissance Uluwatu</h3>
-            </div>
-        </div>
-
-
-        <!-- Legian -->
-        <div id="legian_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="legian_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('legian_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Eight Palms Villa</h3>
                 <h3>Jumeirah Bali</h3>
                 <h3>Renaissance Uluwatu</h3>
-            </div>
-        </div>
-
-
-
-
-        <!-- Jakarta -->
-        <div id="jakarta_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="jakarta_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('jakarta_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Raffles Jakarta</h3>
                 <h3>Ascott Jakarta</h3>
                 <h3>Citadines Sudirman</h3>
@@ -1112,82 +930,23 @@
                 <h3>Sheraton Soekarno</h3>
                 <h3>Grove Suites</h3>
                 <h3>FM7 Tangerang</h3>
-                <h3>Harris Hotel</h3>
-
-
-
-
                 <h3>Merlynn Park</h3>
-            </div>
-        </div>
-
-
-
-
-        <!-- Puncak -->
-        <div id="puncak_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="puncak_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('puncak_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Grand Aston</h3>
                 <h3>Le Eminence</h3>
                 <h3>Pesona Alam</h3>
                 <h3>Botanica Sanctuary</h3>
                 <h3>Villa Marina</h3>
-            </div>
-        </div>
-
-
-
-
-
-        <!-- Bandung -->
-        <div id="bandung_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="bandung_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('bandung_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Courtyard Bandung</h3>
                 <h3>Sheraton Bandung</h3>
                 <h3>Trans Luxury</h3>
                 <h3>Four Points Sheraton</h3>
-            </div>
-        </div>
-
-
-
-        <!-- Lombok -->
-        <div id="lombok_hotel_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="lombok_hotel_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('lombok_hotel_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class">
                 <h3>Kalandara</h3>
                 <h3>The Kayana Lombok</h3>
             </div>
         </div>
+
+
+
 
 
     </section>
@@ -2484,7 +2243,7 @@
 
 
     <!-- System Js Filees -->
-    <script src="create-new-package-localstorage.js"></script>
+    <script src="create-new-package-database.js"></script>
     <script src="create-new-package-insert-data.js"></script>
     <script src="create-new-package-all-hotel-data-array.js"></script>
     <script src="create-new-package-setup.js"></script>
