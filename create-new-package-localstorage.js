@@ -41,29 +41,25 @@ async function saveNewWebsiteData() {
         return;
     }
 
-    // Request a file handle from the user
-    let fileHandle;
-    try {
-        fileHandle = await window.showSaveFilePicker({
-            suggestedName: localStorageNewSaveDataNameInput + ".json",
-            types: [{
-                description: 'JSON File',
-                accept: { 'application/json': ['.json'] },
-            }]
-        });
-    } catch (error) {
-        console.error('File save operation was cancelled or failed:', error);
-        return;
-    }
+    // Create a blob from the JSON object
+    const jsonString = JSON.stringify(newObject);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
 
-    // Create a writable stream
-    const writableStream = await fileHandle.createWritable();
+    // Create a link element to download the file
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${localStorageNewSaveDataNameInput}.json`;
 
-    // Write the data to the file as JSON
-    await writableStream.write(JSON.stringify(newObject));
+    // Append the link to the document and simulate a click
+    document.body.appendChild(a);
+    a.click();
 
-    // Close the file
-    await writableStream.close();
+    // Clean up
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 0);
 
     // Provide feedback to the user
     localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
@@ -93,6 +89,7 @@ async function saveNewWebsiteData() {
 // Ensure the function is called correctly on mobile devices
 document.getElementById('localstorage_new_save_button_id').addEventListener('touchstart', saveNewWebsiteData);
 document.getElementById('localstorage_new_save_button_id').addEventListener('click', saveNewWebsiteData);
+
 
 
 
