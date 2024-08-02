@@ -83,12 +83,12 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p style="user-select: none;" onclick="openSaveNewWebsiteLocalStorageDataName()">تخزين</p>
+        <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">تخزين</p>
         <p style="user-select: none;"
-            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateIndexedDBDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
+            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
             إستعادة</p>
         <p style="user-select: none;"
-            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateIndexedDBDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
+            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
             حذف</p>
     </div>
 
@@ -103,14 +103,14 @@
 
     <div id="localstorage_save_name_input_div">
         <div id="first_div_in_localstorage_save_name_input_div">
-            <p onclick="saveUpdatedWebsiteData()">حفظ التعديلات في نفس البكج</p>
+            <p onclick="saveUpdatedWebsiteDataBase()">حفظ التعديلات في نفس البكج</p>
         </div>
         <div>
             <h6>تخزين جديد</h6>
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
                 autocomplete="off">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteData()">تخزين جديد</p>
+                onclick="saveNewWebsiteDataBase()">تخزين جديد</p>
         </div>
     </div>
 
@@ -143,7 +143,7 @@
         </div>
 
 
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importIndexedDBDataName()">تأكيد
+        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importSavedDataBaseName()">تأكيد
         </p>
 
 
