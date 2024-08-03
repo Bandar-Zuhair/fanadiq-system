@@ -9,7 +9,6 @@
 
 
 
-
 /* Header Nav Bar */
 function toggleLinks(id) {
     var links = document.getElementById(id);
@@ -2228,7 +2227,6 @@ document.addEventListener('click', function() {
         isClintMovementsLastDayPickerVisible = false;
     }
 });
-
 
 
 
