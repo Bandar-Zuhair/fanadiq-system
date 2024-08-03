@@ -98,14 +98,6 @@ async function saveNewWebsiteDataBase() {
 
 /* Function to save new website localstorage data name */
 openSaveNewWebsiteDataBase = function () {
-    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
-    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
-
-    if (storeLastClickedLocalstorageDataName.innerText === '') {
-        firstDiv.style.display = 'none';
-    } else {
-        firstDiv.style.display = 'flex';
-    }
 
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -192,9 +184,6 @@ async function importSavedDataBaseName() {
                 htmlSectionPdfPageDiv.innerHTML = savedData.elements[divId];
                 reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
             }
-
-            /* Store the clicked localstorage data name for later saving reference */
-            store_last_clicked_localstorage_data_name.innerText = savedData.name;
 
             /* Show the download button */
             document.getElementById('export_package_pdf_div_id').style.display = 'block';
