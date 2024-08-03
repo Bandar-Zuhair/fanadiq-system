@@ -1,7 +1,6 @@
 
 
 
-// Function to save new website data to a file with directory selection
 async function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
@@ -50,17 +49,29 @@ async function saveNewWebsiteDataBase() {
     let dataBlob = new Blob([dataStr], { type: 'application/json' });
 
     try {
-        // Show the directory picker and save the file in the selected directory
-        const handle = await window.showSaveFilePicker({
-            suggestedName: `${localStorageNewSaveDataNameInput}.json`,
-            types: [{
-                description: 'JSON Files',
-                accept: { 'application/json': ['.json'] },
-            }],
-        });
-        const writable = await handle.createWritable();
-        await writable.write(dataBlob);
-        await writable.close();
+        if (window.showSaveFilePicker) {
+            // Desktop version using File System Access API
+            const handle = await window.showSaveFilePicker({
+                suggestedName: `${localStorageNewSaveDataNameInput}.json`,
+                types: [{
+                    description: 'JSON Files',
+                    accept: { 'application/json': ['.json'] },
+                }],
+            });
+            const writable = await handle.createWritable();
+            await writable.write(dataBlob);
+            await writable.close();
+        } else {
+            // Fallback for mobile devices and browsers that don't support File System Access API
+            const url = URL.createObjectURL(dataBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${localStorageNewSaveDataNameInput}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
 
         // Provide feedback and reset input
         localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
@@ -91,6 +102,7 @@ async function saveNewWebsiteDataBase() {
         }, 500);
     }
 }
+
 
 
 
