@@ -391,16 +391,13 @@ body {
     background: white;
     width: 100%;
     font-size: 2.5vw;
+    margin: 0 5px;
     padding: 1px 5px;
     text-align: center;
     cursor: pointer;
     border: 0.5px solid black;
     border-radius: 7px;
     transition: all 0.1s ease-in-out;
-}
-
-#localstorage_data_controller_div p:nth-child(2) {
-    margin: 0 5px;
 }
 
 #localstorage_data_controller_div p:hover {
