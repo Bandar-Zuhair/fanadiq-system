@@ -71,6 +71,9 @@ async function saveNewWebsiteDataBase() {
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+
+            // Inform the user to choose the download location
+            alert('Please choose the location where you want to save the file.');
         }
 
         // Provide feedback and reset input
