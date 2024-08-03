@@ -85,11 +85,8 @@
     <div id="localstorage_data_controller_div">
         <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">تخزين</p>
         <p style="user-select: none;"
-            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
+            onclick="importSavedDataBaseName()">
             إستعادة</p>
-        <p style="user-select: none;"
-            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
-            حذف</p>
     </div>
 
 
@@ -110,7 +107,7 @@
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
                 autocomplete="off">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteDataBase()">تخزين جديد</p>
+                onclick="saveNewWebsiteDataBase()" style="user-select: none;">تخزين جديد</p>
         </div>
     </div>
 
@@ -128,54 +125,6 @@
 
 
 
-
-
-
-    <!-- Dropdown Div For Hotel Locations -->
-    <div id="import_localstorage_data_names_dropdown"
-        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
-        <h6>إستعادة البيانات</h6>
-
-
-        <div class="search_bar_div_class">
-            <input type="text" id="import_localstorage_data_names_search_bar_input_id" class="search_bar_input_class"
-                placeholder="بحث.." autocomplete="off">
-        </div>
-
-
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importSavedDataBaseName()">تأكيد
-        </p>
-
-
-        <div id="all_localstorage_stored_data_names_for_importing_data_div"
-            class="company_names_options_dropdown_class">
-            <!-- Dynamic JS Code Here -->
-        </div>
-    </div>
-
-
-
-
-    <!-- Dropdown Div For Hotel Locations -->
-    <div id="delete_localstorage_data_names_dropdown"
-        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
-        <h6>حذف البيانات</h6>
-
-
-        <div class="search_bar_div_class">
-            <input type="text" id="fileInput" class="search_bar_input_class" placeholder="بحث.." autocomplete="off">
-        </div>
-
-
-
-        <p id="delete_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
-            onclick="deleteWebsiteDataName()">حذف</p>
-
-
-        <div id="all_localstorage_stored_data_names_for_deleting_data_div" class="company_names_options_dropdown_class">
-            <!-- Dynamic JS Code Here -->
-        </div>
-    </div>
 
 
 
