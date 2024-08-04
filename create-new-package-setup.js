@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-/* window.addEventListener('beforeunload', function (event) {
+window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-}); */
+});
 
 
 
@@ -50,28 +50,50 @@ setTimeout(function () {
 /* Function to show and hide different pachage details sections */
 showPackageTypeSection = function (packageType, clickedElement) {
 
-    if (packageType === 'hotel') {
+    window.scrollTo(0, 0);
+
+    
+    if (packageType === 'clint') {
+        create_new_clint_data_section.style.display = 'block';
+        create_new_hotel_package_section.style.display = 'none';
+        create_new_flight_package_section.style.display = 'none';
+        create_new_clint_movements_paln_section.style.display = 'none';
+        create_new_package_including_and_not_including_data_section.style.display = 'none';
+
+    } else if (packageType === 'hotel') {
+        create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'flex';
         create_new_flight_package_section.style.display = 'none';
         create_new_clint_movements_paln_section.style.display = 'none';
+        create_new_package_including_and_not_including_data_section.style.display = 'none';
 
     } else if (packageType === 'flight') {
+        create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'flex';
         create_new_clint_movements_paln_section.style.display = 'none';
+        create_new_package_including_and_not_including_data_section.style.display = 'none';
 
-    } else {
+    } else if (packageType === 'transportation') {
+        create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'none';
         create_new_clint_movements_paln_section.style.display = 'flex';
+        create_new_package_including_and_not_including_data_section.style.display = 'none';
 
+    } else if (packageType === 'package_including') {
+        create_new_clint_data_section.style.display = 'none';
+        create_new_hotel_package_section.style.display = 'none';
+        create_new_flight_package_section.style.display = 'none';
+        create_new_clint_movements_paln_section.style.display = 'none';
+        create_new_package_including_and_not_including_data_section.style.display = 'block';
     }
 
 
     // Change the color of the clicked element to red and reset others to black
     var links = document.querySelectorAll('.header_navbar_links a');
-    links.forEach(function(link) {
-        link.style.color = (link === clickedElement) ? 'rgb(255, 145, 0)' : 'black';
+    links.forEach(function (link) {
+        link.style.backgroundColor = (link === clickedElement) ? 'rgb(0, 46, 57)' : 'rgb(85, 127, 137)';
     });
 }
 
@@ -91,30 +113,6 @@ showPackageTypeSection = function (packageType, clickedElement) {
 
 
 
-/* Function To Drop Down Elements */
-function toggleDropdownContent(toggleButtonId, dropdownContentId) {
-    let toggleButton = document.getElementById(toggleButtonId);
-    let dropdownContent = document.getElementById(dropdownContentId);
-    toggleButton.addEventListener('click', function () {
-        dropdownContent.style.maxHeight = dropdownContent.style.maxHeight ? null : dropdownContent.scrollHeight + 'px';
-    });
-}
-
-// Prepare dropdown toggles for client, hotel, and package details
-toggleDropdownContent('toggle_hotel_clint_elements', 'hotel_dropdown_clint_content');
-toggleDropdownContent('toggle_hotel_elements', 'dropdown_hotel_content');
-toggleDropdownContent('toggle_package_elements', 'dropdown_package_content');
-
-
-
-// Prepare dropdown toggles for flight package details
-toggleDropdownContent('toggle_clint_flight_elements', 'flight_dropdown_content');
-
-
-
-// Prepare dropdown toggles for transportation plane details
-toggleDropdownContent('toggle_clint_movements_details_elements', 'clint_movements_details_dropdown_content');
-toggleDropdownContent('toggle_clint_movements_period_elements', 'clint_movements_period_dropdown_content');
 
 
 
@@ -255,14 +253,14 @@ function cycleColor(event) {
 
     // Get the current background color of the pseudo-element
     let currentColor = window.getComputedStyle(label, '::before').backgroundColor;
-    
+
     // Find the index of the current color
     let currentIndex = colors.indexOf(currentColor);
     // Determine the next color index
     let nextIndex = (currentIndex + 1) % colors.length;
     // Get the next color
     let nextColor = colors[nextIndex];
-    
+
     // Apply the next color
     label.style.setProperty('--checkbox-color', nextColor);
 }
@@ -274,7 +272,7 @@ document.querySelectorAll('#package_including_details_div input[type="checkbox"]
     let checkboxId = checkbox.id;
     let initialColor = initialColors[checkboxId] || 'rgb(255, 255, 255)'; // Default to white if not specified
     label.style.setProperty('--checkbox-color', initialColor);
-    
+
     // Add click event listener
     checkbox.addEventListener('click', cycleColor);
 });
@@ -478,7 +476,7 @@ let createRoomTypeDescripyionDropDown = function () {
         }
 
         /* But if the hotel name input was empty then hide all the h3 elements */
-    }else{
+    } else {
         // Clear any existing content in the h3 elements div
         hotelRoomTypeDescriptionH3ElementsDiv.innerHTML = '';
     }
@@ -545,7 +543,7 @@ function filterOptions(inputId, dropdownId) {
 
 
 /* Function to clear searchable dropdown input filter h3 */
-clearSearchableDropDownInputValue = function(targetInputToClear) {
+clearSearchableDropDownInputValue = function (targetInputToClear) {
     // Clear the input value
     document.getElementById(targetInputToClear).value = '';
 
@@ -706,7 +704,6 @@ document.getElementById('clint_movements_hotel_names_search_bar_input_id').addEv
 
 
 
-
 /* Dropdown the package including sms cards and inner flight tickets amount */
 // Set lastClickedClintMovementsCityInput when the sms card input field is clicked
 document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', () => {
@@ -724,7 +721,7 @@ document.getElementById('inner_flight_tickets_amount_input_id').addEventListener
 
 
 // Get all the h3 elements within the dropdown
-let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#sms_card_and_ticket_amount_dropdown h3');
+let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#breakfast_and_sms_card_and_ticket_amount_dropdown h3');
 
 // Add click event listener to each h3 element
 smsCardWithInternetAmountInputOptions.forEach(option => {
@@ -953,7 +950,7 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 
 
 
-    
+
 
 
 
@@ -1009,7 +1006,7 @@ clintMovementsNextCityInputOptions.forEach(option => {
             clintMovementsNextCityInput.value = 'الذهاب للمطار للمغادرة'; // Set input value
 
             // Reset stored next city input
-            storeClintMovementsNextCityInput = null;
+            storeClintMovementsNextCityInput = option.textContent;
 
             bali_clint_movements_places_div.style.display = 'none';
             jakarta_clint_movements_places_div.style.display = 'none';
@@ -1175,7 +1172,7 @@ showClintMovemtsPlacesPage = function () {
 
 /* Function to show the clint movements tutorial page */
 showClintMovemtsTutorialPage = function () {
-    
+
     // Disable scrolling
     document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
 
@@ -1216,16 +1213,27 @@ pickThisClintMovementsPlace = function (clickedPlace) {
             // Get all p elements within the div
             var pElements = div.getElementsByTagName('p');
 
-            // Reset the background color of all p elements to darkred
-            for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
+            // Reset the background color of all p elements with class 'bandung_places_p_color_1_class' to rgb(0, 56, 99)
+            var color1Elements = div.getElementsByClassName('bandung_places_p_color_1_class');
+            for (var i = 0; i < color1Elements.length; i++) {
+                color1Elements[i].style.backgroundColor = 'rgb(0, 56, 99)';
+            }
+
+            // Reset the background color of all p elements with class 'bandung_places_p_color_2_class' to rgb(0, 89, 157)
+            var color2Elements = div.getElementsByClassName('bandung_places_p_color_2_class');
+            for (var i = 0; i < color2Elements.length; i++) {
+                color2Elements[i].style.backgroundColor = 'rgb(0, 89, 157)';
             }
         }
     });
 
-    // Toggle the background color of the clicked p element
+    // Toggle the background color of the clicked p element based on its class
     if (clickedPlace.style.backgroundColor === 'rgb(0, 155, 0)') {
-        clickedPlace.style.backgroundColor = 'rgb(0, 56, 99)';
+        if (clickedPlace.classList.contains('bandung_places_p_color_1_class')) {
+            clickedPlace.style.backgroundColor = 'rgb(0, 56, 99)';
+        } else if (clickedPlace.classList.contains('bandung_places_p_color_2_class')) {
+            clickedPlace.style.backgroundColor = 'rgb(0, 89, 157)';
+        }
     } else {
         clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
         clickedPlace.style.color = 'white';
@@ -1237,12 +1245,16 @@ pickThisClintMovementsPlace = function (clickedPlace) {
 
         // Iterate through all random days class divs
         allRandomDaysClassDivs.forEach(function (randomDaysClassDiv) {
-            // Get all p elements within the random days class div
-            var pElements = randomDaysClassDiv.getElementsByTagName('p');
+            // Get all p elements with class 'bandung_places_p_color_1_class' within the random days class div and reset their background color
+            var color1Elements = randomDaysClassDiv.getElementsByClassName('bandung_places_p_color_1_class');
+            for (var i = 0; i < color1Elements.length; i++) {
+                color1Elements[i].style.backgroundColor = 'rgb(0, 56, 99)';
+            }
 
-            // Reset the background color of all p elements in random days class
-            for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
+            // Get all p elements with class 'bandung_places_p_color_2_class' within the random days class div and reset their background color
+            var color2Elements = randomDaysClassDiv.getElementsByClassName('bandung_places_p_color_2_class');
+            for (var i = 0; i < color2Elements.length; i++) {
+                color2Elements[i].style.backgroundColor = 'rgb(0, 89, 157)';
             }
         });
 
@@ -1250,6 +1262,8 @@ pickThisClintMovementsPlace = function (clickedPlace) {
         clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
     }
 }
+
+
 
 
 
@@ -1670,7 +1684,7 @@ var wholePackageStartDatePicker = new Pikaday({
         weekdays: arabicDays,
         weekdaysShort: arabicDays
     },
-    onSelect: function() {
+    onSelect: function () {
         isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights();
         let selectedDate = this.getDate();
@@ -1698,14 +1712,14 @@ var wholePackageEndDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: function() {
+    onSelect: function () {
         isWholePackageEndDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
     }
 });
 
 // Toggle the whole package start date picker on input field click
-document.getElementById('package_start_date_input_id').addEventListener('click', function(e) {
+document.getElementById('package_start_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isWholePackageStartDatePickerVisible) {
@@ -1722,7 +1736,7 @@ document.getElementById('package_start_date_input_id').addEventListener('click',
 });
 
 // Toggle the whole package end date picker on input field click
-document.getElementById('package_end_date_input_id').addEventListener('click', function(e) {
+document.getElementById('package_end_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isWholePackageEndDatePickerVisible) {
@@ -1744,7 +1758,7 @@ function isClickInsideDatePicker(event, picker) {
 }
 
 // Hide the date pickers when clicking outside, but don't toggle state
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     if (isWholePackageStartDatePickerVisible && !isClickInsideDatePicker(e, wholePackageStartDatePicker)) {
         wholePackageStartDatePicker.hide();
         isWholePackageStartDatePickerVisible = false;
@@ -1856,7 +1870,7 @@ var hotelStartDatePicker = new Pikaday({
         weekdays: arabicDays,
         weekdaysShort: arabicDays
     },
-    onSelect: function() {
+    onSelect: function () {
         isHotelStartDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights();
         let selectedDate = this.getDate();
@@ -1884,14 +1898,14 @@ var hotelEndDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: function() {
+    onSelect: function () {
         isHotelEndDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights(); // Call 'updateHotelTotalNights' when a date is selected
     }
 });
 
 // Toggle the hotel check-in date picker on input field click
-document.getElementById('hotel_check_in_input_id').addEventListener('click', function(e) {
+document.getElementById('hotel_check_in_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isHotelStartDatePickerVisible) {
@@ -1908,7 +1922,7 @@ document.getElementById('hotel_check_in_input_id').addEventListener('click', fun
 });
 
 // Toggle the hotel check-out date picker on input field click
-document.getElementById('hotel_check_out_input_id').addEventListener('click', function(e) {
+document.getElementById('hotel_check_out_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isHotelEndDatePickerVisible) {
@@ -1925,15 +1939,15 @@ document.getElementById('hotel_check_out_input_id').addEventListener('click', fu
 });
 
 // Prevent the date pickers from hiding when clicking inside them
-hotelStartDatePicker.el.addEventListener('click', function(e) {
+hotelStartDatePicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
-hotelEndDatePicker.el.addEventListener('click', function(e) {
+hotelEndDatePicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 
 // Hide the date pickers when clicking outside
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     if (isHotelStartDatePickerVisible) {
         hotelStartDatePicker.hide();
         isHotelStartDatePickerVisible = false;
@@ -1979,7 +1993,7 @@ var startDatePicker = new Pikaday({
         let month = getArabicMonthName(date.getMonth());
         return `${day} ${month}`;
     },
-    onSelect: function() {
+    onSelect: function () {
         isDatePickerVisible = false; // Reset the visibility state when a date is selected
     },
     i18n: {
@@ -1993,7 +2007,7 @@ var startDatePicker = new Pikaday({
 
 var isDatePickerVisible = false;
 
-document.getElementById('flight_date_input_id').addEventListener('click', function(e) {
+document.getElementById('flight_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation(); // Prevent the click event from propagating
 
     if (isDatePickerVisible) {
@@ -2006,12 +2020,12 @@ document.getElementById('flight_date_input_id').addEventListener('click', functi
 });
 
 // Prevent the date picker from hiding when clicking inside it
-startDatePicker.el.addEventListener('click', function(e) {
+startDatePicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 
 // Hide the date picker when clicking outside
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     if (isDatePickerVisible) {
         startDatePicker.hide();
         isDatePickerVisible = false;
@@ -2140,7 +2154,7 @@ var clintMovementsFirstDayPicker = new Pikaday({
         weekdays: arabicDays,
         weekdaysShort: arabicDays
     },
-    onSelect: function() {
+    onSelect: function () {
         isClintMovementsFirstDayPickerVisible = false; // Reset visibility state on date selection
         updateWholeClintMovementsTotalNights();
         let selectedDate = this.getDate();
@@ -2168,14 +2182,14 @@ var clintMovementsLastDayPicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: function() {
+    onSelect: function () {
         isClintMovementsLastDayPickerVisible = false; // Reset visibility state on date selection
         updateWholeClintMovementsTotalNights(); // Call 'updateWholeClintMovementsTotalNights' when a date is selected
     }
 });
 
 // Toggle the Clint Movements First Day date picker on input field click
-document.getElementById('clint_movements_first_day_date_input_id').addEventListener('click', function(e) {
+document.getElementById('clint_movements_first_day_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isClintMovementsFirstDayPickerVisible) {
@@ -2192,7 +2206,7 @@ document.getElementById('clint_movements_first_day_date_input_id').addEventListe
 });
 
 // Toggle the Clint Movements Last Day date picker on input field click
-document.getElementById('clint_movements_last_day_date_input_id').addEventListener('click', function(e) {
+document.getElementById('clint_movements_last_day_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isClintMovementsLastDayPickerVisible) {
@@ -2209,15 +2223,15 @@ document.getElementById('clint_movements_last_day_date_input_id').addEventListen
 });
 
 // Prevent the date pickers from hiding when clicking inside them
-clintMovementsFirstDayPicker.el.addEventListener('click', function(e) {
+clintMovementsFirstDayPicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
-clintMovementsLastDayPicker.el.addEventListener('click', function(e) {
+clintMovementsLastDayPicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 
 // Hide the date pickers when clicking outside
-document.addEventListener('click', function() {
+document.addEventListener('click', function () {
     if (isClintMovementsFirstDayPickerVisible) {
         clintMovementsFirstDayPicker.hide();
         isClintMovementsFirstDayPickerVisible = false;
