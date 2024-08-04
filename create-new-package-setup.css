@@ -78,7 +78,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 }
 
 
@@ -170,7 +170,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .clint_movements_full_page_div {
@@ -183,7 +183,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .clint_movements_full_page_div h6 {
@@ -250,95 +250,65 @@ body {
 
 /* Header */
 #header {
-    background: rgb(215, 232, 244);
-    padding: 20px 0;
-    /* Increased padding for better spacing */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* Space out header sections */
-    align-items: center;
-    transition: all 0.3s ease-in-out;
-}
-
-#header_div {
+    position: sticky;
+    /* Makes the header stick at the top of the viewport */
+    top: 0;
+    /* Position the header at the top */
+    left: 0;
+    /* Aligns the header to the left edge of the viewport */
     width: 100%;
-    padding: 5px 20px;
-    display: flex;
-    justify-content: space-between;
-    /* Space evenly between child elements */
-    align-items: center;
-}
-
-#header_div img {
-    width: 15vw;
-}
-
-#header_div h1 {
-    font-size: 2vw;
-    font-weight: bolder;
-}
-
-
-/* Navbar sections within the header */
-.header_navbar_section {
-    padding-top: 15px;
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    transition: all 0.2s ease-in-out;
-}
-
-.header_navbar_section:hover {
-    box-shadow: 0 3px 5px -3px black;
-}
-
-.header_navbar_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    padding: 0 20px;
-}
-
-.header_navbar_title {
-    font-size: 2.5vw;
-}
-
-.header_navbar_header ion-icon {
-    font-size: 1.8vw;
-    transition: transform 0.3s ease;
-}
-
-.header_navbar_links {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    /* Ensures the header spans the full width of the viewport */
+    background: red;
+    /* Background color for the header, change as needed */
+    z-index: 900;
+    /* Ensures the header is on top of other elements */
     border-bottom: 1px solid black;
+    /* Optional border for visual separation */
 }
 
+/* Navigation Links Container */
+.header_navbar_links {
+    background: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    /* Prevents wrapping to ensure items stay in one row */
+    justify-content: space-between;
+    /* Distributes space between items */
+    border-bottom: 1px solid black;
+    padding: 10px 0;
+    /* Add padding to ensure proper spacing */
+    box-sizing: border-box;
+    /* Ensures padding and border are included in the width */
+}
+
+/* Individual Navigation Links */
 .header_navbar_links a {
     text-decoration: none;
-    width: 100%;
     font-size: 3vw;
+    /* Adjust as needed for responsiveness */
     text-align: center;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
+    background: rgb(85, 127, 137);
+    color: white;
+    border: 0.5px solid black;
+    flex: 1;
+    /* Allows each link to take an equal share of the container's width */
+    box-sizing: border-box;
 }
+
+/* Ensure each link has the same width */
+.header_navbar_links a {
+    flex: 1 1 auto;
+    /* Allows items to grow and shrink as needed */
+}
+
+
+
 
 .header_navbar_links a:hover {
     transform: scale(1.015);
-}
-
-
-.rotate {
-    transform: rotate(180deg);
 }
 
 
@@ -353,7 +323,7 @@ body {
     border: 1px solid white;
     border-radius: 7px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
 }
 
 #fanadiqindonesia_error_page_go_back_button:hover {
@@ -364,6 +334,22 @@ body {
 
 
 
+
+
+
+
+
+/* Scroll down icon */
+#scroll_bottom_page_icon {
+    background: rgb(85, 127, 137);
+    color: white;
+    font-size: 5vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
 
 
@@ -391,13 +377,16 @@ body {
     background: white;
     width: 100%;
     font-size: 2.5vw;
-    margin: 0 5px;
     padding: 1px 5px;
     text-align: center;
     cursor: pointer;
     border: 0.5px solid black;
     border-radius: 7px;
     transition: all 0.1s ease-in-out;
+}
+
+#localstorage_data_controller_div p:nth-child(2) {
+    margin: 0 5px;
 }
 
 #localstorage_data_controller_div p:hover {
@@ -464,7 +453,7 @@ body {
 }
 
 .localstorage_data_name_submit_button {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 
@@ -486,7 +475,7 @@ body {
 }
 
 .localstorage_dropdown_div_class p {
-    background: rgb(85, 127, 137);
+    background: rgb(255, 174, 0);
     color: white;
     font-size: 2.5vw;
     padding: 1px 5px;
@@ -494,8 +483,10 @@ body {
     border: 0.5px solid black;
     border-radius: 7px;
     cursor: pointer;
-    align-self: flex-start; /* Position the button to the right */
-    margin-right: 5px; /* Adjust margin as needed */
+    align-self: flex-start;
+    /* Position the button to the right */
+    margin-right: 5px;
+    /* Adjust margin as needed */
 }
 
 
@@ -531,7 +522,6 @@ body {
 .section_title_text_div {
     width: 100%;
     margin-top: 4px;
-    cursor: pointer;
 }
 
 .section_title_text {
@@ -547,9 +537,11 @@ body {
 
 .dropdown_content_div_class {
     width: 100%;
+}
+
+/* Class for closed dropdowns */
+.dropdown_content_closed {
     max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
 }
 
 .package_info_input_div {
@@ -795,7 +787,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
     border-radius: 7px;
     border: 0.5px solid black;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 
@@ -835,7 +827,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     overflow-y: auto;
     transform: translateY(100%);
-    transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
+    transition: transform 0.1s ease-in-out, height 0.1s ease-in-out;
 }
 
 /* Visible state for the dropdown */
@@ -848,7 +840,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 /* Search bar input */
@@ -860,7 +852,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border: none;
     outline: none;
     border-radius: 7px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 /* Company name options */
@@ -977,7 +969,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: fixed;
     top: 0;
     left: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .clint_movements_tutorial_full_page_div p {
@@ -1006,7 +998,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 0;
     left: 0;
     overflow-y: auto;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .clint_movements_places_full_page_div h5 {
@@ -1026,7 +1018,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .clint_movements_places_full_page_div p {
-    background: rgb(0, 56, 99);
     color: white;
     font-size: 2vw;
     margin: 3px 0;
@@ -1036,6 +1027,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: all 0.1s ease-in-out;
 }
 
+.bandung_places_p_color_1_class {
+    background: rgb(0, 56, 99);
+}
+
+.bandung_places_p_color_2_class {
+    background: rgb(0, 89, 157);
+}
 
 
 
@@ -1176,10 +1174,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 3.5vw;
     }
 
+
+
+
+
+    /* Scroll down icon */
+    #scroll_bottom_page_icon {
+        font-size: 7vw;
+    }
+
+
+
+
+
+
     .section_title_text {
         font-size: 4vw;
         padding: 8px 14px;
     }
+
+
+
 
 
 
@@ -1420,6 +1435,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .header_navbar_links a {
         font-size: 4.5vw;
     }
+
+
+
+
+
+
+
+    /* Scroll down icon */
+    #scroll_bottom_page_icon {
+        font-size: 9vw;
+    }
+
+
 
 
 
@@ -1671,6 +1699,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .header_navbar_links a {
         font-size: 5.5vw;
+    }
+
+
+
+
+
+
+
+
+    /* Scroll down icon */
+    #scroll_bottom_page_icon {
+        font-size: 13.5vw;
     }
 
 
