@@ -618,7 +618,7 @@
     border: 0.5px solid black;
     border-radius: 0;
     box-shadow: 0 0 0 black;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 
