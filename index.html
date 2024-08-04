@@ -26,22 +26,16 @@
 
     <!-- Header Section -->
     <header id="header">
-
-
-        <div id="header_div">
-            <img src="فنادق-اندونيسيا/فنادق-اندونيسيا.png">
-            <h1>FANADIQ INDONESIA</h1>
-        </div>
-
         <div class="header_navbar_links">
-            <a onclick="showPackageTypeSection('hotel', this)" style="color: rgb(255, 145, 0);">الفنادق</a>
-            <a onclick="showPackageTypeSection('flight', this)">الطيران</a>
-            <a onclick="showPackageTypeSection('transportation', this)">التحركات</a>
+            <a id="header_navbar_links_clint_a" onclick="showPackageTypeSection('clint', this)"
+                style="background: rgb(0, 46, 57);">العميل</a>
+            <a id="header_navbar_links_hotel_a" onclick="showPackageTypeSection('hotel', this)">الفنادق</a>
+            <a id="header_navbar_links_flight_a" onclick="showPackageTypeSection('flight', this)">الطيران</a>
+            <a id="header_navbar_links_package_icluding_and_not_including_a"
+                onclick="showPackageTypeSection('package_including', this)">يشمل</a>
+            <a id="header_navbar_links_clint_movements_a"
+                onclick="showPackageTypeSection('transportation', this)">التحركات</a>
         </div>
-
-
-        <!-- Add more sections as needed -->
-
     </header>
 
 
@@ -50,6 +44,7 @@
 
 
 
+    <ion-icon name="caret-down-circle-outline" id="scroll_bottom_page_icon" onclick="window.scrollTo(0, document.body.scrollHeight);"></ion-icon>
 
 
 
@@ -85,8 +80,11 @@
     <div id="localstorage_data_controller_div">
         <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">تخزين</p>
         <p style="user-select: none;"
-            onclick="importSavedDataBaseName()">
+            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
             إستعادة</p>
+        <p style="user-select: none;"
+            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
+            حذف</p>
     </div>
 
 
@@ -99,12 +97,78 @@
 
 
     <div id="localstorage_save_name_input_div">
+        <div id="first_div_in_localstorage_save_name_input_div">
+            <p onclick="saveUpdatedWebsiteDataBase()">حفظ التعديلات في نفس البكج</p>
+        </div>
         <div>
-            <h6>تخزين جديد</h6>
+            <h6>تخزين جديد <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين"
                 autocomplete="off">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteDataBase()" style="user-select: none;">تخزين جديد</p>
+                onclick="saveNewWebsiteDataBase()">تخزين جديد</p>
+        </div>
+    </div>
+
+    <p id="store_last_clicked_localstorage_data_name" style="display: none;"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Dropdown Div For Hotel Locations -->
+    <div id="import_localstorage_data_names_dropdown"
+        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
+        <h6>إستعادة البيانات</h6>
+
+
+        <div class="search_bar_div_class">
+            <input type="text" id="import_localstorage_data_names_search_bar_input_id" class="search_bar_input_class"
+                placeholder="بحث.." autocomplete="off">
+        </div>
+
+
+        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importSavedDataBaseName()">تأكيد
+        </p>
+
+
+        <div id="all_localstorage_stored_data_names_for_importing_data_div"
+            class="company_names_options_dropdown_class">
+            <!-- Dynamic JS Code Here -->
+        </div>
+    </div>
+
+
+
+
+    <!-- Dropdown Div For Hotel Locations -->
+    <div id="delete_localstorage_data_names_dropdown"
+        class="searchable_names_dropdown_class localstorage_dropdown_div_class">
+        <h6>حذف البيانات</h6>
+
+
+        <div class="search_bar_div_class">
+            <input type="text" id="fileInput" class="search_bar_input_class" placeholder="بحث.." autocomplete="off">
+        </div>
+
+
+
+        <p id="delete_localstorage_data_name_submit_button_id" class="localstorage_data_name_submit_button"
+            onclick="deleteWebsiteDataName()">حذف</p>
+
+
+        <div id="all_localstorage_stored_data_names_for_deleting_data_div" class="company_names_options_dropdown_class">
+            <!-- Dynamic JS Code Here -->
         </div>
     </div>
 
@@ -130,35 +194,14 @@
 
 
 
+    <!-- Package clint data -->
+    <section id="create_new_clint_data_section">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Create New Package Section -->
-    <section id="create_new_hotel_package_section">
-
-
-        <div class="section_title_text_div" id="toggle_hotel_clint_elements">
+        <div id="toggle_clint_data_title_div_id" class="section_title_text_div">
             <h1 class="section_title_text">تفاصيل العميل</h1>
         </div>
 
-        <div id="hotel_dropdown_clint_content" class="dropdown_content_div_class">
+        <div id="clint_data_dropdown_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
 
@@ -227,12 +270,6 @@
 
 
 
-
-
-
-
-
-
         <!-- Dropdown Div For Hotel Locations -->
         <div id="adult_whole_package_people_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
@@ -255,395 +292,6 @@
                 <h3>15 بالغين</h3>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Create hotel data section -->
-        <div id="toggle_hotel_elements" class="section_title_text_div">
-            <h1 id="hotel_content_section_title_text_id" class="section_title_text">تفاصيل الفندق</h1>
-        </div>
-
-        <div id="dropdown_hotel_content" class="dropdown_content_div_class">
-
-            <div class="package_info_input_div">
-                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
-                    onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
-
-
-                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
-                    style="cursor: pointer;">
-
-                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" readonly autocomplete="off"
-                    style="cursor: pointer;">
-
-                <input type="text" id="hotel_total_nights_input_id" placeholder="مجموع الليالي" readonly
-                    autocomplete="off" style="cursor: default;">
-
-
-                <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
-                    autocomplete="off"
-                    onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
-                    style="cursor: pointer;">
-
-
-
-                <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
-                    autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
-                    style="cursor: pointer;">
-
-
-
-                <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_room_view_dropdown')" style="cursor: pointer;">
-
-
-                <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_unit_amount_dropdown')" style="cursor: pointer;">
-
-
-                <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
-                    autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
-
-
-                <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
-                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
-                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
-
-
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="hotel_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
-                </div>
-
-
-
-
-
-
-
-
-                <div class="edit_data_controll_icons_div">
-                    <div class="submit_package_pdf_div">
-                        <ion-icon name="checkmark-outline" id="confirm_new_hotel_data_row_icon"
-                            onclick="confirmNewHotelDataRow()" style="display: none;"></ion-icon>
-                    </div>
-
-                    <div class="submit_package_pdf_div">
-                        <ion-icon name="close-outline" id="cancel_new_hotel_data_row_icon"
-                            onclick="cancelNewHotelDataRow()" style=" display: none; background: red;"></ion-icon>
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Create package including and not including data section -->
-        <div class="section_title_text_div" id="toggle_package_elements">
-            <h1 class="section_title_text">البرنامج يشمل..؟</h1>
-        </div>
-
-
-
-
-        <div id="dropdown_package_content" class="dropdown_content_div_class">
-            <div class="package_info_input_div">
-
-
-
-                <div id="package_including_details_div" class="package_including_details_div_class">
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox">
-                        <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
-                            مايماثل حجمها) مع سائق خاص طوال مدة
-                            الرحلة ولا توجد أيام حره في البرنامج</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="hotel_booking_with_breakfast_for_2_people_checkbox">
-                        <label for="hotel_booking_with_breakfast_for_2_people_checkbox">الفنادق والمنتجعات<br>(شاملة
-                            وجبة
-                            الإفطار لشخصين + طفل تحت ٥ سنوات لكل غرفة)</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="welcome_goodbye_hotel_delivery_checkbox">
-                        <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق
-                            والجولات السياحية</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="inner_flight_tickets_checkbox">
-                        <label for="inner_flight_tickets_checkbox">تذاكر الطيران الداخلي</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="customer_service_24_hour_checkbox">
-                        <label for="customer_service_24_hour_checkbox">خدمة عملاء 24 ساعة يتحدث العربية</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="sms_card_with_internet_checkbox">
-                        <label for="sms_card_with_internet_checkbox">شرائح إنترنت</label>
-                    </div>
-
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="outer_flight_tickets_checkbox">
-                        <label for="outer_flight_tickets_checkbox">تذاكر الطيران الدولي</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="placese_visiting_cost_checkbox">
-                        <label for="placese_visiting_cost_checkbox">تكاليف دخوليات + مواقف السيارت في الحدائق و
-                            المنتزهات</label>
-                    </div>
-
-                    <div class="package_including_data_custom_checkbox">
-                        <input type="checkbox" id="bali_taxes_not_covered_checkbox">
-                        <label for="bali_taxes_not_covered_checkbox">ضريبة دخول بالي</label>
-                    </div>
-                </div>
-
-
-
-                <input type="text" id="sms_card_with_internet_amount_input_id" placeholder="عدد شرائح الإنترنت؟"
-                    readonly autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
-
-
-
-                <input type="text" id="inner_flight_tickets_amount_input_id" placeholder="عدد تذاكر الطياران الداخلي؟"
-                    readonly autocomplete="off" onclick="showOverlay('sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
-
-
-
-                <textarea id="package_details_textarea_id" class="package_details_input_class"
-                    placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
-                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('package_details_textarea_id')"></ion-icon>
-
-
-                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
-
-
-
-                <div class="package_including_details_div_class">
-                    <div class="show_package_total_price_checkbox_div">
-                        <input type="checkbox" id="show_package_total_price_checkbox" class="custom_checkbox">
-                        <label for="show_package_total_price_checkbox">إظهار السعر في الملف؟</label>
-                    </div>
-                </div>
-
-
-                <!-- Button for exiting full-screen mode -->
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="package_including_data_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('package_including_data_inputs_submit_icon')"></ion-icon>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Dropdown div for hotel locations -->
-        <div id="sms_card_and_ticket_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>شخص واحد</h3>
-                <h3>شخصين</h3>
-                <h3>ثلاثة أشخاص</h3>
-                <h3>اربعة أشخاص</h3>
-                <h3>خمسة أشخاص</h3>
-                <h3>ستة أشخاص</h3>
-                <h3>سبعة أشخاص</h3>
-                <h3>ثمانية أشخاص</h3>
-                <h3>تسعة أشخاص</h3>
-                <h3>عشر أشخاص</h3>
-                <h3>احد عشر شخص</h3>
-                <h3>اثنا عشر شخص</h3>
-                <h3>ثلاثة عشر شخص</h3>
-                <h3>اربعة عشر شخص</h3>
-                <h3>خمسة عشر شخص</h3>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Company names options -->
-        <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث.." autocomplete="off">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
-            </div>
-
-            <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
-            </div>
-
-        </div>
-
-
-
-
-
-
-
-
-        <!-- Dropdown div for room amount -->
-        <div id="hotel_room_contain_pool_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>مسبح</h3>
-                <h3>مسبح خاص</h3>
-                <h3>مسبح عميق</h3>
-                <h3>مسبح عام</h3>
-            </div>
-        </div>
-
-
-
-        <!-- Dropdown div for room amount -->
-        <div id="hotel_room_view_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>الطبيعة</h3>
-                <h3>المنتجع</h3>
-                <h3>الحديقة</h3>
-                <h3>الوادي</h3>
-                <h3>البحيرة</h3>
-                <h3>الجبل</h3>
-                <h3>الجبل والمسبح</h3>
-                <h3>المدينة</h3>
-                <h3>المحيط</h3>
-                <h3>المحيط (إطلالة جزئية)</h3>
-                <h3>البحر</h3>
-                <h3>النهر</h3>
-                <h3>الشاطئ</h3>
-                <h3>الشاطئ (إطلالة جزئية)</h3>
-                <h3>المسبح</h3>
-                <h3>النهر</h3>
-                <h3>المزرعة</h3>
-                <h3>مزرعة الأرز</h3>
-                <h3>الغابة</h3>
-            </div>
-        </div>
-
-
-        <!-- Dropdown div for room amount -->
-        <div id="hotel_unit_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3>1</h3>
-                <h3>2</h3>
-                <h3>3</h3>
-                <h3>4</h3>
-                <h3>5</h3>
-                <h3>6</h3>
-                <h3>7</h3>
-                <h3>8</h3>
-                <h3>9</h3>
-                <h3>10</h3>
-                <h3>11</h3>
-                <h3>12</h3>
-                <h3>13</h3>
-                <h3>14</h3>
-                <h3>15</h3>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -763,7 +411,213 @@
             </div>
         </div>
 
+    </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Create New Package Section -->
+    <section id="create_new_hotel_package_section" style="display: none;">
+
+        <!-- Create hotel data section -->
+        <div id="toggle_hotel_data_title_div_id" class="section_title_text_div">
+            <h1 id="hotel_content_section_title_text_id" class="section_title_text">تفاصيل الفندق</h1>
+        </div>
+
+        <div id="hotel_data_dropdown_content" class="dropdown_content_div_class">
+
+            <div class="package_info_input_div">
+                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
+                    onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
+                    style="cursor: pointer;">
+
+                <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" readonly autocomplete="off"
+                    style="cursor: pointer;">
+
+                <input type="text" id="hotel_total_nights_input_id" placeholder="مجموع الليالي" readonly
+                    autocomplete="off" style="cursor: default;">
+
+
+                <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
+                    autocomplete="off"
+                    onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                    style="cursor: pointer;">
+
+
+
+                <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
+                    autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
+                    style="cursor: pointer;">
+
+
+
+                <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_room_view_dropdown')" style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_unit_amount_dropdown')" style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
+                    autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
+
+
+                <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
+                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
+                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                    onclick="toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+
+
+                <div class="submit_package_pdf_div">
+                    <ion-icon name="send" id="hotel_inputs_submit_icon"
+                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
+                </div>
+
+
+
+
+
+
+
+
+                <div class="edit_data_controll_icons_div">
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="checkmark-outline" id="confirm_new_hotel_data_row_icon"
+                            onclick="confirmNewHotelDataRow()" style="display: none;"></ion-icon>
+                    </div>
+
+                    <div class="submit_package_pdf_div">
+                        <ion-icon name="close-outline" id="cancel_new_hotel_data_row_icon"
+                            onclick="cancelNewHotelDataRow()" style=" display: none; background: red;"></ion-icon>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Company names options -->
+        <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+                <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
+                    placeholder="بحث.." autocomplete="off">
+            </div>
+
+            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
+            </div>
+
+            <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_room_contain_pool_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>مسبح</h3>
+                <h3>مسبح خاص</h3>
+                <h3>مسبح عميق</h3>
+                <h3>مسبح عام</h3>
+            </div>
+        </div>
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_room_view_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>الطبيعة</h3>
+                <h3>المنتجع</h3>
+                <h3>الحديقة</h3>
+                <h3>الوادي</h3>
+                <h3>البحيرة</h3>
+                <h3>الجبل</h3>
+                <h3>الجبل والمسبح</h3>
+                <h3>المدينة</h3>
+                <h3>المحيط</h3>
+                <h3>المحيط (إطلالة جزئية)</h3>
+                <h3>البحر</h3>
+                <h3>النهر</h3>
+                <h3>الشاطئ</h3>
+                <h3>الشاطئ (إطلالة جزئية)</h3>
+                <h3>المسبح</h3>
+                <h3>النهر</h3>
+                <h3>المزرعة</h3>
+                <h3>مزرعة الأرز</h3>
+                <h3>الغابة</h3>
+            </div>
+        </div>
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_unit_amount_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>1</h3>
+                <h3>2</h3>
+                <h3>3</h3>
+                <h3>4</h3>
+                <h3>5</h3>
+                <h3>6</h3>
+                <h3>7</h3>
+                <h3>8</h3>
+                <h3>9</h3>
+                <h3>10</h3>
+                <h3>11</h3>
+                <h3>12</h3>
+                <h3>13</h3>
+                <h3>14</h3>
+                <h3>15</h3>
+            </div>
+        </div>
 
 
 
@@ -891,8 +745,132 @@
         </div>
 
 
+    </section>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="create_new_package_including_and_not_including_data_section" style="display: none;">
+
+        <!-- Create package including and not including data section -->
+        <div id="toggle_package_including_and_not_including_data_title_div" class="section_title_text_div">
+            <h1 class="section_title_text">البرنامج يشمل..؟</h1>
+        </div>
+
+
+        <div id="package_including_and_not_including_data_dropdown_content" class="dropdown_content_div_class">
+            <div class="package_info_input_div">
+
+
+
+                <div id="package_including_details_div" class="package_including_details_div_class">
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox">
+                        <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
+                            مايماثل حجمها) مع سائق خاص طوال مدة
+                            الرحلة ولا توجد أيام حره في البرنامج</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="hotel_booking_with_breakfast_for_2_people_checkbox">
+                        <label for="hotel_booking_with_breakfast_for_2_people_checkbox">الفنادق والمنتجعات<br>(شاملة
+                            وجبة
+                            الإفطار لشخصين + طفل تحت ٥ سنوات لكل غرفة)</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="welcome_goodbye_hotel_delivery_checkbox">
+                        <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق
+                            والجولات السياحية</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="inner_flight_tickets_checkbox">
+                        <label for="inner_flight_tickets_checkbox">تذاكر الطيران الداخلي</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="customer_service_24_hour_checkbox">
+                        <label for="customer_service_24_hour_checkbox">خدمة عملاء 24 ساعة يتحدث العربية</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="sms_card_with_internet_checkbox">
+                        <label for="sms_card_with_internet_checkbox">شرائح إنترنت</label>
+                    </div>
+
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="outer_flight_tickets_checkbox">
+                        <label for="outer_flight_tickets_checkbox">تذاكر الطيران الدولي</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="placese_visiting_cost_checkbox">
+                        <label for="placese_visiting_cost_checkbox">تكاليف دخوليات + مواقف السيارت في الحدائق و
+                            المنتزهات</label>
+                    </div>
+
+                    <div class="package_including_data_custom_checkbox">
+                        <input type="checkbox" id="bali_taxes_not_covered_checkbox">
+                        <label for="bali_taxes_not_covered_checkbox">ضريبة دخول بالي</label>
+                    </div>
+                </div>
+
+
+
+                <input type="text" id="sms_card_with_internet_amount_input_id" placeholder="عدد شرائح الإنترنت؟"
+                    readonly autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
+
+
+
+                <input type="text" id="inner_flight_tickets_amount_input_id" placeholder="عدد تذاكر الطياران الداخلي؟"
+                    readonly autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
+
+
+
+                <textarea id="package_details_textarea_id" class="package_details_input_class"
+                    placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
+                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                    onclick="toggleFullscreen('package_details_textarea_id')"></ion-icon>
+
+
+                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
+
+
+
+                <div class="package_including_details_div_class">
+                    <div class="show_package_total_price_checkbox_div">
+                        <input type="checkbox" id="show_package_total_price_checkbox" class="custom_checkbox">
+                        <label for="show_package_total_price_checkbox">إظهار السعر في الملف؟</label>
+                    </div>
+                </div>
+
+
+                <!-- Button for exiting full-screen mode -->
+                <div class="submit_package_pdf_div">
+                    <ion-icon name="send" id="package_including_data_inputs_submit_icon"
+                        onclick="checkInputsToInsertData('package_including_data_inputs_submit_icon')"></ion-icon>
+                </div>
+            </div>
+        </div>
 
     </section>
 
@@ -903,8 +881,47 @@
 
 
 
+
+
+
+
+
+    <!-- Dropdown div for hotel locations -->
+    <div id="breakfast_and_sms_card_and_ticket_amount_dropdown" class="searchable_names_dropdown_class">
+        <div class="search_bar_div_class">
+        </div>
+        <div class="company_names_options_dropdown_class">
+            <h3 style="color: red;">حذف</h3>
+            <h3>شخص واحد</h3>
+            <h3>شخصين</h3>
+            <h3>ثلاثة أشخاص</h3>
+            <h3>اربعة أشخاص</h3>
+            <h3>خمسة أشخاص</h3>
+            <h3>ستة أشخاص</h3>
+            <h3>سبعة أشخاص</h3>
+            <h3>ثمانية أشخاص</h3>
+            <h3>تسعة أشخاص</h3>
+            <h3>عشر أشخاص</h3>
+            <h3>احد عشر شخص</h3>
+            <h3>اثنا عشر شخص</h3>
+            <h3>ثلاثة عشر شخص</h3>
+            <h3>اربعة عشر شخص</h3>
+            <h3>خمسة عشر شخص</h3>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     <!-- Delete the clint package data -->
-    <div id="ensure_delete_clint_clint_package_data_div" class="ensure_your_delete_action">
+    <div id="ensure_delete_clint_package__including_and_not_icluding_data_div" class="ensure_your_delete_action">
         <button onclick="runDeleteClintPackageDataRow()">حذف</button>
     </div>
 
@@ -915,7 +932,7 @@
     </div>
 
     <!-- Delete the clicked inserted hotel data -->
-    <div id="ensure_delet_or_edit_hotel_data_div" class="ensure_your_delete_action">
+    <div id="ensure_delete_or_edit_hotel_data_div" class="ensure_your_delete_action">
         <button onclick="runDeleteClickedHotelDataFunction()">حذف</button>
         <button onclick="runEditClickedHotelDataFunction()">تعديل</button>
     </div>
@@ -936,12 +953,12 @@
     <!-- Create flight package data section -->
     <section id="create_new_flight_package_section" style="display: none;">
 
-        <div id="toggle_clint_flight_elements" class="section_title_text_div">
+        <div id="toggle_flight_data_title_div_id" class="section_title_text_div">
             <h1 id="flight_content_section_title_text_id" class="section_title_text">تفاصيل الطياران</h1>
         </div>
 
 
-        <div id="flight_dropdown_content" class="dropdown_content_div_class">
+        <div id="flight_data_dropdown_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
 
@@ -1119,7 +1136,7 @@
     <section id="create_new_clint_movements_paln_section" style="display: none;">
 
 
-        <div class="section_title_text_div" id="toggle_clint_movements_period_elements">
+        <div id="toggle_clint_movements_period_title_div_id" class="section_title_text_div">
             <h1 class="section_title_text">مدة خط سير البرنامج</h1>
         </div>
 
@@ -1156,7 +1173,7 @@
 
 
 
-        <div class="section_title_text_div" id="toggle_clint_movements_details_elements">
+        <div id="toggle_clint_movements_details_title_div_id" class="section_title_text_div">
             <h1 id="clint_movements_content_section_title_text_id" class="section_title_text">تفاصيل خط السير (يوم كامل)
             </h1>
         </div>
@@ -1478,56 +1495,83 @@
 
             <div id="clint_movements_places_names_options_for_bali_area_1">
                 <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">التجول في السنتر
+                </p>
             </div>
 
 
             <div id="clint_movements_places_names_options_for_bali_area_2">
                 <h6>مزارات كوتا <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">الألعاب البحرية في منطقة نوسادوا</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ PANTAI PANDAWA</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ اطلاله الجرف الصخري ULUWATU</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ جمبران و الجلوس في احد المطاعم و مشاهدة الغروب
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب البحرية في
+                    منطقة نوسادوا</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ PANTAI
+                    PANDAWA</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ اطلاله
+                    الجرف الصخري ULUWATU</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ جمبران
+                    و الجلوس في احد المطاعم و مشاهدة الغروب
                     الجميل</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة جزيرة NUSA PENIDA المشهورة بشواطئها الجميلة وتكون
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جزيرة NUSA
+                    PENIDA المشهورة بشواطئها الجميلة وتكون
                     الرحلة بالقوارب ويتم زيارة من 3 الى 4 شواطئ شاملة التوصيل من والى الفندق و المواصلات داخل الجزيرة
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر تلاقاواجا</p>
-                <p onclick="pickThisClintMovementsPlace(this)">فعالية ركوب الخيل على الشاطئ الأسود</p>
-                <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر تلاقاواجا</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شمال الجزيرة المعروفة بأجوائها الساحرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة احد اجمل المعالم قرية جاتلويه المشهورة بمدرجات
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">التجديف في نهر
+                    تلاقاواجا</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">فعالية ركوب الخيل
+                    على الشاطئ الأسود</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة احد اجمل
+                    المعالم قرية جاتلويه المشهورة بمدرجات
                     الأرز</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ The Beach Love والجلوس في الكافي المطل</p>
-                <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية WATERBOM</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه DOLPIN WATERSPORT</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس ستديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا (ديسكفري + ليبو مول + بيتش ووك مول)</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شاطئ The
+                    Beach Love والجلوس في الكافي المطل</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب المائية
+                    WATERBOM</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة فعالية بحريه
+                    DOLPIN WATERSPORT</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة ملاهي ترانس
+                    ستديو</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مولات كوتا
+                    (ديسكفري + ليبو مول + بيتش ووك مول)</p>
             </div>
 
 
             <div id="clint_movements_places_names_options_for_bali_area_3">
                 <h6>مزارات اوبود <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية وسط الطبيعه</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرتين التوام</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة النباتات</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال تيغينونغان الجميل</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه ALOHA مراجيح الهواء</p>
-                <p onclick="pickThisClintMovementsPlace(this)">سنتر اوبود للغدا حسب الرغبة</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الدبابات الرباعية
+                    وسط الطبيعه والشلالات</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال
+                    تيغينونغان الجميل</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزه ALOHA
+                    مراجيح الهواء</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">سنتر اوبود للغدا
+                    حسب الرغبة</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شمال الجزيرة
+                    المعروفة بأجوائها الساحرة</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بحيرة براتان
+                    الفاتنة واخذ جولة بالقارب</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بوابة منتجع
+                    هندارا الشهيرة</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بحيرتين
+                    التوام</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة
+                    النباتات</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جبل كنتامي
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة Alas Harum اجمل مزرعة قهوة في بالي</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة جبل و بحيرة
+                    بانور و الجلوس في احد الكافيهات الجميلة
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة Alas Harum
+                    اجمل مزرعة قهوة في بالي</p>
             </div>
 
 
             <div id="clint_movements_places_names_options_for_bali_area_4"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والتسوق</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والإستجمام</p>
             </div>
 
         </div>
@@ -1542,33 +1586,34 @@
 
             <div id="clint_movements_places_names_options_for_jakarta_area_1">
                 <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">التجول في السنتر
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">الألعاب المائية
+                    WATERBOM</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة فعالية بحريه
+                    DOLPIN WATERSPORT</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة ملاهي ترانس
+                    ستديو</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مولات كوتا
+                    (ديسكفري + ليبو مول + بيتش ووك مول)</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مولات كوتا
+                    (ديسكفري + ليبو مول + بيتش ووك مول)</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة ملاهي ترانس
+                    ستديو</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة فعالية بحريه
+                    DOLPIN WATERSPORT</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب المائية
+                    WATERBOM</p>
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_jakarta_area_2">
-                <h6>المنطقة الثانية <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية WATERBOM</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه DOLPIN WATERSPORT</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس ستديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_jakarta_area_3">
-                <h6>المنطقة الثالثة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس ستديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه DOLPIN WATERSPORT</p>
-                <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية WATERBOM</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_jakarta_area_4"
+            <div id="clint_movements_places_names_options_for_jakarta_area_2"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والتسوق</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والإستجمام</p>
             </div>
         </div>
 
@@ -1580,41 +1625,40 @@
             <h5>مزارات بونشاك</h5>
             <div id="clint_movements_places_names_options_for_puncak_area_1">
                 <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي NICOLES</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة كافي NICOLES
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة تامان
+                    سفاري (تحتاج لنهار كامل)</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة كافي DAMAR
+                    LANGIT</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة شيموري
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة
+                    ميلريمبا</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة WISATA
+                    ALAM SEVILLAGE</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مطل البرشوات
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة كافي ROOF
+                    PARK</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة الزهور
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرة
+                    فينيسيا</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزة THE
+                    NICE FANTASTIC</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة الجنة
+                </p>
             </div>
 
 
-            <div id="clint_movements_places_names_options_for_puncak_area_2">
-                <h6>المنطقة الثانية <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة تامان سفاري (تحتاج لنهار كامل)</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي DAMAR LANGIT</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_puncak_area_3">
-                <h6>المنطقة الثالة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة شيموري</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة ميلريمبا</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة WISATA ALAM SEVILLAGE</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مطل البرشوات</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي ROOF PARK</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_puncak_area_4">
-                <h6>المنطقة الرابعة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة الزهور</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة فينيسيا</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة THE NICE FANTASTIC</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة الجنة</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_puncak_area_5"
+            <div id="clint_movements_places_names_options_for_puncak_area_2"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والتسوق</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والإستجمام</p>
             </div>
 
         </div>
@@ -1626,47 +1670,44 @@
         <div id="bandung_clint_movements_places_div" style="display: none;">
             <h5>مزارات باندونق</h5>
             <div id="clint_movements_places_names_options_for_bandung_area_1">
-                <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مول تشيمبلاس ووك و التجول في ساحة المول و شارع
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول تشيمبلاس
+                    ووك و التجول في ساحة المول و شارع
                     الجبن</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bandung_area_2">
-                <h6>المنطقة الثانية <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال ماربايا الصغير و كافي TWIG CAFE الرائع</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مزرعة الخيول</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة DCASTELLO الجديد</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة السوق العائم FLOATING MARKET وحديقة RAINBOW GARDEN
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال ماربايا
+                    الصغير و كافي TWIG CAFE الرائع</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مزرعة الخيول
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)">الجلوس في الكافي الجميل MERCUSUAR</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزة
+                    DCASTELLO الجديد</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة السوق العائم
+                    FLOATING MARKET وحديقة RAINBOW GARDEN
+                </p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الجلوس في الكافي
+                    الجميل MERCUSUAR</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول و ملاهي
+                    ترانس استديو</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة الكافي
+                    الجميل LOUNGE & SIERRA CAFE</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة KIARA
+                    ARTHA PARK</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة قرية
+                    الخيزران الرائعة DUSUN BAMBU</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال CURUG
+                    CIMAHI</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزه THE
+                    GREAT ASIA AFRICA</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منطقة
+                    الكافيهات الجميلة KAWASAN PUNCLUT</p>
             </div>
 
 
-
-            <div id="clint_movements_places_names_options_for_bandung_area_3">
-                <h6>المنطقة الثالثة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة مول و ملاهي ترانس استديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة الكافي الجميل LOUNGE & SIERRA CAFE</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة KIARA ARTHA PARK</p>
-            </div>
-
-
-
-            <div id="clint_movements_places_names_options_for_bandung_area_4">
-                <h6>المنطقة الرابعة <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة قرية الخيزران الرائعة DUSUN BAMBU</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال CURUG CIMAHI</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه THE GREAT ASIA AFRICA</p>
-                <p onclick="pickThisClintMovementsPlace(this)">زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT</p>
-            </div>
-
-
-            <div id="clint_movements_places_names_options_for_bandung_area_5"
+            <div id="clint_movements_places_names_options_for_bandung_area_2"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والتسوق</p>
-                <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة والإستجمام</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والتسوق</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                    والإستجمام</p>
             </div>
 
         </div>
@@ -2163,6 +2204,11 @@
         <button id="check_pdf_name_button" onclick="checkThePdfNameToDownload()">تحميل</button>
     </div>
 
+
+
+
+    <!-- Library to lower the size of the saved data -->
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 
 
 
