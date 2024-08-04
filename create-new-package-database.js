@@ -1,21 +1,83 @@
+let dbName = 'WebsiteDataDB';
+let storeName = 'SavedWebsiteData';
+let db;
+
+let request = indexedDB.open(dbName, 1);
+
+request.onupgradeneeded = function (event) {
+    db = event.target.result;
+    db.createObjectStore(storeName, { keyPath: 'name' });
+};
+
+request.onsuccess = function (event) {
+    db = event.target.result;
+
+    // Now that the database is open, you can safely call the estimate function
+    estimateIndexedDBUsage();
+};
+
+request.onerror = function (event) {
+    console.error('Database error:', event.target.errorCode);
+};
+
+// Function to estimate IndexedDB usage
+function estimateIndexedDBUsage() {
+    let transaction = db.transaction([storeName], 'readonly');
+    let store = transaction.objectStore(storeName);
+    let totalSize = 0;
+
+    store.openCursor().onsuccess = function (event) {
+        let cursor = event.target.result;
+        if (cursor) {
+            let jsonData = JSON.stringify(cursor.value);
+            totalSize += new Blob([jsonData]).size;
+            cursor.continue();
+        } else {
+            console.log('Estimated IndexedDB usage: ' + totalSize + ' bytes');
+        }
+    };
+
+    transaction.onerror = function (event) {
+        console.error('Transaction error:', event.target.errorCode);
+    };
+}
+
+
+// Check storage quota and usage
+navigator.storage.estimate().then(estimate => {
+    console.log(`Quota: ${estimate.quota} bytes`);
+    console.log(`Usage: ${estimate.usage} bytes`);
+    
+    // Display a warning if usage exceeds a certain threshold
+    const USAGE_THRESHOLD = 0.8; // 80%
+    if (estimate.usage / estimate.quota > USAGE_THRESHOLD) {
+        alert('Warning: You are using more than 80% of your storage quota.');
+    }
+});
 
 
 
-async function saveNewWebsiteDataBase() {
+
+
+
+// Function to save new website data to IndexedDB
+function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
     if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
         localstorageNewSaveButton.style.backgroundColor = 'red';
         setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
         }, 500);
         return;
     }
 
+    // Keep 'name' key as required by IndexedDB
     let newObject = {
-        name: localStorageNewSaveDataNameInput,
-        elements: {}
+        name: localStorageNewSaveDataNameInput, // IndexedDB requires this key
+        date: new Date().toISOString(), // Add current date
+        e: {} // Use 'e' for 'elements' to minimize data size
     };
 
     let divIds = [
@@ -31,7 +93,12 @@ async function saveNewWebsiteDataBase() {
     divIds.forEach(divId => {
         let element = document.getElementById(divId);
         if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            newObject.elements[divId] = element.outerHTML;
+            // Clone the element to avoid modifying the original
+            let clonedElement = element.cloneNode(true);
+
+            // Minify and clean the HTML
+            let minifiedHTML = minifyHTML(clonedElement.outerHTML);
+            newObject.e[divId] = LZString.compressToUTF16(minifiedHTML); // Compress HTML
             isAnyDivVisible = true;
         }
     });
@@ -39,70 +106,232 @@ async function saveNewWebsiteDataBase() {
     if (!isAnyDivVisible) {
         localstorageNewSaveButton.style.backgroundColor = 'red';
         setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
         }, 500);
         return;
     }
 
-    // Convert the data to JSON format
-    let dataStr = JSON.stringify(newObject, null, 2);
-    let dataBlob = new Blob([dataStr], { type: 'application/json' });
+    let transaction = db.transaction([storeName], 'readwrite');
+    let store = transaction.objectStore(storeName);
 
-    try {
-        if (window.showSaveFilePicker) {
-            // Desktop version using File System Access API
-            const handle = await window.showSaveFilePicker({
-                suggestedName: `${localStorageNewSaveDataNameInput}.json`,
-                types: [{
-                    description: 'JSON Files',
-                    accept: { 'application/json': ['.json'] },
-                }],
-            });
-            const writable = await handle.createWritable();
-            await writable.write(dataBlob);
-            await writable.close();
+    let getRequest = store.get(localStorageNewSaveDataNameInput);
+
+    getRequest.onsuccess = function (event) {
+        let existingData = event.target.result;
+
+        if (existingData) {
+            store.put(newObject);
         } else {
-            // Fallback for mobile devices and browsers that don't support File System Access API
-            const url = URL.createObjectURL(dataBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${localStorageNewSaveDataNameInput}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            // Inform the user to choose the download location
-            alert('Please choose the location where you want to save the file.');
+            store.add(newObject);
         }
 
-        // Provide feedback and reset input
-        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
-        }, 500);
-
-        document.getElementById('localstorage_new_save_data_name_input_id').value = '';
-
-        /* Get the 'localstorage_save_name_input_div' and show it */
         let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
-
-        // Hide delete button div
         let overlayLayer = document.querySelector('.black_overlay');
 
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-        overlayLayer.style.opacity = '0'; // Hide overlay
+        transaction.oncomplete = function () {
+            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
 
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
+            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)';
+            overlayLayer.style.opacity = '0';
 
-    } catch (error) {
-        console.error('File save error:', error);
-        localstorageNewSaveButton.style.backgroundColor = 'red';
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300);
+
+            document.getElementById('localstorage_new_save_data_name_input_id').value = '';
+        };
+
+        transaction.onerror = function (event) {
+            console.error('Transaction error:', event.target.errorCode);
+        };
+    };
+
+    getRequest.onerror = function (event) {
+        console.error('Get request error:', event.target.errorCode);
+    };
+}
+
+// Function to minify and clean HTML
+function minifyHTML(html) {
+    return html
+        .replace(/\s+/g, ' ') // Collapse whitespace
+        .replace(/>\s+</g, '><') // Remove spaces between tags
+        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
+        .replace(/\s*=\s*/g, '=') // Remove spaces around equals in attributes
+        .replace(/\s*(style|class)=""/g, '') // Remove empty style and class attributes
+        .trim();
+}
+
+
+
+
+
+
+
+function cleanUpOldData() {
+    let transaction = db.transaction([storeName], 'readwrite');
+    let store = transaction.objectStore(storeName);
+
+    let getAllRequest = store.getAll();
+
+    getAllRequest.onsuccess = function (event) {
+        let allData = event.target.result;
+        let currentDate = new Date();
+
+        allData.forEach(data => {
+            let dataDate = new Date(data.date);
+            let monthsDifference = (currentDate.getFullYear() - dataDate.getFullYear()) * 12 + (currentDate.getMonth() - dataDate.getMonth());
+
+            if (monthsDifference > 12) {
+                store.delete(data.name);
+            }
+        });
+    };
+
+    getAllRequest.onerror = function (event) {
+        console.error('Error fetching all data from IndexedDB:', event.target.errorCode);
+    };
+}
+
+function monitorStorageUsage() {
+    let transaction = db.transaction([storeName], 'readonly');
+    let store = transaction.objectStore(storeName);
+
+    let getAllRequest = store.getAll();
+
+    getAllRequest.onsuccess = function (event) {
+        let allData = event.target.result;
+        let totalSize = 0;
+
+        allData.forEach(data => {
+            Object.values(data.e).forEach(compressedHTML => {
+                totalSize += compressedHTML.length; // Rough estimate of size
+            });
+        });
+
+        console.log('Total storage size:', totalSize, 'characters');
+        if (totalSize > MAX_STORAGE_LIMIT) {
+            alert('You are approaching the storage limit. Please delete some old data.');
+            // Implement further actions like automatic deletion of oldest data
+        }
+    };
+
+    getAllRequest.onerror = function (event) {
+        console.error('Error fetching all data from IndexedDB:', event.target.errorCode);
+    };
+}
+
+// Run monitorStorageUsage periodically, e.g., every day
+setInterval(monitorStorageUsage, 24 * 60 * 60 * 1000); // Every 24 hours
+
+const MAX_STORAGE_LIMIT = 5000000; // Define your storage limit in characters
+
+
+// Call the cleanUpOldData function when the page loads
+window.onload = function () {
+    cleanUpOldData();
+};
+
+
+
+
+
+
+// Function to import saved data from IndexedDB
+function importSavedDataBaseName() {
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
+
+    // Clear the previous input text
+    document.getElementById('import_localstorage_data_names_search_bar_input_id').value = '';
+
+    let allLocalStorageDataNamesDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+    let found = false;
+
+    allLocalStorageDataNamesDiv.forEach(function (clickedLocalStorageDataNameElement) {
+        if (clickedLocalStorageDataNameElement.style.backgroundColor === 'rgb(0, 155, 0)') {
+            found = true;
+
+            let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
+            dropdownDivElements.forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+
+            // Assuming overlayLayer is correctly defined elsewhere in your code
+            overlayLayer.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300);
+
+            let transaction = db.transaction([storeName], 'readonly');
+            let store = transaction.objectStore(storeName);
+            let clickedDataName = clickedLocalStorageDataNameElement.innerText;
+
+            // Retrieve the specific object by name
+            let getRequest = store.get(clickedDataName);
+
+            getRequest.onsuccess = function (event) {
+                let matchingObject = event.target.result;
+
+                if (matchingObject && matchingObject.e) {
+                    document.getElementById('inserted_clint_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_package_icluding_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_flight_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_hotel_data_position_div').innerHTML = '';
+                    document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
+
+                    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+                    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+
+                    for (let divId in matchingObject.e) {
+                        let htmlSectionPdfPageDiv = document.getElementById(divId);
+                        htmlSectionPdfPageDiv.style.display = 'block';
+                        htmlSectionPdfPageDiv.innerHTML = LZString.decompressFromUTF16(matchingObject.e[divId]);
+                        reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                    }
+
+                    // Store the clicked localstorage data name for later saving reference
+                    store_last_clicked_localstorage_data_name.innerText = clickedDataName;
+
+                    // Show the download button
+                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
+
+                    overlayLayer.style.opacity = '0';
+                    setTimeout(() => {
+                        overlayLayer.style.display = 'none';
+                    }, 300);
+                }
+            };
+
+            getRequest.onerror = function (event) {
+                console.error('Error fetching data from IndexedDB:', event.target.errorCode);
+            };
+        }
+    });
+
+    if (!found) {
+        import_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
         setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(85, 127, 137)';
+            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'darkorange';
         }, 500);
+    }
+
+    // Set the package including sms + inner tickets + package total price inputs values
+    if (document.getElementById('store_localstorage_package_including_sms_value').innerText !== '') {
+        document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
+    }
+    if (document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== '') {
+        document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
+    }
+    if (document.getElementById('store_localstorage_package_total_price_value').innerText !== '') {
+        document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
     }
 }
 
@@ -111,8 +340,17 @@ async function saveNewWebsiteDataBase() {
 
 
 
+
 /* Function to save new website localstorage data name */
 openSaveNewWebsiteDataBase = function () {
+    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
+    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
+
+    if (storeLastClickedLocalstorageDataName.innerText === '') {
+        firstDiv.style.display = 'none';
+    } else {
+        firstDiv.style.display = 'flex';
+    }
 
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -150,83 +388,100 @@ openSaveNewWebsiteDataBase = function () {
 
 
 
-async function importSavedDataBaseName() {
-    try {
-        // Show the file picker to select a JSON file
-        const [fileHandle] = await window.showOpenFilePicker({
-            types: [{
-                description: 'JSON Files',
-                accept: { 'application/json': ['.json'] },
-            }],
-            multiple: false
-        });
 
-        const file = await fileHandle.getFile();
-        const fileContents = await file.text();
-        const savedData = JSON.parse(fileContents);
 
-        if (savedData && savedData.elements) {
-            // Clear existing content
-            const elementIds = [
-                'inserted_clint_data_position_div',
-                'inserted_package_icluding_data_position_div',
-                'inserted_flight_data_position_div',
-                'inserted_hotel_data_position_div',
-                'inserted_clint_movements_data_position_div'
-            ];
-            
-            elementIds.forEach(id => {
-                document.getElementById(id).innerHTML = '';
-            });
 
-            const divIds = [
-                'downloaded_pdf_clint_data_page',
-                'downloaded_pdf_package_including_data_page',
-                'downloaded_pdf_flight_data_page',
-                'downloaded_pdf_hotel_data_page',
-                'downloaded_pdf_clint_movements_data_page',
-                'downloaded_pdf_total_price_data_page'
-            ];
 
-            divIds.forEach(id => {
-                document.getElementById(id).style.display = 'none';
-            });
 
-            // Populate the webpage with the saved data
-            for (let divId in savedData.elements) {
-                const htmlSectionPdfPageDiv = document.getElementById(divId);
-                htmlSectionPdfPageDiv.style.display = 'block';
-                htmlSectionPdfPageDiv.innerHTML = savedData.elements[divId];
-                reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
-            }
+// Function to update existing website data in IndexedDB
+function saveUpdatedWebsiteDataBase() {
+    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
+    let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
-            /* Show the download button */
-            document.getElementById('export_package_pdf_div_id').style.display = 'block';
+    // Create an object to store visible div elements
+    let newObject = {
+        name: storeLastClickedLocalstorageDataName,
+        elements: {}
+    };
 
-            /* Set the package including sms + inner tickets + package total price inputs values */
-            if (document.getElementById('store_localstorage_package_including_sms_value').innerText !== '') {
-                document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_localstorage_package_including_sms_value').innerText;
-            }
-            if (document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText !== '') {
-                document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_localstorage_package_including_inner_tickets_value').innerText;
-            }
-            if (document.getElementById('store_localstorage_package_total_price_value').innerText !== '') {
-                document.getElementById('package_totla_price_input_id').value = document.getElementById('store_localstorage_package_total_price_value').innerText;
-            }
+    // List of div IDs to check visibility
+    let divIds = [
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_total_price_data_page'
+    ];
 
-            // Provide feedback
-            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'rgb(0, 155, 0)';
-            setTimeout(() => {
-                import_localstorage_data_name_submit_button_id.style.backgroundColor = 'rgb(85, 127, 137)';
-            }, 500);
+    // Check visibility of each div and add to the object if visible
+    let isAnyDivVisible = false;
+    divIds.forEach(divId => {
+        let element = document.getElementById(divId);
+        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+            newObject.elements[divId] = element.outerHTML;
+            isAnyDivVisible = true;
         }
-    } catch (error) {
-        console.error('Error importing data:', error);
-        import_localstorage_data_name_submit_button_id.style.backgroundColor = 'red';
+    });
+
+    // If no visible divs were found, change the submit icon background color and exit
+    if (!isAnyDivVisible) {
+        // Change the submit icon background color
+        localstorageNewSaveButton.style.backgroundColor = 'red';
+
+        // Set the background color of the submit icon back to the default color
         setTimeout(() => {
-            import_localstorage_data_name_submit_button_id.style.backgroundColor = 'rgb(85, 127, 137)';
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
         }, 500);
+
+        return;
     }
+
+    let transaction = db.transaction([storeName], 'readwrite');
+    let store = transaction.objectStore(storeName);
+
+    let getRequest = store.get(storeLastClickedLocalstorageDataName);
+
+    getRequest.onsuccess = function (event) {
+        let existingData = event.target.result;
+
+        if (existingData) {
+            // Update existing data
+            store.put(newObject);
+
+            // Change the submit icon background color to green
+            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+
+            // Set the background color of the submit icon back to the default color
+            setTimeout(() => {
+                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+            }, 500);
+
+            /* Get the 'localstorage_save_name_input_div' and show it */
+            let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
+
+            // Hide delete button div
+            let overlayLayer = document.querySelector('.black_overlay');
+
+            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
+            overlayLayer.style.opacity = '0'; // Hide overlay
+
+            // Remove overlay and delete box div from DOM after transition
+            setTimeout(() => {
+                document.body.removeChild(overlayLayer);
+            }, 300); // Match transition duration in CSS
+        } else {
+            console.error('No existing data found to update');
+        }
+    };
+
+    getRequest.onerror = function (event) {
+        console.error('Get request error:', event.target.errorCode);
+    };
+
+    transaction.onerror = function (event) {
+        console.error('Transaction error:', event.target.errorCode);
+    };
 }
 
 
@@ -234,6 +489,216 @@ async function importSavedDataBaseName() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to update the displayed IndexedDB data names
+function updateDataBaseSavedDataNames(localStorageControllerDivId) {
+    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
+
+    // Clear existing <p> elements
+    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
+
+    // Open a transaction to read from the IndexedDB
+    let transaction = db.transaction([storeName], 'readonly');
+    let store = transaction.objectStore(storeName);
+
+    // Get all data from the object store
+    let getAllRequest = store.getAll();
+
+    getAllRequest.onsuccess = function (event) {
+        let savedWebsiteDataArray = event.target.result;
+
+        // Create new <h3> elements based on the saved data array
+        savedWebsiteDataArray.forEach(data => {
+            let pElement = document.createElement('h3');
+            pElement.innerText = data.name;
+            pElement.onclick = function () {
+                pickThisWebsiteLocalStorageDataName(pElement);
+            };
+            allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+        });
+    };
+
+    getAllRequest.onerror = function (event) {
+        console.error('Error fetching data from IndexedDB:', event.target.errorCode);
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to pick website localStorage data names */
+pickThisWebsiteLocalStorageDataName = function (clickedLocalStorageDataName) {
+    // Identify the parent div of the clicked <p> element
+    let parentDivId = clickedLocalStorageDataName.parentElement.id;
+
+    // If the clicked element is inside the importing data div (single selection)
+    if (parentDivId === 'all_localstorage_stored_data_names_for_importing_data_div') {
+        // Get all <p> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
+        let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+
+        // Loop through each <p> element to reset their styles
+        allDataNames.forEach(function (dataName) {
+            dataName.style.backgroundColor = 'white';
+            dataName.style.color = 'black';
+        });
+
+        // Set the background color and text color of the clicked <p> element
+        clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+        clickedLocalStorageDataName.style.color = 'white';
+
+    } else if (parentDivId === 'all_localstorage_stored_data_names_for_deleting_data_div') {
+        // If the clicked element is inside the deleting data div (multiple selection)
+
+        // Toggle the background and text color of the clicked <p> element
+        if (clickedLocalStorageDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
+            clickedLocalStorageDataName.style.backgroundColor = 'white';
+            clickedLocalStorageDataName.style.color = 'black';
+        } else {
+            clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+            clickedLocalStorageDataName.style.color = 'white';
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to open IndexedDB and return the database instance
+function openDB() {
+    return new Promise((resolve, reject) => {
+        let request = indexedDB.open('WebsiteDataDB', 1);
+
+        request.onupgradeneeded = function (event) {
+            let db = event.target.result;
+            // Create an object store with a key path 'name'
+            if (!db.objectStoreNames.contains('SavedWebsiteData')) {
+                db.createObjectStore('SavedWebsiteData', { keyPath: 'name' });
+            }
+        };
+
+        request.onsuccess = function (event) {
+            resolve(event.target.result);
+        };
+
+        request.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+// Function to delete data from IndexedDB
+async function deleteFromIndexedDB(name) {
+    let db = await openDB();
+
+    return new Promise((resolve, reject) => {
+        let transaction = db.transaction('SavedWebsiteData', 'readwrite');
+        let objectStore = transaction.objectStore('SavedWebsiteData');
+        let request = objectStore.delete(name);
+
+        request.onsuccess = function () {
+            resolve();
+        };
+
+        request.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+// Function to delete the saved website data name
+async function deleteWebsiteDataName() {
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
+
+    /* Clear the previous input text */
+    document.getElementById('fileInput').value = '';
+
+    // Get the 'allLocalstorageStoredDataNamesRorDeletingDataDiv' div
+    let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.getElementById('all_localstorage_stored_data_names_for_deleting_data_div');
+
+    // Get all h3 elements inside the 'allLocalstorageStoredDataNamesRorDeletingDataDiv'
+    let h3Elements = allLocalstorageStoredDataNamesRorDeletingDataDiv.getElementsByTagName('h3');
+
+    let deletePromises = [];
+    let found = false;
+
+    // Loop through all h3 elements
+    for (let h3 of h3Elements) {
+        // Check the background color
+        let bgColor = window.getComputedStyle(h3).backgroundColor;
+        if (bgColor === 'rgb(0, 155, 0)') {
+            found = true;
+
+            // Delete from IndexedDB
+            deletePromises.push(deleteFromIndexedDB(h3.innerText));
+        }
+    }
+
+    if (found) {
+        // Wait for all delete operations to complete
+        await Promise.all(deletePromises);
+
+        /* Hide The 'localstorage_delete_stored_data_names_div' with the 'overlayLayer' */
+        let allLocalstorageStoredDataNamesRorDeletingDataDiv = document.querySelectorAll('.searchable_names_dropdown_class');
+        allLocalstorageStoredDataNamesRorDeletingDataDiv.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+
+        overlayLayer.style.opacity = '0'; // Hide overlay
+
+        // Check if overlayLayer exists in the DOM before trying to remove it
+        setTimeout(() => {
+            if (document.body.contains(overlayLayer)) {
+                document.body.removeChild(overlayLayer);
+            }
+        }, 300); // Match transition duration in CSS
+    } else {
+        // Change the submit button background color
+        document.getElementById('delete_localstorage_data_name_submit_button_id').style.backgroundColor = 'red';
+        setTimeout(() => {
+            document.getElementById('delete_localstorage_data_name_submit_button_id').style.backgroundColor = 'darkorange';
+        }, 500);
+    }
+}
 
 
 
@@ -336,7 +801,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         /* Function to delete the clint package data row */
         deleteClintPackageDataRow = function () {
 
-            let deleteclintPackageDataDiv = document.getElementById('ensure_delete_clint_clint_package_data_div');
+            let deleteclintPackageDataDiv = document.getElementById('ensure_delete_clint_package__including_and_not_icluding_data_div');
 
             /* Function to run delete the clicked clint row data */
             runDeleteClintPackageDataRow = function () {
@@ -553,7 +1018,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
 
 
-                document.getElementById('flight_dropdown_content').scrollIntoView({
+                document.getElementById('flight_data_dropdown_content').scrollIntoView({
                     block: 'center',
                     inline: 'center',
                     behavior: 'smooth',
@@ -738,6 +1203,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     /* Function to run delete clicked flight row data */
                     runEditClickedFlightDataFunction = function () {
                         editClickedFlightData(currentFlightDataDivId);
+
+                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
+                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(0, 46, 57)';
+                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.color = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
                     }
                 }
             };
@@ -882,13 +1354,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             // Get the 'hotel_row_image_controller' elements inside each 'hotel_row_class' element
             let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll('.hotel_row_image_controller');
 
-            // Loop through each 'hotel_row_image_controller' element
-            hotelRowImageControllers.forEach(hotelRowImageController => {
-                /* Pass the div of the clicked 'hotel_row_image_controller' */
-                hotelRowImageController.onclick = function (event) {
-                    hotelRowImageControllerFunction(event);
-                };
-            });
+
 
 
 
@@ -937,6 +1403,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                 element.addEventListener('mouseup', (event) => {
                     if (!isDragging && !isTouchEvent) { // Only execute if it is not a touch event
+
                         hotelRowImageControllerFunction(event);
                     }
                 });
@@ -966,7 +1433,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 }
 
                 // Hide delete button div
-                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
+                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
                 deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
@@ -1010,15 +1477,16 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
                 document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
 
-                document.getElementById('toggle_hotel_elements').scrollIntoView({
+                document.getElementById('hotel_data_dropdown_content').scrollIntoView({
                     block: 'center',
                     inline: 'center',
                     behavior: 'smooth',
                 });
 
+
                 // Hide delete button div
                 let overlayLayer = document.querySelector('.black_overlay');
-                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
+                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
                 deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
 
                 // Hide overlay layer with opacity transition
@@ -1206,7 +1674,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Function to show delete the inserted hotel data
             hotelRowImageControllerFunction = function (event) {
-                let deleteHotelRowDiv = document.getElementById('ensure_delet_or_edit_hotel_data_div');
+                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
                 let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
 
                 if (clickedHotelDataDiv) {
@@ -1254,6 +1722,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     /* Function to run edit clikced hotel row data */
                     runEditClickedHotelDataFunction = function () {
                         editClickedHotelDataFunction(currentHotelDataDivId);
+
+                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
+                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(0, 46, 57)';
+                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
                     }
                 }
             };
@@ -1959,6 +2434,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             /* Function to run edit the clicked clint movements row data */
             runEditClickedClintMovementsDataFunction = function () {
                 editClickedClintMovementsData(currentClintMovementsDataDivId);
+
+                /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
+                document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(0, 46, 57)';
             }
 
             // Check if the overlay already exists
