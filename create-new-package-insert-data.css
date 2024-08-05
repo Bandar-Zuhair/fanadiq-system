@@ -20,6 +20,15 @@
 
 
 
+#package_code_number_for_later_import_reference_p_id {
+    width: 100%;
+    font-size: 2vw;
+    padding-left: 10px;
+    text-align: end;
+}
+
+
+
 #clint_full_name_p {
     width: 100%;
     font-size: 2vw;
@@ -168,7 +177,6 @@
     margin: auto;
     padding: 10px;
     position: relative;
-    /* Add this to position the icon absolutely */
 }
 
 .pdf_section_title_div_class h6 {
@@ -603,25 +611,6 @@
 
 
 
-/* Download pdf file */
-#export_package_pdf_div_id {
-    width: 100%;
-}
-
-#export_package_pdf_div_id button {
-    background: white;
-    color: black;
-    width: 100%;
-    font-size: 3vw;
-    text-align: center;
-    cursor: pointer;
-    border: 0.5px solid black;
-    border-radius: 0;
-    box-shadow: 0 0 0 black;
-    transition: all 0.1s ease-in-out;
-}
-
-
 
 
 
@@ -742,6 +731,11 @@
 
 
 
+    #package_code_number_for_later_import_reference_p_id {
+        font-size: 2.5vw;
+    }
+
+
 
 
     #clint_full_name_p {
@@ -831,10 +825,6 @@
         padding: 4px;
     }
 
-    #export_package_pdf_div_id button {
-        font-size: 4vw;
-    }
-
     #name_pdf_file_div span {
         font-size: 6vw;
     }
@@ -857,6 +847,10 @@
 /* 650px */
 @media(max-width:650px) {
 
+    #package_code_number_for_later_import_reference_p_id {
+        font-size: 3vw;
+    }
+
     .ensure_your_delete_action {
         padding: 10px;
     }
@@ -864,10 +858,6 @@
     .ensure_your_delete_action button {
         font-size: 5vw;
         padding: 3px;
-    }
-
-    #export_package_pdf_div_id button {
-        font-size: 5vw;
     }
 }
 
@@ -1033,6 +1023,10 @@
 
 
 
+    #package_code_number_for_later_import_reference_p_id {
+        font-size: 3.5vw;
+    }
+
 
 
     #clint_full_name_p {
@@ -1130,10 +1124,6 @@
     .ensure_your_delete_action button {
         font-size: 7vw;
         padding: 2px;
-    }
-
-    #export_package_pdf_div_id button {
-        font-size: 6vw;
     }
 
     #name_pdf_file_div span {
