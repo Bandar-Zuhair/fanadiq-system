@@ -1,32 +1,30 @@
-let dbName = 'WebsiteDataDB';
-let storeName = 'SavedWebsiteData';
+const dbName = 'WebsiteDataDB';
+const storeName = 'SavedWebsiteData';
 let db;
 
+// Your existing IndexedDB code
 let request = indexedDB.open(dbName, 1);
 
-request.onupgradeneeded = function (event) {
+request.onupgradeneeded = function(event) {
     db = event.target.result;
     db.createObjectStore(storeName, { keyPath: 'name' });
 };
 
-request.onsuccess = function (event) {
+request.onsuccess = function(event) {
     db = event.target.result;
-
-    // Now that the database is open, you can safely call the estimate function
     estimateIndexedDBUsage();
 };
 
-request.onerror = function (event) {
+request.onerror = function(event) {
     console.error('Database error:', event.target.errorCode);
 };
 
-// Function to estimate IndexedDB usage
 function estimateIndexedDBUsage() {
     let transaction = db.transaction([storeName], 'readonly');
     let store = transaction.objectStore(storeName);
     let totalSize = 0;
 
-    store.openCursor().onsuccess = function (event) {
+    store.openCursor().onsuccess = function(event) {
         let cursor = event.target.result;
         if (cursor) {
             let jsonData = JSON.stringify(cursor.value);
@@ -37,30 +35,60 @@ function estimateIndexedDBUsage() {
         }
     };
 
-    transaction.onerror = function (event) {
+    transaction.onerror = function(event) {
         console.error('Transaction error:', event.target.errorCode);
     };
 }
 
-
-// Check storage quota and usage
 navigator.storage.estimate().then(estimate => {
     console.log(`Quota: ${estimate.quota} bytes`);
     console.log(`Usage: ${estimate.usage} bytes`);
 
-    // Display a warning if usage exceeds a certain threshold
-    let USAGE_THRESHOLD = 0.8; // 80%
+    let USAGE_THRESHOLD = 0.8;
     if (estimate.usage / estimate.quota > USAGE_THRESHOLD) {
         alert('Warning: You are using more than 80% of your storage quota.');
     }
 });
 
+async function saveDataToGitHub(data) {
+    const token = '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';
+    const owner = 'my.github.websites@gmail.com';
+    const repo = 'fanadiq-system';
+    const path = 'allSavedData/2024/savedDataFile.json';
+    const message = 'Add new data';
+    const content = btoa(JSON.stringify(data));
 
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    
+    const existingFileResponse = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+        }
+    });
 
+    const existingFile = await existingFileResponse.json();
+    const sha = existingFile.sha;
 
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message,
+            content,
+            sha: sha || undefined
+        })
+    });
 
+    const result = await response.json();
+    console.log('GitHub response:', result);
+}
 
-// Function to save new website data to IndexedDB
 function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
     let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
@@ -73,11 +101,10 @@ function saveNewWebsiteDataBase() {
         return;
     }
 
-    // Keep 'name' key as required by IndexedDB
     let newObject = {
-        name: localStorageNewSaveDataNameInput, // IndexedDB requires this key
-        date: new Date().toISOString(), // Add current date
-        e: {} // Use 'e' for 'elements' to minimize data size
+        name: localStorageNewSaveDataNameInput,
+        date: new Date().toISOString(),
+        e: {}
     };
 
     let divIds = [
@@ -93,12 +120,9 @@ function saveNewWebsiteDataBase() {
     divIds.forEach(divId => {
         let element = document.getElementById(divId);
         if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            // Clone the element to avoid modifying the original
             let clonedElement = element.cloneNode(true);
-
-            // Minify and clean the HTML
             let minifiedHTML = minifyHTML(clonedElement.outerHTML);
-            newObject.e[divId] = LZString.compressToUTF16(minifiedHTML); // Compress HTML
+            newObject.e[divId] = LZString.compressToUTF16(minifiedHTML);
             isAnyDivVisible = true;
         }
     });
@@ -111,129 +135,38 @@ function saveNewWebsiteDataBase() {
         return;
     }
 
-    let transaction = db.transaction([storeName], 'readwrite');
-    let store = transaction.objectStore(storeName);
-
-    let getRequest = store.get(localStorageNewSaveDataNameInput);
-
-    getRequest.onsuccess = function (event) {
-        let existingData = event.target.result;
-
-        if (existingData) {
-            store.put(newObject);
-        } else {
-            store.add(newObject);
-        }
-
+    saveDataToGitHub(newObject).then(() => {
         let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
         let overlayLayer = document.querySelector('.black_overlay');
 
-        transaction.oncomplete = function () {
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
+        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
+        setTimeout(() => {
+            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
+        }, 500);
 
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)';
-            overlayLayer.style.opacity = '0';
+        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)';
+        overlayLayer.style.opacity = '0';
 
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300);
+        setTimeout(() => {
+            document.body.removeChild(overlayLayer);
+        }, 300);
 
-            document.getElementById('localstorage_new_save_data_name_input_id').value = '';
-        };
-
-        transaction.onerror = function (event) {
-            console.error('Transaction error:', event.target.errorCode);
-        };
-    };
-
-    getRequest.onerror = function (event) {
-        console.error('Get request error:', event.target.errorCode);
-    };
+        document.getElementById('localstorage_new_save_data_name_input_id').value = '';
+    }).catch(error => {
+        console.error('Error saving to GitHub:', error);
+    });
 }
 
-// Function to minify and clean HTML
 function minifyHTML(html) {
     return html
-        .replace(/\s+/g, ' ') // Collapse whitespace
-        .replace(/>\s+</g, '><') // Remove spaces between tags
-        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
-        .replace(/\s*=\s*/g, '=') // Remove spaces around equals in attributes
-        .replace(/\s*(style|class)=""/g, '') // Remove empty style and class attributes
+        .replace(/\s+/g, ' ')
+        .replace(/>\s+</g, '><')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/\s*=\s*/g, '=')
+        .replace(/\s*(style|class)=""/g, '')
         .trim();
 }
 
-
-
-
-
-
-
-function cleanUpOldData() {
-    let transaction = db.transaction([storeName], 'readwrite');
-    let store = transaction.objectStore(storeName);
-
-    let getAllRequest = store.getAll();
-
-    getAllRequest.onsuccess = function (event) {
-        let allData = event.target.result;
-        let currentDate = new Date();
-
-        allData.forEach(data => {
-            let dataDate = new Date(data.date);
-            let monthsDifference = (currentDate.getFullYear() - dataDate.getFullYear()) * 12 + (currentDate.getMonth() - dataDate.getMonth());
-
-            if (monthsDifference > 12) {
-                store.delete(data.name);
-            }
-        });
-    };
-
-    getAllRequest.onerror = function (event) {
-        console.error('Error fetching all data from IndexedDB:', event.target.errorCode);
-    };
-}
-
-function monitorStorageUsage() {
-    let transaction = db.transaction([storeName], 'readonly');
-    let store = transaction.objectStore(storeName);
-
-    let getAllRequest = store.getAll();
-
-    getAllRequest.onsuccess = function (event) {
-        let allData = event.target.result;
-        let totalSize = 0;
-
-        allData.forEach(data => {
-            Object.values(data.e).forEach(compressedHTML => {
-                totalSize += compressedHTML.length; // Rough estimate of size
-            });
-        });
-
-        console.log('Total storage size:', totalSize, 'characters');
-        if (totalSize > MAX_STORAGE_LIMIT) {
-            alert('You are approaching the storage limit. Please delete some old data.');
-            // Implement further actions like automatic deletion of oldest data
-        }
-    };
-
-    getAllRequest.onerror = function (event) {
-        console.error('Error fetching all data from IndexedDB:', event.target.errorCode);
-    };
-}
-
-// Run monitorStorageUsage periodically, e.g., every day
-setInterval(monitorStorageUsage, 24 * 60 * 60 * 1000); // Every 24 hours
-
-let MAX_STORAGE_LIMIT = 5000000; // Define your storage limit in characters
-
-
-// Call the cleanUpOldData function when the page loads
-window.onload = function () {
-    cleanUpOldData();
-};
 
 
 
