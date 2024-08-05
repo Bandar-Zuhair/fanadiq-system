@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-window.addEventListener('beforeunload', function (event) {
+/* window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-});
+}); */
 
 
 
@@ -52,7 +52,7 @@ showPackageTypeSection = function (packageType, clickedElement) {
 
     window.scrollTo(0, 0);
 
-    
+
     if (packageType === 'clint') {
         create_new_clint_data_section.style.display = 'block';
         create_new_hotel_package_section.style.display = 'none';
@@ -207,6 +207,32 @@ clintPackageTypeDiv.forEach(checkbox => {
 
 
 
+
+
+
+
+
+/* Dropdown website users names functionality */
+let websiteUsersNameInput = document.getElementById('website_users_name_input_id');
+
+// Get the options within the dropdown
+let websiteUsersNameInputOptions = document.querySelectorAll('#website_users_names_dropdown h3');
+
+websiteUsersNameInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        if(option.textContent === 'سامي' || option.textContent === 'ابو سما'){
+            websiteUsersNameInput.value = `مستر ${option.textContent}`; // Set input value to selected option
+            
+        }else{
+            websiteUsersNameInput.value = option.textContent; // Set input value to selected option
+
+        }
+
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
 
 
 
@@ -1289,32 +1315,70 @@ setTheClickedClintMovementsPlace = function () {
 
 
 
-// Function to parse date strings in the format "DD-MMM"
-function parseDate(dateStr) {
-    let parts = dateStr.split('-');
+// Function to parse a date string in 'DD month' format
+function parseDate(dateString) {
+    let arabicMonths = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+    let parts = dateString.split(' ');
     let day = parseInt(parts[0]);
-    let monthShortNames = { "Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5, "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11 };
-    let month = monthShortNames[parts[1]];
+    let month = arabicMonths.indexOf(parts[1]);
     let year = new Date().getFullYear(); // Assuming the current year
+
     return new Date(year, month, day);
 }
 
-// Function to format a Date object to "DD-MMM"
+// Function to format a date in Arabic month format
 function formatDate(date) {
+    let arabicMonths = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
     let day = date.getDate();
-    let month = date.toLocaleString('en', { month: 'short' }); // English month name
-    return `${day}-${month}`;
+    let month = arabicMonths[date.getMonth()];
+    return `${day} ${month}`;
 }
-
-// Ensure to use parseDate and formatDate consistently
-// Example: let dateObj = parseDate(dateStr); let formattedDate = formatDate(dateObj);
 
 // Function to arrange dates in the client movements
 function arrangeClintMovementsDates() {
-    let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
-    let currentDate = parseDate(clintMovementsFirstDayDateInput);
-    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class');
+    // Get reference to the elements
+    let wholePackageStartDateInput = document.getElementById('whole_package_start_date_input_id').value;
+    let wholePackageEndDateInput = document.getElementById('whole_package_end_date_input_id').value;
+    let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id');
 
+    // Parse the start date
+    let currentDate = parseDate(wholePackageStartDateInput);
+
+    // Get all divs with the class name 'clint_movements_row_class_for_editing'
+    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
+
+    // If there are no divs with the class name 'clint_movements_row_class_for_editing'
+    if (clintMovementsRowDivs.length === 0) {
+        // Set the date of clint_movements_current_day_date_input_id to the whole_package_start_date_input_id
+        clintMovementsCurrentDayDateInput.value = wholePackageStartDateInput;
+    } else {
+        // Function to delete the last div if its date is ahead of the whole_package_end_date_input_id date
+        function deleteAheadDivs() {
+            clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing'); // Update the list of divs
+            if (clintMovementsRowDivs.length > 0) {
+                // Get the last 'clint_movements_row_class_for_editing' div and its corresponding h6 element
+                let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
+                let lastClintMovementsRowH6Element = lastClintMovementsRowDiv.querySelector('h6');
+
+                // If the date in the last h6 element is after the whole_package_end_date_input_id date, remove the div
+                if (lastClintMovementsRowH6Element && parseDate(lastClintMovementsRowH6Element.innerText) > parseDate(wholePackageEndDateInput)) {
+                    lastClintMovementsRowDiv.remove();
+                    deleteAheadDivs(); // Recursively call to check and delete remaining divs
+                } else {
+                    // Set the clint_movements_current_day_date_input_id to one day after the date in the last h6 element
+                    let newDate = parseDate(lastClintMovementsRowH6Element.innerText);
+                    newDate.setDate(newDate.getDate() + 1);
+                    clintMovementsCurrentDayDateInput.value = formatDate(newDate);
+                }
+            }
+        }
+
+        // Call the function to handle the deletion and updating of dates
+        deleteAheadDivs();
+    }
+
+    // Update all divs with the class name 'clint_movements_row_class' with sequential dates starting from the currentDate
+    clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class'); // Get all 'clint_movements_row_class' divs
     for (let i = 0; i < clintMovementsRowDivs.length; i++) {
         let h6Element = clintMovementsRowDivs[i].querySelector('h6');
         if (h6Element) {
@@ -1323,76 +1387,19 @@ function arrangeClintMovementsDates() {
         }
     }
 
-    let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
-    let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
-    if (lastH6Element) {
-        let lastH6Date = parseDate(lastH6Element.innerText);
-        lastH6Date.setDate(lastH6Date.getDate() + 1);
-        document.getElementById('clint_movements_current_day_date_input_id').value = formatDate(lastH6Date);
+    // Update the clint_movements_current_day_date_input_id to the day after the last date
+    if (clintMovementsRowDivs.length > 0) {
+        let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
+        let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
+        if (lastH6Element) {
+            let lastH6Date = parseDate(lastH6Element.innerText);
+            lastH6Date.setDate(lastH6Date.getDate() + 1);
+            clintMovementsCurrentDayDateInput.value = formatDate(lastH6Date);
+        }
     }
 }
 
-// Example usage of date functions in other parts of your code
-function setTheFirstClintMovemnetsDate() {
-    let clintMovementsFirstDayDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
-    let clintMovementsLastDayDateInput = document.getElementById('clint_movements_last_day_date_input_id').value;
-    let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id');
-    let clintMovementsPeriodInputsSubmitIcon = document.getElementById('clint_movements_period_inputs_submit_icon');
 
-    if (clintMovementsFirstDayDateInput !== '' && clintMovementsLastDayDateInput !== '') {
-        clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(0, 255, 0)';
-        setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
-        }, 500);
-
-        let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
-        let topClintMovementsRowH6Element = null; // Ensure initialization
-
-        function deleteAheadDivs() {
-            clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
-            if (clintMovementsRowDivs.length > 0) {
-                let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
-                let lastClintMovementsRowH6Element = lastClintMovementsRowDiv.querySelector('h6');
-                if (lastClintMovementsRowH6Element && parseDate(lastClintMovementsRowH6Element.innerText) > parseDate(clintMovementsLastDayDateInput)) {
-                    document.getElementById('clint_movements_current_day_date_input_id').value = lastClintMovementsRowH6Element.innerText;
-                    lastClintMovementsRowDiv.remove();
-                    deleteAheadDivs();
-                }
-            }
-        }
-
-        if (clintMovementsRowDivs.length > 0) {
-            let topClintMovementsRowDiv = clintMovementsRowDivs[0];
-            topClintMovementsRowH6Element = topClintMovementsRowDiv.querySelector('h6');
-            if (topClintMovementsRowH6Element && topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
-                topClintMovementsRowH6Element.innerText = clintMovementsFirstDayDateInput;
-                clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
-                arrangeClintMovementsDates();
-
-                /* Make sure to delet all 'clint_movements_row_class_for_editing' that have a date ahead the date exist in the 'clint_movements_last_day_date_input_id' */
-                deleteAheadDivs();
-                return;
-            }
-        }
-
-        // Set the new value of the 'clint_movements_first_day_date_input_id' inside 'clint_movements_current_day_date_input_id'
-        if (!topClintMovementsRowH6Element || topClintMovementsRowH6Element.innerText !== clintMovementsFirstDayDateInput) {
-            clintMovementsCurrentDayDateInput.value = clintMovementsFirstDayDateInput;
-        }
-
-        deleteAheadDivs();
-
-        document.getElementById('store_localstorage_clint_movements_first_day_date_value').innerText = clintMovementsFirstDayDateInput;
-        document.getElementById('store_localstorage_clint_movements_last_day_date_value').innerText = clintMovementsLastDayDateInput;
-        document.getElementById('store_localstorage_clint_movements_total_nights_day_date_value').innerText = document.getElementById('clint_movements_total_nights_input_id').value;
-
-    } else {
-        clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'red';
-        setTimeout(() => {
-            clintMovementsPeriodInputsSubmitIcon.style.backgroundColor = 'rgb(255, 174, 0)';
-        }, 500);
-    }
-}
 
 
 
@@ -1531,13 +1538,13 @@ function hideOverlay() {
 
 
 // Arabic month names
-const innerDatePickerArabicMonths = [
+let innerDatePickerArabicMonths = [
     'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
 ];
 
 // Arabic day names
-const arabicDays = ['أحد', 'إثن', 'ثلو', 'ربو', 'خمي', 'جمع', 'سبت'];
+let arabicDays = ['أحد', 'إثن', 'ثلو', 'ربو', 'خمي', 'جمع', 'سبت'];
 
 // Function to get Arabic month name
 function getArabicMonthName(monthIndex) {
@@ -1628,8 +1635,8 @@ function parseArabicDate(dateStr) {
 
 // Function to update the total nights input
 function updateWholePackageTotalNights() {
-    let startDateInput = document.getElementById('package_start_date_input_id');
-    let endDateInput = document.getElementById('package_end_date_input_id');
+    let startDateInput = document.getElementById('whole_package_start_date_input_id');
+    let endDateInput = document.getElementById('whole_package_end_date_input_id');
     let totalNightsInput = document.getElementById('package_total_nights_input_id');
 
     let startDate = startDateInput.value;
@@ -1656,7 +1663,7 @@ function updateWholePackageTotalNights() {
 
 // Function to disable specific dates
 function disableSpecificDates(date) {
-    let startDateInput = document.getElementById('package_start_date_input_id').value;
+    let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
     if (startDateInput) {
         let startDate = parseArabicDate(startDateInput);
         return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
@@ -1669,7 +1676,7 @@ var today = new Date();
 
 // Initialize Pikaday for the start date
 var wholePackageStartDatePicker = new Pikaday({
-    field: document.getElementById('package_start_date_input_id'),
+    field: document.getElementById('whole_package_start_date_input_id'),
     format: 'DD-M',
     minDate: today,
     toString(date, format) {
@@ -1678,8 +1685,8 @@ var wholePackageStartDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
+        previousMonth: '',
+        nextMonth: '',
         months: innerDatePickerArabicMonths,
         weekdays: arabicDays,
         weekdaysShort: arabicDays
@@ -1696,7 +1703,7 @@ var wholePackageStartDatePicker = new Pikaday({
 
 // Initialize Pikaday for the end date
 var wholePackageEndDatePicker = new Pikaday({
-    field: document.getElementById('package_end_date_input_id'),
+    field: document.getElementById('whole_package_end_date_input_id'),
     format: 'DD-M',
     minDate: today,
     toString(date, format) {
@@ -1705,8 +1712,8 @@ var wholePackageEndDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
+        previousMonth: '',
+        nextMonth: '',
         months: innerDatePickerArabicMonths,
         weekdays: arabicDays,
         weekdaysShort: arabicDays
@@ -1719,7 +1726,7 @@ var wholePackageEndDatePicker = new Pikaday({
 });
 
 // Toggle the whole package start date picker on input field click
-document.getElementById('package_start_date_input_id').addEventListener('click', function (e) {
+document.getElementById('whole_package_start_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isWholePackageStartDatePickerVisible) {
@@ -1736,7 +1743,7 @@ document.getElementById('package_start_date_input_id').addEventListener('click',
 });
 
 // Toggle the whole package end date picker on input field click
-document.getElementById('package_end_date_input_id').addEventListener('click', function (e) {
+document.getElementById('whole_package_end_date_input_id').addEventListener('click', function (e) {
     e.stopPropagation();
 
     if (isWholePackageEndDatePickerVisible) {
@@ -1864,8 +1871,8 @@ var hotelStartDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
+        previousMonth: '',
+        nextMonth: '',
         months: innerDatePickerArabicMonths,
         weekdays: arabicDays,
         weekdaysShort: arabicDays
@@ -1891,8 +1898,8 @@ var hotelEndDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
+        previousMonth: '',
+        nextMonth: '',
         months: innerDatePickerArabicMonths,
         weekdays: arabicDays,
         weekdaysShort: arabicDays
@@ -1997,8 +2004,8 @@ var startDatePicker = new Pikaday({
         isDatePickerVisible = false; // Reset the visibility state when a date is selected
     },
     i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
+        previousMonth: '',
+        nextMonth: '',
         months: innerDatePickerArabicMonths,
         weekdays: arabicDays,
         weekdaysShort: arabicDays
@@ -2054,193 +2061,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Function to pick the first and last clint movemennts dates */
-
-
-
-
-// Variables to track the visibility of the date pickers
-var isClintMovementsFirstDayPickerVisible = false;
-var isClintMovementsLastDayPickerVisible = false;
-
-// Function to parse date strings in the format "DD-MMM"
-function parseDate(dateStr) {
-    let parts = dateStr.split('-');
-    let day = parseInt(parts[0]);
-    let monthShortNames = { "Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5, "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11 };
-    let month = monthShortNames[parts[1]];
-    let year = new Date().getFullYear(); // Assuming the current year
-    return new Date(year, month, day);
-}
-
-// Function to calculate the difference in days between two dates
-function calculateDaysDifference(startDate, endDate) {
-    let start = parseDate(startDate);
-    let end = parseDate(endDate);
-    let diff = end - start;
-    return Math.round(diff / (1000 * 60 * 60 * 24));
-}
-
-// Function to update the total nights input
-function updateWholeClintMovementsTotalNights() {
-    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id');
-    let endDateInput = document.getElementById('clint_movements_last_day_date_input_id');
-    let totalNightsInput = document.getElementById('clint_movements_total_nights_input_id');
-
-    let startDate = startDateInput.value;
-    let endDate = endDateInput.value;
-
-    if (startDate !== '' && endDate !== '') {
-        let totalNights = calculateDaysDifference(startDate, endDate);
-
-        // Set the total clint movements night (just to show the user the difference)
-        totalNightsInput.value = `${totalNights} ليالي`;
-
-        // Ensure the end date is not earlier than or equal to the start date
-        if (parseDate(startDate) >= parseDate(endDate)) {
-            endDateInput.value = '';
-            totalNightsInput.value = '';
-        }
-    } else {
-        totalNightsInput.value = '';
-    }
-}
-
-// Function to disable specific dates
-function disableSpecificDates(date) {
-    let startDateInput = document.getElementById('clint_movements_first_day_date_input_id').value;
-    if (startDateInput) {
-        let startDate = parseDate(startDateInput);
-        return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
-    }
-    return false;
-}
-
-// Get today's date
-var today = new Date();
-
-// Prepare Pikaday for the first day input
-var clintMovementsFirstDayPicker = new Pikaday({
-    field: document.getElementById('clint_movements_first_day_date_input_id'), // Field to attach the date picker
-    format: 'DD-MMM', // Format to display only day and month
-    minDate: today, // Set minimum date to today
-    toString(date, format) { // Function to format the date
-        let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
-        return `${day}-${month}`; // Return formatted date
-    },
-    i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
-        months: innerDatePickerArabicMonths,
-        weekdays: arabicDays,
-        weekdaysShort: arabicDays
-    },
-    onSelect: function () {
-        isClintMovementsFirstDayPickerVisible = false; // Reset visibility state on date selection
-        updateWholeClintMovementsTotalNights();
-        let selectedDate = this.getDate();
-        let minEndDate = new Date(selectedDate);
-        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
-        clintMovementsLastDayPicker.setMinDate(minEndDate); // Update min date for the second picker
-    }
-});
-
-// Prepare the second date picker (clint_movements_last_day_date_input_id)
-var clintMovementsLastDayPicker = new Pikaday({
-    field: document.getElementById('clint_movements_last_day_date_input_id'), // Field to attach the date picker
-    format: 'DD-MMM', // Format to display only day and month
-    minDate: today, // Set minimum date to today (will be updated dynamically)
-    toString(date, format) { // Function to format the date
-        let day = date.getDate(); // Get the day
-        let month = date.toLocaleString('en', { month: 'short' }); // Get the month in short format (English)
-        return `${day}-${month}`; // Return formatted date
-    },
-    i18n: {
-        previousMonth: 'الشهر السابق',
-        nextMonth: 'الشهر التالي',
-        months: innerDatePickerArabicMonths,
-        weekdays: arabicDays,
-        weekdaysShort: arabicDays
-    },
-    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: function () {
-        isClintMovementsLastDayPickerVisible = false; // Reset visibility state on date selection
-        updateWholeClintMovementsTotalNights(); // Call 'updateWholeClintMovementsTotalNights' when a date is selected
-    }
-});
-
-// Toggle the Clint Movements First Day date picker on input field click
-document.getElementById('clint_movements_first_day_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isClintMovementsFirstDayPickerVisible) {
-        clintMovementsFirstDayPicker.hide();
-        isClintMovementsFirstDayPickerVisible = false;
-    } else {
-        if (isClintMovementsLastDayPickerVisible) {
-            clintMovementsLastDayPicker.hide();
-            isClintMovementsLastDayPickerVisible = false;
-        }
-        clintMovementsFirstDayPicker.show();
-        isClintMovementsFirstDayPickerVisible = true;
-    }
-});
-
-// Toggle the Clint Movements Last Day date picker on input field click
-document.getElementById('clint_movements_last_day_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isClintMovementsLastDayPickerVisible) {
-        clintMovementsLastDayPicker.hide();
-        isClintMovementsLastDayPickerVisible = false;
-    } else {
-        if (isClintMovementsFirstDayPickerVisible) {
-            clintMovementsFirstDayPicker.hide();
-            isClintMovementsFirstDayPickerVisible = false;
-        }
-        clintMovementsLastDayPicker.show();
-        isClintMovementsLastDayPickerVisible = true;
-    }
-});
-
-// Prevent the date pickers from hiding when clicking inside them
-clintMovementsFirstDayPicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-clintMovementsLastDayPicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-
-// Hide the date pickers when clicking outside
-document.addEventListener('click', function () {
-    if (isClintMovementsFirstDayPickerVisible) {
-        clintMovementsFirstDayPicker.hide();
-        isClintMovementsFirstDayPickerVisible = false;
-    }
-    if (isClintMovementsLastDayPickerVisible) {
-        clintMovementsLastDayPicker.hide();
-        isClintMovementsLastDayPickerVisible = false;
-    }
-});
 
 
 
