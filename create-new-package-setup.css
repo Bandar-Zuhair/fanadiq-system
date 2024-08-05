@@ -1077,8 +1077,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Increase the clickable area for the header cells */
 .pika-single .pika-table th {
-    padding: 10px;
-    font-size: 1.2rem;
+    padding: 0px;
+    font-size: 1vw;
     /* Increase font size for header */
 }
 
@@ -1417,8 +1417,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+    /* Increase the clickable area for the header cells */
+    .pika-single .pika-table th {
+        font-size: 2vw;
+        /* Increase font size for header */
+    }
 
-    
     /* Style for month navigation icons */
     .pika-single .pika-prev,
     .pika-single .pika-next {
@@ -1471,7 +1475,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     /* Scroll down icon */
     #scroll_bottom_page_icon {
-        font-size: 9vw;
+        font-size: 10vw;
     }
 
 
@@ -1692,6 +1696,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 
+    /* Increase the clickable area for the header cells */
+    .pika-single .pika-table th {
+        font-size: 3vw;
+        /* Increase font size for header */
+    }
 
     /* Style for month navigation icons */
     .pika-single .pika-prev,
@@ -1747,7 +1756,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     /* Scroll down icon */
     #scroll_bottom_page_icon {
-        font-size: 13.5vw;
+        font-size: 14.5vw;
     }
 
 
@@ -1958,7 +1967,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     /* Increase the size of day cells and add more space between them */
     .pika-single .pika-table td {
-        padding: 2px;
+        padding: 2vw;
         /* Center the text */
         width: auto;
         /* Increase the width of the cells */
@@ -1972,7 +1981,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .pika-single .pika-table th {
-        padding: 0px;
+        font-size: 4vw;
+        /* Increase font size for Arabic days names */
     }
 
     /* Ensure the date picker container is wide enough to fit the day buttons */
