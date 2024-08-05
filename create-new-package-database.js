@@ -77,6 +77,7 @@ function minifyHTML(html) {
 
 
 
+
 // Function to import saved data from IndexedDB
 function importSavedDataBaseName() {
     // Re-enable scrolling
