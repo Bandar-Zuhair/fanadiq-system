@@ -51,11 +51,11 @@ navigator.storage.estimate().then(estimate => {
 });
 
 
-async function saveDataToGitHub(data) {
+async function saveDataToGitHub(data, fileName) {
     const token = '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';  // Replace with your actual PAT
     const owner = 'bandar-zuhair';  // Replace with your GitHub username
     const repo = 'fanadiq-system';  // Replace with your repository name
-    const path = 'savedDataFile.json';  // Dynamic path based on input
+    const path = `allSavedData/2024/${fileName}.json`;  // Dynamic path based on input
     const message = 'Add new data';
 
     // Encode the data to Base64
@@ -68,7 +68,7 @@ async function saveDataToGitHub(data) {
         const existingFileResponse = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `token ${token}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
@@ -85,7 +85,7 @@ async function saveDataToGitHub(data) {
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `token ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
             },
@@ -103,7 +103,6 @@ async function saveDataToGitHub(data) {
         console.error('Error saving to GitHub:', error);
     }
 }
-
 
 function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
@@ -151,7 +150,7 @@ function saveNewWebsiteDataBase() {
         return;
     }
 
-    saveDataToGitHub(newObject).then(() => {
+    saveDataToGitHub(newObject, localStorageNewSaveDataNameInput).then(() => {
         let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
         let overlayLayer = document.querySelector('.black_overlay');
 
@@ -182,6 +181,7 @@ function minifyHTML(html) {
         .replace(/\s*(style|class)=""/g, '')
         .trim();
 }
+
 
 
 
