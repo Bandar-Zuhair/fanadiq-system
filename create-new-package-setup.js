@@ -209,6 +209,13 @@ clintPackageTypeDiv.forEach(checkbox => {
 
 
 
+window.addEventListener('load', () => {
+    let storedUserName = localStorage.getItem('user_name_code');
+    
+    if (storedUserName) {
+        document.getElementById('website_users_name_input_id').value = storedUserName;
+    }
+});
 
 
 
@@ -229,6 +236,8 @@ websiteUsersNameInputOptions.forEach(option => {
 
         }
 
+        // Store the selected value in localStorage
+        localStorage.setItem('user_name_code', websiteUsersNameInput.value);
 
         hideOverlay(); // Hide overlay after selection
     });
