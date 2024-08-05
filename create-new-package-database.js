@@ -59,7 +59,7 @@ async function saveDataToGitHub(data) {
     const message = 'Add new data';
 
     // Encode the data to Base64
-    const content = btoa(JSON.stringify(data));
+    const content = base64js.fromByteArray(new TextEncoder().encode(JSON.stringify(data)));
 
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     
@@ -97,6 +97,7 @@ async function saveDataToGitHub(data) {
     const result = await response.json();
     console.log('GitHub response:', result);
 }
+
 
 function saveNewWebsiteDataBase() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
