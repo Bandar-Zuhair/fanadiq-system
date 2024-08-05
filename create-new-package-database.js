@@ -52,7 +52,7 @@ navigator.storage.estimate().then(estimate => {
 
 
 async function saveDataToGitHub(data, fileName) {
-    const token = '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';  // Replace with your actual PAT
+    const token = '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';  // Replace with your actual PAT
     const owner = 'bandar-zuhair';  // Replace with your GitHub username
     const repo = 'fanadiq-system';  // Replace with your repository name
     const path = `allSavedData/2024/${fileName}.json`;  // Dynamic path based on input
