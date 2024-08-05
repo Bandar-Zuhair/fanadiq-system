@@ -52,10 +52,10 @@ navigator.storage.estimate().then(estimate => {
 
 
 async function saveDataToGitHub(data) {
-    const token = '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';  // Replace with your actual PAT
+    const token = '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';  // Replace with your actual PAT
     const owner = 'bandar-zuhair';  // Replace with your GitHub username
     const repo = 'fanadiq-system';  // Replace with your repository name
-    const path = 'allSavedData/2024/savedDataFile.json';  // Dynamic path based on input
+    const path = 'savedDataFile.json';  // Dynamic path based on input
     const message = 'Add new data';
 
     // Encode the data to Base64
@@ -72,30 +72,36 @@ async function saveDataToGitHub(data) {
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
+        console.log(`GET ${url} status:`, existingFileResponse.status);
         if (existingFileResponse.status === 200) {
             const existingFile = await existingFileResponse.json();
             sha = existingFile.sha;
         }
     } catch (error) {
-        console.log('File does not exist or another error occurred:', error);
+        console.log('Error fetching existing file:', error);
     }
 
-    const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message,
-            content,
-            sha: sha || undefined
-        })
-    });
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message,
+                content,
+                sha: sha || undefined
+            })
+        });
 
-    const result = await response.json();
-    console.log('GitHub response:', result);
+        console.log(`PUT ${url} status:`, response.status);
+        const result = await response.json();
+        console.log('GitHub response:', result);
+    } catch (error) {
+        console.error('Error saving to GitHub:', error);
+    }
 }
 
 
