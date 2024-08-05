@@ -47,9 +47,9 @@ function estimateIndexedDBUsage() {
 navigator.storage.estimate().then(estimate => {
     console.log(`Quota: ${estimate.quota} bytes`);
     console.log(`Usage: ${estimate.usage} bytes`);
-    
+
     // Display a warning if usage exceeds a certain threshold
-    const USAGE_THRESHOLD = 0.8; // 80%
+    let USAGE_THRESHOLD = 0.8; // 80%
     if (estimate.usage / estimate.quota > USAGE_THRESHOLD) {
         alert('Warning: You are using more than 80% of your storage quota.');
     }
@@ -227,7 +227,7 @@ function monitorStorageUsage() {
 // Run monitorStorageUsage periodically, e.g., every day
 setInterval(monitorStorageUsage, 24 * 60 * 60 * 1000); // Every 24 hours
 
-const MAX_STORAGE_LIMIT = 5000000; // Define your storage limit in characters
+let MAX_STORAGE_LIMIT = 5000000; // Define your storage limit in characters
 
 
 // Call the cleanUpOldData function when the page loads
@@ -300,8 +300,6 @@ function importSavedDataBaseName() {
                     // Store the clicked localstorage data name for later saving reference
                     store_last_clicked_localstorage_data_name.innerText = clickedDataName;
 
-                    // Show the download button
-                    document.getElementById('export_package_pdf_div_id').style.display = 'block';
 
                     overlayLayer.style.opacity = '0';
                     setTimeout(() => {
@@ -987,10 +985,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Hide section with id 'downloaded_pdf_flight_data_page'
                     document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
 
-                    // Hide the download button if there are no other important data sections visible
-                    if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
-                        document.getElementById('export_package_pdf_div_id').style.display = 'none';
-                    }
                 }
             }
 
@@ -1225,8 +1219,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
             // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
             function createFlightDragAndDropMood() {
-
-
                 // Common function to handle dragging logic
                 function handleDrag(event, touch = false) {
                     if (event.target.classList.contains('flight_row_flight_arrival_time_controller')) {
@@ -1237,8 +1229,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
                         document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden';
+                        // Disable scrolling without affecting layout
+                        document.body.style.touchAction = 'none';
+                        document.body.style.userSelect = 'none';
                     }
                 }
 
@@ -1312,7 +1305,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
                     document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
-                    document.body.style.overflow = '';
+                    // Restore scrolling
+                    document.body.style.touchAction = '';
+                    document.body.style.userSelect = '';
                 }
 
                 // Function to handle mouse up event
@@ -1450,10 +1445,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Hide section with id 'downloaded_pdf_hotel_data_page'
                     document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
 
-                    // Hide the download button if there are no other important data sections visible
-                    if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' && document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
-                        document.getElementById('export_package_pdf_div_id').style.display = 'none';
-                    }
                 }
             };
 
@@ -1628,19 +1619,19 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         // Append <p> elements for each input with text
                         if (hotelRoomContainPoolText !== '') {
                             let poolP = document.createElement('span');
-                            poolP.id = `hotel_pool_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            poolP.id = `hotel_pool_p_id_${currentHotelDataDivId}`;
                             poolP.innerText = hotelRoomContainPoolText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolP);
                         }
                         if (hotelRoomViewText !== '') {
                             let viewP = document.createElement('span');
-                            viewP.id = `hotel_view_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            viewP.id = `hotel_view_p_id_${currentHotelDataDivId}`;
                             viewP.innerText = hotelRoomViewText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewP);
                         }
                         if (hotelBreakfastPeopleAmountText !== '') {
                             let breakfastP = document.createElement('span');
-                            breakfastP.id = `hotel_breakfast_p_id_${currentHotelDataDivId.split('_').pop()}`;
+                            breakfastP.id = `hotel_breakfast_p_id_${currentHotelDataDivId}`;
                             breakfastP.innerText = hotelBreakfastPeopleAmountText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastP);
                         }
@@ -1753,8 +1744,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
                         document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
 
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                        // Disable scrolling without affecting layout
+                        document.body.style.touchAction = 'none';
+                        document.body.style.userSelect = 'none';
                     }
                 }
 
@@ -1768,8 +1760,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         document.addEventListener('touchmove', touchMove, { passive: false }); // Listen for touch move events
                         document.addEventListener('touchend', touchEnd); // Listen for touch end events
 
-                        // Disable scrolling
-                        document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
+                        // Disable scrolling without affecting layout
+                        document.body.style.touchAction = 'none';
+                        document.body.style.userSelect = 'none';
                     }
                 }
 
@@ -1860,7 +1853,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.removeEventListener('mouseup', mouseUp); // Stop listening for mouse up events
 
                     // Enable scrolling
-                    document.body.style.overflow = ''; // Re-enable page scrolling
+                    document.body.style.touchAction = '';
+                    document.body.style.userSelect = '';
                 }
 
                 // Function to handle touch end event
@@ -1884,7 +1878,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.removeEventListener('touchend', touchEnd); // Stop listening for touch end events
 
                     // Enable scrolling
-                    document.body.style.overflow = ''; // Re-enable page scrolling
+                    document.body.style.touchAction = '';
+                    document.body.style.userSelect = '';
                 }
 
                 // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
@@ -1911,9 +1906,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
         /* Set the values for the following inputs to be able to continue the process of the clint movements action */
-        document.getElementById('clint_movements_first_day_date_input_id').value = document.getElementById('store_localstorage_clint_movements_first_day_date_value').innerText;
-        document.getElementById('clint_movements_last_day_date_input_id').value = document.getElementById('store_localstorage_clint_movements_last_day_date_value').innerText;
-        document.getElementById('clint_movements_total_nights_input_id').value = document.getElementById('store_localstorage_clint_movements_total_nights_day_date_value').innerText;
         document.getElementById('clint_movements_current_day_date_input_id').value = document.getElementById('store_localstorage_clint_movements_current_day_date_value').innerText;
 
 
@@ -2063,12 +2055,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Hide section with id 'downloaded_pdf_clint_movements_data_page'
                     document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
 
-                    // Hide the download button if there are no other important data sections visible
-                    if (document.getElementById('downloaded_pdf_flight_data_page').style.display === 'none' &&
-                        document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none' &&
-                        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
-                        document.getElementById('export_package_pdf_div_id').style.display = 'none';
-                    }
                 }
             };
 
@@ -2114,8 +2100,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                 /* Disable the clint movements dates when editing */
-                document.getElementById('clint_movements_first_day_date_input_id').disabled = true;
-                document.getElementById('clint_movements_last_day_date_input_id').disabled = true;
+                document.getElementById('whole_package_start_date_input_id').disabled = true;
+                document.getElementById('whole_package_end_date_input_id').disabled = true;
 
 
                 // Hide delete button div
@@ -2204,8 +2190,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                     /* Re-enable the clint movements dates when editing */
-                    document.getElementById('clint_movements_first_day_date_input_id').disabled = false;
-                    document.getElementById('clint_movements_last_day_date_input_id').disabled = false;
+                    document.getElementById('whole_package_start_date_input_id').disabled = false;
+                    document.getElementById('whole_package_end_date_input_id').disabled = false;
                 }
 
 
@@ -2492,8 +2478,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
                     document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
-                    // Disable scrolling
-                    document.body.style.overflow = 'hidden';
+                    // Disable scrolling without affecting layout
+                    document.body.style.touchAction = 'none';
+                    document.body.style.userSelect = 'none';
                 }
             }
 
@@ -2537,7 +2524,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 if (targetIndex !== currentIndex) {
                     flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
 
-                    /* Update the date arrangment in every drag and drop action */
+                    /* Update the date arrangement in every drag and drop action */
                     arrangeClintMovementsDates();
                 }
             }
@@ -2570,7 +2557,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
                 document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
 
-                document.body.style.overflow = '';
+                // Enable scrolling
+                document.body.style.touchAction = '';
+                document.body.style.userSelect = '';
             }
 
             // Function to handle mouse up event
@@ -2590,10 +2579,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 div.addEventListener('mousedown', mouseDown);
                 div.addEventListener('touchstart', touchStart);
             });
-
         }
 
         // Initialize drag and drop functionality
         createClintMovementsDragAndDropMood();
+
     }
 }
