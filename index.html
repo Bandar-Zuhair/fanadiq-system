@@ -2,6 +2,7 @@
 <html lang="ar">
 
 
+
 <head>
 
     <meta charset="utf-8" />
@@ -105,7 +106,7 @@
             <h6>تخزين جديد <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
             <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين">
             <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteDataBase()">تخزين جديد</p>
+                onclick="saveNewWebsiteDataToGoogleSheets()">تخزين جديد</p>
         </div>
     </div>
 
@@ -2183,9 +2184,6 @@
     <!-- Library to lower the size of the saved data -->
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 
-
-    <!-- Import this library -->
-    <script src="https://cdn.jsdelivr.net/npm/base64-js@1.5.1/base64js.min.js"></script>
 
 
     <!-- Import date picker -->
