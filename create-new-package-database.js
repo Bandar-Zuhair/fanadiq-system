@@ -52,7 +52,7 @@ navigator.storage.estimate().then(estimate => {
 
 
 async function saveDataToGitHub(data, fileName) {
-    const token = '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';  // Replace with your actual PAT
+    const token = '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';  // Replace with your actual PAT
     const owner = 'bandar-zuhair';  // Replace with your GitHub username
     const repo = 'fanadiq-system';  // Replace with your repository name
     const path = `allSavedData/2024/${fileName}.json`;  // Dynamic path based on input
@@ -62,24 +62,6 @@ async function saveDataToGitHub(data, fileName) {
     const content = base64js.fromByteArray(new TextEncoder().encode(JSON.stringify(data)));
 
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-    
-    let sha;
-    try {
-        const existingFileResponse = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
-        console.log(`GET ${url} status:`, existingFileResponse.status);
-        if (existingFileResponse.status === 200) {
-            const existingFile = await existingFileResponse.json();
-            sha = existingFile.sha;
-        }
-    } catch (error) {
-        console.log('Error fetching existing file:', error);
-    }
 
     try {
         const response = await fetch(url, {
@@ -92,7 +74,6 @@ async function saveDataToGitHub(data, fileName) {
             body: JSON.stringify({
                 message,
                 content,
-                sha: sha || undefined
             })
         });
 
@@ -181,6 +162,7 @@ function minifyHTML(html) {
         .replace(/\s*(style|class)=""/g, '')
         .trim();
 }
+
 
 
 
