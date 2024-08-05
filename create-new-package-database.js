@@ -25,9 +25,9 @@ function saveNewWebsiteDataToGoogleSheets() {
     divIds.forEach(divId => {
         let element = document.getElementById(divId);
         if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            let clonedElement = element.cloneNode(true);
-            let minifiedHTML = minifyHTML(clonedElement.outerHTML);
-            newObject.e[divId] = LZString.compressToUTF16(minifiedHTML);
+            // Get HTML content as plain text
+            let htmlContent = element.outerHTML;
+            newObject.e[divId] = htmlContent;
             isAnyDivVisible = true;
         }
     });
@@ -36,8 +36,8 @@ function saveNewWebsiteDataToGoogleSheets() {
         console.error('No visible divs');
         return;
     }
-            
-    fetch('https://script.google.com/macros/s/AKfycbyQXZknoWoptruVN5Qj44UKsKKIaFidEdFCuP6w5YEpz9iVcCEdbt4YMmB2FO63I6qhQg/exec', {
+
+    fetch('https://script.google.com/macros/s/AKfycbyw5tF55GsG6ThyWO0da0qRjPuVSc3tATGFAh7j4OmZi6qDjTGHqbv61QKpDuwC8o1ZRA/exec', {
         method: 'POST',
         body: JSON.stringify(newObject),
         headers: {
@@ -53,15 +53,6 @@ function saveNewWebsiteDataToGoogleSheets() {
     });
 }
 
-function minifyHTML(html) {
-    return html
-        .replace(/\s+/g, ' ') // Collapse whitespace
-        .replace(/>\s+</g, '><') // Remove spaces between tags
-        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
-        .replace(/\s*=\s*/g, '=') // Remove spaces around equals in attributes
-        .replace(/\s*(style|class)=""/g, '') // Remove empty style and class attributes
-        .trim();
-}
 
 
 
