@@ -44,7 +44,8 @@
 
 
 
-    <ion-icon name="caret-down-circle-outline" id="scroll_bottom_page_icon" onclick="window.scrollTo(0, document.body.scrollHeight);"></ion-icon>
+    <ion-icon name="caret-down-circle-outline" id="scroll_bottom_page_icon"
+        onclick="window.scrollTo(0, document.body.scrollHeight);"></ion-icon>
 
 
 
@@ -78,13 +79,14 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">تخزين</p>
+        <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">حفظ</p>
         <p style="user-select: none;"
             onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
             إستعادة</p>
         <p style="user-select: none;"
             onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
             حذف</p>
+        <p style="user-select: none;" onclick="openPdfDownloadBox()">تحميل</p>
     </div>
 
 
@@ -217,10 +219,10 @@
                     autocomplete="off">
 
 
-                <input type="text" id="package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
+                <input type="text" id="whole_package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
                     autocomplete="off" style="cursor: pointer;">
 
-                <input type="text" id="package_end_date_input_id" placeholder="تاريخ نهاية البرنامج" readonly
+                <input type="text" id="whole_package_end_date_input_id" placeholder="تاريخ نهاية البرنامج" readonly
                     autocomplete="off" style="cursor: pointer;">
 
                 <input type="text" id="package_total_nights_input_id" placeholder="مجموع الليالي" readonly
@@ -256,6 +258,11 @@
 
                 </div>
 
+
+
+
+                <input type="text" id="website_users_name_input_id" placeholder="اسم المستخدم..؟" readonly
+                    autocomplete="off" onclick="showOverlay('website_users_names_dropdown')" style="cursor: pointer;">
 
 
 
@@ -408,6 +415,25 @@
                 <h3>سكاي وايز</h3>
                 <h3>gv</h3>
                 <h3>sstr</h3>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="website_users_names_dropdown" class="searchable_names_dropdown_class">
+            <div class="search_bar_div_class">
+            </div>
+            <div class="company_names_options_dropdown_class">
+                <h3>سامي</h3>
+                <h3>عبد الله</h3>
+                <h3>معتز</h3>
+                <h3>وائل</h3>
+                <h3>عبد الرحمن</h3>
+                <h3>علي</h3>
+                <h3>ابو سما</h3>
             </div>
         </div>
 
@@ -835,14 +861,14 @@
 
 
                 <input type="text" id="sms_card_with_internet_amount_input_id" placeholder="عدد شرائح الإنترنت؟"
-                    readonly autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
+                    readonly autocomplete="off"
+                    onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
 
 
 
                 <input type="text" id="inner_flight_tickets_amount_input_id" placeholder="عدد تذاكر الطياران الداخلي؟"
-                    readonly autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
+                    readonly autocomplete="off"
+                    onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')" style="cursor: pointer;">
 
 
 
@@ -1135,44 +1161,6 @@
     <!-- Create clint movements plane data section -->
     <section id="create_new_clint_movements_paln_section" style="display: none;">
 
-
-        <div id="toggle_clint_movements_period_title_div_id" class="section_title_text_div">
-            <h1 class="section_title_text">مدة خط سير البرنامج</h1>
-        </div>
-
-
-        <div id="clint_movements_period_dropdown_content" class="dropdown_content_div_class">
-
-            <div class="package_info_input_div">
-
-
-
-                <input type="text" id="clint_movements_first_day_date_input_id" placeholder="اول يوم" readonly
-                    autocomplete="off" style="cursor: pointer;">
-                <input type="text" id="clint_movements_last_day_date_input_id" placeholder="اخر يوم" readonly
-                    autocomplete="off" style="cursor: pointer;">
-                <input type="text" id="clint_movements_total_nights_input_id" placeholder="مجموع الليالي" readonly
-                    autocomplete="off" style="cursor: pointer;">
-
-
-
-
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="clint_movements_period_inputs_submit_icon"
-                        onclick="setTheFirstClintMovemnetsDate()"></ion-icon>
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
-
-
-
         <div id="toggle_clint_movements_details_title_div_id" class="section_title_text_div">
             <h1 id="clint_movements_content_section_title_text_id" class="section_title_text">تفاصيل خط السير (يوم كامل)
             </h1>
@@ -1295,6 +1283,7 @@
                 <h3>جاكرتا</h3>
                 <h3>بونشاك</h3>
                 <h3>باندونق</h3>
+                <h3>لومبوك</h3>
             </div>
         </div>
 
@@ -1537,30 +1526,30 @@
 
             <div id="clint_movements_places_names_options_for_bali_area_3">
                 <h6>مزارات اوبود <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الدبابات الرباعية
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">الدبابات الرباعية
                     وسط الطبيعه والشلالات</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شلال
                     تيغينونغان الجميل</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزه ALOHA
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة منتزه ALOHA
                     مراجيح الهواء</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">سنتر اوبود للغدا
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">سنتر اوبود للغدا
                     حسب الرغبة</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شمال الجزيرة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شمال الجزيرة
                     المعروفة بأجوائها الساحرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بحيرة براتان
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرة براتان
                     الفاتنة واخذ جولة بالقارب</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بوابة منتجع
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بوابة منتجع
                     هندارا الشهيرة</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة بحيرتين
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرتين
                     التوام</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة
                     النباتات</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جبل كنتامي
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة جبل كنتامي
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة جبل و بحيرة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جبل و بحيرة
                     بانور و الجلوس في احد الكافيهات الجميلة
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة Alas Harum
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة Alas Harum
                     اجمل مزرعة قهوة في بالي</p>
             </div>
 
@@ -1568,9 +1557,9 @@
             <div id="clint_movements_places_names_options_for_bali_area_4"
                 class="clint_movements_places_names_options_for_random_days_class">
                 <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
                     والتسوق</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
                     والإستجمام</p>
             </div>
 
@@ -1585,25 +1574,10 @@
 
 
             <div id="clint_movements_places_names_options_for_jakarta_area_1">
-                <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">التجول في السنتر
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">التجول في السنتر
                 </p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">الألعاب المائية
-                    WATERBOM</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة فعالية بحريه
-                    DOLPIN WATERSPORT</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة ملاهي ترانس
-                    ستديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مولات كوتا
-                    (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مولات كوتا
-                    (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة ملاهي ترانس
-                    ستديو</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة فعالية بحريه
-                    DOLPIN WATERSPORT</p>
-                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب المائية
-                    WATERBOM</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ انشول</p>
+                <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">مطعم السدة</p>
             </div>
 
 
@@ -1775,6 +1749,9 @@
         <div id="inserted_company_name_image_position_div">
             <!-- Dynamic JS Code Here -->
         </div>
+
+
+        <p id="package_code_number_for_later_import_reference_p_id">wa_vid_1</p>
 
 
         <div id="pdf_clint_info_section_title_div_id" class="pdf_section_title_div_class">
@@ -2060,9 +2037,6 @@
 
         <!-- Element to store the last clint movements values -->
         <p id="store_localstorage_clint_movements_uniuqe_id_name_value" style="display: none;"></p>
-        <p id="store_localstorage_clint_movements_first_day_date_value" style="display: none;"></p>
-        <p id="store_localstorage_clint_movements_last_day_date_value" style="display: none;"></p>
-        <p id="store_localstorage_clint_movements_total_nights_day_date_value" style="display: none;"></p>
         <p id="store_localstorage_clint_movements_current_day_date_value" style="display: none;"></p>
 
     </section>
