@@ -36,8 +36,8 @@ function saveNewWebsiteDataToGoogleSheets() {
         console.error('No visible divs');
         return;
     }
-
-    fetch('https://script.google.com/macros/s/AKfycbz0cy88Arzi7q41zZsLmjeMoPDimrYP54BLB86FBi4iEYnYyuF74RjCMWUk0Qo8dEVFMw/exec', {
+            
+    fetch('https://script.google.com/macros/s/AKfycbyQXZknoWoptruVN5Qj44UKsKKIaFidEdFCuP6w5YEpz9iVcCEdbt4YMmB2FO63I6qhQg/exec', {
         method: 'POST',
         body: JSON.stringify(newObject),
         headers: {
