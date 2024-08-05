@@ -50,26 +50,37 @@ navigator.storage.estimate().then(estimate => {
     }
 });
 
+
 async function saveDataToGitHub(data) {
-    const token = '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';
-    const owner = 'my.github.websites@gmail.com';
-    const repo = 'fanadiq-system';
-    const path = 'allSavedData/2024/savedDataFile.json';
+    const token = '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';  // Replace with your actual PAT
+    const owner = 'my.github.websites@gmail.com';  // Replace with your GitHub username
+    const repo = 'fanadiq-system';  // Replace with your repository name
+    const path = 'allSavedData/2024/savedDataFile.json';  // Dynamic path based on input
     const message = 'Add new data';
-    const content = btoa(JSON.stringify(data));
+
+    // Encode the data to Base64
+    const encoder = new TextEncoder();
+    const dataUint8Array = encoder.encode(JSON.stringify(data));
+    const content = btoa(String.fromCharCode.apply(null, dataUint8Array));
 
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     
-    const existingFileResponse = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
+    let sha;
+    try {
+        const existingFileResponse = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        if (existingFileResponse.status === 200) {
+            const existingFile = await existingFileResponse.json();
+            sha = existingFile.sha;
         }
-    });
-
-    const existingFile = await existingFileResponse.json();
-    const sha = existingFile.sha;
+    } catch (error) {
+        console.log('File does not exist or another error occurred:', error);
+    }
 
     const response = await fetch(url, {
         method: 'PUT',
