@@ -433,38 +433,53 @@ function saveUpdatedWebsiteDataBase() {
 
 
 
-// Function to update the displayed IndexedDB data names
-function updateDataBaseSavedDataNames(localStorageControllerDivId) {
+async function updateDataBaseSavedDataNames(localStorageControllerDivId) {
+    const token = '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';  // Replace with your actual PAT
+    const owner = 'bandar-zuhair';  // Replace with your GitHub username
+    const repo = 'fanadiq-system';  // Replace with your repository name
+    const path = 'allSavedData/2024';  // Directory to list
+
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
 
     // Clear existing <p> elements
     allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
 
-    // Open a transaction to read from the IndexedDB
-    let transaction = db.transaction([storeName], 'readonly');
-    let store = transaction.objectStore(storeName);
-
-    // Get all data from the object store
-    let getAllRequest = store.getAll();
-
-    getAllRequest.onsuccess = function (event) {
-        let savedWebsiteDataArray = event.target.result;
-
-        // Create new <h3> elements based on the saved data array
-        savedWebsiteDataArray.forEach(data => {
-            let pElement = document.createElement('h3');
-            pElement.innerText = data.name;
-            pElement.onclick = function () {
-                pickThisWebsiteLocalStorageDataName(pElement);
-            };
-            allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
         });
-    };
 
-    getAllRequest.onerror = function (event) {
-        console.error('Error fetching data from IndexedDB:', event.target.errorCode);
-    };
+        console.log(`GET ${url} status:`, response.status);
+
+        if (response.status === 200) {
+            const files = await response.json();
+
+            // Create new <h3> elements based on the file names
+            files.forEach(file => {
+                if (file.type === 'file' && file.name.endsWith('.json')) {
+                    let pElement = document.createElement('h3');
+                    pElement.innerText = file.name;
+                    pElement.onclick = function () {
+                        pickThisWebsiteLocalStorageDataName(pElement);
+                    };
+                    allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+                }
+            });
+        } else {
+            console.error('Error fetching data from GitHub:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Error fetching data from GitHub:', error);
+    }
 }
+
+
+
 
 
 
