@@ -59,9 +59,7 @@ async function saveDataToGitHub(data) {
     const message = 'Add new data';
 
     // Encode the data to Base64
-    const encoder = new TextEncoder();
-    const dataUint8Array = encoder.encode(JSON.stringify(data));
-    const content = btoa(String.fromCharCode.apply(null, dataUint8Array));
+    const content = btoa(JSON.stringify(data));
 
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     
@@ -70,7 +68,7 @@ async function saveDataToGitHub(data) {
         const existingFileResponse = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `token ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
@@ -85,7 +83,7 @@ async function saveDataToGitHub(data) {
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
-            'Authorization': `token ${token}`,
+            'Authorization': `Bearer ${token}`,
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
         },
@@ -177,6 +175,8 @@ function minifyHTML(html) {
         .replace(/\s*(style|class)=""/g, '')
         .trim();
 }
+
+
 
 
 
