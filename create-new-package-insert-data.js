@@ -854,9 +854,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* Make sure the correct section is the one that is visiable */
+                    create_new_clint_data_section.style.display = 'none';
                     create_new_hotel_package_section.style.display = 'none';
                     create_new_flight_package_section.style.display = 'flex';
                     create_new_clint_movements_paln_section.style.display = 'none';
+                    create_new_package_including_and_not_including_data_section.style.display = 'none';
 
 
                     document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
@@ -974,7 +976,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <div><p>20 كيلو للشخص</p></div>
                             <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
                             <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                            <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                            <div><p id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</p></div>
                             <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
                             <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
                         `;
@@ -1455,9 +1457,11 @@ checkInputsToInsertData = function (clickedButtonId) {
             editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
                 /* Make sure the correct section is the one that is visiable */
+                create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'flex';
                 create_new_flight_package_section.style.display = 'none';
                 create_new_clint_movements_paln_section.style.display = 'none';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
 
 
                 /* Hide and show different icons */
@@ -1607,8 +1611,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                         // Create the HTML content for a new hotel row
                         let hotelRowTableDivContent = `
                             <div><p id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</p></div>
-                            <div><p id='hotel_check_in_${insertedHotelDataDivUniqueId}'>${hotelCheckInReadyText}</p></div>
-                            <div><p style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}'>${hotelCheckOutReadyText}</p></div>
+                            <div><p id='hotel_check_in_${insertedHotelDataDivUniqueId}' class="hotel_check_in_date_for_matching_whole_package_date">${hotelCheckInReadyText}</p></div>
+                            <div><p style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}' class="hotel_check_out_date_for_matching_whole_package_date">${hotelCheckOutReadyText}</p></div>
                             <div><p id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</p></div>
                             <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
                             <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
@@ -2323,7 +2327,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Update dates after deleting a row
                     arrangeClintMovementsDates();
 
-                    
+
                     // Check if there are any remaining clint movements data divs
                     let remainingClintMovementsDataDivs = document.querySelectorAll('.clint_movements_row_class');
                     if (remainingClintMovementsDataDivs.length === 1) { // Only the first element left
@@ -2349,9 +2353,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
 
                     /* Make sure the correct section is the one that is visiable */
+                    create_new_clint_data_section.style.display = 'none';
                     create_new_hotel_package_section.style.display = 'none';
                     create_new_flight_package_section.style.display = 'none';
-                    create_new_clint_movements_paln_section.style.display = 'flex';
+                    create_new_clint_movements_paln_section.style.display = 'none';
+                    create_new_package_including_and_not_including_data_section.style.display = 'flex';
 
 
                     /* Show and hide different icons */
@@ -2703,6 +2709,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     /* Function to run edit the clicked clint movements row data */
                     runEditClickedClintMovementsDataFunction = function () {
                         editClickedClintMovementsData(currentClintMovementsDataDivId);
+
 
                         /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
                         document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
