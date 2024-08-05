@@ -1,99 +1,8 @@
-const dbName = 'WebsiteDataDB';
-const storeName = 'SavedWebsiteData';
-let db;
-
-// Your existing IndexedDB code
-let request = indexedDB.open(dbName, 1);
-
-request.onupgradeneeded = function(event) {
-    db = event.target.result;
-    db.createObjectStore(storeName, { keyPath: 'name' });
-};
-
-request.onsuccess = function(event) {
-    db = event.target.result;
-    estimateIndexedDBUsage();
-};
-
-request.onerror = function(event) {
-    console.error('Database error:', event.target.errorCode);
-};
-
-function estimateIndexedDBUsage() {
-    let transaction = db.transaction([storeName], 'readonly');
-    let store = transaction.objectStore(storeName);
-    let totalSize = 0;
-
-    store.openCursor().onsuccess = function(event) {
-        let cursor = event.target.result;
-        if (cursor) {
-            let jsonData = JSON.stringify(cursor.value);
-            totalSize += new Blob([jsonData]).size;
-            cursor.continue();
-        } else {
-            console.log('Estimated IndexedDB usage: ' + totalSize + ' bytes');
-        }
-    };
-
-    transaction.onerror = function(event) {
-        console.error('Transaction error:', event.target.errorCode);
-    };
-}
-
-navigator.storage.estimate().then(estimate => {
-    console.log(`Quota: ${estimate.quota} bytes`);
-    console.log(`Usage: ${estimate.usage} bytes`);
-
-    let USAGE_THRESHOLD = 0.8;
-    if (estimate.usage / estimate.quota > USAGE_THRESHOLD) {
-        alert('Warning: You are using more than 80% of your storage quota.');
-    }
-});
-
-
-async function saveDataToGitHub(data, fileName) {
-    const token = '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';  // Replace with your actual PAT
-    const owner = 'bandar-zuhair';  // Replace with your GitHub username
-    const repo = 'fanadiq-system';  // Replace with your repository name
-    const path = `allSavedData/2024/${fileName}.json`;  // Dynamic path based on input
-    const message = 'Add new data';
-
-    // Encode the data to Base64
-    const content = base64js.fromByteArray(new TextEncoder().encode(JSON.stringify(data)));
-
-    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-
-    try {
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                message,
-                content,
-            })
-        });
-
-        console.log(`PUT ${url} status:`, response.status);
-        const result = await response.json();
-        console.log('GitHub response:', result);
-    } catch (error) {
-        console.error('Error saving to GitHub:', error);
-    }
-}
-
-function saveNewWebsiteDataBase() {
+function saveNewWebsiteDataToGoogleSheets() {
     let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
-    let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
     if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
-        localstorageNewSaveButton.style.backgroundColor = 'red';
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
+        console.error('Invalid input');
         return;
     }
 
@@ -124,44 +33,39 @@ function saveNewWebsiteDataBase() {
     });
 
     if (!isAnyDivVisible) {
-        localstorageNewSaveButton.style.backgroundColor = 'red';
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
+        console.error('No visible divs');
         return;
     }
 
-    saveDataToGitHub(newObject, localStorageNewSaveDataNameInput).then(() => {
-        let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
-        let overlayLayer = document.querySelector('.black_overlay');
-
-        localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
-
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)';
-        overlayLayer.style.opacity = '0';
-
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300);
-
-        document.getElementById('localstorage_new_save_data_name_input_id').value = '';
-    }).catch(error => {
-        console.error('Error saving to GitHub:', error);
+    fetch('https://script.google.com/macros/s/AKfycbz0cy88Arzi7q41zZsLmjeMoPDimrYP54BLB86FBi4iEYnYyuF74RjCMWUk0Qo8dEVFMw/exec', {
+        method: 'POST',
+        body: JSON.stringify(newObject),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
     });
 }
 
 function minifyHTML(html) {
     return html
-        .replace(/\s+/g, ' ')
-        .replace(/>\s+</g, '><')
-        .replace(/<!--[\s\S]*?-->/g, '')
-        .replace(/\s*=\s*/g, '=')
-        .replace(/\s*(style|class)=""/g, '')
+        .replace(/\s+/g, ' ') // Collapse whitespace
+        .replace(/>\s+</g, '><') // Remove spaces between tags
+        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
+        .replace(/\s*=\s*/g, '=') // Remove spaces around equals in attributes
+        .replace(/\s*(style|class)=""/g, '') // Remove empty style and class attributes
         .trim();
 }
+
+
+
+
 
 
 
@@ -433,53 +337,38 @@ function saveUpdatedWebsiteDataBase() {
 
 
 
-async function updateDataBaseSavedDataNames(localStorageControllerDivId) {
-    const token = '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';  // Replace with your actual PAT
-    const owner = 'bandar-zuhair';  // Replace with your GitHub username
-    const repo = 'fanadiq-system';  // Replace with your repository name
-    const path = 'allSavedData/2024';  // Directory to list
-
-    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+// Function to update the displayed IndexedDB data names
+function updateDataBaseSavedDataNames(localStorageControllerDivId) {
     let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
 
     // Clear existing <p> elements
     allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
 
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Accept': 'application/vnd.github.v3+json'
-            }
+    // Open a transaction to read from the IndexedDB
+    let transaction = db.transaction([storeName], 'readonly');
+    let store = transaction.objectStore(storeName);
+
+    // Get all data from the object store
+    let getAllRequest = store.getAll();
+
+    getAllRequest.onsuccess = function (event) {
+        let savedWebsiteDataArray = event.target.result;
+
+        // Create new <h3> elements based on the saved data array
+        savedWebsiteDataArray.forEach(data => {
+            let pElement = document.createElement('h3');
+            pElement.innerText = data.name;
+            pElement.onclick = function () {
+                pickThisWebsiteLocalStorageDataName(pElement);
+            };
+            allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
         });
+    };
 
-        console.log(`GET ${url} status:`, response.status);
-
-        if (response.status === 200) {
-            const files = await response.json();
-
-            // Create new <h3> elements based on the file names
-            files.forEach(file => {
-                if (file.type === 'file' && file.name.endsWith('.json')) {
-                    let pElement = document.createElement('h3');
-                    pElement.innerText = file.name;
-                    pElement.onclick = function () {
-                        pickThisWebsiteLocalStorageDataName(pElement);
-                    };
-                    allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
-                }
-            });
-        } else {
-            console.error('Error fetching data from GitHub:', response.status, response.statusText);
-        }
-    } catch (error) {
-        console.error('Error fetching data from GitHub:', error);
-    }
+    getAllRequest.onerror = function (event) {
+        console.error('Error fetching data from IndexedDB:', event.target.errorCode);
+    };
 }
-
-
-
 
 
 
