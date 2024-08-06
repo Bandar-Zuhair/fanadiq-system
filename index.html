@@ -83,9 +83,6 @@
         <p style="user-select: none;"
             onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
             إستعادة</p>
-        <p style="user-select: none;"
-            onclick="showOverlay('delete_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_deleting_data_div')">
-            حذف</p>
         <p style="user-select: none;" onclick="openPdfDownloadBox()">تحميل</p>
     </div>
 
@@ -104,9 +101,15 @@
         </div>
         <div>
             <h6>تخزين جديد <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-            <input type="text" id="localstorage_new_save_data_name_input_id" placeholder="إسم التخزين">
-            <p id="localstorage_new_save_button_id" class="localstorage_data_name_submit_button"
-                onclick="saveNewWebsiteDataToGoogleSheets()">تخزين جديد</p>
+
+
+            <form method="post"
+                action="https://script.google.com/macros/s/AKfycbz9kZWcRFJIXvtUjlbZfNxxOeRJqr5iZeqesp6BhmUErxAZANsIGiRd4h6gd27Q6wiWVw/exec"
+                name="save-package">
+                <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ جديد" id="submit" style="background: rgb(85, 127, 137); color: white; cursor: pointer; transition: all 0.2s ease-in-out;">
+            </form>
+
+
         </div>
     </div>
 
@@ -139,7 +142,7 @@
         </div>
 
 
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="importSavedDataBaseName()">تأكيد
+        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="findSelectedNameAndImportContent()">تأكيد
         </p>
 
 
