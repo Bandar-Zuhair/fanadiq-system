@@ -1,7 +1,7 @@
 {
   "name": "fanadiq-system",
   "version": "1.0.0",
-  "main": "create-new-package-all-hotel-data-array.js",
+  "main": "server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.mjs"
