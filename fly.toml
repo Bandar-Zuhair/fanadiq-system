@@ -1,0 +1,15 @@
+app = "fanadiq-system"
+
+[build]
+image = "node:14"
+
+[env]
+PORT = "3000"
+
+[[services]]
+internal_port = 3000
+protocol = "tcp"
+
+[services.ports]
+handlers = ["http"]
+port = 80
