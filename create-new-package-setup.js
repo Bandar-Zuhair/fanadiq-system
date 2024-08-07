@@ -215,12 +215,19 @@ window.addEventListener('load', () => {
     if (storedUserName) {
         document.getElementById('website_users_name_input_id').value = storedUserName;
     }
+
+
+    if(document.getElementById('website_users_name_input_id').value !== ''){
+        getAndSetMostTopEmptyCellRowNumberFunction();
+    }
+
 });
 
 
 
-/* Dropdown website users names functionality */
+// Dropdown website users names functionality
 let websiteUsersNameInput = document.getElementById('website_users_name_input_id');
+let previousValue = websiteUsersNameInput.value; // Store the initial value
 
 // Get the options within the dropdown
 let websiteUsersNameInputOptions = document.querySelectorAll('#website_users_names_dropdown h3');
@@ -228,20 +235,33 @@ let websiteUsersNameInputOptions = document.querySelectorAll('#website_users_nam
 websiteUsersNameInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
-        if(option.textContent === 'سامي' || option.textContent === 'ابو سما'){
-            websiteUsersNameInput.value = `مستر ${option.textContent}`; // Set input value to selected option
-            
-        }else{
-            websiteUsersNameInput.value = option.textContent; // Set input value to selected option
+        let newValue;
 
+        if(option.textContent === 'سامي' || option.textContent === 'ابو سما'){
+            newValue = `بكج مستر ${option.textContent}`; // Set input value to selected option
+        } else {
+            newValue = `بكج ${option.textContent}`; // Set input value to selected option
         }
 
-        // Store the selected value in localStorage
-        localStorage.setItem('user_name_code', websiteUsersNameInput.value);
+        // Check if the new value is different from the current value
+        if (websiteUsersNameInput.value !== newValue) {
+            websiteUsersNameInput.value = newValue; // Update the input value
+            
+            getAndSetMostTopEmptyCellRowNumberFunction();
+            document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 0;
+
+            // Store the selected value in localStorage
+            localStorage.setItem('user_name_code', websiteUsersNameInput.value);
+
+            // Update the previous value
+            previousValue = newValue;
+        }
 
         hideOverlay(); // Hide overlay after selection
+
     });
 });
+
 
 
 
@@ -995,7 +1015,7 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 // Variable to store the last clicked clint movement city input
 let lastClickedClintMovementsCityInput = null;
 
-// Variable to store the clicked h3 city for the 'clint_movements_current_city_input_id' input for later use
+// Variable to store the clicked h3 current city for the 'clint_movements_current_city_input_id' input for later use
 let storeClintMovementsCurrentCityInput = null;
 
 // Variable to store the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use
