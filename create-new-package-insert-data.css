@@ -20,7 +20,7 @@
 
 
 
-#package_code_number_for_later_import_reference_p_id {
+#package_user_code_name_for_later_import_reference_p_id {
     width: 100%;
     font-size: 2vw;
     padding-left: 10px;
@@ -660,6 +660,19 @@
     border-radius: 7px;
 }
 
+#name_pdf_file_div p {
+    background: rgb(85, 127, 137);
+    width: fit-content;
+    color: white;
+    font-size: 2vw;
+    margin-bottom: 20px;
+    padding: 1px 5px;
+    text-align: center;
+    border: 0.5px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
 #name_pdf_file_div button {
     font-size: 2.5vw;
     margin-top: 10px;
@@ -730,7 +743,7 @@
 
 
 
-    #package_code_number_for_later_import_reference_p_id {
+    #package_user_code_name_for_later_import_reference_p_id {
         font-size: 2.5vw;
     }
 
@@ -846,7 +859,7 @@
 /* 650px */
 @media(max-width:650px) {
 
-    #package_code_number_for_later_import_reference_p_id {
+    #package_user_code_name_for_later_import_reference_p_id {
         font-size: 3vw;
     }
 
@@ -1022,7 +1035,7 @@
 
 
 
-    #package_code_number_for_later_import_reference_p_id {
+    #package_user_code_name_for_later_import_reference_p_id {
         font-size: 3.5vw;
     }
 
