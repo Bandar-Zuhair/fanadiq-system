@@ -341,8 +341,8 @@ function submitForm() {
 
 
 
-
-const proxyServerURL = 'http://localhost:3000/api/handleRequest'; // Replace with your server-side proxy URL
+// Replace with your server-side proxy URL
+const proxyServerURL = 'https://b1d72741-6c12-4316-a0dc-897de7e0a31d-00-1flammxb2btfj.pike.replit.dev/api/handleRequest';
 
 let mostTopEmptyCellRowNumberValue;
 
@@ -361,24 +361,24 @@ function getAndSetMostTopEmptyCellRowNumberFunction() {
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        if (result && result.row !== undefined) {
-            mostTopEmptyCellRowNumberValue = result.row;
-            console.log('Most top empty cell row number:', result.row);
-            document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
-        } else {
-            console.error('Unexpected result format:', result);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });    
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            if (result && result.row !== undefined) {
+                mostTopEmptyCellRowNumberValue = result.row;
+                console.log('Most top empty cell row number:', result.row);
+                document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
+            } else {
+                console.error('Unexpected result format:', result);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 
