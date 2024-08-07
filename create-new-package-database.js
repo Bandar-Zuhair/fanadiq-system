@@ -342,7 +342,7 @@ function submitForm() {
 
 
 // Replace with your server-side proxy URL
-const proxyServerURL = 'https://b1d72741-6c12-4316-a0dc-897de7e0a31d-00-1flammxb2btfj.pike.replit.dev/api/handleRequest';
+const proxyServerURL = 'http://fanadiq-system.fly.dev/api/handleRequest';
 
 let mostTopEmptyCellRowNumberValue;
 
