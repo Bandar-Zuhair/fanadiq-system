@@ -96,24 +96,21 @@
 
 
     <div id="localstorage_save_name_input_div">
-        <div id="first_div_in_localstorage_save_name_input_div">
-            <p onclick="saveUpdatedWebsiteDataBase()">حفظ التعديلات في نفس البكج</p>
-        </div>
         <div>
             <h6>تخزين جديد <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
 
 
             <form method="post"
-                action="https://script.google.com/macros/s/AKfycbz9kZWcRFJIXvtUjlbZfNxxOeRJqr5iZeqesp6BhmUErxAZANsIGiRd4h6gd27Q6wiWVw/exec"
+                action="https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec"
                 name="save-package">
-                <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ جديد" id="submit" style="background: rgb(85, 127, 137); color: white; cursor: pointer; transition: all 0.2s ease-in-out;">
+                <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ جديد" id="submit"
+                    style="background: rgb(85, 127, 137); color: white; cursor: pointer; transition: all 0.2s ease-in-out;">
             </form>
 
 
         </div>
     </div>
 
-    <p id="store_last_clicked_localstorage_data_name" style="display: none;"></p>
 
 
 
@@ -142,7 +139,8 @@
         </div>
 
 
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button" onclick="findSelectedNameAndImportContent()">تأكيد
+        <p id="restoreDataButton" class="localstorage_data_name_submit_button"
+            onclick="findSelectedNameAndImportContent()">تأكيد
         </p>
 
 
@@ -263,15 +261,25 @@
 
 
 
-                <input type="text" id="website_users_name_input_id" placeholder="اسم المستخدم..؟" readonly
-                    autocomplete="off" onclick="showOverlay('website_users_names_dropdown')" style="cursor: pointer;">
+                <input type="text" id="website_users_name_input_id" name="website_users_name_input_id"
+                    placeholder="اسم المستخدم..؟" readonly autocomplete="off"
+                    onclick="showOverlay('website_users_names_dropdown')" style="cursor: pointer;">
+
+                <form method="post"
+                    action="https://script.google.com/macros/s/AKfycbwtKdvg7GrtqexL5diXA_Uo9RgRkv8uVIG6VQ2y1iN2q1Xc_Sl2lPICaYcDfPE5ld7e/exec"
+                    name="save-package-unique-code" id="save-package-unique-code" style="width: 100%;">
+                </form>
 
 
-
-                <div class="submit_package_pdf_div">
+                <div class="submit_package_pdf_div" id="submit_clint_data_to_pdf_div_id">
                     <ion-icon name="send" id="clint_inputs_submit_icon"
                         onclick="checkInputsToInsertData('clint_inputs_submit_icon')"></ion-icon>
                 </div>
+
+
+
+
+
 
             </div>
 
@@ -1754,7 +1762,7 @@
         </div>
 
 
-        <p id="package_code_number_for_later_import_reference_p_id"></p>
+        <p id="package_user_code_name_for_later_import_reference_p_id"></p>
 
 
         <div id="pdf_clint_info_section_title_div_id" class="pdf_section_title_div_class">
@@ -2177,6 +2185,8 @@
     <!-- Choose pdf file name box -->
     <div id="name_pdf_file_div">
         <span onclick="closeDownloadPdfBox()">&times;</span>
+        <p id="use_website_user_code_name_as_downloaded_pdf_file_name_p_id"
+            onclick="downloadPdfWithCurrentUserCodeName()"></p>
         <input type="text" id="pdf_file_name_input_id" placeholder="إسم الملف..؟">
         <button id="check_pdf_name_button" onclick="checkThePdfNameToDownload()">تحميل</button>
     </div>
