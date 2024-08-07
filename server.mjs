@@ -4,10 +4,7 @@ import fetch from 'node-fetch';
 import cors from 'cors';
 
 const app = express();
-const port = process.env.PORT || 3000;
-
-// The rest of your code...
-
+const port = process.env.PORT || 3000; // Use the port provided by Repl.it
 
 // Use CORS middleware
 app.use(cors({
@@ -40,5 +37,5 @@ app.post('/api/handleRequest', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Proxy server listening at http://localhost:${port}`);
+    console.log(`Proxy server listening at https://b1d72741-6c12-4316-a0dc-897de7e0a31d-00-1flammxb2btfj.pike.replit.dev/`);
 });
