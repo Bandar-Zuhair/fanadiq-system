@@ -1,62 +1,7 @@
-/* function saveNewWebsiteDataToGoogleSheets() {
-    let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
-
-    if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
-        console.error('Invalid input');
-        return;
-    }
-
-    let newObject = {
-        name: localStorageNewSaveDataNameInput,
-        date: new Date().toISOString(),
-        e: {}
-    };
-
-    let divIds = [
-        'downloaded_pdf_clint_data_page',
-        'downloaded_pdf_package_including_data_page',
-        'downloaded_pdf_flight_data_page',
-        'downloaded_pdf_hotel_data_page',
-        'downloaded_pdf_clint_movements_data_page',
-        'downloaded_pdf_total_price_data_page'
-    ];
-
-    let isAnyDivVisible = false;
-    divIds.forEach(divId => {
-        let element = document.getElementById(divId);
-        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            // Get HTML content as plain text
-            let htmlContent = element.outerHTML;
-            newObject.e[divId] = htmlContent;
-            isAnyDivVisible = true;
-        }
-    });
-
-    if (!isAnyDivVisible) {
-        console.error('No visible divs');
-        return;
-    }
-
-    fetch('https://script.google.com/macros/s/AKfycbyw5tF55GsG6ThyWO0da0qRjPuVSc3tATGFAh7j4OmZi6qDjTGHqbv61QKpDuwC8o1ZRA/exec', {
-        method: 'POST',
-        body: JSON.stringify(newObject),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
-} */
 
 
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbz9kZWcRFJIXvtUjlbZfNxxOeRJqr5iZeqesp6BhmUErxAZANsIGiRd4h6gd27Q6wiWVw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec';
 const form = document.forms['save-package'];
 
 form.addEventListener('submit', e => {
@@ -64,10 +9,10 @@ form.addEventListener('submit', e => {
 
     document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
 
-    let localStorageNewSaveDataNameInput = document.getElementById('localstorage_new_save_data_name_input_id').value;
+    let localStorageNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
-    if (localStorageNewSaveDataNameInput === '' || localStorageNewSaveDataNameInput === 'Last Download') {
-        alert('Invalid input');
+    if (document.getElementById('downloaded_pdf_clint_data_page').style === 'none') {
+        alert('تأكد من إدخال معلومات العميل');
         return;
     }
 
@@ -85,19 +30,12 @@ form.addEventListener('submit', e => {
         'downloaded_pdf_total_price_data_page'
     ];
 
-    let isAnyDivVisible = false;
     divIds.forEach(divId => {
         let element = document.getElementById(divId);
         if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
             newObject.content[divId] = cleanHTML(element.innerHTML);
-            isAnyDivVisible = true;
         }
     });
-
-    if (!isAnyDivVisible) {
-        alert('No visible divs');
-        return;
-    }
 
     fetch(scriptURL, {
         method: 'POST',
@@ -115,7 +53,13 @@ form.addEventListener('submit', e => {
                 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
                 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
             }, 5000);
+
+
+            /* Run the 'submitForm' to store new "Done" text for the website user code name */
+            submitForm()
+
         })
+
         .catch(error => console.error('Error!', error.message));
 });
 
@@ -137,7 +81,7 @@ function cleanHTML(html) {
 
 
 
-const sheetURL = 'https://script.google.com/macros/s/AKfycbz9kZWcRFJIXvtUjlbZfNxxOeRJqr5iZeqesp6BhmUErxAZANsIGiRd4h6gd27Q6wiWVw/exec'; // Replace with your web app URL
+const sheetURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec'; // Replace with your web app URL
 let sheetData = [];
 
 // Fetch data from Google Sheets via web app and store it locally
@@ -230,7 +174,6 @@ function importContentForSelectedName(name) {
                 }
             }
 
-            store_last_clicked_localstorage_data_name.innerText = name;
             hideOverlay()
 
 
@@ -292,14 +235,6 @@ function pickThisWebsiteLocalStorageDataName(clickedLocalStorageDataName) {
 
 /* Function to save new website localstorage data name */
 openSaveNewWebsiteDataBase = function () {
-    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name');
-    let firstDiv = document.getElementById('first_div_in_localstorage_save_name_input_div');
-
-    if (storeLastClickedLocalstorageDataName.innerText === '') {
-        firstDiv.style.display = 'none';
-    } else {
-        firstDiv.style.display = 'flex';
-    }
 
     /* Get the 'localstorage_save_name_input_div' and show it */
     let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
@@ -330,6 +265,7 @@ openSaveNewWebsiteDataBase = function () {
     overlayLayer.addEventListener('click', (event) => {
         event.stopPropagation(); // Prevent immediate closure of overlay on click
     });
+
 }
 
 
@@ -342,95 +278,55 @@ openSaveNewWebsiteDataBase = function () {
 
 
 
-// Function to update existing website data in IndexedDB
-function saveUpdatedWebsiteDataBase() {
-    let storeLastClickedLocalstorageDataName = document.getElementById('store_last_clicked_localstorage_data_name').innerText;
-    let localstorageNewSaveButton = document.getElementById('localstorage_new_save_button_id');
 
-    // Create an object to store visible div elements
-    let newObject = {
-        name: storeLastClickedLocalstorageDataName,
-        elements: {}
-    };
 
-    // List of div IDs to check visibility
-    let divIds = [
-        'downloaded_pdf_clint_data_page',
-        'downloaded_pdf_package_including_data_page',
-        'downloaded_pdf_flight_data_page',
-        'downloaded_pdf_hotel_data_page',
-        'downloaded_pdf_clint_movements_data_page',
-        'downloaded_pdf_total_price_data_page'
-    ];
 
-    // Check visibility of each div and add to the object if visible
-    let isAnyDivVisible = false;
-    divIds.forEach(divId => {
-        let element = document.getElementById(divId);
-        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            newObject.elements[divId] = element.outerHTML;
-            isAnyDivVisible = true;
-        }
-    });
 
-    // If no visible divs were found, change the submit icon background color and exit
-    if (!isAnyDivVisible) {
-        // Change the submit icon background color
-        localstorageNewSaveButton.style.backgroundColor = 'red';
 
-        // Set the background color of the submit icon back to the default color
-        setTimeout(() => {
-            localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-        }, 500);
 
-        return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to add new "Done" text inside the 'fanadiq package users unique code' sheet (database) to make sure a unique website code name */
+function submitForm() {
+    const form = document.getElementById('save-package-unique-code');
+    const inputField = document.getElementById('website_users_name_input_id');
+
+    const packageName = inputField.value;
+
+    if (packageName) {
+        const data = {
+            name: packageName,
+            action: 'insert'
+        };
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            mode: 'no-cors'
+        })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+    } else {
+        alert('Please enter a package name.');
     }
-
-    let transaction = db.transaction([storeName], 'readwrite');
-    let store = transaction.objectStore(storeName);
-
-    let getRequest = store.get(storeLastClickedLocalstorageDataName);
-
-    getRequest.onsuccess = function (event) {
-        let existingData = event.target.result;
-
-        if (existingData) {
-            // Update existing data
-            store.put(newObject);
-
-            // Change the submit icon background color to green
-            localstorageNewSaveButton.style.backgroundColor = 'rgb(0, 255, 0)';
-
-            // Set the background color of the submit icon back to the default color
-            setTimeout(() => {
-                localstorageNewSaveButton.style.backgroundColor = 'darkorange';
-            }, 500);
-
-            /* Get the 'localstorage_save_name_input_div' and show it */
-            let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
-
-            // Hide delete button div
-            let overlayLayer = document.querySelector('.black_overlay');
-
-            localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-            overlayLayer.style.opacity = '0'; // Hide overlay
-
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        } else {
-            console.error('No existing data found to update');
-        }
-    };
-
-    getRequest.onerror = function (event) {
-        console.error('Get request error:', event.target.errorCode);
-    };
-
-    transaction.onerror = function (event) {
-        console.error('Transaction error:', event.target.errorCode);
-    };
 }
 
 
@@ -443,6 +339,47 @@ function saveUpdatedWebsiteDataBase() {
 
 
 
+
+
+
+const proxyServerURL = 'http://localhost:3000/api/handleRequest'; // Replace with your server-side proxy URL
+
+let mostTopEmptyCellRowNumberValue;
+
+function getAndSetMostTopEmptyCellRowNumberFunction() {
+    const userName = document.getElementById('website_users_name_input_id').value;
+
+    const data = {
+        name: userName,
+        action: 'get'
+    };
+
+    fetch(proxyServerURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        if (result && result.row !== undefined) {
+            mostTopEmptyCellRowNumberValue = result.row;
+            console.log('Most top empty cell row number:', result.row);
+            document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
+        } else {
+            console.error('Unexpected result format:', result);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });    
+}
 
 
 
