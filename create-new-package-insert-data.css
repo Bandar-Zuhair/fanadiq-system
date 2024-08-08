@@ -264,6 +264,11 @@
     cursor: pointer;
 }
 
+.hotel_row_class h1,
+.hotel_row_class h2,
+.hotel_row_class h3,
+.hotel_row_class h4,
+.hotel_row_class h5,
 .hotel_row_class p {
     font-size: 2.2vw;
     font-weight: 600;
@@ -482,11 +487,9 @@
     text-align: center;
 }
 
-.clint_movements_row_class h6 {
-    font-size: 2vw;
-    font-weight: 600;
-}
-
+.clint_movements_row_class h1,
+.clint_movements_row_class h2,
+.clint_movements_row_class h3,
 .clint_movements_row_class p {
     font-size: 2vw;
     font-weight: 600;
@@ -711,7 +714,7 @@
 
 
 /* inserted main row data coloring */
-.inserted_main_row_color_class{
+.inserted_main_row_color_class {
     background: rgb(207, 83, 21);
     color: white;
     border-top: 0.5px solid black;
@@ -933,6 +936,11 @@
 
 
 
+    .hotel_row_class h1,
+    .hotel_row_class h2,
+    .hotel_row_class h3,
+    .hotel_row_class h4,
+    .hotel_row_class h5,
     .hotel_row_class p {
         font-size: 2.6vw;
     }
@@ -966,7 +974,9 @@
 
 
 
-
+    .clint_movements_row_class h1,
+    .clint_movements_row_class h2,
+    .clint_movements_row_class h3,
     .clint_movements_row_class p {
         font-size: 2.5vw;
     }
