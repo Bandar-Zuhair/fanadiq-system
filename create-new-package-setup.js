@@ -218,7 +218,7 @@ window.addEventListener('load', () => {
 
 
     if(document.getElementById('website_users_name_input_id').value !== ''){
-        getAndSetMostTopEmptyCellRowNumberFunction();
+        fetchData();
     }
 
 });
@@ -247,7 +247,7 @@ websiteUsersNameInputOptions.forEach(option => {
         if (websiteUsersNameInput.value !== newValue) {
             websiteUsersNameInput.value = newValue; // Update the input value
             
-            getAndSetMostTopEmptyCellRowNumberFunction();
+            fetchData();
             document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 0;
 
             // Store the selected value in localStorage
