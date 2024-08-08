@@ -347,6 +347,9 @@ const proxyServerURL = 'https://fanadiq-system.fly.dev/api/handleRequest';
 let mostTopEmptyCellRowNumberValue;
 
 function getAndSetMostTopEmptyCellRowNumberFunction() {
+    console.log('Enterd The getAndSetMostTopEmptyCellRowNumberFunction');
+
+    
     const userName = document.getElementById('website_users_name_input_id').value;
 
     const data = {
