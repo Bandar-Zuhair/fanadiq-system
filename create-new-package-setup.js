@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-/* window.addEventListener('beforeunload', function (event) {
+window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-}); */
+});
 
 
 
@@ -131,7 +131,6 @@ showPackageTypeSection = function (packageType, clickedElement) {
 
 
 
-
 /* Dropdown airport line names functionality */
 let adultPackagePersonAmountInput = document.getElementById('adult_package_person_amount_input_id');
 
@@ -143,6 +142,9 @@ adultPackagePersonAmountInputOptions.forEach(option => {
 
         /* Save the clicked number in the variable for later use */
         adultPackagePersonAmountInput.value = option.textContent
+
+        /* Store the inserted values in the stored p elements for later use (when importing) */
+        document.getElementById('store_google_sheet_package_adult_amount_value').innerText = option.textContent;
 
         hideOverlay(); // Hide overlay after selection
     });
@@ -170,8 +172,14 @@ companyNamesInputOptions.forEach(option => {
         if (option.textContent === 'حذف') {
             companyNamesInput.value = '';
 
+            /* Delete the innerText (in case if exist) */
+            document.getElementById('store_google_sheet_clint_company_name_value').innerText = '';
+
         } else {
             companyNamesInput.value = option.textContent; // Set input value to selected option
+
+            /* Store the inserted values in the stored p elements for later use (when importing) */
+            document.getElementById('store_google_sheet_clint_company_name_value').innerText = option.textContent;
         }
 
         hideOverlay(); // Hide overlay after selection
@@ -211,13 +219,13 @@ clintPackageTypeDiv.forEach(checkbox => {
 
 window.addEventListener('load', () => {
     let storedUserName = localStorage.getItem('user_name_code');
-    
+
     if (storedUserName) {
         document.getElementById('website_users_name_input_id').value = storedUserName;
     }
 
 
-    if(document.getElementById('website_users_name_input_id').value !== ''){
+    if (document.getElementById('website_users_name_input_id').value !== '') {
         fetchData();
     }
 
@@ -237,7 +245,7 @@ websiteUsersNameInputOptions.forEach(option => {
 
         let newValue;
 
-        if(option.textContent === 'سامي' || option.textContent === 'ابو سما'){
+        if (option.textContent === 'سامي' || option.textContent === 'ابو سما') {
             newValue = `بكج مستر ${option.textContent}`; // Set input value to selected option
         } else {
             newValue = `بكج ${option.textContent}`; // Set input value to selected option
@@ -246,7 +254,7 @@ websiteUsersNameInputOptions.forEach(option => {
         // Check if the new value is different from the current value
         if (websiteUsersNameInput.value !== newValue) {
             websiteUsersNameInput.value = newValue; // Update the input value
-            
+
             fetchData();
             document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 0;
 
@@ -954,46 +962,6 @@ clintMovementsAirportWelcomeInputOptions.forEach(option => {
 
 
 
-// Praper a variable to store the currently active input field
-let currentInput = null;
-
-// Function to set the current input when an input is clicked
-function setCurrentInput(event) {
-    currentInput = event.target; // Set currentInput to the clicked input element
-}
-
-// Attach event listeners to the check-out and check-in inputs to set the current input
-document.getElementById('clint_movements_new_check_out_input_id').addEventListener('click', setCurrentInput);
-document.getElementById('clint_movements_new_check_in_input_id').addEventListener('click', setCurrentInput);
-
-// Function to insert the clicked h3 text into the current input value
-function insertTextIntoInput(event) {
-    // Check if the clicked element is an h3 tag and if there is a currentInput set
-    if (event.target.tagName === 'H3' && currentInput) {
-        let clickedText = event.target.innerText; // Get the inner text of the clicked h3
-
-        // Depending on the current input field, update its value with appropriate text
-        if (currentInput.id === 'clint_movements_new_check_out_input_id') {
-            if (clickedText === 'حذف') {
-                currentInput.value = ''; // Clear the input if 'حذف' is clicked
-            } else {
-                currentInput.value = `تسجيل الخروج من ${clickedText}`; // Set check-out text
-            }
-        } else if (currentInput.id === 'clint_movements_new_check_in_input_id') {
-            if (clickedText === 'حذف') {
-                currentInput.value = ''; // Clear the input if 'حذف' is clicked
-            } else {
-                currentInput.value = `تسجيل الدخول في ${clickedText}`; // Set check-in text
-            }
-        }
-
-        // Hide the dropdown menu after selecting an option
-        hideOverlay(event.target.closest('.searchable_names_dropdown_class').id);
-    }
-}
-
-// Attach the event listener to the dropdown container for h3 clicks
-document.getElementById('clint_movements_hotel_names_dropdown').addEventListener('click', insertTextIntoInput);
 
 
 
@@ -1009,79 +977,6 @@ document.getElementById('clint_movements_hotel_names_dropdown').addEventListener
 
 
 
-
-
-
-// Variable to store the last clicked clint movement city input
-let lastClickedClintMovementsCityInput = null;
-
-// Variable to store the clicked h3 current city for the 'clint_movements_current_city_input_id' input for later use
-let storeClintMovementsCurrentCityInput = null;
-
-// Variable to store the clicked h3 city for the 'clint_movements_next_city_input_id' input for later use
-let storeClintMovementsNextCityInput = null;
-
-/* Clint movements pick current city functions */
-let clintMovementsCurrentCityInput = document.getElementById('clint_movements_current_city_input_id');
-
-// Get the options within the dropdown
-let clintMovementsCurrentCityInputOptions = document.querySelectorAll('#clint_movemnts_current_city_dropdown h3');
-
-clintMovementsCurrentCityInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-        /* Store the clicked current clint movements city for later use */
-        storeClintMovementsCurrentCityInput = option.textContent;
-
-        clintMovementsCurrentCityInput.value = `المدينة الحالية ${option.textContent}`; // Set input value to selected option
-
-        // Set the value of the last clicked input to the current city input
-        lastClickedClintMovementsCityInput = clintMovementsCurrentCityInput;
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
-
-/* Clint movements pick new city functions */
-let clintMovementsNextCityInput = document.getElementById('clint_movements_next_city_input_id');
-
-// Get the options within the dropdown
-let clintMovementsNextCityInputOptions = document.querySelectorAll('#clint_movemnts_next_city_dropdown h3');
-
-clintMovementsNextCityInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        if (option.textContent === 'حذف') {
-            clintMovementsNextCityInput.value = ''; // Clear input value
-
-            // Reset stored next city input
-            storeClintMovementsNextCityInput = null;
-
-
-        } else if (option.textContent === 'مغادرة') {
-            clintMovementsNextCityInput.value = 'الذهاب للمطار للمغادرة'; // Set input value
-
-            // Reset stored next city input
-            storeClintMovementsNextCityInput = option.textContent;
-
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'none';
-
-
-        } else {
-            clintMovementsNextCityInput.value = `الذهاب الى ${option.textContent}`; // Set input value
-
-            // Set storeClintMovementsNextCityInput for regular city selection
-            storeClintMovementsNextCityInput = option.textContent;
-        }
-
-        // Set the value of the last clicked input to the next city input
-        lastClickedClintMovementsCityInput = clintMovementsNextCityInput;
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
 
 
 
@@ -1089,83 +984,68 @@ clintMovementsNextCityInputOptions.forEach(option => {
 
 
 /* Function to show clint movements places page */
-showClintMovemtsPlacesPage = function () {
+showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
     // Disable scrolling
     document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
 
-    /* in case if the 'clint_movements_next_city_input_id' was empty then use the value of the 'clint_movements_current_city_input_id' */
-    if (storeClintMovementsNextCityInput === null) {
+
+    /* Show the clint movements visting places based on the value of the 'clint_movements_current_city_input_id' */
+    if (clickedClintMovementsPlacesLocation.innerText === 'كوتا') {
+        kuta_clint_movements_places_div.style.display = 'block';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
 
 
-        /* Show the clint movements visting places based on the value of the 'clint_movements_current_city_input_id' */
-        if (clint_movements_current_city_input_id.value === 'المدينة الحالية بالي') {
-            bali_clint_movements_places_div.style.display = 'block';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'none';
+    } else if (clickedClintMovementsPlacesLocation.innerText === 'اوبود') {
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'block';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
 
+    } else if (clickedClintMovementsPlacesLocation.innerText === 'جاكرتا') {
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'block';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
 
-        } else if (clint_movements_current_city_input_id.value === 'المدينة الحالية جاكرتا') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'block';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'none';
+    } else if (clickedClintMovementsPlacesLocation.innerText === 'بونشاك') {
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'block';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
 
-        } else if (clint_movements_current_city_input_id.value === 'المدينة الحالية بونشاك') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'block';
-            bandung_clint_movements_places_div.style.display = 'none';
+    }else if(clickedClintMovementsPlacesLocation.innerText === 'باندونج'){
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'block';
+        lombok_clint_movements_places_div.style.display = 'none';
 
-        } else if (clint_movements_current_city_input_id.value === 'المدينة الحالية باندونق') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'block';
-
-        }
-
-
-
-        /* if the 'storeClintMovementsNextCityInput' which is the value of 'clint_movements_next_city_input_id' is not null then use it to show clint movements visting places */
-    } else if (storeClintMovementsNextCityInput !== null) {
-
-
-        /* Show the clint movements visting places based on the value of the 'storeClintMovementsNextCityInput' */
-        if (storeClintMovementsNextCityInput === 'المدينة الحالية بالي') {
-            bali_clint_movements_places_div.style.display = 'block';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'none';
-
-
-        } else if (storeClintMovementsNextCityInput === 'المدينة الحالية جاكرتا') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'block';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'none';
-
-        } else if (storeClintMovementsNextCityInput === 'المدينة الحالية بونشاك') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'block';
-            bandung_clint_movements_places_div.style.display = 'none';
-
-        } else if (storeClintMovementsNextCityInput === 'المدينة الحالية باندونق') {
-            bali_clint_movements_places_div.style.display = 'none';
-            jakarta_clint_movements_places_div.style.display = 'none';
-            puncak_clint_movements_places_div.style.display = 'none';
-            bandung_clint_movements_places_div.style.display = 'block';
-
-        }
+    }else if(clickedClintMovementsPlacesLocation.innerText === 'لومبوك'){
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'block';
 
     }
 
 
 
-    /* Get the 'clint_movements_places_page_div' element */
-    let clintMovementsPlacesPageDiv = document.getElementById('clint_movements_places_page_div');
+    /* Get the 'bali_kuta_clint_movements_places_page_div' element */
+    let clintMovementsPlacesPageDiv = document.getElementById('bali_kuta_clint_movements_places_page_div');
 
     // Show the clint movements places page div
     clintMovementsPlacesPageDiv.style.display = 'flex';
@@ -1176,12 +1056,6 @@ showClintMovemtsPlacesPage = function () {
     // Prevent scrolling of the body
     document.body.style.overflow = 'hidden';
 
-    // Create the exit button
-    let insertClintMovementsPlacesIcon = document.createElement('ion-icon');
-    insertClintMovementsPlacesIcon.name = 'add-circle';
-    insertClintMovementsPlacesIcon.className = 'insert_clint_movements_places_icon';
-    document.body.appendChild(insertClintMovementsPlacesIcon);
-
 
     // Create the exit icon
     let exitClintMovementsPlacesPage = document.createElement('ion-icon');
@@ -1190,32 +1064,22 @@ showClintMovemtsPlacesPage = function () {
     document.body.appendChild(exitClintMovementsPlacesPage);
 
 
-
-
-    // Function to hide the clint movements places page and remove the exit button
-    insertClintMovementsPlacesIcon.onclick = function () {
-
-        /* Run the function for placing the clicked clint movemenets places */
-        setTheClickedClintMovementsPlace();
-
-        clintMovementsPlacesPageDiv.style.display = 'none';
-        document.body.style.overflow = ''; // Restore body scrolling
-
-        insertClintMovementsPlacesIcon.remove();
-        exitClintMovementsPlacesPage.remove();
-
-
-        // Enable scrolling
-        document.body.style.overflow = ''; // Re-enable page scrolling
-    }
-
-
     // Function to hide the clint movements places page and remove the exit button
     exitClintMovementsPlacesPage.onclick = function () {
+        
+        
+        /* Hide all clint movements places options */
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
         clintMovementsPlacesPageDiv.style.display = 'none';
+
+
         document.body.style.overflow = ''; // Restore body scrolling
 
-        insertClintMovementsPlacesIcon.remove();
         exitClintMovementsPlacesPage.remove();
 
 
@@ -1224,34 +1088,6 @@ showClintMovemtsPlacesPage = function () {
     }
 }
 
-
-/* Function to show the clint movements tutorial page */
-showClintMovemtsTutorialPage = function () {
-
-    // Disable scrolling
-    document.body.style.overflow = 'hidden'; // Disable page scrolling during drag
-
-    /* Show the 'clint_movements_tutorial_page_div' div */
-    let clintMovementsTutorialPageDiv = document.getElementById('clint_movements_tutorial_page_div');
-    clintMovementsTutorialPageDiv.style.display = 'flex';
-
-
-
-    let exitClintMovementsTutorialPage = document.createElement('ion-icon');
-    exitClintMovementsTutorialPage.name = 'arrow-undo';
-    exitClintMovementsTutorialPage.className = 'exit_full_screen_icon';
-    document.body.appendChild(exitClintMovementsTutorialPage);
-
-
-    /* Funnction to handle exit clint movements tutorial page */
-    exitClintMovementsTutorialPage.onclick = function () {
-        clintMovementsTutorialPageDiv.style.display = 'none';
-        exitClintMovementsTutorialPage.remove();
-
-        // Enable scrolling
-        document.body.style.overflow = ''; // Re-enable page scrolling
-    }
-}
 
 /* Function to pick a clint movements place */
 pickThisClintMovementsPlace = function (clickedPlace) {
@@ -1294,51 +1130,12 @@ pickThisClintMovementsPlace = function (clickedPlace) {
         clickedPlace.style.color = 'white';
     }
 
-    // Additional functionality for clint_movements_places_names_options_for_random_days_class
-    if (parentDiv.classList.contains('clint_movements_places_names_options_for_random_days_class')) {
-        var allRandomDaysClassDivs = document.querySelectorAll('.clint_movements_places_names_options_for_random_days_class');
-
-        // Iterate through all random days class divs
-        allRandomDaysClassDivs.forEach(function (randomDaysClassDiv) {
-            // Get all p elements with class 'bandung_places_p_color_1_class' within the random days class div and reset their background color
-            var color1Elements = randomDaysClassDiv.getElementsByClassName('bandung_places_p_color_1_class');
-            for (var i = 0; i < color1Elements.length; i++) {
-                color1Elements[i].style.backgroundColor = 'rgb(0, 56, 99)';
-            }
-
-            // Get all p elements with class 'bandung_places_p_color_2_class' within the random days class div and reset their background color
-            var color2Elements = randomDaysClassDiv.getElementsByClassName('bandung_places_p_color_2_class');
-            for (var i = 0; i < color2Elements.length; i++) {
-                color2Elements[i].style.backgroundColor = 'rgb(0, 89, 157)';
-            }
-        });
-
-        // Set the background color of the clicked p element to green
-        clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
-    }
 }
 
 
 
 
 
-
-// Function to collect the clicked clint movements places and set them in the textarea
-setTheClickedClintMovementsPlace = function () {
-    let clintMovementsPlacesPageDiv = document.getElementById('clint_movements_places_page_div'); // Get the div for clint movements places page
-    let clickedPlacesText = []; // Initialize an array to store the innerText of clicked p elements
-
-    // Collect the innerText of all p elements with the background color rgb(0, 155, 0)
-    clintMovementsPlacesPageDiv.querySelectorAll('p').forEach(p => {
-        if (window.getComputedStyle(p).backgroundColor === 'rgb(0, 155, 0)') { // Check if the background color is rgb(0, 155, 0)
-            clickedPlacesText.push(p.innerText); // Add the innerText of the p element to the array
-        }
-    });
-
-    // Set the collected text inside the textarea
-    let clintMovementsDetailsInput = document.getElementById('clint_movements_whole_day_actions_details_textarea_id'); // Get the textarea by its id
-    clintMovementsDetailsInput.value = clickedPlacesText.join(' + '); // Join the text with ' + ' and set it as the value of the textarea
-}
 
 
 
@@ -1361,71 +1158,6 @@ function formatDate(date) {
     let day = date.getDate();
     let month = arabicMonths[date.getMonth()];
     return `${day} ${month}`;
-}
-
-// Function to arrange dates in the client movements
-function arrangeClintMovementsDates() {
-    // Get reference to the elements
-    let wholePackageStartDateInput = document.getElementById('whole_package_start_date_input_id').value;
-    let wholePackageEndDateInput = document.getElementById('whole_package_end_date_input_id').value;
-    let clintMovementsCurrentDayDateInput = document.getElementById('clint_movements_current_day_date_input_id');
-
-    // Parse the start date
-    let currentDate = parseDate(wholePackageStartDateInput);
-
-    // Get all divs with the class name 'clint_movements_row_class_for_editing'
-    let clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing');
-
-    // If there are no divs with the class name 'clint_movements_row_class_for_editing'
-    if (clintMovementsRowDivs.length === 0) {
-        // Set the date of clint_movements_current_day_date_input_id to the whole_package_start_date_input_id
-        clintMovementsCurrentDayDateInput.value = wholePackageStartDateInput;
-    } else {
-        // Function to delete the last div if its date is ahead of the whole_package_end_date_input_id date
-        function deleteAheadDivs() {
-            clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class_for_editing'); // Update the list of divs
-            if (clintMovementsRowDivs.length > 0) {
-                // Get the last 'clint_movements_row_class_for_editing' div and its corresponding h6 element
-                let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
-                let lastClintMovementsRowH6Element = lastClintMovementsRowDiv.querySelector('h6');
-
-                // If the date in the last h6 element is after the whole_package_end_date_input_id date, remove the div
-                if (lastClintMovementsRowH6Element && parseDate(lastClintMovementsRowH6Element.innerText) > parseDate(wholePackageEndDateInput)) {
-                    lastClintMovementsRowDiv.remove();
-                    deleteAheadDivs(); // Recursively call to check and delete remaining divs
-                } else {
-                    // Set the clint_movements_current_day_date_input_id to one day after the date in the last h6 element
-                    let newDate = parseDate(lastClintMovementsRowH6Element.innerText);
-                    newDate.setDate(newDate.getDate() + 1);
-                    clintMovementsCurrentDayDateInput.value = formatDate(newDate);
-                }
-            }
-        }
-
-        // Call the function to handle the deletion and updating of dates
-        deleteAheadDivs();
-    }
-
-    // Update all divs with the class name 'clint_movements_row_class' with sequential dates starting from the currentDate
-    clintMovementsRowDivs = document.getElementsByClassName('clint_movements_row_class'); // Get all 'clint_movements_row_class' divs
-    for (let i = 0; i < clintMovementsRowDivs.length; i++) {
-        let h6Element = clintMovementsRowDivs[i].querySelector('h6');
-        if (h6Element) {
-            h6Element.innerText = formatDate(currentDate);
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-    }
-
-    // Update the clint_movements_current_day_date_input_id to the day after the last date
-    if (clintMovementsRowDivs.length > 0) {
-        let lastClintMovementsRowDiv = clintMovementsRowDivs[clintMovementsRowDivs.length - 1];
-        let lastH6Element = lastClintMovementsRowDiv.querySelector('h6');
-        if (lastH6Element) {
-            let lastH6Date = parseDate(lastH6Element.innerText);
-            lastH6Date.setDate(lastH6Date.getDate() + 1);
-            clintMovementsCurrentDayDateInput.value = formatDate(lastH6Date);
-        }
-    }
 }
 
 
@@ -1821,7 +1553,7 @@ document.addEventListener('click', function (e) {
 
 
 
-/* Store the hotel total nights for later use */
+/* Store the hotel total nights for later use (when inserting hotel row data) */
 let storeHotelTotalNights;
 
 
