@@ -383,6 +383,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             let lastCLickedWebsiteUserNameVariable;
 
 
+
             if (document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText === '' || document.getElementById('website_users_name_input_id').value !== lastCLickedWebsiteUserNameVariable) {
                 /* Set the package code text based on the website user name & current year & saved packages amount */
                 let websiteUsersNameInput;
