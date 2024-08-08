@@ -312,6 +312,7 @@ async function submitForm() {
                 mode: 'no-cors'
             });
         } catch (error) {
+            console.error('Error during form submission:', error);
         }
     } else {
         // Alert the user if the package name is empty
@@ -329,6 +330,7 @@ async function fetchData() {
         // Process the fetched data
         processSheetData(data);
     } catch (error) {
+        console.error('Error fetching data:', error);
     }
 }
 
@@ -355,8 +357,9 @@ function processSheetData(data) {
 
     // Get the sheet data values
     const sheetData = data.values;
-    // Initialize the row index to the last row index in the sheet data
-    let rowIndex = sheetData.length - 2; // Default to the last row adjusted
+    // Initialize the row index to -1 indicating no empty row found
+    let rowIndex = -1;
+
     // Loop through the sheet data starting from row 2 (index 1)
     for (let i = 1; i < sheetData.length; i++) {
         // Check if the cell in the current column is empty
@@ -366,6 +369,13 @@ function processSheetData(data) {
             break;
         }
     }
+
+    // If no empty cell was found, set the row index to the last row
+    if (rowIndex === -1) {
+        rowIndex = sheetData.length;
+    }
+
+    console.log('Row Index:', rowIndex);
 
     // Set the most top empty cell row number value
     mostTopEmptyCellRowNumberValue = rowIndex;
@@ -397,6 +407,7 @@ function getColumnIndex(packageName) {
             return -1;
     }
 }
+
 
 
 
