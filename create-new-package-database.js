@@ -342,7 +342,7 @@ function submitForm() {
 
 
 // Replace with your server-side proxy URL
-const proxyServerURL = 'http://fanadiq-system.fly.dev/api/handleRequest';
+const proxyServerURL = 'https://fanadiq-system.fly.dev/api/handleRequest';
 
 let mostTopEmptyCellRowNumberValue;
 
