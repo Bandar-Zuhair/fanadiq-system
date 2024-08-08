@@ -59,8 +59,6 @@ form.addEventListener('submit', e => {
             submitForm()
 
         })
-
-        .catch(error => console.error('Error!', error.message));
 });
 
 // Function to clean HTML
@@ -107,9 +105,6 @@ function updateDataBaseSavedDataNames(localStorageControllerDivId) {
                 allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
             });
         })
-        .catch(error => {
-            console.error('Error fetching data from Google Sheets:', error);
-        });
 }
 
 // Function to find the selected name and call importContentForSelectedName
@@ -125,8 +120,6 @@ function findSelectedNameAndImportContent() {
 
     if (selectedName) {
         importContentForSelectedName(selectedName);
-    } else {
-        console.error('No name selected');
     }
 }
 
@@ -146,9 +139,6 @@ function importContentForSelectedName(name) {
         };
 
         try {
-            // Log the raw content data to the console
-            console.log('Raw content data:', contentColumns);
-
             let parser = new DOMParser();
 
             for (let divId in contentColumns) {
@@ -167,9 +157,6 @@ function importContentForSelectedName(name) {
                         htmlSectionPdfPageDiv.innerHTML = '';  // Clear current content
                         htmlSectionPdfPageDiv.innerHTML = newContent;  // Set new content
                         reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
-                        console.log('Bandoory' + htmlSectionPdfPageDiv.id);
-                    } else {
-                        console.error('Div not found:', divId);
                     }
                 }
             }
@@ -178,7 +165,6 @@ function importContentForSelectedName(name) {
 
 
         } catch (error) {
-            console.error('Error processing content:', error);
         }
     }
 }
@@ -294,94 +280,122 @@ openSaveNewWebsiteDataBase = function () {
 
 
 
+// Variable to store the most top empty cell row number
+let mostTopEmptyCellRowNumberValue;
 
-
-
-
-
-/* Function to add new "Done" text inside the 'fanadiq package users unique code' sheet (database) to make sure a unique website code name */
-function submitForm() {
+// Function to handle form submission and insert data into the Google Sheets
+async function submitForm() {
+    // Get the form element
     const form = document.getElementById('save-package-unique-code');
+    // Get the input field element
     const inputField = document.getElementById('website_users_name_input_id');
 
+    // Get the package name value from the input field
     const packageName = inputField.value;
 
+    // Check if the package name is not empty
     if (packageName) {
+        // Prepare the data to be sent in the POST request
         const data = {
             name: packageName,
             action: 'insert'
         };
 
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            mode: 'no-cors'
-        })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error: ' + error.message);
+        try {
+            // Send the POST request to the Google Apps Script URL
+            await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                mode: 'no-cors'
             });
+        } catch (error) {
+        }
     } else {
+        // Alert the user if the package name is empty
         alert('Please enter a package name.');
     }
 }
 
+// Function to fetch data from the Google Sheets
+async function fetchData() {
+    try {
+        // Send a GET request to the Google Apps Script URL
+        const response = await fetch("https://script.google.com/macros/s/AKfycby1RWmnezTeabEZ1VkczgLeIDilocuU4ezEe7iFbura4eE7wK2gWaOyS-MLiUtoVRgi/exec");
+        // Parse the response as JSON
+        const data = await response.json();
+        // Process the fetched data
+        processSheetData(data);
+    } catch (error) {
+    }
+}
 
+// Function to process the fetched data and find the most top empty cell row number
+function processSheetData(data) {
+    // Get the input field element
+    const inputField = document.getElementById('website_users_name_input_id');
+    // Get the package name value from the input field
+    const packageName = inputField.value;
 
+    // Check if the package name is empty
+    if (!packageName) {
+        alert('Please enter a package name.');
+        return;
+    }
 
+    // Get the column index based on the package name
+    const columnIndex = getColumnIndex(packageName);
+    // Check if the column index is valid
+    if (columnIndex === -1) {
+        alert('Invalid package name.');
+        return;
+    }
 
+    // Get the sheet data values
+    const sheetData = data.values;
+    // Initialize the row index to the last row index in the sheet data
+    let rowIndex = sheetData.length - 2; // Default to the last row adjusted
+    // Loop through the sheet data starting from row 2 (index 1)
+    for (let i = 1; i < sheetData.length; i++) {
+        // Check if the cell in the current column is empty
+        if (sheetData[i][columnIndex] === "") {
+            // Set the row index to the current row index (1-based)
+            rowIndex = i;
+            break;
+        }
+    }
 
+    // Set the most top empty cell row number value
+    mostTopEmptyCellRowNumberValue = rowIndex;
 
+    // Make the submit client data div visible
+    document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
+}
 
-
-
-
-
-
-// Replace with your server-side proxy URL
-const proxyServerURL = 'https://fanadiq-system.fly.dev/api/handleRequest';
-
-let mostTopEmptyCellRowNumberValue;
-
-function getAndSetMostTopEmptyCellRowNumberFunction() {
-    console.log('Enterd The getAndSetMostTopEmptyCellRowNumberFunction');
-
-    
-    const userName = document.getElementById('website_users_name_input_id').value;
-
-    const data = {
-        name: userName,
-        action: 'get'
-    };
-
-    fetch(proxyServerURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(result => {
-            if (result && result.row !== undefined) {
-                mostTopEmptyCellRowNumberValue = result.row;
-                console.log('Most top empty cell row number:', result.row);
-                document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
-            } else {
-                console.error('Unexpected result format:', result);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+// Function to get the column index based on the package name
+function getColumnIndex(packageName) {
+    // Return the column index based on the package name
+    switch (packageName) {
+        case 'بكج مستر سامي':
+            return 0;
+        case 'بكج عبد الله':
+            return 1;
+        case 'بكج معتز':
+            return 2;
+        case 'بكج وائل':
+            return 3;
+        case 'بكج عبد الرحمن':
+            return 4;
+        case 'بكج علي':
+            return 5;
+        case 'بكج مستر ابو سما':
+            return 6;
+        default:
+            // Return -1 for invalid package names
+            return -1;
+    }
 }
 
 
@@ -451,7 +465,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
     if (visiableDivIdName === 'downloaded_pdf_clint_data_page') {
 
-        console.log('here we got played')
         /* Function to reActive the company logo delete functionality */
         if (document.getElementById('inserted_company_name_logo_id')) {
 
