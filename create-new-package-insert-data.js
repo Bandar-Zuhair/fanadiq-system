@@ -314,40 +314,20 @@ checkInputsToInsertData = function (clickedButtonId) {
             }
 
 
-            /* Check if the 'storePackageTotalNights' is equal undefined or no */
-            if (storePackageTotalNights === undefined) {
-                insertedClintDataRowDivContent = `
-                    <div>
-                        <p>${combinedPersonAmount}</p>
-                    </div>
-                    <div>
-                        <p id="whole_package_first_date_p_id">${wholePackageStartDateInput}</p>
-                    </div>
-                    <div>
-                        <p>${wholePackageEndDateInput}</p>
-                    </div>
-                    <div" style="cursor: pointer;">
-                        <p></p>
-                    </div>
-                `;
-
-
-            } else {
-                insertedClintDataRowDivContent = `
-                    <div>
-                        <p>${combinedPersonAmount}</p>
-                    </div>
-                    <div>
-                        <p id="whole_package_first_date_p_id">${wholePackageStartDateInput}</p>
-                    </div>
-                    <div>
-                        <p>${wholePackageEndDateInput}</p>
-                    </div>
-                    <div" style="cursor: pointer;">
-                        <p>${storePackageTotalNights}</p>
-                    </div>
-                `;
-            }
+            insertedClintDataRowDivContent = `
+                <div>
+                    <p>${combinedPersonAmount}</p>
+                </div>
+                <div>
+                    <p id="whole_package_first_date_p_id">${wholePackageStartDateInput}</p>
+                </div>
+                <div>
+                    <p>${wholePackageEndDateInput}</p>
+                </div>
+                <div style="cursor: pointer;">
+                    <p>${storePackageTotalNights}</p>
+                </div>
+            `;
 
 
 
@@ -358,7 +338,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('clint_data_row_main_div_id').style.display = 'flex';
 
             let insertedClintDataRowDiv = document.createElement('div');
-            insertedClintDataRowDiv.className = 'clint_data_row_class';
+            insertedClintDataRowDiv.classList.add('clint_data_row_class');
             insertedClintDataRowDiv.innerHTML = insertedClintDataRowDivContent;
 
 
@@ -387,45 +367,50 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            if (document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText === '' || document.getElementById('website_users_name_input_id').value !== lastCLickedWebsiteUserNameVariable) {
-                /* Set the package code text based on the website user name & current year & saved packages amount */
-                let websiteUsersNameInput;
-                if (document.getElementById('website_users_name_input_id').value === 'بكج مستر سامي') {
-                    websiteUsersNameInput = 'mr_sa';
+            if (document.getElementById('website_users_name_input_id').disabled !== true) {
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الله') {
-                    websiteUsersNameInput = 'abd_amr';
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج معتز') {
-                    websiteUsersNameInput = 'mo_ta';
+                if (document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText === '' || document.getElementById('website_users_name_input_id').value !== lastCLickedWebsiteUserNameVariable) {
+                    /* Set the package code text based on the website user name & current year & saved packages amount */
+                    let websiteUsersNameInput;
+                    if (document.getElementById('website_users_name_input_id').value === 'بكج مستر سامي') {
+                        websiteUsersNameInput = 'mr_sa';
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج وائل') {
-                    websiteUsersNameInput = 'wa_el';
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الله') {
+                        websiteUsersNameInput = 'abd_amr';
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الرحمن') {
-                    websiteUsersNameInput = 'abd_rah';
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج معتز') {
+                        websiteUsersNameInput = 'mo_ta';
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج علي') {
-                    websiteUsersNameInput = 'ali_amr';
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج وائل') {
+                        websiteUsersNameInput = 'wa_el';
 
-                } else if (document.getElementById('website_users_name_input_id').value === 'بكج مستر ابو سما') {
-                    websiteUsersNameInput = 'abo_sma';
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الرحمن') {
+                        websiteUsersNameInput = 'abd_rah';
 
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج علي') {
+                        websiteUsersNameInput = 'ali_amr';
+
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج مستر ابو سما') {
+                        websiteUsersNameInput = 'abo_sma';
+
+                    }
+
+
+                    // Get the current year as a four-digit number
+                    const currentYear = new Date().getFullYear();
+                    // Extract the last two digits of the year
+                    const lastTwoNumbersOfTheCurrentYear = currentYear % 100;
+
+
+                    document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${websiteUsersNameInput}_${lastTwoNumbersOfTheCurrentYear}_${mostTopEmptyCellRowNumberValue}`;
+
+
+                    /* Store the last clicked website user name for later refrence if it got changed */
+                    lastCLickedWebsiteUserNameVariable = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
                 }
-
-
-                // Get the current year as a four-digit number
-                const currentYear = new Date().getFullYear();
-                // Extract the last two digits of the year
-                const lastTwoNumbersOfTheCurrentYear = currentYear % 100;
-
-
-                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${websiteUsersNameInput}_${lastTwoNumbersOfTheCurrentYear}_${mostTopEmptyCellRowNumberValue}`;
-
-
-                /* Store the last clicked website user name for later refrence if it got changed */
-                lastCLickedWebsiteUserNameVariable = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
             }
+
 
 
 
