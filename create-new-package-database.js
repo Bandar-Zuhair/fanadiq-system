@@ -1,5 +1,4 @@
-
-
+let existingData = false;
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec';
 const form = document.forms['save-package'];
@@ -37,6 +36,51 @@ form.addEventListener('submit', e => {
         }
     });
 
+    checkExistingData(localStorageNewSaveDataNameInput)
+        .then(exists => {
+            if (exists) {
+                updateExistingData(newObject);
+            } else {
+                saveNewData(newObject);
+            }
+        });
+});
+
+// Function to clean HTML
+function cleanHTML(html) {
+    return html.replace(/\s+/g, ' ').trim();
+}
+
+// Function to check if data already exists
+function checkExistingData(name) {
+    return fetch(`${scriptURL}?action=check&name=${encodeURIComponent(name)}`)
+        .then(response => response.json())
+        .then(data => data.exists);
+}
+
+// Function to update existing data
+function updateExistingData(newObject) {
+    fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'update', data: newObject }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'no-cors'
+    })
+        .then(() => {
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
+
+            setTimeout(() => {
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
+            }, 5000);
+        });
+}
+
+// Function to save new data
+function saveNewData(newObject) {
     fetch(scriptURL, {
         method: 'POST',
         body: JSON.stringify(newObject),
@@ -54,18 +98,11 @@ form.addEventListener('submit', e => {
                 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
             }, 5000);
 
-
-            /* Run the 'submitForm' to store new "Done" text for the website user code name */
-            submitForm()
-
-        })
-});
-
-// Function to clean HTML
-function cleanHTML(html) {
-    // Remove unnecessary whitespace
-    return html.replace(/\s+/g, ' ').trim();
+            // Run the 'submitForm' to store new "Done" text for the website user code name
+            submitForm();
+        });
 }
+
 
 
 
@@ -162,11 +199,18 @@ function importContentForSelectedName(name) {
             }
 
             hideOverlay()
+            
 
+            existingData = true;
+            document.getElementById('website_users_name_input_id').disabled = true;
 
+            
         } catch (error) {
         }
     }
+
+
+
 }
 
 // Function to format the raw HTML content for placing in the website
@@ -482,27 +526,33 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('whole_package_start_date_input_id').value = document.getElementById('store_google_sheet_whole_package_first_date_value').innerText;
         document.getElementById('whole_package_end_date_input_id').value = document.getElementById('store_google_sheet_whole_package_last_date_value').innerText;
         document.getElementById('package_total_nights_input_id').value = document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText;
+        storePackageTotalNights = document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText;
         document.getElementById('clint_company_name_input_id').value = document.getElementById('store_google_sheet_clint_company_name_value').innerText;
 
 
 
+        existingData = true;
+        document.getElementById('website_users_name_input_id').disabled = true;
+
+
+
         /* Check the package type checkbox based on the innerText of the 'store_google_sheet_clint_package_type_checkbox_value' */
-        if(document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شهل عسل'){
+        if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شهل عسل') {
             document.getElementById('honeymoon_checkbox').checked = true;
 
-        }else if(document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شباب'){
+        } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شباب') {
             document.getElementById('guys_checkbox').checked = true;
 
-        }else if(document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج عائلة'){
+        } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج عائلة') {
             document.getElementById('family_checkbox').checked = true;
-            
-        }else if(document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شخصين'){
+
+        } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شخصين') {
             document.getElementById('two_people_checkbox').checked = true;
 
         }
 
 
-        
+
         /* Function to reActive the company logo delete functionality */
         if (document.getElementById('inserted_company_name_logo_id')) {
 
