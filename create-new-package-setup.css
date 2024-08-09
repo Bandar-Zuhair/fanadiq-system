@@ -100,6 +100,10 @@ body {
     text-align: center;
 }
 
+#clint_movements_whole_day_actions_details_textarea_id{
+    height: 10vw;
+}
+
 
 /* Enter textArea full screen mood button */
 .textarea_open_fullscreen_icon_class {
@@ -138,25 +142,6 @@ body {
     background: rgb(195, 0, 0);
 }
 
-/* Exit the full screen mood button */
-.insert_clint_movements_places_icon {
-    z-index: 1001;
-    background-color: rgb(255, 174, 0);
-    color: white;
-    font-size: 3vw;
-    padding: 15px;
-    position: fixed;
-    top: 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 7px;
-    border: 1px solid black;
-    transition: all 0.1s ease-in-out;
-}
-
-.insert_clint_movements_places_icon:hover {
-    background: rgb(215, 147, 0);
-}
 
 
 /* Clint movements tutorial */
@@ -924,52 +909,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
 }
 
-#clint_movements_place_options_and_tuorial {
+#clint_movements_places_cities_options {
     width: 100%;
-    padding: 5px 0;
+    padding: 15px 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
-#clint_movements_place_options_and_tuorial p {
-    background: white;
-    font-size: 2vw;
+#clint_movements_places_cities_options p {
+    background: rgb(85, 127, 137);
+    color: white;
+    font-size: 3vw;
+    margin: 2px;
     padding: 1px 5px;
     border: 0.5px solid black;
-    border-radius: 7px;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
+    flex-grow: 1; /* Allow each <p> to grow equally */
+    text-align: center; /* Center text inside each <p> */
+    box-sizing: border-box; /* Include padding and border in width */
 }
 
-#clint_movements_place_options_and_tuorial p:hover {
+#clint_movements_places_cities_options p:hover {
     opacity: 0.8;
 }
 
-/* Clint movements tutorial */
-.clint_movements_tutorial_full_page_div {
-    z-index: 999;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    background: rgb(215, 232, 244);
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: opacity 0.1s ease-in-out;
-}
 
-.clint_movements_tutorial_full_page_div p {
-    background: rgb(0, 56, 99);
-    color: white;
-    font-size: 2vw;
-    margin: 3px 0;
-    text-align: center;
-    border: 0.5px solid black;
-    cursor: default;
-}
+
 
 
 
@@ -1356,11 +1323,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 10px;
     }
 
-    .insert_clint_movements_places_icon {
-        font-size: 4vw;
-        padding: 10px;
-    }
-
     .search_bar_div_class {
         padding: 5px;
     }
@@ -1378,12 +1340,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 3.5vw;
     }
 
-    #clint_movements_place_options_and_tuorial p {
+    #clint_movements_places_cities_options p {
         font-size: 3vw;
-    }
-
-    .clint_movements_tutorial_full_page_div p {
-        font-size: 2.5vw;
     }
 
     .clint_movements_places_full_page_div h5 {
@@ -1585,6 +1543,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 4vw;
     }
 
+    #clint_movements_whole_day_actions_details_textarea_id{
+        height: 13vw;
+    }
+
     .submit_package_pdf_div ion-icon {
         font-size: 7vw;
         padding: 5px;
@@ -1637,11 +1599,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 5px;
     }
 
-    .insert_clint_movements_places_icon {
-        font-size: 7vw;
-        padding: 5px;
-    }
-
     .search_bar_div_class {
         padding: 4px;
     }
@@ -1660,13 +1617,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         margin: 4px;
     }
 
-    #clint_movements_place_options_and_tuorial p {
+    #clint_movements_places_cities_options p {
         font-size: 4vw;
         padding: 1px 5px;
-    }
-
-    .clint_movements_tutorial_full_page_div p {
-        font-size: 3vw;
     }
 
     .clint_movements_places_full_page_div h5 {
@@ -1850,6 +1803,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         font-size: 5.5vw;
     }
 
+    #clint_movements_whole_day_actions_details_textarea_id{
+        height: 16vw;
+    }
+
     .submit_package_pdf_div ion-icon {
         font-size: 9.5vw;
     }
@@ -1907,11 +1864,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 3px;
     }
 
-    .insert_clint_movements_places_icon {
-        font-size: 10vw;
-        padding: 3px;
-    }
-
     .search_bar_div_class {
         padding: 3px;
     }
@@ -1927,12 +1879,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         padding: 0 5px;
     }
 
-    #clint_movements_place_options_and_tuorial p {
-        font-size: 5vw;
+    #clint_movements_places_cities_options {
+        flex-wrap: wrap;
     }
 
-    .clint_movements_tutorial_full_page_div p {
-        font-size: 3.5vw;
+    #clint_movements_places_cities_options p {
+        font-size: 5.5vw;
     }
 
     .clint_movements_places_full_page_div h5 {
