@@ -279,7 +279,7 @@ websiteUsersNameInputOptions.forEach(option => {
 
         // Play a sound effect
         new Audio('click.mp3').play();
-        
+
         let newValue;
 
         if (option.textContent === 'سامي' || option.textContent === 'ابو سما') {
@@ -411,6 +411,9 @@ hotelNameInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
 
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
 
         /* First store the corrent hotel name for later comparing (to reset the hotel room type or no need) */
         currentHotelName = hotelNameInput.value
@@ -463,6 +466,9 @@ let hotelRoomContainPoolInputOptions = document.querySelectorAll('#hotel_room_co
 hotelRoomContainPoolInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         if (option.textContent === 'حذف') {
             hotelRoomContainPoolInput.value = '';
 
@@ -488,6 +494,9 @@ let hotelRoomViewInputOptions = document.querySelectorAll('#hotel_room_view_drop
 
 hotelRoomViewInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
 
         if (option.textContent === 'حذف') {
             hotelRoomViewInput.value = '';
@@ -540,6 +549,9 @@ let hotelUnitAmountInputOptions = document.querySelectorAll('#hotel_unit_amount_
 
 hotelUnitAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
 
         /* Save the clicked number in the variable for later use */
         storeHotelTotalUnitNumber = option.textContent;
@@ -599,6 +611,10 @@ let createRoomTypeDescripyionDropDown = function () {
 
                 // Add a click event listener to the h3 element
                 h3.addEventListener('click', () => {
+
+                    // Play a sound effect
+                    new Audio('click.mp3').play();
+
                     // When the h3 element is clicked, set the value of the room type description input field to the text content of the h3 element
                     hotelRoomTypeDescriptionInput.value = h3.textContent;
 
@@ -814,6 +830,10 @@ let smsCardWithInternetAmountInputOptions = document.querySelectorAll('#breakfas
 // Add click event listener to each h3 element
 smsCardWithInternetAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         if (lastClickedClintMovementsCityInput) { // Check if an input field was clicked before
             if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
                 lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
@@ -868,6 +888,10 @@ let flightAirLineInputOptions = document.querySelectorAll('#airport_line_name_dr
 
 flightAirLineInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         flightAirLineInput.value = option.textContent; // Set input value to selected option
         hideOverlay(); // Hide overlay after selection
     });
@@ -894,6 +918,10 @@ insertFlightDestinationCityInputValue = function (clickedInputIdName) {
     let h3Elements = clickedInputDropdown.querySelectorAll('h3');
     h3Elements.forEach(h3 => {
         h3.onclick = function () {
+
+            // Play a sound effect
+            new Audio('click.mp3').play();
+
             lastClickedFlightDestinationInput.value = this.innerText; // Set input value to h3 inner text
             hideOverlay(); // Hide the overlay after selection
         };
@@ -912,6 +940,10 @@ let flightAdultPersonAmountInputOptions = document.querySelectorAll('#flight_adu
 
 flightAdultPersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         flightAdultPersonAmountInput.value = option.textContent; // Set input value to selected option
         hideOverlay(); // Hide overlay after selection
     });
@@ -926,6 +958,9 @@ let flightInfantPersonAmountInputOptions = document.querySelectorAll('#flight_in
 
 flightInfantPersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
 
         if (option.textContent === 'حذف') {
             flightInfantPersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
@@ -1142,8 +1177,17 @@ pickThisClintMovementsPlace = function (clickedPlace) {
 }
 
 
+/* Function to hide or show the 'downloaded_pdf_clint_movements_data_page' section */
+hideAndShowClintMovementSectionFunction = function () {
 
+    if (document.getElementById('downloaded_pdf_clint_movements_data_page').style.display === 'none') {
+        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
 
+    } else {
+        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+    }
+
+}
 
 
 
@@ -1416,32 +1460,36 @@ function calculateDaysDifference(startDate, endDate) {
 
 
 
-
-/* Store the package total nights for later use */
+/* Store the hotel total nights for later use (when inserting hotel row data) */
+let storeHotelTotalNights;
 let storePackageTotalNights;
-
 
 // Variables to track the visibility of the date pickers
 var isWholePackageStartDatePickerVisible = false;
 var isWholePackageEndDatePickerVisible = false;
+var isHotelStartDatePickerVisible = false;
+var isHotelEndDatePickerVisible = false;
 
-// Function to calculate the difference in days
-function wholePackageAndHotelCalculateDaysDifference(startDate, endDate) {
-    let start = new Date(startDate);
-    let end = new Date(endDate);
-    let timeDifference = end.getTime() - start.getTime();
-    let dayDifference = timeDifference / (1000 * 3600 * 24);
-    return Math.round(dayDifference);
-}
-
-// Function to parse the Arabic date input
+// Function to parse date strings in the format "DD-MMM"
 function parseArabicDate(dateStr) {
-    let [day, monthName] = dateStr.split(' ');
-    let month = arabicMonthsReverse[monthName];
-    return new Date(`${month} ${day}, ${new Date().getFullYear()}`);
+    let parts = dateStr.split(' ');
+    let day = parseInt(parts[0]);
+    let monthShortNames = {
+        "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3, "مايو": 4, "يونيو": 5,
+        "يوليو": 6, "أغسطس": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
+    };
+    let month = monthShortNames[parts[1]];
+    let year = new Date().getFullYear(); // Assuming the current year
+    return new Date(year, month, day);
 }
 
-// Function to update the total nights input
+// Function to calculate the difference in days between two dates
+function wholePackageAndHotelCalculateDaysDifference(startDate, endDate) {
+    let diff = endDate - startDate;
+    return Math.round(diff / (1000 * 60 * 60 * 24));
+}
+
+// Function to update the total nights input for whole package
 function updateWholePackageTotalNights() {
     let startDateInput = document.getElementById('whole_package_start_date_input_id');
     let endDateInput = document.getElementById('whole_package_end_date_input_id');
@@ -1469,173 +1517,7 @@ function updateWholePackageTotalNights() {
     }
 }
 
-// Function to disable specific dates
-function disableSpecificDates(date) {
-    let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
-    if (startDateInput) {
-        let startDate = parseArabicDate(startDateInput);
-        return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
-    }
-    return false;
-}
-
-// Get today's date
-var today = new Date();
-
-// Initialize Pikaday for the start date
-var wholePackageStartDatePicker = new Pikaday({
-    field: document.getElementById('whole_package_start_date_input_id'),
-    format: 'DD-M',
-    minDate: today,
-    toString(date, format) {
-        let day = date.getDate();
-        let month = getArabicMonthName(date.getMonth());
-        return `${day} ${month}`;
-    },
-    i18n: {
-        previousMonth: '',
-        nextMonth: '',
-        months: innerDatePickerArabicMonths,
-        weekdays: arabicDays,
-        weekdaysShort: arabicDays
-    },
-    onSelect: function () {
-
-        // Play a sound effect
-        new Audio('click.mp3').play();
-
-
-        isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
-        updateWholePackageTotalNights();
-        let selectedDate = this.getDate();
-        let minEndDate = new Date(selectedDate);
-        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
-        wholePackageEndDatePicker.setMinDate(minEndDate); // Update min date for the second picker
-    }
-});
-
-// Initialize Pikaday for the end date
-var wholePackageEndDatePicker = new Pikaday({
-    field: document.getElementById('whole_package_end_date_input_id'),
-    format: 'DD-M',
-    minDate: today,
-    toString(date, format) {
-        let day = date.getDate();
-        let month = getArabicMonthName(date.getMonth());
-        return `${day} ${month}`;
-    },
-    i18n: {
-        previousMonth: '',
-        nextMonth: '',
-        months: innerDatePickerArabicMonths,
-        weekdays: arabicDays,
-        weekdaysShort: arabicDays
-    },
-    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
-    onSelect: function () {
-
-        // Play a sound effect
-        new Audio('click.mp3').play();
-
-        isWholePackageEndDatePickerVisible = false; // Reset visibility state on date selection
-        updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
-    }
-});
-
-// Toggle the whole package start date picker on input field click
-document.getElementById('whole_package_start_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isWholePackageStartDatePickerVisible) {
-        wholePackageStartDatePicker.hide();
-        isWholePackageStartDatePickerVisible = false;
-    } else {
-        if (isWholePackageEndDatePickerVisible) {
-            wholePackageEndDatePicker.hide();
-            isWholePackageEndDatePickerVisible = false;
-        }
-        wholePackageStartDatePicker.show();
-        isWholePackageStartDatePickerVisible = true;
-    }
-});
-
-// Toggle the whole package end date picker on input field click
-document.getElementById('whole_package_end_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isWholePackageEndDatePickerVisible) {
-        wholePackageEndDatePicker.hide();
-        isWholePackageEndDatePickerVisible = false;
-    } else {
-        if (isWholePackageStartDatePickerVisible) {
-            wholePackageStartDatePicker.hide();
-            isWholePackageStartDatePickerVisible = false;
-        }
-        wholePackageEndDatePicker.show();
-        isWholePackageEndDatePickerVisible = true;
-    }
-});
-
-// Function to check if click is inside the date picker
-function isClickInsideDatePicker(event, picker) {
-    return picker.el.contains(event.target);
-}
-
-// Hide the date pickers when clicking outside, but don't toggle state
-document.addEventListener('click', function (e) {
-    if (isWholePackageStartDatePickerVisible && !isClickInsideDatePicker(e, wholePackageStartDatePicker)) {
-        wholePackageStartDatePicker.hide();
-        isWholePackageStartDatePickerVisible = false;
-    }
-    if (isWholePackageEndDatePickerVisible && !isClickInsideDatePicker(e, wholePackageEndDatePicker)) {
-        wholePackageEndDatePicker.hide();
-        isWholePackageEndDatePickerVisible = false;
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Store the hotel total nights for later use (when inserting hotel row data) */
-let storeHotelTotalNights;
-
-// Variables to track the visibility of the date pickers
-var isHotelStartDatePickerVisible = false;
-var isHotelEndDatePickerVisible = false;
-
-// Function to parse date strings in the format "DD-MMM"
-function parseArabicDate(dateStr) {
-    let parts = dateStr.split(' ');
-    let day = parseInt(parts[0]);
-    let monthShortNames = {
-        "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3, "مايو": 4, "يونيو": 5,
-        "يوليو": 6, "أغسطس": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
-    };
-    let month = monthShortNames[parts[1]];
-    let year = new Date().getFullYear(); // Assuming the current year
-    return new Date(year, month, day);
-}
-
-// Function to calculate the difference in days between two dates
-function wholePackageAndHotelCalculateDaysDifference(startDate, endDate) {
-    let diff = endDate - startDate;
-    return Math.round(diff / (1000 * 60 * 60 * 24));
-}
-
-// Function to update the total nights input
+// Function to update the total nights input for hotel
 function updateHotelTotalNights() {
     let startDateInput = document.getElementById('hotel_check_in_input_id');
     let endDateInput = document.getElementById('hotel_check_out_input_id');
@@ -1664,8 +1546,8 @@ function updateHotelTotalNights() {
 }
 
 // Function to disable specific dates
-function disableSpecificDates(date) {
-    let startDateInput = document.getElementById('hotel_check_in_input_id').value;
+function disableSpecificDates(date, startDateInputId) {
+    let startDateInput = document.getElementById(startDateInputId).value;
     if (startDateInput) {
         let startDate = parseArabicDate(startDateInput);
         return date.getTime() <= startDate.getTime(); // Disable the exact start date and any date before it
@@ -1675,6 +1557,65 @@ function disableSpecificDates(date) {
 
 // Get today's date
 var today = new Date();
+
+/* Inputs date for whole package start period */
+var wholePackageStartDatePicker = new Pikaday({
+    field: document.getElementById('whole_package_start_date_input_id'),
+    format: 'DD-M',
+    minDate: today,
+    toString(date, format) {
+        let day = date.getDate();
+        let month = getArabicMonthName(date.getMonth());
+        return `${day} ${month}`;
+    },
+    i18n: {
+        previousMonth: '',
+        nextMonth: '',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
+    },
+    onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+        isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
+        updateWholePackageTotalNights();
+        let selectedDate = this.getDate();
+        let minEndDate = new Date(selectedDate);
+        minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
+        wholePackageEndDatePicker.setMinDate(minEndDate); // Update min date for the second picker
+    }
+});
+
+/* Inputs date for whole package end period */
+var wholePackageEndDatePicker = new Pikaday({
+    field: document.getElementById('whole_package_end_date_input_id'),
+    format: 'DD-M',
+    minDate: today,
+    toString(date, format) {
+        let day = date.getDate();
+        let month = getArabicMonthName(date.getMonth());
+        return `${day} ${month}`;
+    },
+    i18n: {
+        previousMonth: '',
+        nextMonth: '',
+        months: innerDatePickerArabicMonths,
+        weekdays: arabicDays,
+        weekdaysShort: arabicDays
+    },
+    disableDayFn: function (date) { return disableSpecificDates(date, 'whole_package_start_date_input_id'); }, // Disable the exact start date and any date before it in the end date picker
+    onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+        isWholePackageEndDatePickerVisible = false; // Reset visibility state on date selection
+        updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
+    }
+});
 
 /* Inputs date for hotel start period */
 var hotelStartDatePicker = new Pikaday({
@@ -1724,7 +1665,7 @@ var hotelEndDatePicker = new Pikaday({
         weekdays: arabicDays,
         weekdaysShort: arabicDays
     },
-    disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
+    disableDayFn: function (date) { return disableSpecificDates(date, 'hotel_check_in_input_id'); }, // Disable the exact start date and any date before it in the end date picker
     onSelect: function () {
 
         // Play a sound effect
@@ -1732,6 +1673,50 @@ var hotelEndDatePicker = new Pikaday({
 
         isHotelEndDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights(); // Call 'updateHotelTotalNights' when a date is selected
+    }
+});
+
+// Toggle the whole package start date picker on input field click
+document.getElementById('whole_package_start_date_input_id').addEventListener('click', function (e) {
+    e.stopPropagation();
+
+    if (isWholePackageStartDatePickerVisible) {
+        wholePackageStartDatePicker.hide();
+        isWholePackageStartDatePickerVisible = false;
+    } else {
+        if (isWholePackageEndDatePickerVisible) {
+            wholePackageEndDatePicker.hide();
+            isWholePackageEndDatePickerVisible = false;
+        }
+        wholePackageStartDatePicker.show();
+        isWholePackageStartDatePickerVisible = true;
+    }
+});
+
+// Toggle the whole package end date picker on input field click
+document.getElementById('whole_package_end_date_input_id').addEventListener('click', function (e) {
+    e.stopPropagation();
+
+    if (isWholePackageEndDatePickerVisible) {
+        wholePackageEndDatePicker.hide();
+        isWholePackageEndDatePickerVisible = false;
+    } else {
+        if (isWholePackageStartDatePickerVisible) {
+            wholePackageStartDatePicker.hide();
+            isWholePackageStartDatePickerVisible = false;
+        }
+
+        // Update the minDate for the end date picker based on the current start date
+        let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
+        if (startDateInput) {
+            let parsedStartDate = parseArabicDate(startDateInput);
+            let minEndDate = new Date(parsedStartDate);
+            minEndDate.setDate(minEndDate.getDate() + 1);
+            wholePackageEndDatePicker.setMinDate(minEndDate);
+        }
+
+        wholePackageEndDatePicker.show();
+        isWholePackageEndDatePickerVisible = true;
     }
 });
 
@@ -1780,6 +1765,12 @@ document.getElementById('hotel_check_out_input_id').addEventListener('click', fu
 });
 
 // Prevent the date pickers from hiding when clicking inside them
+wholePackageStartDatePicker.el.addEventListener('click', function (e) {
+    e.stopPropagation();
+});
+wholePackageEndDatePicker.el.addEventListener('click', function (e) {
+    e.stopPropagation();
+});
 hotelStartDatePicker.el.addEventListener('click', function (e) {
     e.stopPropagation();
 });
@@ -1789,6 +1780,14 @@ hotelEndDatePicker.el.addEventListener('click', function (e) {
 
 // Hide the date pickers when clicking outside
 document.addEventListener('click', function () {
+    if (isWholePackageStartDatePickerVisible) {
+        wholePackageStartDatePicker.hide();
+        isWholePackageStartDatePickerVisible = false;
+    }
+    if (isWholePackageEndDatePickerVisible) {
+        wholePackageEndDatePicker.hide();
+        isWholePackageEndDatePickerVisible = false;
+    }
     if (isHotelStartDatePickerVisible) {
         hotelStartDatePicker.hide();
         isHotelStartDatePickerVisible = false;
@@ -1798,7 +1797,6 @@ document.addEventListener('click', function () {
         isHotelEndDatePickerVisible = false;
     }
 });
-
 
 
 
@@ -1882,23 +1880,31 @@ document.addEventListener('click', function () {
 
 
 
-
-/* Time picker for flight fly and arravial time */
+/* Function for the time picking */
 $(document).ready(function () {
     $('#flight_fly_away_time_input_id').pickatime({
         format: 'HH:i',
         interval: 5,
         min: [0, 0],
-        max: [23, 59]
+        max: [23, 59],
+        onSet: function() {
+            // Play a sound effect
+            new Audio('click.mp3').play();
+        }
     });
 
     $('#flight_arrival_time_input_id').pickatime({
         format: 'HH:i',
         interval: 5,
         min: [0, 0],
-        max: [23, 59]
+        max: [23, 59],
+        onSet: function() {
+            // Play a sound effect
+            new Audio('click.mp3').play();
+        }
     });
 });
+
 
 
 
