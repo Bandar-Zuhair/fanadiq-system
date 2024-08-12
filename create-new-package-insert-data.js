@@ -513,6 +513,11 @@ checkInputsToInsertData = function (clickedButtonId) {
             'bali_taxes_not_covered_checkbox'
         ];
 
+
+        // Play a sound effect
+        new Audio('success.mp3').play();
+
+
         // Get references to the text areas
         let packageIncludingDataTextArea = document.getElementById('package_details_textarea_id').value;
         let smsCardWithInternetAmountInputReayText = document.getElementById('sms_card_with_internet_amount_input_id').value;
@@ -712,6 +717,9 @@ checkInputsToInsertData = function (clickedButtonId) {
         // If Not All Inputs Are Valid, Show The Error Message
         if (flightAirLineInput === '' || flightAdultPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '') {
 
+            // Play a sound effect
+            new Audio('error.mp3').play();
+
             /* Chnage the sumbit icon background color */
             clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
 
@@ -725,6 +733,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             /* in case if the two city inputs were the same then dont continue the process */
             if (flightFromCityInput === flightToCityInput) {
+
+                // Play a sound effect
+                new Audio('error.mp3').play();
+
+
                 /* Chnage the sumbit icon background color */
                 clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
 
@@ -734,6 +747,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }, 500);
 
             } else {
+
+                // Play a sound effect
+                new Audio('success.mp3').play();
+
+
                 /* Change the 'تم' button color */
                 clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
                 // Set the background color of the submit icon back to default color
@@ -746,8 +764,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
-                if (document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText !== '') {
-                    insertedFlightDataDivUniqueId = document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText;
+                if (document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText !== '') {
+                    insertedFlightDataDivUniqueId = document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText;
                 } else {
                     insertedFlightDataDivUniqueId = 1;
                 }
@@ -780,7 +798,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
-                document.getElementById('store_localstorage_flight_uniuqe_id_name_value').innerText = insertedFlightDataDivUniqueId;
+                document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText = insertedFlightDataDivUniqueId;
 
 
                 // Insert the HTML content into the newly created div
@@ -1038,6 +1056,11 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     /* Function to confirm the new flight row data */
                     confirmNewFlightDataRow = function () {
+
+                        // Play a sound effect
+                        new Audio('success.mp3').play();
+
+
                         // Get the clicked flight data row
                         let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
 
@@ -1347,6 +1370,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
 
+            // Play a sound effect
+            new Audio('error.mp3').play();
+
             // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'red';
 
@@ -1356,6 +1382,11 @@ checkInputsToInsertData = function (clickedButtonId) {
             }, 500);
 
         } else {
+
+            // Play a sound effect
+            new Audio('success.mp3').play();
+
+
             // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             // Set the background color of the submit icon back to default color
@@ -1368,8 +1399,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
-            if (document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText !== '') {
-                insertedHotelDataDivUniqueId = document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText;
+            if (document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText !== '') {
+                insertedHotelDataDivUniqueId = document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText;
             } else {
                 insertedHotelDataDivUniqueId = 1;
             }
@@ -1444,7 +1475,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
-            document.getElementById('store_localstorage_hotel_uniuqe_id_name_value').innerText = insertedHotelDataDivUniqueId;
+            document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText = insertedHotelDataDivUniqueId;
 
 
             // Get all dynamically created elements with the class 'hotelRowImageController'
@@ -1515,7 +1546,15 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Get references to all input elements and reset their values
             document.getElementById('hotel_name_input_id').value = '';
+
+
             document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
+
+            /* Store the last stooped hotel check out date for later use (when importing data) */
+            document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
+
+
+
             document.getElementById('hotel_check_in_input_id').disabled = true;
             document.getElementById('hotel_check_out_input_id').value = '';
             document.getElementById('hotel_total_nights_input_id').value = '';
@@ -1676,9 +1715,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                     if (lastHotelRowDiv.id === clickedHotelRowIdName) {
                         document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
 
+                        /* Store the last stooped hotel check out date for later use (when importing data) */
+                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
+
+
                         /* but if the last found div is not the one that got clicked then set the check in value as it got saved before in the 'lastSavedHotelCheckInDate' */
                     } else {
                         document.getElementById('hotel_check_in_input_id').value = lastSavedHotelCheckInDate;
+
+
+                        /* Store the last stooped hotel check out date for later use (when importing data) */
+                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
 
                     }
 
@@ -1707,6 +1754,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     saveOriginalHotelDates();
 
 
+                    /* Make sure to Re-set the 'hotel_check_in_input_id' to unclickable */
                     document.getElementById('hotel_check_in_input_id').disabled = true;
                 };
 
@@ -1717,6 +1765,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 // Function to confirm the new hotel row data
                 confirmNewHotelDataRow = function () {
+
+                    // Play a sound effect
+                    new Audio('success.mp3').play();
+
                     // Get the clicked hotel data row
                     let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
 
@@ -2081,6 +2133,9 @@ checkInputsToInsertData = function (clickedButtonId) {
         /* if one of the clint data or hotel data sections is hidden then stop the process */
         if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none' || document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none') {
 
+            // Play a sound effect
+            new Audio('error.mp3').play();
+
             // Change the submit icon background color
             clint_movements_auto_create_icon.style.backgroundColor = 'red';
 
@@ -2091,6 +2146,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
         } else {
 
+            // Play a sound effect
+            new Audio('success.mp3').play();
+
+
             // Change the submit icon background color
             clint_movements_auto_create_icon.style.backgroundColor = 'rgb(0, 255, 0)';
 
@@ -2100,6 +2159,11 @@ checkInputsToInsertData = function (clickedButtonId) {
             }, 500);
 
 
+            /* Show the hide and show clint movement section icon if the 'show_and_hide_clint_movement_section_icon' is visible */
+            document.getElementById('show_and_hide_clint_movement_section_icon').style.display = 'inline';
+
+
+            /* Delete all data inside the 'inserted_clint_movements_data_position_div' in every time the 'clint_movements_auto_create_icon' is clicked */
             document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
 
 
@@ -2124,20 +2188,30 @@ checkInputsToInsertData = function (clickedButtonId) {
                 return `${newDay} ${newMonth}`; // Return the new date in the same format (day month)
             }
 
+
+
+
+
+
+
+            // Function to clean up text and ensure no duplicated '+'
+            function cleanUpText(text) {
+                return text.replace(/\+\s*\+/g, ' + ').trim();
+            }
+
             // Get the state of the airport welcome checkbox
             let isAirportWelcomeIncluded = document.getElementById('include_airport_welcome__checkbox').checked;
-
-
-
-            // Get all divs with class name "hotel_row_class_for_editing"
             let hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
-            let totalHotels = hotelRows.length; // Total number of hotel rows
-
-
-
-            // Track the usage of visiting place names for each city
+            let totalHotels = hotelRows.length;
             let usedVisitingPlaces = {};
-            let isFirstMovementRowCreated = false; // Track if the first movement row has been created
+
+            let previousCityName = '';
+            let previousHotelName = '';
+            let isFirstHotelRowCreated = false; // Flag to check the first created row
+            let isCheckOutTextAdded = false; // Flag to track if check-out text has been added
+
+            let isFirstJakartaHotelFound = false; // Flag to track the first Jakarta hotel found
+            let hasCenterTourTextBeenAdded = false; // Flag to track if "التجول في السنتر" text has been added
 
             hotelRows.forEach((hotelRow, index) => {
                 let hotelName = hotelRow.querySelector('h1').innerText;
@@ -2184,10 +2258,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     let newDate = incrementDate(checkInDate, i);
 
-                    // Initialize visiting places text
                     let visitingPlacesText = "";
                     if (i === 0 && targetObject) {
-                        let dayIndex = 1; // Start with day 1 for the first day of the stay
+                        let dayIndex = 1;
                         while (usedDays[dayIndex] && targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
                             dayIndex++;
                         }
@@ -2195,7 +2268,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             let textArray = targetObject[`visitingPlaceNamesDay${dayIndex}`];
                             usedDays[dayIndex] = true;
                             if (textArray && textArray.length > 0) {
-                                visitingPlacesText = `${textArray.join(' + ')} + `;
+                                visitingPlacesText = `${textArray.join(' + ')} `;
                             }
                         }
                     }
@@ -2204,44 +2277,57 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let combinedCityName = cityName;
 
                     if (i === 0 && index > 0) {
-                        let previousHotelName = hotelRows[index - 1].querySelector('h1').innerText;
-                        let previousCityName = hotelRows[index - 1].querySelector('h5').innerText;
+                        previousCityName = hotelRows[index - 1].querySelector('h5').innerText;
+                        previousHotelName = hotelRows[index - 1].querySelector('h1').innerText;
 
                         if (cityName !== previousCityName) {
                             combinedCityName = `${previousCityName}-${cityName}`;
                         }
 
-                        let additionalText = cityName !== previousCityName ?
-                            (cityName === "بونشاك" ? ` + الذهاب الى ${cityName}` : ` + الذهاب الى ${cityName} + التجول في السنتر`) : '';
+                        // Construct the checkInOutText without `+` after certain texts
+                        let additionalText = "";
+                        if (isAirportWelcomeIncluded && (cityName === "بالي" || cityName === "جاكرتا") && cityName !== previousCityName) {
+                            additionalText = `الإستقبال في مطار ${cityName} + `;
+                        }
 
-                        // Place the visiting places text between "تسجيل الخروج من ${previousHotelName}" and "تسجيل الدخول في ${hotelName}"
-                        checkInOutText = `تسجيل الخروج من ${previousHotelName} + ${visitingPlacesText} تسجيل الدخول في ${hotelName}`;
-
-                        if (isAirportWelcomeIncluded && (cityName === 'جاكرتا' && previousCityName !== 'جاكرتا' || cityName === 'بالي' && previousCityName !== 'بالي')) {
-                            let cityWelcomeText = `الإستقبال في مطار ${cityName}`;
-                            if (additionalText.includes(`الذهاب الى ${cityName}`)) {
-                                checkInOutText = checkInOutText.replace(`الذهاب الى ${cityName}`, `الذهاب الى ${cityName} + ${cityWelcomeText}`);
-                            } else {
-                                checkInOutText = `${cityWelcomeText} + ${checkInOutText}`;
-                            }
+                        if (previousCityName !== cityName) {
+                            checkInOutText = `تسجيل الخروج من ${previousHotelName} + الذهاب الى ${cityName} + ${additionalText}${visitingPlacesText} + تسجيل الدخول في ${hotelName}`;
+                        } else {
+                            checkInOutText = `${additionalText}${visitingPlacesText} + تسجيل الدخول في ${hotelName}`;
                         }
                     }
 
-                    if (checkInOutText.includes("تسجيل الدخول في") && (cityName === "بالي" || cityName === "جاكرتا")) {
-                        checkInOutText = checkInOutText.replace(`تسجيل الدخول في ${hotelName}`, `التجول في السنتر + تسجيل الدخول في ${hotelName}`);
+                    if ((cityName === "بالي" || cityName === "جاكرتا") && !hasCenterTourTextBeenAdded) {
+                        checkInOutText = checkInOutText.replace(`تسجيل الدخول في ${hotelName}`, `تسجيل الدخول في ${hotelName} + التجول في السنتر`);
+                        hasCenterTourTextBeenAdded = true;
                     }
 
-                    clintMovementsRowTableDiv.innerHTML = `
-            <div><h1>${newDate}</h1></div>
-            <div><h2>${checkInOutText}</h2></div>
-            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
-        `;
+                    if (!isFirstHotelRowCreated && (cityName === "بالي" || cityName === "جاكرتا") && isAirportWelcomeIncluded) {
+                        checkInOutText = `الإستقبال في مطار ${cityName} + ${checkInOutText}`;
+                        isFirstHotelRowCreated = true; // Mark the first hotel row as created
+                    }
 
-                    // Ensure "الإستقبال في مطار ${cityName}" is included only for the first movement row and only for "بالي" or "جاكرتا"
-                    if (!isFirstMovementRowCreated && i === 0 && (cityName === "بالي" || cityName === "جاكرتا")) {
+                    // Add "تسجيل الخروج من ${previousHotelName}" to the first `clintMovementsRowTableDiv` of each hotel, except the very first one
+                    if (i === 0 && index > 0 && !isCheckOutTextAdded) {
+                        checkInOutText = `تسجيل الخروج من ${previousHotelName} + ${checkInOutText}`;
+                        isCheckOutTextAdded = true; // Mark check-out text as added
+                    }
+
+                    // Clean up text to ensure no duplicated '+'
+                    checkInOutText = cleanUpText(checkInOutText);
+
+                    clintMovementsRowTableDiv.innerHTML = `
+                        <div><h1>${newDate}</h1></div>
+                        <div><h2>${checkInOutText}</h2></div>
+                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
+                    `;
+
+                    // Apply the new condition to append text if needed
+                    if (!isFirstJakartaHotelFound && cityName === "جاكرتا" && i === 0) {
                         let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
-                        currentH2.innerText = `الإستقبال في مطار ${cityName} + ${currentH2.innerText}`;
-                        isFirstMovementRowCreated = true; // Mark the first movement row as created
+                        currentH2.innerText += " + الذهاب لمطعم السدة للعشاء";
+                        currentH2.innerText = cleanUpText(currentH2.innerText); // Clean up text to ensure no duplicated '+'
+                        isFirstJakartaHotelFound = true; // Mark the first Jakarta hotel as found
                     }
 
                     if (targetObject && i > 0) {
@@ -2256,12 +2342,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                             if (textArray && textArray.length > 0) {
                                 let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
-                                currentH2.innerText = currentH2.innerText.trim();
+                                currentH2.innerText = cleanUpText(currentH2.innerText.trim());
 
                                 if (currentH2.innerText) {
-                                    currentH2.innerText += `${textArray.join(' + ')}`;
+                                    currentH2.innerText += ` + ${textArray.join(' + ')}`;
                                 } else {
-                                    currentH2.innerText = textArray.join(' + ');
+                                    currentH2.innerText = `${textArray.join(' + ')}`;
                                 }
                             }
                         }
@@ -2286,18 +2372,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     extraClintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
 
-                    // Ensure "التجول في السنتر" is included only for the first extra movement row and only for "بالي" or "جاكرتا"
-                    let extraText = '';
-                    if (!isFirstMovementRowCreated && (cityName === "بالي" || cityName === "جاكرتا")) {
-                        extraText = " + التجول في السنتر";
-                        isFirstMovementRowCreated = true; // Mark the first extra movement row as created
-                    }
 
                     extraClintMovementsRowTableDiv.innerHTML = `
-            <div><h1>${extraDate}</h1></div>
-            <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة${extraText}</h2></div>
-            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
-        `;
+                        <div><h1>${extraDate}</h1></div>
+                        <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
+                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
+                    `;
 
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(extraClintMovementsRowTableDiv);
 
@@ -2307,6 +2387,21 @@ checkInputsToInsertData = function (clickedButtonId) {
                     };
                 }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2663,6 +2758,9 @@ runDeleteThisPackageIncludingDataText = function (clickedPackageIncludingDataTex
 /* Function to open choosing pdf file name box */
 openPdfDownloadBox = function () {
 
+    // Play a sound effect
+    new Audio('click.mp3').play();
+
     if (document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText !== '' && document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
         let packageUserCodeNameForLaterImportReferenceP = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
         document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').innerText = `استخدم كود البكج ${packageUserCodeNameForLaterImportReferenceP}`;
@@ -2697,6 +2795,10 @@ openPdfDownloadBox = function () {
 
     /* Function to hide the name pdf file box */
     closeDownloadPdfBox = function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         // Hide edit/delete options div
         namePdfBoxDiv.style.transform = 'translate(-50%, -100vh)';
 
@@ -2852,8 +2954,8 @@ checkThePdfNameToDownload = function () {
     }
 }
 
-/* Save the last PDF download data in localStorage */
-saveLastPdfDownloadData = function () {
+// Function to save the last PDF download data in localStorage
+function saveLastPdfDownloadData() {
     let idsToCheck = [
         'downloaded_pdf_clint_data_page',
         'downloaded_pdf_package_including_data_page',
@@ -2873,57 +2975,25 @@ saveLastPdfDownloadData = function () {
         let element = document.getElementById(id);
         if (element && isVisible(element)) {
             // Minify and clean the HTML
-            let minifiedHTML = minifyHTML(element.outerHTML);
+            let minifiedHTML = minifyHTML(element.innerHTML);
             newEntry.e[id] = LZString.compressToUTF16(minifiedHTML); // Compress HTML
         }
     });
 
-    let transaction = db.transaction([storeName], 'readwrite');
-    let store = transaction.objectStore(storeName);
-
-    let getRequest = store.get("Last Download");
-
-    getRequest.onsuccess = function (event) {
-        let existingData = event.target.result;
-
-        if (existingData) {
-            // Replace the old data with the new data
-            store.put(newEntry);
-        } else {
-            // Add the new data
-            store.add(newEntry);
-        }
-
-        transaction.oncomplete = function () {
-            console.log('Data saved successfully as "Last Download".');
-        };
-
-        transaction.onerror = function (event) {
-            console.error('Transaction error:', event.target.errorCode);
-        };
-    };
-
-    getRequest.onerror = function (event) {
-        console.error('Get request error:', event.target.errorCode);
-    };
-};
-
-// Function to minify and clean HTML
-function minifyHTML(html) {
-    return html
-        .replace(/\s+/g, ' ') // Collapse whitespace
-        .replace(/>\s+</g, '><') // Remove spaces between tags
-        .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
-        .replace(/\s*=\s*/g, '=') // Remove spaces around equals in attributes
-        .replace(/\s*(style|class)=""/g, '') // Remove empty style and class attributes
-        .trim();
+    localStorage.setItem('lastDownloadWebsiteData', JSON.stringify(newEntry));
+    console.log('Data saved successfully in localStorage as "lastDownloadWebsiteData".');
 }
 
+// Function to minify HTML (dummy implementation, you can replace it with a real minification function if needed)
+function minifyHTML(html) {
+    return html.replace(/\s+/g, ' ').trim();
+}
 
-/* Function to check if an element is visible */
-let isVisible = function (element) {
-    return element && element.style.display !== 'none' && element.offsetParent !== null;
-};
+// Function to check if an element is visible (dummy implementation, you can replace it with a real visibility check function if needed)
+function isVisible(element) {
+    return element.offsetWidth > 0 && element.offsetHeight > 0;
+}
+
 
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = async function (pdfName) {
