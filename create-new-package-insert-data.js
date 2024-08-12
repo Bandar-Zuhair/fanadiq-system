@@ -2208,10 +2208,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             let previousCityName = '';
             let previousHotelName = '';
             let isFirstHotelRowCreated = false; // Flag to check the first created row
-            let isCheckOutTextAdded = false; // Flag to track if check-out text has been added
+            let hasCenterTourTextBeenAdded = false; // Flag to track if "التجول في السنتر" text has been added
 
             let isFirstJakartaHotelFound = false; // Flag to track the first Jakarta hotel found
-            let hasCenterTourTextBeenAdded = false; // Flag to track if "التجول في السنتر" text has been added
 
             hotelRows.forEach((hotelRow, index) => {
                 let hotelName = hotelRow.querySelector('h1').innerText;
@@ -2251,6 +2250,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }
 
                 let usedDays = usedVisitingPlaces[cityName];
+                let isCheckOutTextAdded = false; // Flag to track if check-out text has been added for this hotel
 
                 for (let i = 0; i < nights; i++) {
                     let clintMovementsRowTableDiv = document.createElement('div');
@@ -2290,10 +2290,15 @@ checkInputsToInsertData = function (clickedButtonId) {
                             additionalText = `الإستقبال في مطار ${cityName} + `;
                         }
 
-                        if (previousCityName !== cityName) {
-                            checkInOutText = `تسجيل الخروج من ${previousHotelName} + الذهاب الى ${cityName} + ${additionalText}${visitingPlacesText} + تسجيل الدخول في ${hotelName}`;
-                        } else {
-                            checkInOutText = `${additionalText}${visitingPlacesText} + تسجيل الدخول في ${hotelName}`;
+                        if (!isCheckOutTextAdded) {
+                            checkInOutText = `تسجيل الخروج من ${previousHotelName} `;
+
+                            if (previousCityName !== cityName) {
+                                checkInOutText += `+ الذهاب الى ${cityName} `;
+                            }
+
+                            checkInOutText += `+ ${additionalText}${visitingPlacesText} + تسجيل الدخول في ${hotelName}`;
+                            isCheckOutTextAdded = true;
                         }
                     }
 
@@ -2304,13 +2309,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     if (!isFirstHotelRowCreated && (cityName === "بالي" || cityName === "جاكرتا") && isAirportWelcomeIncluded) {
                         checkInOutText = `الإستقبال في مطار ${cityName} + ${checkInOutText}`;
-                        isFirstHotelRowCreated = true; // Mark the first hotel row as created
-                    }
-
-                    // Add "تسجيل الخروج من ${previousHotelName}" to the first `clintMovementsRowTableDiv` of each hotel, except the very first one
-                    if (i === 0 && index > 0 && !isCheckOutTextAdded) {
-                        checkInOutText = `تسجيل الخروج من ${previousHotelName} + ${checkInOutText}`;
-                        isCheckOutTextAdded = true; // Mark check-out text as added
+                        isFirstHotelRowCreated = true;
                     }
 
                     // Clean up text to ensure no duplicated '+'
@@ -2327,7 +2326,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
                         currentH2.innerText += " + الذهاب لمطعم السدة للعشاء";
                         currentH2.innerText = cleanUpText(currentH2.innerText); // Clean up text to ensure no duplicated '+'
-                        isFirstJakartaHotelFound = true; // Mark the first Jakarta hotel as found
+                        isFirstJakartaHotelFound = true;
                     }
 
                     if (targetObject && i > 0) {
@@ -2372,7 +2371,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     extraClintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
 
-
                     extraClintMovementsRowTableDiv.innerHTML = `
                         <div><h1>${extraDate}</h1></div>
                         <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
@@ -2381,12 +2379,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(extraClintMovementsRowTableDiv);
 
-                    let ClintMovementsRowImageController = extraClintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
-                    ClintMovementsRowImageController.onclick = function (event) {
+                    let clintMovementsRowImageController = extraClintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
+                    clintMovementsRowImageController.onclick = function (event) {
                         clintMovementsRowCityNameControllerFunction(event);
                     };
                 }
             });
+
+
 
 
 
