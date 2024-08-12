@@ -79,9 +79,18 @@
 
     <!-- LocalStorage data controller div -->
     <div id="localstorage_data_controller_div">
-        <p style="user-select: none;" onclick="openSaveNewWebsiteDataBase()">حفظ</p>
-        <p style="user-select: none;"
-            onclick="showOverlay('import_localstorage_data_names_dropdown'); updateDataBaseSavedDataNames('all_localstorage_stored_data_names_for_importing_data_div')">
+
+
+        <form method="post"
+            action="https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec"
+            name="save-package">
+            <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ" id="submit"
+                style="color: black; cursor: pointer; border-right: none; transition: all 0.2s ease-in-out;">
+        </form>
+
+
+
+        <p style="user-select: none;" onclick="showOverlay('import_localstorage_data_names_dropdown')">
             إستعادة</p>
         <p style="user-select: none;" onclick="openPdfDownloadBox()">تحميل</p>
     </div>
@@ -93,23 +102,6 @@
 
 
 
-
-
-    <div id="localstorage_save_name_input_div">
-        <div>
-            <h6>تخزين جديد <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-
-
-            <form method="post"
-                action="https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec"
-                name="save-package">
-                <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ جديد" id="submit"
-                    style="background: rgb(85, 127, 137); color: white; cursor: pointer; transition: all 0.2s ease-in-out;">
-            </form>
-
-
-        </div>
-    </div>
 
 
 
@@ -139,9 +131,13 @@
         </div>
 
 
-        <p id="restoreDataButton" class="localstorage_data_name_submit_button"
-            onclick="findSelectedNameAndImportContent()">تأكيد
-        </p>
+        <div id="confirm_import_package_data_and_refresh_input_div">
+            <p id="restoreDataButton" class="localstorage_data_name_submit_button"
+                onclick="findSelectedNameAndImportContent()">تأكيد
+            </p>
+
+            <ion-icon name="refresh-outline" id="refresh_import_saved_packages_data_input_value_icon"></ion-icon>
+        </div>
 
 
         <div id="all_localstorage_stored_data_names_for_importing_data_div"
@@ -527,7 +523,7 @@
                 <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
                     placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+                    onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
 
 
                 <div class="submit_package_pdf_div">
@@ -565,7 +561,7 @@
 
 
 
-        <!-- Company names options -->
+        <!-- Hotel room type names options -->
         <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
                 <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
@@ -886,7 +882,7 @@
                 <textarea id="package_details_textarea_id" class="package_details_input_class"
                     placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('package_details_textarea_id')"></ion-icon>
+                    onclick="new Audio('click.mp3').play(); toggleFullscreen('package_details_textarea_id')"></ion-icon>
 
 
                 <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
@@ -1170,7 +1166,7 @@
 
 
     <!-- Create clint movements plane data section -->
-    <section id="create_new_clint_movements_paln_section" style="display: none;">
+    <section id="create_new_clint_movements_plan_section" style="display: none;">
 
         <div id="toggle_clint_movements_details_title_div_id" class="section_title_text_div">
             <h1 id="clint_movements_content_section_title_text_id" class="section_title_text">برنامج تحركات مقترح</h1>
@@ -1183,7 +1179,7 @@
 
 
                 <div class="custom_checkbox">
-                    <input type="checkbox" id="include_airport_welcome__checkbox">
+                    <input type="checkbox" id="include_airport_welcome__checkbox" checked>
                     <label for="include_airport_welcome__checkbox">إستقبال في المطار؟</label>
                 </div>
 
@@ -1191,7 +1187,7 @@
                 <textarea id="clint_movements_whole_day_actions_details_textarea_id" class="package_details_input_class"
                     placeholder="المزارات" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="toggleFullscreen('clint_movements_whole_day_actions_details_textarea_id')"></ion-icon>
+                    onclick="new Audio('click.mp3').play(); toggleFullscreen('clint_movements_whole_day_actions_details_textarea_id')"></ion-icon>
 
 
 
@@ -1202,6 +1198,8 @@
                     <p onclick="showClintMovemtsPlacesPage(this)">بونشاك</p>
                     <p onclick="showClintMovemtsPlacesPage(this)">باندونج</p>
                     <p onclick="showClintMovemtsPlacesPage(this)">لومبوك</p>
+                    <p onclick="showOverlay('clint_visiting_places_names_dropdown')"
+                        style="background: white; color: black;">بحث</p>
                 </div>
 
 
@@ -1246,189 +1244,152 @@
 
 
 
-        <!-- Dropdown div for clint movements city -->
-        <div id="clint_movemnt_welcome_airport_location_dropdown" class="searchable_names_dropdown_class">
+
+
+
+
+
+        <!-- Company names options -->
+        <div id="clint_visiting_places_names_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>بالي</h3>
-                <h3>جاكرتا</h3>
-                <h3>باندونق</h3>
-            </div>
-        </div>
-
-
-
-
-
-
-        <!-- Dropdown div for clint movements city -->
-        <div id="clint_movemnts_current_city_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3>بالي</h3>
-                <h3>جاكرتا</h3>
-                <h3>بونشاك</h3>
-                <h3>باندونق</h3>
-                <h3>لومبوك</h3>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Dropdown div for hotel names -->
-        <div id="clint_movements_hotel_names_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="clint_movements_hotel_names_search_bar_input_id" class="search_bar_input_class"
+                <input type="text" id="all_clint_visiting_place_names_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث..">
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
                 <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('clint_movements_hotel_names_search_bar_input_id')"></ion-icon>
+                    onclick="clearSearchableDropDownInputValue('all_clint_visiting_place_names_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>Komaneka Keramas</h3>
-                <h3>Four Seasons Sayan</h3>
-                <h3>Komaneka Tanggayuda</h3>
-                <h3>Samsara Ubud</h3>
-                <h3>Tejaprana</h3>
-                <h3>K Club</h3>
-                <h3>Ulaman Eco Luxury</h3>
-                <h3>Aksari Ubud</h3>
-                <h3>Amarea Ubud</h3>
-                <h3>Asvara Villa</h3>
-                <h3>Kaamala Resort</h3>
-                <h3>Natya Resort</h3>
-                <h3>Padma Resort</h3>
-                <h3>Seres Spring</h3>
-                <h3>The Westin Ubud</h3>
-                <h3>Black Penny</h3>
-                <h3>Dedary Resort</h3>
-                <h3>Komaneka Rasa Sayang</h3>
-                <h3>Nau Villa</h3>
-                <h3>Tanadewa Ubud</h3>
-                <h3>The Apurva Kempinski</h3>
-                <h3>Ulu Segara</h3>
-                <h3>Merusaka</h3>
-                <h3>The Nest</h3>
-                <h3>Agranusa Villa</h3>
-                <h3>Renaissance Nusa Dua</h3>
-                <h3>Sofitel Nusa Dua</h3>
-                <h3>Tanadewa Nusa Dua</h3>
-                <h3>The Trans Bali</h3>
-                <h3>Indigo Bali</h3>
-                <h3>Sini Vie Villa</h3>
-                <h3>Aloft Seminyak</h3>
-                <h3>Impiana Villa</h3>
-                <h3>W Bali</h3>
-                <h3>Aleva Villa</h3>
-                <h3>Monolocale Resort</h3>
-                <h3>Ize Seminyak</h3>
-                <h3>Aksari Villa</h3>
-                <h3>Astera Villa</h3>
-                <h3>Ayona Villa</h3>
-                <h3>Cyrus Villa</h3>
-                <h3>Double Six Luxury</h3>
-                <h3>Potato Head Suites</h3>
-                <h3>Sana Vie Villa</h3>
-                <h3>Claremont Villa</h3>
-                <h3>Elysian Boutique Villa</h3>
-                <h3>Samaya Seminyak</h3>
-                <h3>La Mira Villa</h3>
-                <h3>Seminyak Sanctuary</h3>
-                <h3>Kolila Villa</h3>
-                <h3>La Vie Villa</h3>
-                <h3>Courtyard Seminyak</h3>
-                <h3>Sheraton Kuta</h3>
-                <h3>Aryaduta Kuta</h3>
-                <h3>Tribe</h3>
-                <h3>Aloft Kuta</h3>
-                <h3>Paasha Atelier</h3>
-                <h3>Mamaka By Ovolo</h3>
-                <h3>Beachwalk Residence</h3>
-                <h3>Discovery Kartika Plaza</h3>
-                <h3>Ramayana Suites</h3>
-                <h3>The Anvaya Beach</h3>
-                <h3>Four Seasons Jimbaran</h3>
-                <h3>Movenpick Jimbaran</h3>
-                <h3>Platinum Jimbaran</h3>
-                <h3>Le Meridien</h3>
-                <h3>Intercontinental Bali</h3>
-                <h3>Umana Bali</h3>
-                <h3>Jumeirah Bali</h3>
-                <h3>Renaissance Uluwatu</h3>
-                <h3>Eight Palms Villa</h3>
-                <h3>Jumeirah Bali</h3>
-                <h3>Renaissance Uluwatu</h3>
-                <h3>Raffles Jakarta</h3>
-                <h3>Ascott Jakarta</h3>
-                <h3>Citadines Sudirman</h3>
-                <h3>Hilton DoubleTree</h3>
-                <h3>Ascott Sudirman</h3>
-                <h3>Parkroyal Serviced Suites</h3>
-                <h3>Somerset Sudirman</h3>
-                <h3>Kempinski Jakarta</h3>
-                <h3>Pullman Park</h3>
-                <h3>Aloft Wahied Hasiem</h3>
-                <h3>Vertu Harmoni</h3>
-                <h3>Pan Pacific</h3>
-                <h3>Ascott Kuningan</h3>
-                <h3>Grand Mercure</h3>
-                <h3>Parkroyal Suites</h3>
-                <h3>Sheraton Soekarno</h3>
-                <h3>Grove Suites</h3>
-                <h3>FM7 Tangerang</h3>
-                <h3>Merlynn Park</h3>
-                <h3>Grand Aston</h3>
-                <h3>Le Eminence</h3>
-                <h3>Pesona Alam</h3>
-                <h3>Botanica Sanctuary</h3>
-                <h3>Villa Marina</h3>
-                <h3>Courtyard Bandung</h3>
-                <h3>Sheraton Bandung</h3>
-                <h3>Trans Luxury</h3>
-                <h3>Four Points Sheraton</h3>
-                <h3>Kalandara</h3>
-                <h3>The Kayana Lombok</h3>
+
+                <!-- Kuta -->
+                <h3>الالعاب البحرية في منطقة نوسا دوا</h3>
+                <h3>الالعاب المائية WATERBOM</h3>
+                <h3>التجديف في نهر تلاقاوجا</h3>
+                <h3>فعالية ركوب الخيل على الشاطئ الاسود</h3>
+                <h3>زيارة مولات كوتا (ديسكفوي + ليبو مول + بيتش ووك مول)</h3>
+                <h3>زيارة شاطئ اطلالة الجرف الصخري ULUWATU</h3>
+                <h3>زيارة شاطئ اطلالة الجرف الصخري ULUWATU</h3>
+                <h3>زيارة ملاهي ترانس ستوديو</h3>
+                <h3>زيارة شاطئ PANTAI PANDAWA</h3>
+                <h3>زيارة جزيرة NUSA PENDIA المشهورة بشواطئها الجميلة وتكون الرحلة بالقوارب ويتم زيارة 3 الى 4 شواطئ شاملة التوصيل من والى الفندق والمواصلات داخل الجزيرة</h3>
+                <h3>زيارة احد اجمل المعالم قرية جاتلوية المشهورة بمدرجات الأرز</h3>
+                <h3>زيارة فعالية بحرية DOLPIN WATERSPORT</h3>
+                
+                
+                
+                
+                
+                
+                <!-- Ubud -->
+                <h3>الدبابات الرباعية وسط الطبيعة والشلالات</h3>
+                <h3>زيارة شلال تيغينونغان الجميل</h3>
+                <h3>زيارة منتزه ALOHA مراجيح الهواء</h3>
+                <h3>سنتر اوبود للغدا حسب الرغبة</h3>
+                <h3>زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</h3>
+                <h3>زيارة شمال الجزيرة المعروفة بأجوائها الساحرة</h3>
+                <h3>زيارة بوابة منتجع هندارا الشهيرة</h3>
+                <h3>زيارة بحيرتين التوام</h3>
+                <h3>زيارة حديقة النباتات</h3>
+                <h3>زيارة جبل كنتامي</h3>
+                <h3>زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة</h3>
+                <h3>زيارة Alas Harum اجمل مزرعة قهوة في بالي</h3>
+                <h3>زيارة Alas Harum اجمل مزرعة قهوة في بالي</h3>
+                <h3>زيارة حديقة القهوة والشوكولاتة</h3>
+                <h3>زيارة شلال GIT GIT</h3>
+                <h3>زيارة شلال TEGENUNGAN</h3>
+                <h3>PRAVARSA SWING</h3>
+                <h3>TIS CAFE</h3>
+                
+                
+                
+                
+                
+                
+                <!-- Jakarta -->
+                <h3>زيارة بحر وملاهي انشول</h3>
+                <h3>زيارة كافي سكاي</h3>
+                <h3>الذهاب لمطعم السدة للعشاء</h3>
+                <h3>زيارة ملاهي دونيا فانتاستيك</h3>
+                <h3>زيارة اكواريوم</h3>
+                
+                
+                
+                
+
+
+
+                
+                
+                <!-- Puncak -->
+                <h3>زيارة حديقة الجنة</h3>
+                <h3>زيارة حديقة شيموري</h3>
+                <h3>زيارة حديقة تامان سفاري (تحتاج لنهار كامل)</h3>
+                <h3>زيارة كافي DAMAR LANGIT</h3>
+                <h3>زيارة حديقة ميلريمبا</h3>
+                <h3>زيارة كافي NICOLES</h3>
+                <h3>زيارة مطل البرشوات</h3>
+                <h3>زيارة حديقة WISATA ALAM SEVILLAGE</h3>
+                <h3>زيارة حديقة الزهور</h3>
+                <h3>زيارة كافي ROOF PARK</h3>
+                <h3>زيارة منتزة THE NICE FANTASTIC</h3>
+                <h3>زيارة بحيرة فينيسيا</h3>
+                <h3>زيارة الشلالات السبعة</h3>
+                <h3>زيارة بحيرة تلاقا سات</h3>
+                
+
+
+
+
+                
+                
+                
+                
+                
+                
+                <!-- Bandung -->
+                <h3>زيارة مول تشيمبلاس ووك و التجول في ساحة المول و شارع الجينز</h3>
+                <h3>زيارة شلال ماربايا الصغير و كافي TWIG CAFE الرائع</h3>
+                <h3>زيارة مزرعة الخيول</h3>
+                <h3>زيارة منتزة DCASTELLO الجديد</h3>
+                <h3>زيارة السوق العائم FLOATING MARKET وحديقة RAINBOW GARDEN</h3>
+                <h3>زيارة مول و ملاهي ترانس استديو</h3>
+                <h3>الجلوس في الكافي الجميل MERCUSUAR</h3>
+                <h3>زيارة حديقة KIARA ARTHA PARK</h3>
+                <h3>زيارة الكافي الجميل LOUNGE & SIERRA CAFE</h3>
+                <h3>زيارة شلال CURUG CIMAHI</h3>
+                <h3>زيارة قرية الخيزران الرائعة DUSUN BAMBU</h3>
+                <h3>زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT</h3>
+                <h3>زيارة منتزه THE GREAT ASIA AFRICA</h3>
+                
+                
+                
+                
+                
+                
+                <!-- Lombok -->
+                
+                
+                
+                
+                
+
+
+                <!-- Free Days -->
+                <h3>يوم مفتوح للراحة والتسوق</h3>
+                <h3>يوم مفتوح للراحة والإستجمام</h3>
+                
+                
             </div>
         </div>
+        
 
 
 
 
 
 
-
-
-
-        <!-- Dropdown div for clint movements city -->
-        <div id="clint_movemnts_next_city_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>بالي</h3>
-                <h3>جاكرتا</h3>
-                <h3>بونشاك</h3>
-                <h3>باندونق</h3>
-                <h3>مغادرة</h3>
-            </div>
-        </div>
 
 
 
@@ -1443,7 +1404,6 @@
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_or_edit_clint_movemnt_data_div" class="ensure_your_delete_action">
-        <button onclick="runDeleteClickedClintMovementsDataFunction()">حذف</button>
         <button onclick="runEditClickedClintMovementsDataFunction()">تعديل</button>
     </div>
 
@@ -1451,61 +1411,50 @@
 
 
 
-    <!-- Delete the clicked inserted flight data -->
-    <div id="ensure_delete_clint_movemnt_rule_div" class="ensure_your_delete_action">
-        <button onclick="passClickedClintMovementsRule()">حذف</button>
-    </div>
-
-
-
-
     <div id="bali_kuta_clint_movements_places_page_div" class="clint_movements_places_full_page_div">
 
         <div id="kuta_clint_movements_places_div" style="display: none;">
-            <h5>مزارات كوتا</h5>
+            <h6>مزارات كوتا</h6>
 
 
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">التجول في السنتر
+            <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر
             </p>
-
-
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب البحرية في
+            <p onclick="pickThisClintMovementsPlace(this)">الألعاب البحرية في
                 منطقة نوسادوا</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ PANTAI
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ PANTAI
                 PANDAWA</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ اطلاله
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ اطلاله
                 الجرف الصخري ULUWATU</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ جمبران
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ جمبران
                 و الجلوس في احد المطاعم و مشاهدة الغروب
                 الجميل</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جزيرة NUSA
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جزيرة NUSA
                 PENIDA المشهورة بشواطئها الجميلة وتكون
                 الرحلة بالقوارب ويتم زيارة من 3 الى 4 شواطئ شاملة التوصيل من والى الفندق و المواصلات داخل الجزيرة
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">التجديف في نهر
+            <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر
                 تلاقاواجا</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">فعالية ركوب الخيل
+            <p onclick="pickThisClintMovementsPlace(this)">فعالية ركوب الخيل
                 على الشاطئ الأسود</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة احد اجمل
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة احد اجمل
                 المعالم قرية جاتلويه المشهورة بمدرجات
                 الأرز</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شاطئ The
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ The
                 Beach Love والجلوس في الكافي المطل</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الألعاب المائية
+            <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية
                 WATERBOM</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة فعالية بحريه
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه
                 DOLPIN WATERSPORT</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة ملاهي ترانس
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس
                 ستديو</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مولات كوتا
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا
                 (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
                 والتسوق</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
                 والإستجمام</p>
 
         </div>
-    </div>
 
 
 
@@ -1513,43 +1462,39 @@
 
 
 
-    <div id="ubud_clint_movements_places_div" class="clint_movements_places_full_page_div">
 
-        <div id="clint_movements_places_names_options_for_bali_area_3" style="display: none;">
-            <h6>مزارات اوبود <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">الدبابات الرباعية
+
+        <div id="ubud_clint_movements_places_div" style="display: none;">
+            <h6>مزارات اوبود</h6>
+
+
+            <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية
                 وسط الطبيعه والشلالات</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة شلال
-                تيغينونغان الجميل</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة منتزه ALOHA
-                مراجيح الهواء</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">سنتر اوبود للغدا
-                حسب الرغبة</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شمال الجزيرة
-                المعروفة بأجوائها الساحرة</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرة براتان
-                الفاتنة واخذ جولة بالقارب</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بوابة منتجع
-                هندارا الشهيرة</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرتين
-                التوام</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة
-                النباتات</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة جبل كنتامي
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال تيغينونغان الجميل</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه ALOHA مراجيح الهواء</p>
+            <p onclick="pickThisClintMovementsPlace(this)">سنتر اوبود للغدا حسب الرغبة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شمال الجزيرة المعروفة بأجوائها الساحرة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرتين التوام</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة النباتات</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة جبل و بحيرة
-                بانور و الجلوس في احد الكافيهات الجميلة
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة Alas Harum
-                اجمل مزرعة قهوة في بالي</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة Alas Harum اجمل مزرعة قهوة في بالي</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال GIT GIT</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال TEGENUNGAN</p>
+            <p onclick="pickThisClintMovementsPlace(this)">PRAVARSA SWING</p>
+            <p onclick="pickThisClintMovementsPlace(this)">ALAS HARUM</p>
+            <p onclick="pickThisClintMovementsPlace(this)">TIS CAFE</p>
+
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والإستجمام</p>
         </div>
 
-        <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
-            والتسوق</p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">يوم مفتوح للراحة
-            والإستجمام</p>
-    </div>
 
 
 
@@ -1563,160 +1508,138 @@
 
 
 
-
-    <div id="jakarta_clint_movements_places_div" style="display: none;">
-        <h5>مزارات جاكرتا</h5>
-
-
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">التجول في السنتر
-        </p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شاطئ انشول
-        </p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">مطعم السدة</p>
-
-        <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والتسوق</p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والإستجمام</p>
-    </div>
+        <div id="jakarta_clint_movements_places_div" style="display: none;">
+            <h6>مزارات جاكرتا</h6>
 
 
-
-
-
-    <div id="puncak_clint_movements_places_div" style="display: none;">
-        <h5>مزارات بونشاك</h5>
-        <div id="clint_movements_places_names_options_for_puncak_area_1">
-            <h6>المنطقة الأولى <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة كافي NICOLES
+            <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة تامان
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ انشول
+            </p>
+            <p onclick="pickThisClintMovementsPlace(this)">مطعم السدة</p>
+
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والإستجمام</p>
+        </div>
+
+
+
+
+
+        <div id="puncak_clint_movements_places_div" style="display: none;">
+            <h6>مزارات بونشاك</h6>
+
+
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي NICOLES
+            </p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة تامان
                 سفاري (تحتاج لنهار كامل)</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة كافي DAMAR
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي DAMAR
                 LANGIT</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة شيموري
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة شيموري
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة
-                ميلريمبا</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة WISATA
-                ALAM SEVILLAGE</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مطل البرشوات
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة ميلريمبا</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة WISATA ALAM SEVILLAGE</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مطل البرشوات
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة كافي ROOF
-                PARK</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة الزهور
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة كافي ROOF PARK</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة الزهور
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة بحيرة
-                فينيسيا</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزة THE
-                NICE FANTASTIC</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة حديقة الجنة
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة فينيسيا</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة THE NICE FANTASTIC</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة الجنة
             </p>
+
+
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والإستجمام</p>
+
         </div>
 
 
-        <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والتسوق</p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والإستجمام</p>
-
-    </div>
 
 
 
+        <div id="bandung_clint_movements_places_div" style="display: none;">
+            <h6>مزارات باندونق</h6>
 
 
-    <div id="bandung_clint_movements_places_div" style="display: none;">
-        <h5>مزارات باندونق</h5>
-        <div id="clint_movements_places_names_options_for_bandung_area_1">
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول تشيمبلاس
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مول تشيمبلاس ووك و التجول في ساحة المول و شارع الجينز</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال ماربايا الصغير و كافي TWIG CAFE الرائع</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مزرعة الخيول
+            </p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة DCASTELLO الجديد</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة السوق العائم FLOATING MARKET وحديقة RAINBOW GARDEN
+            </p>
+            <p onclick="pickThisClintMovementsPlace(this)">الجلوس في الكافي الجميل MERCUSUAR</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مول و ملاهي ترانس استديو</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة الكافي الجميل LOUNGE & SIERRA CAFE</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة KIARA ARTHA PARK</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة قرية الخيزران الرائعة DUSUN BAMBU</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال CURUG CIMAHI</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه THE GREAT ASIA AFRICA</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة الشلالات السبعة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة تلاقا سات</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والإستجمام</p>
+
+        </div>
+
+
+
+
+
+        <div id="lombok_clint_movements_places_div" style="display: none;">
+            <h6>مزارات لومبوك</h6>
+
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مول تشيمبلاس
                 ووك و التجول في ساحة المول و شارع
                 الجبن</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال ماربايا
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال ماربايا
                 الصغير و كافي TWIG CAFE الرائع</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مزرعة الخيول
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مزرعة الخيول
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزة
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة
                 DCASTELLO الجديد</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة السوق العائم
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة السوق العائم
                 FLOATING MARKET وحديقة RAINBOW GARDEN
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الجلوس في الكافي
+            <p onclick="pickThisClintMovementsPlace(this)">الجلوس في الكافي
                 الجميل MERCUSUAR</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول و ملاهي
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مول و ملاهي
                 ترانس استديو</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة الكافي
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة الكافي
                 الجميل LOUNGE & SIERRA CAFE</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة KIARA
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة KIARA
                 ARTHA PARK</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة قرية
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة قرية
                 الخيزران الرائعة DUSUN BAMBU</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال CURUG
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال CURUG
                 CIMAHI</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزه THE
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه THE
                 GREAT ASIA AFRICA</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منطقة
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة منطقة
                 الكافيهات الجميلة KAWASAN PUNCLUT</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
+                والإستجمام</p>
+
         </div>
 
 
-        <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والتسوق</p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والإستجمام</p>
-
     </div>
 
 
 
 
-
-    <div id="lombok_clint_movements_places_div" style="display: none;">
-        <h5>مزارات لومبوك</h5>
-        <div id="clint_movements_places_names_options_for_bandung_area_1">
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول تشيمبلاس
-                ووك و التجول في ساحة المول و شارع
-                الجبن</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال ماربايا
-                الصغير و كافي TWIG CAFE الرائع</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة مزرعة الخيول
-            </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزة
-                DCASTELLO الجديد</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة السوق العائم
-                FLOATING MARKET وحديقة RAINBOW GARDEN
-            </p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">الجلوس في الكافي
-                الجميل MERCUSUAR</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة مول و ملاهي
-                ترانس استديو</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة الكافي
-                الجميل LOUNGE & SIERRA CAFE</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">زيارة حديقة KIARA
-                ARTHA PARK</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة قرية
-                الخيزران الرائعة DUSUN BAMBU</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة شلال CURUG
-                CIMAHI</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منتزه THE
-                GREAT ASIA AFRICA</p>
-            <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_2_class">زيارة منطقة
-                الكافيهات الجميلة KAWASAN PUNCLUT</p>
-        </div>
-
-
-        <h6>تسليك <ion-icon name="arrow-down-circle-outline"></ion-icon></h6>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والتسوق</p>
-        <p onclick="pickThisClintMovementsPlace(this)" class="bandung_places_p_color_1_class">يوم مفتوح للراحة
-            والإستجمام</p>
-
-    </div>
-
-    </div>
 
 
 
@@ -2027,14 +1950,16 @@
 
 
         <!-- Store the values for later refrence (when importing data) -->
-        <p id="store_localstorage_package_including_sms_value" style="display: none;"></p>
-        <p id="store_localstorage_package_including_inner_tickets_value" style="display: none;"></p>
+        <p id="store_google_sheet_package_including_sms_value" style="display: none;"></p>
+        <p id="store_google_sheet_package_including_inner_tickets_value" style="display: none;"></p>
+        <p id="store_google_sheet_package_total_price_value" style="display: none;"></p>
+        <p id="store_google_sheet_package_details_textarea_value" style="display: none;"></p>
 
 
 
     </section>
 
-
+    
 
 
 
@@ -2255,6 +2180,7 @@
     <script src="create-new-package-database.js"></script>
     <script src="create-new-package-insert-data.js"></script>
     <script src="create-new-package-all-hotel-data-array.js"></script>
+    <script src="create-new-package-all-clint-visiting-places.js"></script>
     <script src="create-new-package-setup.js"></script>
 
 
