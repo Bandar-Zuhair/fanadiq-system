@@ -266,6 +266,7 @@
 .hotel_row_class h3,
 .hotel_row_class h4,
 .hotel_row_class h5,
+.hotel_row_class h6,
 .hotel_row_class p {
     font-size: 2.2vw;
     font-weight: 600;
@@ -939,6 +940,7 @@
     .hotel_row_class h3,
     .hotel_row_class h4,
     .hotel_row_class h5,
+    .hotel_row_class h6,
     .hotel_row_class p {
         font-size: 2.6vw;
     }
