@@ -415,7 +415,8 @@
     flex-grow: 0.9;
 }
 
-.flight_row_class p {
+.flight_row_class p,
+.flight_row_class h1 {
     font-size: 2.3vw;
     font-weight: 600;
 }
@@ -957,7 +958,8 @@
 
 
 
-    .flight_row_class p {
+    .flight_row_class p,
+    .flight_row_class h1 {
         font-size: 2.5vw;
     }
 
