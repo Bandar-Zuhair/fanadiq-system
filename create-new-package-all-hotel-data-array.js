@@ -679,22 +679,22 @@ let allHotelDataArray = [
     /* Bandung */
     {
         hotelName: 'Courtyard Bandung',
-        hotelLocation: 'باندونج',
+        hotelLocation: 'باندونق',
         hotelRoomTypes: ['ديلوكس روم', 'بريمير روم', 'سويت تنفيذي', 'بريمير سويت', 'كوربورات سويت', 'كورتيارد سويت', 'رويال سويت'],
     },
     {
         hotelName: 'Sheraton Bandung',
-        hotelLocation: 'باندونج',
+        hotelLocation: 'باندونق',
         hotelRoomTypes: ['ديلوكس روم', 'تنفيذي روم', 'تاور روم', 'جونيور سويت', 'سويت تنفيذي', 'سويت تاور'],
     },
     {
         hotelName: 'Trans Luxury',
-        hotelLocation: 'باندونج',
+        hotelLocation: 'باندونق',
         hotelRoomTypes: ['بريمير روم'],
     },
     {
         hotelName: 'Four Points Sheraton',
-        hotelLocation: 'باندونج',
+        hotelLocation: 'باندونق',
         hotelRoomTypes: ['كلاسيك روم', 'بريميوم روم', 'ديلوكس روم', 'سويت تنفيذي', 'بريمير سويت'],
     },
 
