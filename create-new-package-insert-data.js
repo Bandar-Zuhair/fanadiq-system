@@ -5,8 +5,37 @@ let insertedClintMovementsRowDivUniqueId = 1;
 
 
 
+
+// Function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+function saveOriginalHotelDates() {
+    originalHotelDates = [];
+    const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+
+    hotelRows.forEach(row => {
+        const h2Date = row.querySelector('h2').innerText;
+        const h3Date = row.querySelector('h3').innerText;
+        originalHotelDates.push({ h2Date, h3Date, element: row });
+    });
+}
+
+
+
+// Function to save the current dates of all flights for later re-arranging use (when drag and drop)
+function saveOriginalFlightDates() {
+    originalFlightDates = [];
+    const flightRows = document.querySelectorAll('.flight_row_class_for_editing');
+
+    flightRows.forEach(row => {
+        const h1Date = row.querySelector('h1').innerText;
+        originalFlightDates.push({ h1Date, element: row });
+    });
+}
+
+
+
+
+
 /* Function for checking if ready or no to insert the data */
-// Function to check if all inputs have values
 checkInputsToInsertData = function (clickedButtonId) {
 
 
@@ -28,6 +57,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         if (wholePackageStartDateInput === '' || wholePackageEndDateInput === '' || websiteUsersNameInput === '') {
+
+            // Play a sound effect
+            new Audio('error.mp3').play();
+
+
+
             // Change the submit icon color to green to indicate success
             clint_inputs_submit_icon.style.backgroundColor = 'red';
             // Set the background color of the submit icon back to default color
@@ -35,7 +70,31 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clint_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
 
+
         } else {
+
+
+            if (!honeymoonCheckbox.checked && !guysCheckbox.checked && !familyCheckbox.checked && !twoPeopleCheckbox.checked) {
+
+                // Play a sound effect
+                new Audio('error.mp3').play();
+
+
+                // Change the submit icon color to green to indicate success
+                clint_inputs_submit_icon.style.backgroundColor = 'red';
+                // Set the background color of the submit icon back to default color
+                setTimeout(() => {
+                    clint_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                }, 500);
+
+
+                /* Exit the function and stop the process */
+                return;
+            }
+
+
+            // Play a sound effect
+            new Audio('success.mp3').play();
 
 
             // Change the submit icon color to green to indicate success
@@ -44,6 +103,10 @@ checkInputsToInsertData = function (clickedButtonId) {
             setTimeout(() => {
                 clint_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
+
+
+
+
 
             if (clintCompanyNameInput !== '') {
                 // Create a new image element for the company logo
@@ -160,10 +223,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clintPackageTypeH6.innerHTML = 'بكج شخصين';
                 document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText = 'بكج شخصين';
 
-            } else {
-                clintPackageTypeH6.innerHTML = 'بكج جديد';
-                document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText = '';
-
             }
 
 
@@ -183,8 +242,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 /* Store the inserted clint name in the stored p elements for later use (when importing) */
-                document.getElementById('store_google_sheet_clint_name_value').innerText = clint_full_name_p.innerText;
-
+                document.getElementById('store_google_sheet_clint_name_value').innerText = packageClintNameInput;
 
 
                 /* But if there is no any value in the 'packageClintNameInput' then do the following code */
@@ -245,6 +303,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                         element.innerText = `${newCheckOutDate.getDate()} ${getArabicMonthName(newCheckOutDate.getMonth())}`;
                     });
 
+
+                    // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+                    saveOriginalHotelDates();
                 }
 
                 // Adjust flight dates if there are any flight rows for editing
@@ -260,6 +321,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                         element.innerText = `${newFlightDate.getDate()} ${getArabicMonthName(newFlightDate.getMonth())}`;
                     });
 
+
+                    // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
+                    saveOriginalFlightDates();
                 }
 
                 // Adjust client movement dates if there are any client movement rows for editing
@@ -324,7 +388,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div>
                     <p>${wholePackageEndDateInput}</p>
                 </div>
-                <div style="cursor: pointer;">
+                <div>
                     <p>${storePackageTotalNights}</p>
                 </div>
             `;
@@ -475,11 +539,11 @@ checkInputsToInsertData = function (clickedButtonId) {
         if (packageTotlaPriceInput !== '') {
             document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'block';
             document.getElementById('package_total_price_p_id').innerText = packageTotlaPriceInput;
-            document.getElementById('store_localstorage_package_total_price_value').innerText = packageTotlaPriceInput;
+            document.getElementById('store_google_sheet_package_total_price_value').innerText = packageTotlaPriceInput;
 
         } else {
             document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
-            document.getElementById('store_localstorage_package_total_price_value').innerText = '';
+            document.getElementById('store_google_sheet_package_total_price_value').innerText = '';
 
         }
 
@@ -511,8 +575,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
 
-                    // Update the store_localstorage_package_including_sms_value element
-                    let smsDateValueElement = document.getElementById('store_localstorage_package_including_sms_value');
+                    // Update the 'store_google_sheet_package_including_sms_value' element
+                    let smsDateValueElement = document.getElementById('store_google_sheet_package_including_sms_value');
                     smsDateValueElement.innerText = smsCardWithInternetAmountInputReayText !== '' ? smsCardWithInternetAmountInputReayText : '';
 
                 } else if (id === 'inner_flight_tickets_checkbox') {
@@ -522,8 +586,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     p.appendChild(document.createTextNode(textContent)); // Append the text
                     p.style.padding = '0 5px'; // Add padding to this p element
 
-                    // Update the store_localstorage_package_including_inner_tickets_value element
-                    let innerTicketsDateValueElement = document.getElementById('store_localstorage_package_including_inner_tickets_value');
+                    // Update the 'store_google_sheet_package_including_inner_tickets_value' element
+                    let innerTicketsDateValueElement = document.getElementById('store_google_sheet_package_including_inner_tickets_value');
                     innerTicketsDateValueElement.innerText = innerFlightTicketsAmountInputReayText !== '' ? innerFlightTicketsAmountInputReayText : '';
 
                 } else {
@@ -580,7 +644,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                     insertedPackageIncludingDataDiv.appendChild(p); // Append the paragraph to the including data div
                 }
             });
+
+            // Store the package extra details including for later Re-use (when import data)
+            document.getElementById('store_google_sheet_package_details_textarea_value').innerText = packageIncludingDataTextArea.replace(/\n/g, '\\n');
+
         }
+
+
 
         // Append the data to the respective divs
         let insertedPackageIncludingDataPositionDiv = document.getElementById('inserted_package_icluding_data_position_div');
@@ -691,7 +761,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     <div><p>20 كيلو للشخص</p></div>
                     <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
                     <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                    <div><p id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</p></div>
+                    <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1></div>
                     <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
                     <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
                 `;
@@ -814,10 +884,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 // Get references to all input elements and reset their values thier
-                document.getElementById('flight_air_line_input_id').value = '';
-                document.getElementById('flight_adult_person_amount_input_id').value = '';
-                document.getElementById('flight_infant_person_amount_input_id').value = '';
-                document.getElementById('flight_from_city_input_id').value = '';
+                document.getElementById('flight_from_city_input_id').value = document.getElementById('flight_to_city_input_id').value;
                 document.getElementById('flight_to_city_input_id').value = '';
                 document.getElementById('flight_date_input_id').value = '';
                 document.getElementById('flight_fly_away_time_input_id').value = '';
@@ -875,8 +942,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     create_new_clint_data_section.style.display = 'none';
                     create_new_hotel_package_section.style.display = 'none';
                     create_new_flight_package_section.style.display = 'flex';
-                    create_new_clint_movements_paln_section.style.display = 'none';
                     create_new_package_including_and_not_including_data_section.style.display = 'none';
+                    create_new_clint_movements_plan_section.style.display = 'none';
 
 
                     document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
@@ -923,7 +990,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                     let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                     let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightDateInput = clickedFlightDataDiv.querySelector(`p[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                    let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                     let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                     let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
 
@@ -944,8 +1011,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     cancelNewFlightDataRow = function () {
                         // Get references to all input elements and reset their values
                         document.getElementById('flight_air_line_input_id').value = '';
-                        document.getElementById('flight_adult_person_amount_input_id').value = '';
-                        document.getElementById('flight_infant_person_amount_input_id').value = '';
                         document.getElementById('flight_from_city_input_id').value = '';
                         document.getElementById('flight_to_city_input_id').value = '';
                         document.getElementById('flight_date_input_id').value = '';
@@ -962,6 +1027,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                         /* Reset the innerText and styling to defualt */
                         document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
                         document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+                        // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
+                        saveOriginalFlightDates();
                     }
 
 
@@ -994,7 +1063,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <div><p>20 كيلو للشخص</p></div>
                             <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
                             <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                            <div><p id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</p></div>
+                            <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1></div>
                             <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
                             <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
                         `;
@@ -1090,6 +1159,30 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
+
+                // Function to update dates inside 'flight_row_class_for_editing' divs based on their order in the DOM
+                function updateFlightRowDates() {
+                    const flightRows = document.querySelectorAll('.flight_row_class_for_editing');
+
+                    flightRows.forEach((row, index) => {
+                        const h1Element = row.querySelector('h1');
+
+                        if (h1Element && originalFlightDates[index]) {
+                            // Update the dates based on the new order of elements
+                            h1Element.innerText = originalFlightDates[index].h1Date; // Use h1Date to update
+                        }
+                    });
+                }
+
+
+                // Function to handle the drop and reapply the dates
+                function handleDropFlightRow() {
+                    // After dropping, reapply the dates based on the current DOM order
+                    updateFlightRowDates(); // Call the update function here
+                }
 
 
 
@@ -1195,11 +1288,15 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Function to handle mouse up event
                     function mouseUp(event) {
                         end(event, false);
+
+                        handleDropFlightRow();
                     }
 
                     // Function to handle touch end event
                     function touchEnd(event) {
                         end(event, true);
+
+                        handleDropFlightRow(); // Call the function to update dates after drop ends
                     }
 
                     // Add event listeners for each insertedFlightDataDiv element
@@ -1210,6 +1307,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                         div.addEventListener('touchstart', touchStart);
                     });
                 }
+
+
+                // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
+                saveOriginalFlightDates();
 
             }
 
@@ -1296,7 +1397,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
                 <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
                 <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
-                <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
             `;
 
 
@@ -1414,14 +1515,13 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Get references to all input elements and reset their values
             document.getElementById('hotel_name_input_id').value = '';
-            document.getElementById('hotel_check_in_input_id').value = '';
+            document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
+            document.getElementById('hotel_check_in_input_id').disabled = true;
             document.getElementById('hotel_check_out_input_id').value = '';
             document.getElementById('hotel_total_nights_input_id').value = '';
             document.getElementById('hotel_room_type_description_input_id').value = '';
             document.getElementById('hotel_room_contain_pool_input_id').value = '';
             document.getElementById('hotel_room_view_input_id').value = '';
-            document.getElementById('hotel_unit_amount_input_id').value = '';
-            document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
             document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
@@ -1474,12 +1574,16 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Function to edit the clicked hotel row data */
             editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
+                console.log(clickedHotelRowIdName);
+
+
+
                 /* Make sure the correct section is the one that is visiable */
                 create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'flex';
                 create_new_flight_package_section.style.display = 'none';
-                create_new_clint_movements_paln_section.style.display = 'none';
                 create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'none';
 
 
                 /* Hide and show different icons */
@@ -1519,7 +1623,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
 
 
-                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel name input
+                /* Save the last saved hotel check in date for later re-use (after finishing the editing process) */
+                let lastSavedHotelCheckInDate = document.getElementById('hotel_check_in_input_id').value;
+                document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
 
@@ -1548,11 +1654,34 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
+
                 /* Function to cancel the hotel row data editing process */
                 cancelNewHotelDataRow = function () {
+
+                    // Get all divs with the class name 'hotel_row_class_for_editing' to compare its id name
+                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                    // Get the last found div with the class name "hotel_row_class_for_editing"
+                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
+
+
                     // Get references to all input elements and reset their values
                     document.getElementById('hotel_name_input_id').value = '';
-                    document.getElementById('hotel_check_in_input_id').value = '';
+
+
+                    /* if the last found div is the one that got clicked then make sure to set the value of the check in as the value of the check out */
+                    if (lastHotelRowDiv.id === clickedHotelRowIdName) {
+                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
+
+                        /* but if the last found div is not the one that got clicked then set the check in value as it got saved before in the 'lastSavedHotelCheckInDate' */
+                    } else {
+                        document.getElementById('hotel_check_in_input_id').value = lastSavedHotelCheckInDate;
+
+                    }
+
                     document.getElementById('hotel_check_out_input_id').value = '';
                     document.getElementById('hotel_total_nights_input_id').value = '';
                     document.getElementById('hotel_room_type_description_input_id').value = '';
@@ -1572,11 +1701,21 @@ checkInputsToInsertData = function (clickedButtonId) {
                     /* Reset the innerText and styling to defualt */
                     document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
                     document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
+
+
+                    // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+                    saveOriginalHotelDates();
+
+
+                    document.getElementById('hotel_check_in_input_id').disabled = true;
                 };
 
 
 
-                /* Function to confirm the new hotel row data */
+                // Initialize a global object to store dates
+                let savedHotelDates = {};
+
+                // Function to confirm the new hotel row data
                 confirmNewHotelDataRow = function () {
                     // Get the clicked hotel data row
                     let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
@@ -1594,10 +1733,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let hotelBreakfastPeopleAmountText = document.getElementById('hotel_breakfast_people_amount_input_id').value;
                     let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
 
-
                     /* if one of the inputs is empty then stop the process */
                     if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
-
                         // Change the submit icon background color
                         confirm_new_hotel_data_row_icon.style.backgroundColor = 'red';
 
@@ -1605,12 +1742,14 @@ checkInputsToInsertData = function (clickedButtonId) {
                         setTimeout(() => {
                             confirm_new_hotel_data_row_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                         }, 500);
-
                     } else {
+                        // Save current dates before updating
+                        let h2Date = document.querySelector(`.hotel_row_class_for_editing #hotel_check_in_${clickedHotelRowIdName}`)?.innerText || '';
+                        let h3Date = document.querySelector(`.hotel_row_class_for_editing #hotel_check_out_${clickedHotelRowIdName}`)?.innerText || '';
+                        savedHotelDates[clickedHotelRowIdName] = { startDate: h2Date, endDate: h3Date };
 
                         // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
                         let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
-
 
                         let hotelLocationReadyText = '';
                         let hotelAreaReadyText = '';
@@ -1625,7 +1764,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                             }
                         }
 
-
                         // Create the HTML content for a new hotel row
                         let hotelRowTableDivContent = `
                             <div><h1 id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</h1></div>
@@ -1634,7 +1772,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
                             <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
                             <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
-                            <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                            <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
                         `;
 
                         // Insert the new HTML content into the clicked hotel data div
@@ -1679,6 +1817,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         cancelNewHotelDataRow();
                     }
                 };
+
             };
 
 
@@ -1755,160 +1894,156 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+
+
+            // Function to update dates inside 'hotel_row_class_for_editing' divs based on their order in the DOM
+            function updateHotelRowDates() {
+                const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                hotelRows.forEach((row, index) => {
+                    const h2Element = row.querySelector('h2');
+                    const h3Element = row.querySelector('h3');
+
+                    if (h2Element && h3Element && originalHotelDates[index]) {
+                        // Update the dates based on the new order of elements
+                        h2Element.innerText = originalHotelDates[index].h2Date; // Or any date calculation logic here
+                        h3Element.innerText = originalHotelDates[index].h3Date; // Or any date calculation logic here
+                    }
+                });
+            }
+
+            // Function to handle the drop and reapply the dates
+            function handleDrop() {
+                // After dropping, reapply the dates based on the current DOM order
+                updateHotelRowDates(); // Call the update function here
+            }
+
+            // Function to prepare drag and drop functionality
             function createHotelDragAndDropMood() {
-                // Event listener for the drop zone (inserted_hotel_data_position_div)
-                let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
+                let dropZone = document.getElementById('inserted_hotel_data_position_div');
 
-                // Function to handle mouse down event
                 function mouseDown(event) {
-                    if (event.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        event.preventDefault(); // Prevent default behavior
-                        let draggingElement = event.target.closest('.hotel_row_class'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = event.clientY; // Store initial mouse position
-                        document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
-                        document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
+                    if (event.target.tagName.toLowerCase() === 'img') {
+                        event.preventDefault();
+                        let draggingElement = event.target.closest('.hotel_row_class');
+                        draggingElement.classList.add('dragging');
+                        draggingElement.dataset.startY = event.clientY;
+                        document.addEventListener('mousemove', mouseMove);
+                        document.addEventListener('mouseup', mouseUp);
 
-                        // Disable scrolling without affecting layout
                         document.body.style.touchAction = 'none';
                         document.body.style.userSelect = 'none';
                     }
                 }
 
-                // Function to handle touch start event
                 function touchStart(event) {
-                    let touch = event.touches[0]; // Get the first touch
-                    if (touch.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        let draggingElement = touch.target.closest('.hotel_row_class'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = touch.clientY; // Store initial touch position
-                        document.addEventListener('touchmove', touchMove, { passive: false }); // Listen for touch move events
-                        document.addEventListener('touchend', touchEnd); // Listen for touch end events
+                    let touch = event.touches[0];
+                    if (touch.target.tagName.toLowerCase() === 'img') {
+                        let draggingElement = touch.target.closest('.hotel_row_class');
+                        draggingElement.classList.add('dragging');
+                        draggingElement.dataset.startY = touch.clientY;
+                        document.addEventListener('touchmove', touchMove, { passive: false });
+                        document.addEventListener('touchend', touchEnd);
 
-                        // Disable scrolling without affecting layout
                         document.body.style.touchAction = 'none';
                         document.body.style.userSelect = 'none';
                     }
                 }
 
-                // Function to handle mouse move event
                 function mouseMove(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial mouse position
-                    let deltaY = event.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
+                    let draggingElement = document.querySelector('.dragging');
+                    let startY = parseInt(draggingElement.dataset.startY || 0);
+                    let deltaY = event.clientY - startY;
+                    draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
+                    let dropElements = Array.from(dropZone.children);
+                    let currentIndex = dropElements.indexOf(draggingElement);
 
-                    // Determine the target index based on the position
                     let targetIndex = currentIndex;
                     for (let i = 0; i < dropElements.length; i++) {
                         let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
+                        let rect = element.getBoundingClientRect();
                         if (i !== currentIndex && event.clientY > rect.top && event.clientY < rect.bottom) {
                             if (deltaY > 0 && event.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
+                                targetIndex = i + 1;
                             } else if (deltaY < 0 && event.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
+                                targetIndex = i;
                             }
                             break;
                         }
                     }
 
-                    // Adjust the elements when dragged between others
                     if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
+                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
                     }
                 }
 
-                // Function to handle touch move event
                 function touchMove(event) {
-                    event.preventDefault(); // Prevent default behavior to stop scrolling
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let touch = event.touches[0]; // Get the first touch
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial touch position
-                    let deltaY = touch.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
+                    event.preventDefault();
+                    let draggingElement = document.querySelector('.dragging');
+                    let touch = event.touches[0];
+                    let startY = parseInt(draggingElement.dataset.startY || 0);
+                    let deltaY = touch.clientY - startY;
+                    draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
+                    let dropElements = Array.from(dropZone.children);
+                    let currentIndex = dropElements.indexOf(draggingElement);
 
-                    // Determine the target index based on the position
                     let targetIndex = currentIndex;
                     for (let i = 0; i < dropElements.length; i++) {
                         let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
+                        let rect = element.getBoundingClientRect();
                         if (i !== currentIndex && touch.clientY > rect.top && touch.clientY < rect.bottom) {
                             if (deltaY > 0 && touch.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
+                                targetIndex = i + 1;
                             } else if (deltaY < 0 && touch.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
+                                targetIndex = i;
                             }
                             break;
                         }
                     }
 
-                    // Adjust the elements when dragged between others
                     if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
+                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
                     }
                 }
 
-                // Function to handle mouse up event
                 function mouseUp(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
+                    let draggingElement = document.querySelector('.dragging');
 
-                    // Check if draggingElement exists before proceeding
                     if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+                        draggingElement.classList.remove('dragging');
+                        draggingElement.style.transform = '';
+                        draggingElement.removeAttribute('data-start-y');
 
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
+                        handleDrop();  // Call the function to update dates after drop ends
                     }
 
-                    document.removeEventListener('mousemove', mouseMove); // Stop listening for mouse move events
-                    document.removeEventListener('mouseup', mouseUp); // Stop listening for mouse up events
+                    document.removeEventListener('mousemove', mouseMove);
+                    document.removeEventListener('mouseup', mouseUp);
 
-                    // Enable scrolling
                     document.body.style.touchAction = '';
                     document.body.style.userSelect = '';
                 }
 
-                // Function to handle touch end event
                 function touchEnd(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
+                    let draggingElement = document.querySelector('.dragging');
 
-                    // Check if draggingElement exists before proceeding
                     if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+                        draggingElement.classList.remove('dragging');
+                        draggingElement.style.transform = '';
+                        draggingElement.removeAttribute('data-start-y');
 
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
+                        handleDrop();  // Call the function to update dates after drop ends
                     }
 
-                    document.removeEventListener('touchmove', touchMove); // Stop listening for touch move events
-                    document.removeEventListener('touchend', touchEnd); // Stop listening for touch end events
+                    document.removeEventListener('touchmove', touchMove);
+                    document.removeEventListener('touchend', touchEnd);
 
-                    // Enable scrolling
                     document.body.style.touchAction = '';
                     document.body.style.userSelect = '';
                 }
 
-                // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
                 let insertedHotelDataDivs = document.querySelectorAll('.hotel_row_class');
                 insertedHotelDataDivs.forEach((div) => {
                     div.addEventListener('mousedown', mouseDown);
@@ -1916,9 +2051,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 });
             }
 
-            // Call the createHotelDragAndDropMood function to set up delete and drag-and-drop functionality
+            // Call the function to set up drag-and-drop functionality
             createHotelDragAndDropMood();
 
+            // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+            saveOriginalHotelDates();
         }
 
 
@@ -1940,343 +2077,462 @@ checkInputsToInsertData = function (clickedButtonId) {
 
     } else if (clickedButtonId === 'clint_movements_auto_create_icon') {
 
-        console.log('Great');
 
-        document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
+        /* if one of the clint data or hotel data sections is hidden then stop the process */
+        if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none' || document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none') {
 
+            // Change the submit icon background color
+            clint_movements_auto_create_icon.style.backgroundColor = 'red';
 
-        // Function to increment a date by a specified number of days
-        function incrementDate(dateString, days) {
-            let [day, month] = dateString.split(' ');
-            const arabicMonths = {
-                "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3,
-                "مايو": 4, "يونيو": 5, "يوليو": 6, "أغسطس": 7,
-                "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
-            };
-            const monthNames = Object.keys(arabicMonths);
-
-            let date = new Date();
-            date.setDate(parseInt(day));
-            date.setMonth(arabicMonths[month]);
-            date.setDate(date.getDate() + days);
-
-            let newDay = date.getDate();
-            let newMonth = monthNames[date.getMonth()];
-
-            return `${newDay} ${newMonth}`;
-        }
-
-        // Get all divs with class name "hotel_row_class_for_editing"
-        let hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
-        let totalHotels = hotelRows.length;
-
-        hotelRows.forEach((hotelRow, index) => {
-            let hotelName = hotelRow.querySelector('h1').innerText;
-            let checkInDate = hotelRow.querySelector('h2').innerText;
-            let nights = parseInt(hotelRow.querySelector('h4').innerText, 10);
-            let cityName = hotelRow.querySelector('h5').innerText;
-
-            for (let i = 0; i < nights; i++) {
-                let clintMovementsRowTableDiv = document.createElement('div');
-                clintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
-
-                let newDate = incrementDate(checkInDate, i);
-
-                let checkInOutText = i === 0 ? `تسجيل الدخول في ${hotelName}` : '';
-                if (i === 0 && index > 0) {
-                    let previousHotelName = hotelRows[index - 1].querySelector('h1').innerText;
-                    let previousCityName = hotelRows[index - 1].querySelector('h5').innerText;
-
-                    // Ensure "الذهاب الى ${cityName}" is placed after "تسجيل الخروج من ${previousHotelName}"
-                    let additionalText = cityName !== previousCityName ? ` + الذهاب الى ${cityName}` : '';
-                    checkInOutText = `تسجيل الخروج من ${previousHotelName}${additionalText} + تسجيل الدخول في ${hotelName}`;
-                }
-
-                clintMovementsRowTableDiv.innerHTML = `
-                    <div><h1>${newDate}</h1></div>
-                    <div><h2>${checkInOutText}</h2></div>
-                    <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}</h3></div>
-                `;
-
-                document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
-
-                let clintMovementsRowImageController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
-                clintMovementsRowImageController.onclick = function () {
-                    clintMovementsRowCityNameControllerFunction(clintMovementsRowImageController);
-                };
-
-                if (index === totalHotels - 1 && (i === 0 || i === nights - 1)) {
-                    let h3Element = clintMovementsRowTableDiv.querySelector('h3');
-                    let finalCityName = index > 0 && i === 0 ? `${hotelRows[index - 1].querySelector('h5').innerText}-${cityName}` : `${cityName}-مغادرة`;
-                    h3Element.innerText = finalCityName;
-                }
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-        /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
-        document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
-
-
-
-
-        // Get all div elements with ids starting with 'clint_movements_places_names_options_for'
-        var allDivs = document.querySelectorAll('[id^="clint_movements_places_names_options_for"]');
-
-        // Iterate through all divs
-        allDivs.forEach(function (div) {
-            // Get all p elements within the div
-            var pElements = div.getElementsByTagName('p');
-
-            // Reset the background color of all p elements to darkred
-            for (var i = 0; i < pElements.length; i++) {
-                pElements[i].style.backgroundColor = 'rgb(0, 56, 99)';
-            }
-        });
-
-
-
-
-
-
-
-
-
-        // Define a global variable to store the reference
-        let currentClintMovementsDataDivId;
-
-
-
-
-        // Function to handle delete clicked clint movements data
-        editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
-
-            /* Make sure the correct section is the one that is visiable */
-            create_new_clint_data_section.style.display = 'none';
-            create_new_hotel_package_section.style.display = 'none';
-            create_new_flight_package_section.style.display = 'none';
-            create_new_clint_movements_paln_section.style.display = 'none';
-            create_new_package_including_and_not_including_data_section.style.display = 'flex';
-
-
-            /* Show and hide different icons */
-            document.getElementById('clint_movements_auto_create_icon').style.display = 'none';
-            document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'block';
-            document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'block';
-
-
-            /* Change the innerText and styling to defualt */
-            document.getElementById('clint_movements_content_section_title_text_id').innerText = 'تعديل تفاصيل خط السير';
-            document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
-
-
-            /* Scroll up to the middle of the 'clint_movements_details_dropdown_content' */
-            document.getElementById('clint_movements_details_dropdown_content').scrollIntoView({
-                block: 'center',
-                inline: 'center',
-                behavior: 'smooth',
-            });
-
-
-            /* Disable the clint movements dates when editing */
-            document.getElementById('whole_package_start_date_input_id').disabled = true;
-            document.getElementById('whole_package_end_date_input_id').disabled = true;
-
-
-            // Hide delete button div
-            let overlayLayer = document.querySelector('.black_overlay');
-            let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
-            deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-            // Hide overlay layer with opacity transition
-            overlayLayer.style.opacity = '0';
-
-            // Remove overlay and edit/delete div from DOM after transition
+            // Set the background color of the submit icon back to default color
             setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
+                clint_movements_auto_create_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+            }, 500);
+
+        } else {
+
+            // Change the submit icon background color
+            clint_movements_auto_create_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_movements_auto_create_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+            }, 500);
 
 
-            // Get the clicked clint movements data row
-            let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
-            let insertedClintMovementsRowDivUniqueId = currentClintMovementsDataDivId.split('_').pop(); // Extract the unique ID from the clicked row ID
+            document.getElementById('inserted_clint_movements_data_position_div').innerHTML = '';
 
 
+            // Function to increment a date by a specified number of days
+            function incrementDate(dateString, days) {
+                let [day, month] = dateString.split(' '); // Split the date string into day and month
+                const arabicMonths = {
+                    "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3,
+                    "مايو": 4, "يونيو": 5, "يوليو": 6, "أغسطس": 7,
+                    "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
+                }; // Arabic month names mapped to their corresponding month index
+                const monthNames = Object.keys(arabicMonths); // Array of month names in Arabic
 
-            // Extract data using IDs
-            let clintMovementsWholeDayActionsDetailsTextarea = clickedClintMovementsDataDiv.querySelector(`p[id^='clint_movements_whole_day_actions_details_${insertedClintMovementsRowDivUniqueId}']`)?.innerText || '';
+                let date = new Date(); // Create a new date object
+                date.setDate(parseInt(day)); // Set the day of the date object
+                date.setMonth(arabicMonths[month]); // Set the month of the date object
+                date.setDate(date.getDate() + days); // Increment the date by the specified number of days
 
+                let newDay = date.getDate(); // Get the new day after incrementing
+                let newMonth = monthNames[date.getMonth()]; // Get the new month name in Arabic
 
-            document.getElementById('clint_movements_airport_welcome_input_id').value = clintMovementsAirportWelcomeInput;
-            document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = clintMovementsWholeDayActionsDetailsTextarea;
-            document.getElementById('clint_movements_new_check_in_input_id').value = clintMovementsNewCheckInInput;
-            document.getElementById('clint_movements_current_city_input_id').value = `المدينة الحالية ${clintMovementsStoredCurrentCityValue}`;
-
-
-
-
-
-
-
-            /* Function to cancel the clint movements row data editing process */
-            cancelNewClintMovementsDataRow = function () {
-                // Get references to all input elements and reset their values
-                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
-
-
-
-                /* Hide and show different icons */
-                document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
-                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
-                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
-
-
-                /* Reset the innerText and styling to defualt */
-                document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
-                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+                return `${newDay} ${newMonth}`; // Return the new date in the same format (day month)
             }
 
+            // Get the state of the airport welcome checkbox
+            let isAirportWelcomeIncluded = document.getElementById('include_airport_welcome__checkbox').checked;
 
 
 
-            /* Function to confirm the new clint movements row data */
-            confirmNewClintMovementsDataRow = function () {
-                // Get the clicked clint movements data row
-                let clickedClintMovementsDataDiv = document.getElementById(currentClintMovementsDataDivId);
-
-                // Clear the old data (and replace (the  inner data) later and not the whole div)
-                clickedClintMovementsDataDiv.innerHTML = '';
+            // Get all divs with class name "hotel_row_class_for_editing"
+            let hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+            let totalHotels = hotelRows.length; // Total number of hotel rows
 
 
-                // Get references to all input elements for later use
-                let clintMovementsWholeDayActionsDetailsTextarea = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
 
+            // Track the usage of visiting place names for each city
+            let usedVisitingPlaces = {};
+            let isFirstMovementRowCreated = false; // Track if the first movement row has been created
 
-                /* if the 'clintMovementsNextCityInput' exist then make sure there is no any clint movements visiting places */
-                if (clintMovementsNextCityInput === 'الذهاب للمطار للمغادرة') {
-                    /* Check is there is value in the 'clintMovementsWholeDayActionsDetailsTextarea' */
-                    if (clintMovementsWholeDayActionsDetailsTextarea !== '' || clintMovementsAirportWelcomeInput !== '' || clintMovementsNewCheckInInput !== '') {
-                        // Change the submit icon background color
-                        clint_movements_auto_create_icon.style.backgroundColor = 'red';
+            hotelRows.forEach((hotelRow, index) => {
+                let hotelName = hotelRow.querySelector('h1').innerText;
+                let checkInDate = hotelRow.querySelector('h2').innerText;
+                let nights = parseInt(hotelRow.querySelector('h4').innerText, 10);
+                let cityName = hotelRow.querySelector('h5').innerText;
+                let areaName = cityName === "بالي" ? hotelRow.querySelector('h6').innerText : null;
+                let packageType = document.getElementById('clint_package_type_h6').innerText.trim();
 
-                        // Set the background color of the submit icon back to default color
-                        setTimeout(() => {
-                            clint_movements_auto_create_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                        }, 500);
+                let packageMapping = {
+                    "بكج شهر عسل": "honeymoon",
+                    "بكج الأصدقاء": "guys",
+                    "بكج عائلي": "family",
+                    "بكج لشخصين": "twopeople"
+                };
+                let packageKey = packageMapping[packageType];
 
-                        /* Exit the function and stop processing */
-                        return;
+                let targetObject;
+                if (cityName === "بالي" && areaName) {
+                    if (areaName === "اوبود") {
+                        targetObject = allClintVisitingPlacesArray[1][packageKey];
+                    } else if (["كوتا", "كيراماس", "نوسا دوا", "سيمنياك", "جيمباران", "اولواتو", "ليجين"].includes(areaName)) {
+                        targetObject = allClintVisitingPlacesArray[0][packageKey];
+                    }
+                } else if (cityName === 'جاكرتا') {
+                    targetObject = allClintVisitingPlacesArray[2][packageKey];
+                } else if (cityName === 'بونشاك') {
+                    targetObject = allClintVisitingPlacesArray[3][packageKey];
+                } else if (cityName === 'باندونق') {
+                    targetObject = allClintVisitingPlacesArray[4][packageKey];
+                } else if (cityName === 'لومبوك') {
+                    targetObject = allClintVisitingPlacesArray[5][packageKey];
+                }
+
+                if (!usedVisitingPlaces[cityName]) {
+                    usedVisitingPlaces[cityName] = {};
+                }
+
+                let usedDays = usedVisitingPlaces[cityName];
+
+                for (let i = 0; i < nights; i++) {
+                    let clintMovementsRowTableDiv = document.createElement('div');
+                    clintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
+
+                    let newDate = incrementDate(checkInDate, i);
+
+                    // Initialize visiting places text
+                    let visitingPlacesText = "";
+                    if (i === 0 && targetObject) {
+                        let dayIndex = 1; // Start with day 1 for the first day of the stay
+                        while (usedDays[dayIndex] && targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
+                            dayIndex++;
+                        }
+                        if (targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
+                            let textArray = targetObject[`visitingPlaceNamesDay${dayIndex}`];
+                            usedDays[dayIndex] = true;
+                            if (textArray && textArray.length > 0) {
+                                visitingPlacesText = `${textArray.join(' + ')} + `;
+                            }
+                        }
+                    }
+
+                    let checkInOutText = i === 0 ? `تسجيل الدخول في ${hotelName}` : '';
+                    let combinedCityName = cityName;
+
+                    if (i === 0 && index > 0) {
+                        let previousHotelName = hotelRows[index - 1].querySelector('h1').innerText;
+                        let previousCityName = hotelRows[index - 1].querySelector('h5').innerText;
+
+                        if (cityName !== previousCityName) {
+                            combinedCityName = `${previousCityName}-${cityName}`;
+                        }
+
+                        let additionalText = cityName !== previousCityName ?
+                            (cityName === "بونشاك" ? ` + الذهاب الى ${cityName}` : ` + الذهاب الى ${cityName} + التجول في السنتر`) : '';
+
+                        // Place the visiting places text between "تسجيل الخروج من ${previousHotelName}" and "تسجيل الدخول في ${hotelName}"
+                        checkInOutText = `تسجيل الخروج من ${previousHotelName} + ${visitingPlacesText} تسجيل الدخول في ${hotelName}`;
+
+                        if (isAirportWelcomeIncluded && (cityName === 'جاكرتا' && previousCityName !== 'جاكرتا' || cityName === 'بالي' && previousCityName !== 'بالي')) {
+                            let cityWelcomeText = `الإستقبال في مطار ${cityName}`;
+                            if (additionalText.includes(`الذهاب الى ${cityName}`)) {
+                                checkInOutText = checkInOutText.replace(`الذهاب الى ${cityName}`, `الذهاب الى ${cityName} + ${cityWelcomeText}`);
+                            } else {
+                                checkInOutText = `${cityWelcomeText} + ${checkInOutText}`;
+                            }
+                        }
+                    }
+
+                    if (checkInOutText.includes("تسجيل الدخول في") && (cityName === "بالي" || cityName === "جاكرتا")) {
+                        checkInOutText = checkInOutText.replace(`تسجيل الدخول في ${hotelName}`, `التجول في السنتر + تسجيل الدخول في ${hotelName}`);
+                    }
+
+                    clintMovementsRowTableDiv.innerHTML = `
+            <div><h1>${newDate}</h1></div>
+            <div><h2>${checkInOutText}</h2></div>
+            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
+        `;
+
+                    // Ensure "الإستقبال في مطار ${cityName}" is included only for the first movement row and only for "بالي" or "جاكرتا"
+                    if (!isFirstMovementRowCreated && i === 0 && (cityName === "بالي" || cityName === "جاكرتا")) {
+                        let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
+                        currentH2.innerText = `الإستقبال في مطار ${cityName} + ${currentH2.innerText}`;
+                        isFirstMovementRowCreated = true; // Mark the first movement row as created
+                    }
+
+                    if (targetObject && i > 0) {
+                        let dayIndex = i + 1;
+                        while (usedDays[dayIndex] && targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
+                            dayIndex++;
+                        }
+
+                        if (targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
+                            let textArray = targetObject[`visitingPlaceNamesDay${dayIndex}`];
+                            usedDays[dayIndex] = true;
+
+                            if (textArray && textArray.length > 0) {
+                                let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
+                                currentH2.innerText = currentH2.innerText.trim();
+
+                                if (currentH2.innerText) {
+                                    currentH2.innerText += `${textArray.join(' + ')}`;
+                                } else {
+                                    currentH2.innerText = textArray.join(' + ');
+                                }
+                            }
+                        }
+                    }
+
+                    document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
+
+                    let clintMovementsRowImageController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
+                    clintMovementsRowImageController.onclick = function (event) {
+                        clintMovementsRowCityNameControllerFunction(event);
+                    };
+
+                    if (index === totalHotels - 1 && i === nights - 1) {
+                        let h3Element = clintMovementsRowTableDiv.querySelector('h3');
+                        h3Element.innerText = cityName;
                     }
                 }
 
+                if (index === totalHotels - 1) {
+                    let extraDate = incrementDate(checkInDate, nights);
+                    let extraClintMovementsRowTableDiv = document.createElement('div');
 
-                // Create the HTML content for a new hotel row
-                let clintMovementsRowTableDivContent = `
-                    <div><h6 id='clint_movements_current_day_date_${insertedClintMovementsRowDivUniqueId}'></h6></div>
-                    <div id='clint_movements_whole_day_actions_details_container_${insertedClintMovementsRowDivUniqueId}'></div>
-                    <div id='clint_movements_current_and_next_city_container_${insertedClintMovementsRowDivUniqueId}' class="clint_movements_row_controller" style="cursor: pointer;"></div>
-                `;
+                    extraClintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
 
-                // Insert the updated HTML content into the current edithing div
-                clickedClintMovementsDataDiv.innerHTML = clintMovementsRowTableDivContent;
+                    // Ensure "التجول في السنتر" is included only for the first extra movement row and only for "بالي" or "جاكرتا"
+                    let extraText = '';
+                    if (!isFirstMovementRowCreated && (cityName === "بالي" || cityName === "جاكرتا")) {
+                        extraText = " + التجول في السنتر";
+                        isFirstMovementRowCreated = true; // Mark the first extra movement row as created
+                    }
+
+                    extraClintMovementsRowTableDiv.innerHTML = `
+            <div><h1>${extraDate}</h1></div>
+            <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة${extraText}</h2></div>
+            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
+        `;
+
+                    document.getElementById('inserted_clint_movements_data_position_div').appendChild(extraClintMovementsRowTableDiv);
+
+                    let ClintMovementsRowImageController = extraClintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
+                    ClintMovementsRowImageController.onclick = function (event) {
+                        clintMovementsRowCityNameControllerFunction(event);
+                    };
+                }
+            });
 
 
 
 
-                // Get all dynamically created elements with the class 'clint_movements_row_controller'
-                let clintMovementsRowImageControllers = clickedClintMovementsDataDiv.querySelectorAll('.clint_movements_row_controller');
 
 
-                // Attach click and touch event listeners to each element
-                clintMovementsRowImageControllers.forEach(element => {
-                    handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
-                    handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
+            document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
+
+
+
+
+
+
+
+
+
+
+            // Define a global variable to store the reference
+            let currentClintMovementsDataDiv;
+
+
+
+
+            // Function to handle edit clicked clint movements data
+            editClickedClintMovementsData = function (currentClintMovementsDataDiv) {
+                // Make sure the correct section is the one that is visible
+                create_new_clint_data_section.style.display = 'none';
+                create_new_hotel_package_section.style.display = 'none';
+                create_new_flight_package_section.style.display = 'none';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'block';
+
+                // Show and hide different icons
+                document.getElementById('clint_movements_auto_create_icon').style.display = 'none';
+                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'block';
+                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'block';
+
+                // Change the innerText and styling to default
+                document.getElementById('clint_movements_content_section_title_text_id').innerText = `تعديل خط سير يوم ${currentClintMovementsDataDiv.querySelector('h1').innerText}`;
+                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
+
+                // Scroll up to the middle of the 'toggle_clint_movements_details_title_div_id'
+                document.getElementById('toggle_clint_movements_details_title_div_id').scrollIntoView({
+                    block: 'center',
+                    inline: 'center',
+                    behavior: 'smooth',
                 });
 
+                // Disable the clint movements dates when editing
+                document.getElementById('whole_package_start_date_input_id').disabled = true;
+                document.getElementById('whole_package_end_date_input_id').disabled = true;
 
+                // Hide delete button div
+                let overlayLayer = document.querySelector('.black_overlay');
+                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
+                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
 
-                // Clear the input after confirm the new flight data
-                cancelNewClintMovementsDataRow()
-            }
-        }
+                // Hide overlay layer with opacity transition
+                overlayLayer.style.opacity = '0';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // Function to handle clint movements row div click or touch
-        clintMovementsRowCityNameControllerFunction = function (event) {
-            let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
-            let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
-
-            currentClintMovementsDataDivId = clickedclintMovementsDataDiv.id;
-
-            /* Function to run edit the clicked clint movements row data */
-            runEditClickedClintMovementsDataFunction = function () {
-                editClickedClintMovementsData(currentClintMovementsDataDivId);
-
-
-                /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
-                document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(0, 46, 57)';
-            }
-
-            // Check if the overlay already exists
-            let overlayLayer = document.querySelector('.black_overlay');
-            if (!overlayLayer) {
-                overlayLayer = document.createElement('div');
-                overlayLayer.classList.add('black_overlay');
-                document.body.appendChild(overlayLayer);
-
+                // Remove overlay and edit/delete div from DOM after transition
                 setTimeout(() => {
-                    overlayLayer.style.opacity = '1';
-                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
-                }, 50);
+                    document.body.removeChild(overlayLayer);
+                }, 300); // Match transition duration in CSS
 
-                // Handle both click and touch events on overlay for consistency
-                let handleOverlayClick = () => {
-                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
-                    overlayLayer.style.opacity = '0';
-                    setTimeout(() => {
-                        // Only remove the overlay if it is still a child of the body
-                        if (document.body.contains(overlayLayer)) {
-                            document.body.removeChild(overlayLayer);
-                        }
-                    }, 300);
-                };
 
-                overlayLayer.addEventListener('click', handleOverlayClick);
-                overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
 
-                overlayLayer.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                });
+
+                /* Set the clicked clint movemenet row h2 innerText inside the input to start editing */
+                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = currentClintMovementsDataDiv.querySelector('h2').innerText;
+
+
+
+
+
+
+
+
+
+
+                /* Function to cancel the clint movements row data editing process */
+                cancelNewClintMovementsDataRow = function () {
+                    // Get references to all input elements and reset their values
+                    document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
+
+
+
+                    /* Hide and show different icons */
+                    document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
+                    document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
+                    document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
+
+
+                    /* Reset the innerText and styling to defualt */
+                    document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
+                    document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+                }
+
+
+
+
+                /* Function to confirm the new clint movements row data */
+                confirmNewClintMovementsDataRow = function () {
+
+                    // Get references to all input elements for later use
+                    currentClintMovementsDataDiv.querySelector('h2').innerText = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
+
+
+
+
+
+                    // Get all dynamically created elements with the class 'clint_movements_row_controller'
+                    let ClintMovementsRowImageController = currentClintMovementsDataDiv.querySelectorAll('.clint_movements_row_controller');
+                    ClintMovementsRowImageController.onclick = function (event) {
+                        clintMovementsRowCityNameControllerFunction(event); // Pass the event object to the function
+                    };
+
+
+                    // Clear the input after confirm the new flight data
+                    cancelNewClintMovementsDataRow()
+                }
             }
-        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Function to handle clint movements row div click or touch
+            clintMovementsRowCityNameControllerFunction = function (event) {
+                let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
+                let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class');
+
+                // Ensure the target is a clint_movements_row_class div
+                if (clickedclintMovementsDataDiv) {
+                    currentClintMovementsDataDiv = clickedclintMovementsDataDiv;
+
+                    /* Function to run edit the clicked client movements row data */
+                    runEditClickedClintMovementsDataFunction = function () {
+                        editClickedClintMovementsData(currentClintMovementsDataDiv);
+
+                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
+                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(0, 46, 57)';
+                    }
+
+                    // Check if the overlay already exists
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    if (!overlayLayer) {
+                        overlayLayer = document.createElement('div');
+                        overlayLayer.classList.add('black_overlay');
+                        document.body.appendChild(overlayLayer);
+
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = '1';
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
+                        }, 50);
+
+                        // Handle both click and touch events on overlay for consistency
+                        let handleOverlayClick = () => {
+                            deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+                            overlayLayer.style.opacity = '0';
+                            setTimeout(() => {
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
+                            }, 300);
+                        };
+
+                        overlayLayer.addEventListener('click', handleOverlayClick);
+                        overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
+
+                        overlayLayer.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                        });
+                    }
+                }
+            };
+
+        }
 
     }
 }
@@ -2523,6 +2779,11 @@ checkThePdfNameToDownload = function () {
 
     /* If there is no value then change the 'check_pdf_name_button' color */
     if (document.getElementById('pdf_file_name_input_id').value === '') {
+
+        // Play a sound effect
+        new Audio('error.mp3').play();
+
+
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'red';
         document.getElementById('check_pdf_name_button').style.color = 'white';
         setTimeout(() => {
