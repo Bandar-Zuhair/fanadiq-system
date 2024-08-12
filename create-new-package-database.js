@@ -1,49 +1,94 @@
-let existingData = false;
+let existingDataStatus = 'newData'; // Example status for updating existing data
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
 const form = document.forms['save-package'];
 
 form.addEventListener('submit', e => {
+
     e.preventDefault();
 
-    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
+    if (document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
 
-    let localStorageNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
+        // Play a sound effect
+        new Audio('success.mp3').play();
 
-    if (document.getElementById('downloaded_pdf_clint_data_page').style === 'none') {
-        alert('تأكد من إدخال معلومات العميل');
-        return;
-    }
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
 
-    let newObject = {
-        name: localStorageNewSaveDataNameInput,
-        content: {}
-    };
+        let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
-    let divIds = [
-        'downloaded_pdf_clint_data_page',
-        'downloaded_pdf_package_including_data_page',
-        'downloaded_pdf_flight_data_page',
-        'downloaded_pdf_hotel_data_page',
-        'downloaded_pdf_clint_movements_data_page',
-        'downloaded_pdf_total_price_data_page'
-    ];
-
-    divIds.forEach(divId => {
-        let element = document.getElementById(divId);
-        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            newObject.content[divId] = cleanHTML(element.innerHTML);
+        if (document.getElementById('downloaded_pdf_clint_data_page').style === 'none') {
+            alert('تأكد من إدخال معلومات العميل');
+            return;
         }
-    });
 
-    checkExistingData(localStorageNewSaveDataNameInput)
-        .then(exists => {
-            if (exists) {
-                updateExistingData(newObject);
-            } else {
-                saveNewData(newObject);
+        let newObject = {
+            name: googleSheetNewSaveDataNameInput,
+            content: {},
+            status: existingDataStatus
+        };
+
+
+        let divIds = [
+            'downloaded_pdf_clint_data_page',
+            'downloaded_pdf_package_including_data_page',
+            'downloaded_pdf_flight_data_page',
+            'downloaded_pdf_hotel_data_page',
+            'downloaded_pdf_clint_movements_data_page',
+            'downloaded_pdf_total_price_data_page'
+        ];
+
+        divIds.forEach(divId => {
+            let element = document.getElementById(divId);
+            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+                newObject.content[divId] = cleanHTML(element.innerHTML);
             }
         });
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(newObject),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'no-cors'
+        })
+            .then(() => {
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
+
+                setTimeout(() => {
+                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
+                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
+                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
+                }, 5000);
+
+
+                // Only call submitForm if 'existingDataStatus' is equal to "newData"
+                if (existingDataStatus === "newData") {
+                    submitForm();
+                }
+
+
+                updateDataBaseSavedDataNames();
+            });
+
+    } else {
+
+        // Play a sound effect
+        new Audio('error.mp3').play();
+
+
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'red';
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
+
+        setTimeout(() => {
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
+        }, 500);
+    }
+
 });
 
 // Function to clean HTML
@@ -51,57 +96,7 @@ function cleanHTML(html) {
     return html.replace(/\s+/g, ' ').trim();
 }
 
-// Function to check if data already exists
-function checkExistingData(name) {
-    return fetch(`${scriptURL}?action=check&name=${encodeURIComponent(name)}`)
-        .then(response => response.json())
-        .then(data => data.exists);
-}
 
-// Function to update existing data
-function updateExistingData(newObject) {
-    fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'update', data: newObject }),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
-    })
-        .then(() => {
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
-
-            setTimeout(() => {
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
-            }, 5000);
-        });
-}
-
-// Function to save new data
-function saveNewData(newObject) {
-    fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(newObject),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
-    })
-        .then(() => {
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
-
-            setTimeout(() => {
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
-            }, 5000);
-
-            // Run the 'submitForm' to store new "Done" text for the website user code name
-            submitForm();
-        });
-}
 
 
 
@@ -120,11 +115,25 @@ const sheetURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DD
 let sheetData = [];
 
 // Fetch data from Google Sheets via web app and store it locally
-function updateDataBaseSavedDataNames(localStorageControllerDivId) {
-    let allLocalstorageStoredDataNamesForImportingDataDiv = document.getElementById(localStorageControllerDivId);
+function updateDataBaseSavedDataNames() {
+    let allGoogleSheetStoredDataNamesForImportingDataDiv = document.getElementById('all_google_sheet_stored_data_names_for_importing_data_div');
 
-    // Clear existing <h3> elements
-    allLocalstorageStoredDataNamesForImportingDataDiv.innerHTML = '';
+    // Clear existing content
+    allGoogleSheetStoredDataNamesForImportingDataDiv.innerHTML = '';
+
+    // Check if there is any data in localStorage
+    let lastDownloadData = localStorage.getItem('lastDownloadWebsiteData');
+    if (lastDownloadData) {
+        // Create an <h3> element with "Last Download" text
+        let h3Element = document.createElement('h3');
+        h3Element.innerText = 'Last Download';
+
+        h3Element.onclick = function () {
+            pickThisGoogleSheetDataName(this);
+        };
+
+        allGoogleSheetStoredDataNamesForImportingDataDiv.appendChild(h3Element);
+    }
 
     fetch(sheetURL)
         .then(response => response.json())
@@ -134,20 +143,31 @@ function updateDataBaseSavedDataNames(localStorageControllerDivId) {
 
             // Create new <h3> elements based on the sheet data
             sheetData.forEach(row => {
-                let pElement = document.createElement('h3');
-                pElement.innerText = row[0]; // Assuming the "name" is in the first cell
-                pElement.onclick = function () {
-                    pickThisWebsiteLocalStorageDataName(this);
-                };
-                allLocalstorageStoredDataNamesForImportingDataDiv.appendChild(pElement);
+                let h3Element = document.createElement('h3');
+                h3Element.innerText = row[0]; // Assuming the "name" is in the first cell
+                
+                // Check if the innerText is "Name" and hide the element if it is
+                if (h3Element.innerText === "Name") {
+                    h3Element.style.display = 'none';
+                } else {
+                    h3Element.onclick = function () {
+                        pickThisGoogleSheetDataName(this);
+                    };
+                }
+
+                allGoogleSheetStoredDataNamesForImportingDataDiv.appendChild(h3Element);
             });
         })
+        .catch(error => {
+            console.error('Error fetching data from Google Sheets:', error);
+        });
 }
+
 
 // Function to find the selected name and call importContentForSelectedName
 function findSelectedNameAndImportContent() {
     let selectedName = null;
-    let allDataNames = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+    let allDataNames = document.querySelectorAll('#all_google_sheet_stored_data_names_for_importing_data_div h3');
 
     allDataNames.forEach(function (dataName) {
         if (dataName.style.backgroundColor === 'rgb(0, 155, 0)') {
@@ -156,9 +176,80 @@ function findSelectedNameAndImportContent() {
     });
 
     if (selectedName) {
-        importContentForSelectedName(selectedName);
+        if (selectedName === 'Last Download') {
+            // Load data from localStorage
+            importContentFromLocalStorage();
+        } else if (selectedName !== 'Name') {
+            // Play a sound effect
+            new Audio('success.mp3').play();
+
+            // Run a function to import the data based on the name of the clicked h3
+            importContentForSelectedName(selectedName);
+        }
+    } else {
+        // Play a sound effect
+        new Audio('error.mp3').play();
+
+        // Change the submit icon background color
+        import_google_sheet_data_p_id.style.backgroundColor = 'red';
+
+        // Set the background color of the submit icon back to default color
+        setTimeout(() => {
+            import_google_sheet_data_p_id.style.backgroundColor = 'rgb(255, 174, 0)';
+        }, 500);
     }
 }
+
+
+
+// Function to import content from localStorage
+function importContentFromLocalStorage() {
+    let lastDownloadData = localStorage.getItem('lastDownloadWebsiteData');
+    
+    if (lastDownloadData) {
+        let parsedData = JSON.parse(lastDownloadData);
+        let contentColumns = parsedData.e;
+
+        try {
+            let parser = new DOMParser();
+
+            for (let divId in contentColumns) {
+                let compressedHtmlString = contentColumns[divId];
+
+                if (compressedHtmlString) {
+                    // Decompress and format the raw HTML
+                    let rawHtmlString = LZString.decompressFromUTF16(compressedHtmlString);
+                    let formattedHtmlString = formatHtmlForWebsite(rawHtmlString);
+
+                    let doc = parser.parseFromString(formattedHtmlString, 'text/html');
+                    let newContent = doc.body.innerHTML;
+
+                    let htmlSectionPdfPageDiv = document.getElementById(divId);
+                    if (htmlSectionPdfPageDiv) {
+                        htmlSectionPdfPageDiv.style.display = 'block';
+                        htmlSectionPdfPageDiv.innerHTML = '';  // Clear current content
+                        htmlSectionPdfPageDiv.innerHTML = newContent;  // Set new content
+                        reActiveDragAndDropFunctionality(htmlSectionPdfPageDiv.id);
+                    }
+                }
+            }
+
+            hideOverlay();
+
+            existingDataStatus = 'existingData';
+            document.getElementById('website_users_name_input_id').disabled = true;
+
+        } catch (error) {
+            console.error('Error importing data from localStorage:', error);
+        }
+    } else {
+        // Play a sound effect if no data is found
+        new Audio('error.mp3').play();
+    }
+}
+
+
+
 
 // Function to import the content for the selected name
 function importContentForSelectedName(name) {
@@ -198,13 +289,13 @@ function importContentForSelectedName(name) {
                 }
             }
 
-            hideOverlay()
-            
 
-            existingData = true;
+            hideOverlay()
+
+            existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
-            
+
         } catch (error) {
         }
     }
@@ -227,76 +318,50 @@ function formatHtmlForWebsite(rawHtml) {
 
 
 
-
-
-
-
-
-// Function to pick website localStorage data names
-function pickThisWebsiteLocalStorageDataName(clickedLocalStorageDataName) {
-    // Get all <h3> elements inside the 'all_localstorage_stored_data_names_for_importing_data_div' div
-    let allLocalstorageStoredDataNamesForImportingDataDiv = document.querySelectorAll('#all_localstorage_stored_data_names_for_importing_data_div h3');
+// Function to pick google sheet data names
+function pickThisGoogleSheetDataName(clickedGoogleSheetDataName) {
+    // Get all <h3> elements inside the 'all_google_sheet_stored_data_names_for_importing_data_div' div
+    let allGoogleSheetStoredDataNamesForImportingDataDiv = document.querySelectorAll('#all_google_sheet_stored_data_names_for_importing_data_div h3');
 
     // Loop through each <h3> element to reset their styles
-    allLocalstorageStoredDataNamesForImportingDataDiv.forEach(function (dataName) {
+    allGoogleSheetStoredDataNamesForImportingDataDiv.forEach(function (dataName) {
         dataName.style.backgroundColor = 'white';
         dataName.style.color = 'black';
     });
 
     // Set the background color and text color of the clicked <h3> element
-    clickedLocalStorageDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-    clickedLocalStorageDataName.style.color = 'white';
+    clickedGoogleSheetDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+    clickedGoogleSheetDataName.style.color = 'white';
 }
 
 
+/* Refresh saved packages data names */
+document.getElementById('refresh_import_saved_packages_data_input_value_icon').onclick = function () {
+    let input = document.getElementById('import_google_sheet_data_names_search_bar_input_id');
+    let importGoogleSheetDataNamesSearchBarValue = input.value;
+
+    // Clear the input value
+    input.value = '';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* Function to save new website localstorage data name */
-openSaveNewWebsiteDataBase = function () {
-
-    /* Get the 'localstorage_save_name_input_div' and show it */
-    let localStorageStoreNewDataDiv = document.getElementById('localstorage_save_name_input_div');
-
-    // Create an overlay layer for better visual effect
-    let overlayLayer = document.createElement('div');
-    overlayLayer.classList.add('black_overlay');
-    document.body.appendChild(overlayLayer);
-
-    // Delayed opacity transition for smooth appearance
+    // Delay setting the value back to simulate a reset and apply the filter
     setTimeout(() => {
-        overlayLayer.style.opacity = '1';
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -50%)'; // Center div
-    }, 50);
+        input.value = importGoogleSheetDataNamesSearchBarValue;
+        filterDropdown(input); // Apply the filter after resetting the value
+    }, 500);
+};
 
-    // Click handler to close overlay and delete box div on click outside
-    overlayLayer.onclick = () => {
-        localStorageStoreNewDataDiv.style.transform = 'translate(-50%, -150vh)'; // Slide out
-        overlayLayer.style.opacity = '0'; // Hide overlay
 
-        // Remove overlay and delete box div from DOM after transition
-        setTimeout(() => {
-            document.body.removeChild(overlayLayer);
-        }, 300); // Match transition duration in CSS
-    };
 
-    // Prevent overlayLayer click propagation to avoid immediate closure
-    overlayLayer.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent immediate closure of overlay on click
-    });
 
-}
+
+
+
+
+
+
+
+
 
 
 
@@ -356,11 +421,7 @@ async function submitForm() {
                 mode: 'no-cors'
             });
         } catch (error) {
-            console.error('Error during form submission:', error);
         }
-    } else {
-        // Alert the user if the package name is empty
-        alert('Please enter a package name.');
     }
 }
 
@@ -374,7 +435,6 @@ async function fetchData() {
         // Process the fetched data
         processSheetData(data);
     } catch (error) {
-        console.error('Error fetching data:', error);
     }
 }
 
@@ -422,8 +482,13 @@ function processSheetData(data) {
     // Set the most top empty cell row number value
     mostTopEmptyCellRowNumberValue = rowIndex;
 
+
     // Make the submit client data div visible
-    document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 1;
+    // Make the icon unclickable and visually disabled
+    let submitIcon = document.getElementById('clint_inputs_submit_icon');
+    submitIcon.style.opacity = '1';
+    submitIcon.style.pointerEvents = 'auto';
+    submitIcon.disabled = false;
 }
 
 // Function to get the column index based on the package name
@@ -529,10 +594,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         storePackageTotalNights = document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText;
         document.getElementById('clint_company_name_input_id').value = document.getElementById('store_google_sheet_clint_company_name_value').innerText;
 
-
-
-        existingData = true;
-        document.getElementById('website_users_name_input_id').disabled = true;
 
 
 
@@ -822,9 +883,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             editClickedFlightData = function (clickedFlightDataDivIdName) {
 
                 /* Make sure the correct section is the one that is visiable */
+                create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'none';
                 create_new_flight_package_section.style.display = 'flex';
-                create_new_clint_movements_paln_section.style.display = 'none';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'none';
 
 
                 document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
@@ -871,7 +934,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightDateInput = clickedFlightDataDiv.querySelector(`p[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
 
@@ -892,8 +955,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 cancelNewFlightDataRow = function () {
                     // Get references to all input elements and reset their values
                     document.getElementById('flight_air_line_input_id').value = '';
-                    document.getElementById('flight_adult_person_amount_input_id').value = '';
-                    document.getElementById('flight_infant_person_amount_input_id').value = '';
                     document.getElementById('flight_from_city_input_id').value = '';
                     document.getElementById('flight_to_city_input_id').value = '';
                     document.getElementById('flight_date_input_id').value = '';
@@ -910,6 +971,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     /* Reset the innerText and styling to defualt */
                     document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
                     document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+                    // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
+                    saveOriginalFlightDates();
                 }
 
 
@@ -942,7 +1007,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         <div><p>20 كيلو للشخص</p></div>
                         <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
                         <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                        <div><p id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</p></div>
+                        <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</h1></div>
                         <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
                         <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
                     `;
@@ -1031,6 +1096,35 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     }
                 }
             };
+
+
+
+
+
+
+
+
+            // Function to update dates inside 'flight_row_class_for_editing' divs based on their order in the DOM
+            function updateFlightRowDates() {
+                const hotelRows = document.querySelectorAll('.flight_row_class_for_editing');
+
+                hotelRows.forEach((row, index) => {
+                    const h2Element = row.querySelector('h2');
+                    const h3Element = row.querySelector('h3');
+
+                    if (h2Element && h3Element && originalFlightDates[index]) {
+                        // Update the dates based on the new order of elements
+                        h2Element.innerText = originalFlightDates[index].h2Date; // Or any date calculation logic here
+                        h3Element.innerText = originalFlightDates[index].h3Date; // Or any date calculation logic here
+                    }
+                });
+            }
+
+            // Function to handle the drop and reapply the dates
+            function handleDropFlightRow() {
+                // After dropping, reapply the dates based on the current DOM order
+                updateFlightRowDates(); // Call the update function here
+            }
 
 
 
@@ -1137,11 +1231,15 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 // Function to handle mouse up event
                 function mouseUp(event) {
                     end(event, false);
+
+                    handleDropFlightRow(); // Call the function to update dates after drop ends
                 }
 
                 // Function to handle touch end event
                 function touchEnd(event) {
                     end(event, true);
+
+                    handleDropFlightRow(); // Call the function to update dates after drop ends
                 }
 
                 // Add event listeners for each insertedFlightDataDiv element
@@ -1152,6 +1250,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     div.addEventListener('touchstart', touchStart);
                 });
             }
+
+
+            // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
+            saveOriginalFlightDates();
         });
 
 
@@ -1167,6 +1269,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
         // Get all elements with the class name 'hotel_row_class'
         let hotelRowTableDivs = document.querySelectorAll('.hotel_row_class');
+
+
+        /* Re-store the last stopped hotel check out date */
+        document.getElementById('hotel_check_in_input_id').value = document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText;
+        document.getElementById('hotel_check_in_input_id').disabled = true;
+
+
 
         // Loop through each 'hotel_row_class' element
         hotelRowTableDivs.forEach(hotelRowTableDiv => {
@@ -1280,9 +1389,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
                 /* Make sure the correct section is the one that is visiable */
+                create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'flex';
                 create_new_flight_package_section.style.display = 'none';
-                create_new_clint_movements_paln_section.style.display = 'none';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'none';
 
 
                 document.getElementById('hotel_inputs_submit_icon').style.display = 'none';
@@ -1317,8 +1428,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
 
 
-                /* ALways Re-enable the hotel name input */
-                document.getElementById('hotel_name_input_id').disabled = false; // Re-enable hotel name input
+                /* Save the last saved hotel check in date for later re-use (after finishing the editing process) */
+                let lastSavedHotelCheckInDate = document.getElementById('hotel_check_in_input_id').value;
+                document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
 
@@ -1347,7 +1459,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-                /* Restore the value in the viriables */
+                /* Restore the value in the viriables for later use (inside the hotel row data as raw number with no text) */
                 storeHotelTotalUnitNumber = hotelUnitAmountText;
                 storeHotelTotalNights = hotelTotalNightsText;
 
@@ -1356,9 +1468,37 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                 /* Function to cancel the hotel row data editing process */
                 cancelNewHotelDataRow = function () {
+
+                    // Get all divs with the class name 'hotel_row_class_for_editing' to compare its id name
+                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                    // Get the last found div with the class name "hotel_row_class_for_editing"
+                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
+
+
                     // Get references to all input elements and reset their values
                     document.getElementById('hotel_name_input_id').value = '';
-                    document.getElementById('hotel_check_in_input_id').value = '';
+
+
+                    /* if the last found div is the one that got clicked then make sure to set the value of the check in as the value of the check out */
+                    if (lastHotelRowDiv.id === clickedHotelRowIdName) {
+                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
+
+                        /* Store the last stooped hotel check out date for later use (when importing data) */
+                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
+
+
+                        /* but if the last found div is not the one that got clicked then set the check in value as it got saved before in the 'lastSavedHotelCheckInDate' */
+                    } else {
+                        document.getElementById('hotel_check_in_input_id').value = lastSavedHotelCheckInDate;
+
+
+                        /* Store the last stooped hotel check out date for later use (when importing data) */
+                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
+
+                    }
+
+
                     document.getElementById('hotel_check_out_input_id').value = '';
                     document.getElementById('hotel_total_nights_input_id').value = '';
                     document.getElementById('hotel_room_type_description_input_id').value = '';
@@ -1375,6 +1515,14 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                     document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
                     document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
+
+
+                    // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+                    saveOriginalHotelDates();
+
+
+                    /* Make sure to Re-set the 'hotel_check_in_input_id' to unclickable */
+                    document.getElementById('hotel_check_in_input_id').disabled = true;
                 };
 
                 confirmNewHotelDataRow = function () {
@@ -1434,7 +1582,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
                             <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
                             <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
-                            <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><p id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</p>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                            <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
                         `;
 
                         // Insert the new HTML content into the clicked hotel data div
@@ -1553,160 +1701,154 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
+            // Function to update dates inside 'hotel_row_class_for_editing' divs based on their order in the DOM
+            function updateHotelRowDates() {
+                const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                hotelRows.forEach((row, index) => {
+                    const h2Element = row.querySelector('h2');
+                    const h3Element = row.querySelector('h3');
+
+                    if (h2Element && h3Element && originalHotelDates[index]) {
+                        // Update the dates based on the new order of elements
+                        h2Element.innerText = originalHotelDates[index].h2Date; // Or any date calculation logic here
+                        h3Element.innerText = originalHotelDates[index].h3Date; // Or any date calculation logic here
+                    }
+                });
+            }
+
+            // Function to handle the drop and reapply the dates
+            function handleDropHotelRow() {
+                // After dropping, reapply the dates based on the current DOM order
+                updateHotelRowDates(); // Call the update function here
+            }
+
+            // Function to prepare drag and drop functionality
             function createHotelDragAndDropMood() {
-                // Event listener for the drop zone (inserted_hotel_data_position_div)
-                let dropZone = document.getElementById('inserted_hotel_data_position_div'); // Drop zone for hotel data elements
+                let dropZone = document.getElementById('inserted_hotel_data_position_div');
 
-                // Function to handle mouse down event
                 function mouseDown(event) {
-                    if (event.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        event.preventDefault(); // Prevent default behavior
-                        let draggingElement = event.target.closest('.hotel_row_class'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = event.clientY; // Store initial mouse position
-                        document.addEventListener('mousemove', mouseMove); // Listen for mouse move events
-                        document.addEventListener('mouseup', mouseUp); // Listen for mouse up events
+                    if (event.target.tagName.toLowerCase() === 'img') {
+                        event.preventDefault();
+                        let draggingElement = event.target.closest('.hotel_row_class');
+                        draggingElement.classList.add('dragging');
+                        draggingElement.dataset.startY = event.clientY;
+                        document.addEventListener('mousemove', mouseMove);
+                        document.addEventListener('mouseup', mouseUp);
 
-                        // Disable scrolling without affecting layout
                         document.body.style.touchAction = 'none';
                         document.body.style.userSelect = 'none';
                     }
                 }
 
-                // Function to handle touch start event
                 function touchStart(event) {
-                    let touch = event.touches[0]; // Get the first touch
-                    if (touch.target.tagName.toLowerCase() === 'img') { // Check if the event target is an img element
-                        let draggingElement = touch.target.closest('.hotel_row_class'); // Get the parent div being dragged
-                        draggingElement.classList.add('dragging'); // Add dragging class for styling
-                        draggingElement.dataset.startY = touch.clientY; // Store initial touch position
-                        document.addEventListener('touchmove', touchMove, { passive: false }); // Listen for touch move events
-                        document.addEventListener('touchend', touchEnd); // Listen for touch end events
+                    let touch = event.touches[0];
+                    if (touch.target.tagName.toLowerCase() === 'img') {
+                        let draggingElement = touch.target.closest('.hotel_row_class');
+                        draggingElement.classList.add('dragging');
+                        draggingElement.dataset.startY = touch.clientY;
+                        document.addEventListener('touchmove', touchMove, { passive: false });
+                        document.addEventListener('touchend', touchEnd);
 
-                        // Disable scrolling without affecting layout
                         document.body.style.touchAction = 'none';
                         document.body.style.userSelect = 'none';
                     }
                 }
 
-                // Function to handle mouse move event
                 function mouseMove(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial mouse position
-                    let deltaY = event.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
+                    let draggingElement = document.querySelector('.dragging');
+                    let startY = parseInt(draggingElement.dataset.startY || 0);
+                    let deltaY = event.clientY - startY;
+                    draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
+                    let dropElements = Array.from(dropZone.children);
+                    let currentIndex = dropElements.indexOf(draggingElement);
 
-                    // Determine the target index based on the position
                     let targetIndex = currentIndex;
                     for (let i = 0; i < dropElements.length; i++) {
                         let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
+                        let rect = element.getBoundingClientRect();
                         if (i !== currentIndex && event.clientY > rect.top && event.clientY < rect.bottom) {
                             if (deltaY > 0 && event.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
+                                targetIndex = i + 1;
                             } else if (deltaY < 0 && event.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
+                                targetIndex = i;
                             }
                             break;
                         }
                     }
 
-                    // Adjust the elements when dragged between others
                     if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
+                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
                     }
                 }
 
-                // Function to handle touch move event
                 function touchMove(event) {
-                    event.preventDefault(); // Prevent default behavior to stop scrolling
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
-                    let touch = event.touches[0]; // Get the first touch
-                    let startY = parseInt(draggingElement.dataset.startY || 0); // Get initial touch position
-                    let deltaY = touch.clientY - startY; // Calculate vertical distance moved
-                    draggingElement.style.transform = `translateY(${deltaY}px)`; // Move element vertically
+                    event.preventDefault();
+                    let draggingElement = document.querySelector('.dragging');
+                    let touch = event.touches[0];
+                    let startY = parseInt(draggingElement.dataset.startY || 0);
+                    let deltaY = touch.clientY - startY;
+                    draggingElement.style.transform = `translateY(${deltaY}px)`;
 
-                    // Find the current position relative to other elements
-                    let dropElements = Array.from(dropZone.children); // Get all drop zone children
-                    let currentIndex = dropElements.indexOf(draggingElement); // Get index of dragging element
+                    let dropElements = Array.from(dropZone.children);
+                    let currentIndex = dropElements.indexOf(draggingElement);
 
-                    // Determine the target index based on the position
                     let targetIndex = currentIndex;
                     for (let i = 0; i < dropElements.length; i++) {
                         let element = dropElements[i];
-                        let rect = element.getBoundingClientRect(); // Get bounding box of each element
+                        let rect = element.getBoundingClientRect();
                         if (i !== currentIndex && touch.clientY > rect.top && touch.clientY < rect.bottom) {
                             if (deltaY > 0 && touch.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1; // Move down
+                                targetIndex = i + 1;
                             } else if (deltaY < 0 && touch.clientY < rect.top + 20) {
-                                targetIndex = i; // Move up
+                                targetIndex = i;
                             }
                             break;
                         }
                     }
 
-                    // Adjust the elements when dragged between others
                     if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]); // Insert element at new position
+                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
                     }
                 }
 
-                // Function to handle mouse up event
                 function mouseUp(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
+                    let draggingElement = document.querySelector('.dragging');
 
-                    // Check if draggingElement exists before proceeding
                     if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+                        draggingElement.classList.remove('dragging');
+                        draggingElement.style.transform = '';
+                        draggingElement.removeAttribute('data-start-y');
 
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
+                        handleDropHotelRow(); // Call the function to update dates after drop ends
                     }
 
-                    document.removeEventListener('mousemove', mouseMove); // Stop listening for mouse move events
-                    document.removeEventListener('mouseup', mouseUp); // Stop listening for mouse up events
+                    document.removeEventListener('mousemove', mouseMove);
+                    document.removeEventListener('mouseup', mouseUp);
 
-                    // Enable scrolling
                     document.body.style.touchAction = '';
                     document.body.style.userSelect = '';
                 }
 
-                // Function to handle touch end event
                 function touchEnd(event) {
-                    let draggingElement = document.querySelector('.dragging'); // Select the currently dragging element
+                    let draggingElement = document.querySelector('.dragging');
 
-                    // Check if draggingElement exists before proceeding
                     if (draggingElement) {
-                        draggingElement.classList.remove('dragging'); // Remove dragging class
-                        draggingElement.style.transform = ''; // Reset transform after dragging ends
-                        draggingElement.removeAttribute('data-start-y'); // Remove stored startY data
+                        draggingElement.classList.remove('dragging');
+                        draggingElement.style.transform = '';
+                        draggingElement.removeAttribute('data-start-y');
 
-                        // Add a class to trigger the smooth transition effect
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300); // Duration of the transition
+                        handleDropHotelRow(); // Call the function to update dates after drop ends
                     }
 
-                    document.removeEventListener('touchmove', touchMove); // Stop listening for touch move events
-                    document.removeEventListener('touchend', touchEnd); // Stop listening for touch end events
+                    document.removeEventListener('touchmove', touchMove);
+                    document.removeEventListener('touchend', touchEnd);
 
-                    // Enable scrolling
                     document.body.style.touchAction = '';
                     document.body.style.userSelect = '';
                 }
 
-                // Add event listeners for each insertedHotelDataDiv element (to enable drag-and-drop)
                 let insertedHotelDataDivs = document.querySelectorAll('.hotel_row_class');
                 insertedHotelDataDivs.forEach((div) => {
                     div.addEventListener('mousedown', mouseDown);
@@ -1714,8 +1856,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 });
             }
 
-            // Call the createHotelDragAndDropMood function to set up delete and drag-and-drop functionality
+            // Call the function to set up drag-and-drop functionality
             createHotelDragAndDropMood();
+
+            // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+            saveOriginalHotelDates();
         });
 
 
@@ -1728,6 +1873,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         // Get all elements with the class name 'flight_row_class'
         let clintMovementsRowTableDiv = document.querySelectorAll('.clint_movements_row_class');
 
+
+        /* Show the hide and show clint movement section icon if the 'show_and_hide_clint_movement_section_icon' is visible */
+        document.getElementById('show_and_hide_clint_movement_section_icon').style.display = 'inline';
 
 
         // Define a global variable to store the reference
@@ -1849,9 +1997,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             editClickedClintMovementsData = function (currentClintMovementsDataDivId) {
 
                 /* Make sure the correct section is the one that is visiable */
+                create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'none';
                 create_new_flight_package_section.style.display = 'none';
-                create_new_clint_movements_paln_section.style.display = 'flex';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'block';
 
 
                 /* Show and hide different icons */
@@ -2116,5 +2266,18 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 });
             }
         };
+
+
+
+
+
+    } else if (visiableDivIdName === 'downloaded_pdf_package_including_data_page') {
+
+        /* Re-Enter the inputs values if they exist in the stored google sheet p elements */
+        document.getElementById('sms_card_with_internet_amount_input_id').value = document.getElementById('store_google_sheet_package_including_sms_value').innerText;
+        document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_google_sheet_package_including_inner_tickets_value').innerText;
+        document.getElementById('package_details_textarea_id').value = document.getElementById('store_google_sheet_package_details_textarea_value').innerText.replace(/\\n/g, '\n');
+        document.getElementById('package_totla_price_input_id').value = document.getElementById('store_google_sheet_package_total_price_value').innerText;
+
     }
 }
