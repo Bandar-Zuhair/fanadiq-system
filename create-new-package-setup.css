@@ -100,7 +100,7 @@ body {
     text-align: center;
 }
 
-#clint_movements_whole_day_actions_details_textarea_id{
+#clint_movements_whole_day_actions_details_textarea_id {
     height: 10vw;
 }
 
@@ -341,7 +341,7 @@ body {
 
 
 /* Website localstorage controller */
-#localstorage_data_controller_div {
+#google_sheet_data_controller_div {
     width: 100%;
     margin-top: 7.5vw;
     padding: 10px 0 5px;
@@ -350,16 +350,19 @@ body {
     align-items: center;
 }
 
-#localstorage_data_controller_div form,
-#localstorage_data_controller_div p {
-    flex: 1; /* Ensure the elements take equal width */
-    margin: 0; /* Reset any margin */
+#google_sheet_data_controller_div form,
+#google_sheet_data_controller_div p {
+    flex: 1;
+    /* Ensure the elements take equal width */
+    margin: 0;
+    /* Reset any margin */
 }
 
-#localstorage_data_controller_div input,
-#localstorage_data_controller_div p {
+#google_sheet_data_controller_div input,
+#google_sheet_data_controller_div p {
     background: white;
-    width: 100%; /* Ensure the elements take the full width of their container */
+    width: 100%;
+    /* Ensure the elements take the full width of their container */
     font-size: 2.5vw;
     padding: 1px 5px;
     text-align: center;
@@ -367,11 +370,12 @@ body {
     border: 0.5px solid black;
     border-left: none;
     transition: all 0.1s ease-in-out;
-    box-sizing: border-box; /* Ensure padding and border are included in the width */
+    box-sizing: border-box;
+    /* Ensure padding and border are included in the width */
 }
 
-#localstorage_data_controller_div input:hover,
-#localstorage_data_controller_div p:hover {
+#google_sheet_data_controller_div input:hover,
+#google_sheet_data_controller_div p:hover {
     background: rgb(213, 213, 213);
 }
 
@@ -389,14 +393,14 @@ body {
 
 
 /* Importing and deleting data from localStorage */
-#confirm_import_package_data_and_refresh_input_div{
+#confirm_import_package_data_and_refresh_input_div {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.localstorage_dropdown_div_class h6 {
+.google_sheet_dropdown_div_class h6 {
     background: darkred;
     color: white;
     width: 100%;
@@ -405,7 +409,7 @@ body {
     border: 0.5px solid black;
 }
 
-.localstorage_dropdown_div_class p {
+.google_sheet_dropdown_div_class p {
     background: rgb(255, 174, 0);
     color: white;
     font-size: 2.5vw;
@@ -418,9 +422,10 @@ body {
     /* Position the button to the right */
     margin-right: 5px;
     /* Adjust margin as needed */
+    transition: all 0.1s ease-in-out;
 }
 
-.localstorage_dropdown_div_class ion-icon {
+.google_sheet_dropdown_div_class ion-icon {
     background: rgb(255, 174, 0);
     color: white;
     font-size: 5vw;
@@ -730,6 +735,19 @@ body {
 
 
 
+
+/* Submit clint movement package pdf div */
+.submit_clint_movement_package_pdf_div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+
 .edit_data_controll_icons_div {
     display: flex;
     justify-content: center;
@@ -889,9 +907,12 @@ body {
     border: 0.5px solid black;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
-    flex-grow: 1; /* Allow each <p> to grow equally */
-    text-align: center; /* Center text inside each <p> */
-    box-sizing: border-box; /* Include padding and border in width */
+    flex-grow: 1;
+    /* Allow each <p> to grow equally */
+    text-align: center;
+    /* Center text inside each <p> */
+    box-sizing: border-box;
+    /* Include padding and border in width */
 }
 
 #clint_movements_places_cities_options p:hover {
@@ -1130,30 +1151,29 @@ body {
 
 
     /* LocalStorage Elements */
-    #localstorage_data_controller_div {
+    #google_sheet_data_controller_div {
         margin-top: 9vw;
     }
-    #localstorage_data_controller_div input {
-        font-size: 3vw;
-    }
-    #localstorage_data_controller_div p {
-        font-size: 3vw;
-    }
 
-
-
-
-
-
-    .localstorage_dropdown_div_class h6 {
+    #google_sheet_data_controller_div input,
+    #google_sheet_data_controller_div p {
         font-size: 3vw;
     }
 
-    .localstorage_dropdown_div_class p {
+
+
+
+
+
+    .google_sheet_dropdown_div_class h6 {
         font-size: 3vw;
     }
 
-    .localstorage_dropdown_div_class ion-icon {
+    .google_sheet_dropdown_div_class p {
+        font-size: 3vw;
+    }
+
+    .google_sheet_dropdown_div_class ion-icon {
         font-size: 6vw;
     }
 
@@ -1363,9 +1383,9 @@ body {
 
 
 
-    
 
-    .header_navbar_links{
+
+    .header_navbar_links {
         padding: 5px 0;
     }
 
@@ -1391,32 +1411,30 @@ body {
 
 
     /* LocalStorage Element */
-    #localstorage_data_controller_div {
+    #google_sheet_data_controller_div {
         margin-top: 10vw;
     }
-    #localstorage_data_controller_div input {
+
+    #google_sheet_data_controller_div input,
+    #google_sheet_data_controller_div p {
         font-size: 3.5vw;
         padding: 1px 2px;
     }
-    #localstorage_data_controller_div p {
-        font-size: 3.5vw;
-        padding: 1px 2px;
-    }
 
 
 
 
 
 
-    .localstorage_dropdown_div_class h6 {
+    .google_sheet_dropdown_div_class h6 {
         font-size: 4vw;
     }
 
-    .localstorage_dropdown_div_class p {
+    .google_sheet_dropdown_div_class p {
         font-size: 4.5vw;
     }
 
-    .localstorage_dropdown_div_class ion-icon {
+    .google_sheet_dropdown_div_class ion-icon {
         font-size: 9vw;
     }
 
@@ -1485,7 +1503,7 @@ body {
         font-size: 4vw;
     }
 
-    #clint_movements_whole_day_actions_details_textarea_id{
+    #clint_movements_whole_day_actions_details_textarea_id {
         height: 13vw;
     }
 
@@ -1659,17 +1677,15 @@ body {
 
 
 
-    #localstorage_data_controller_div {
+    #google_sheet_data_controller_div {
         margin-top: 11.5vw;
     }
-    #localstorage_data_controller_div input {
+
+    #google_sheet_data_controller_div input,
+    #google_sheet_data_controller_div p {
         font-size: 5vw;
         padding: 0;
     }
-    #localstorage_data_controller_div p {
-        font-size: 5vw;
-        padding: 0;
-    }
 
 
 
@@ -1679,11 +1695,11 @@ body {
 
 
 
-    .localstorage_dropdown_div_class p {
+    .google_sheet_dropdown_div_class p {
         font-size: 5vw;
     }
 
-    .localstorage_dropdown_div_class ion-icon {
+    .google_sheet_dropdown_div_class ion-icon {
         font-size: 10vw;
     }
 
@@ -1738,7 +1754,7 @@ body {
         font-size: 5.5vw;
     }
 
-    #clint_movements_whole_day_actions_details_textarea_id{
+    #clint_movements_whole_day_actions_details_textarea_id {
         height: 16vw;
     }
 
