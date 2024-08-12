@@ -135,10 +135,10 @@ let allClintVisitingPlacesArray = [
 
         honeymoon: {
             visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay3: ['زيارة ملاهي دونيا فانتاستيك + زيارة اكواريوم'],
             visitingPlaceNamesDay4: ['يوم مفتوج للراحة والتسوق'],
-            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay6: ['يوم مفتوج للراحة والإستجمام'],
             visitingPlaceNamesDay7: ['يوم مفتوج للراحة والتسوق'],
         },
@@ -146,10 +146,10 @@ let allClintVisitingPlacesArray = [
 
         guys: {
             visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay3: ['زيارة ملاهي دونيا فانتاستيك + زيارة اكواريوم'],
             visitingPlaceNamesDay4: ['يوم مفتوج للراحة والتسوق'],
-            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay6: ['يوم مفتوج للراحة والإستجمام'],
             visitingPlaceNamesDay7: ['يوم مفتوج للراحة والتسوق'],
         },
@@ -160,7 +160,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
             visitingPlaceNamesDay3: ['زيارة ملاهي دونيا فانتاستيك + زيارة اكواريوم'],
             visitingPlaceNamesDay4: ['يوم مفتوج للراحة والتسوق'],
-            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay6: ['يوم مفتوج للراحة والإستجمام'],
             visitingPlaceNamesDay7: ['يوم مفتوج للراحة والتسوق'],
         },
@@ -168,10 +168,10 @@ let allClintVisitingPlacesArray = [
 
         twopeople: {
             visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay2: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay3: ['زيارة ملاهي دونيا فانتاستيك + زيارة اكواريوم'],
             visitingPlaceNamesDay4: ['يوم مفتوج للراحة والتسوق'],
-            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي + الذهاب لمطعم السدة للعشاء'],
+            visitingPlaceNamesDay5: ['زيارة بحر وملاهي انشول + زيارة كافي سكاي'],
             visitingPlaceNamesDay6: ['يوم مفتوج للراحة والإستجمام'],
             visitingPlaceNamesDay7: ['يوم مفتوج للراحة والتسوق'],
         },
@@ -184,58 +184,57 @@ let allClintVisitingPlacesArray = [
 
 
 
-
     /* Puncak object[3] */
     {
 
         honeymoon: {
-            visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة الزهور'],
             visitingPlaceNamesDay3: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
-            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة حديقة الزهور'],
+            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay7: ['زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
-            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة بحيرة تلاقا سات'],
+            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
         guys: {
-            visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة الزهور'],
             visitingPlaceNamesDay3: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
-            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة حديقة الزهور'],
+            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay7: ['زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
-            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة بحيرة تلاقا سات'],
+            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
         family: {
-            visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة الزهور'],
             visitingPlaceNamesDay3: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
-            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة حديقة الزهور'],
+            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay7: ['زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
-            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة بحيرة تلاقا سات'],
+            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
         twopeople: {
-            visitingPlaceNamesDay1: [''],
-            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay2: ['زيارة حديقة الجنة + زيارة حديقة الزهور'],
             visitingPlaceNamesDay3: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
-            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة حديقة الزهور'],
+            visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay7: ['زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
-            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة بحيرة تلاقا سات'],
+            visitingPlaceNamesDay8: ['زيارة الشلالات السبعة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
