@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-window.addEventListener('beforeunload', function (event) {
+/* window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-});
+}); */
 
 
 
@@ -50,6 +50,10 @@ setTimeout(function () {
 /* Function to show and hide different pachage details sections */
 showPackageTypeSection = function (packageType, clickedElement) {
 
+    // Play a sound effect
+    new Audio('click.mp3').play();
+
+
     window.scrollTo(0, 0);
 
 
@@ -57,36 +61,36 @@ showPackageTypeSection = function (packageType, clickedElement) {
         create_new_clint_data_section.style.display = 'block';
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'none';
-        create_new_clint_movements_paln_section.style.display = 'none';
         create_new_package_including_and_not_including_data_section.style.display = 'none';
+        create_new_clint_movements_plan_section.style.display = 'none';
 
     } else if (packageType === 'hotel') {
         create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'flex';
         create_new_flight_package_section.style.display = 'none';
-        create_new_clint_movements_paln_section.style.display = 'none';
         create_new_package_including_and_not_including_data_section.style.display = 'none';
+        create_new_clint_movements_plan_section.style.display = 'none';
 
     } else if (packageType === 'flight') {
         create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'flex';
-        create_new_clint_movements_paln_section.style.display = 'none';
         create_new_package_including_and_not_including_data_section.style.display = 'none';
-
-    } else if (packageType === 'transportation') {
-        create_new_clint_data_section.style.display = 'none';
-        create_new_hotel_package_section.style.display = 'none';
-        create_new_flight_package_section.style.display = 'none';
-        create_new_clint_movements_paln_section.style.display = 'flex';
-        create_new_package_including_and_not_including_data_section.style.display = 'none';
+        create_new_clint_movements_plan_section.style.display = 'none';
 
     } else if (packageType === 'package_including') {
         create_new_clint_data_section.style.display = 'none';
         create_new_hotel_package_section.style.display = 'none';
         create_new_flight_package_section.style.display = 'none';
-        create_new_clint_movements_paln_section.style.display = 'none';
         create_new_package_including_and_not_including_data_section.style.display = 'block';
+        create_new_clint_movements_plan_section.style.display = 'none';
+
+    } else if (packageType === 'transportation') {
+        create_new_clint_data_section.style.display = 'none';
+        create_new_hotel_package_section.style.display = 'none';
+        create_new_flight_package_section.style.display = 'none';
+        create_new_package_including_and_not_including_data_section.style.display = 'none';
+        create_new_clint_movements_plan_section.style.display = 'block';
     }
 
 
@@ -140,6 +144,9 @@ let adultPackagePersonAmountInputOptions = document.querySelectorAll('#adult_who
 adultPackagePersonAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         /* Save the clicked number in the variable for later use */
         adultPackagePersonAmountInput.value = option.textContent
 
@@ -168,6 +175,11 @@ let companyNamesInputOptions = document.querySelectorAll('#company_names_dropdow
 companyNamesInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
         /* if the clicked h3 element was delete then reset the 'clint_company_name_input_id' value */
         if (option.textContent === 'حذف') {
             companyNamesInput.value = '';
@@ -182,6 +194,19 @@ companyNamesInputOptions.forEach(option => {
             document.getElementById('store_google_sheet_clint_company_name_value').innerText = option.textContent;
         }
 
+
+        /* Reset the value of 'company_names_search_bar_input_id' after picking a hotek name */
+        document.getElementById('company_names_search_bar_input_id').value = '';
+
+        // Get the dropdown div associated with the input
+        let dropdownDivOptions = document.getElementById('company_names_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
+
+        // Reset the display of all <h3> elements
+        dropdownDivOptions.forEach(option => {
+            option.style.display = 'block'; // Show all options
+        });
+
+
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -191,6 +216,11 @@ let clintPackageTypeDiv = document.querySelectorAll('#clint_package_type_div inp
 
 clintPackageTypeDiv.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
         if (checkbox.checked) {
             clintPackageTypeDiv.forEach(otherCheckbox => {
                 if (otherCheckbox !== checkbox) {
@@ -229,6 +259,10 @@ window.addEventListener('load', () => {
         fetchData();
     }
 
+
+    /* Run a function to update the saved packages data for importing */
+    updateDataBaseSavedDataNames()
+
 });
 
 
@@ -243,6 +277,9 @@ let websiteUsersNameInputOptions = document.querySelectorAll('#website_users_nam
 websiteUsersNameInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
+        // Play a sound effect
+        new Audio('click.mp3').play();
+        
         let newValue;
 
         if (option.textContent === 'سامي' || option.textContent === 'ابو سما') {
@@ -256,7 +293,14 @@ websiteUsersNameInputOptions.forEach(option => {
             websiteUsersNameInput.value = newValue; // Update the input value
 
             fetchData();
-            document.getElementById('submit_clint_data_to_pdf_div_id').style.opacity = 0;
+
+
+            // Make the icon unclickable and visually disabled
+            let submitIcon = document.getElementById('clint_inputs_submit_icon');
+            submitIcon.style.opacity = '0';
+            submitIcon.style.pointerEvents = 'none';
+            submitIcon.disabled = true;
+
 
             // Store the selected value in localStorage
             localStorage.setItem('user_name_code', websiteUsersNameInput.value);
@@ -366,9 +410,35 @@ let hotelNameInputOptions = document.querySelectorAll('#all_hotel_names_dropdown
 hotelNameInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
+
+
+        /* First store the corrent hotel name for later comparing (to reset the hotel room type or no need) */
+        currentHotelName = hotelNameInput.value
+
+
         /* Set the input value with the clicked rooms number h3 innerText */
         hotelNameInput.value = option.textContent;
         hideOverlay(); // Hide overlay after selection
+
+
+        /* Reset the value of 'all_hotel_names_search_bar_input_id' after picking a hotek name */
+        document.getElementById('all_hotel_names_search_bar_input_id').value = '';
+
+        // Get the dropdown div associated with the input
+        let dropdownDivOptions = document.getElementById('all_hotel_names_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
+
+        // Reset the display of all <h3> elements
+        dropdownDivOptions.forEach(option => {
+            option.style.display = 'block'; // Show all options
+        });
+
+
+
+        if (option.textContent !== currentHotelName) {
+            document.getElementById('hotel_room_type_description_input_id').value = '';
+        }
+
+
     });
 });
 
@@ -472,7 +542,7 @@ hotelUnitAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
 
         /* Save the clicked number in the variable for later use */
-        storeHotelTotalUnitNumber = option.textContent
+        storeHotelTotalUnitNumber = option.textContent;
 
         /* Set the input value with the clicked rooms number h3 innerText */
         hotelUnitAmountInput.value = `عدد الوحدات ${option.textContent}`;
@@ -532,6 +602,21 @@ let createRoomTypeDescripyionDropDown = function () {
                     // When the h3 element is clicked, set the value of the room type description input field to the text content of the h3 element
                     hotelRoomTypeDescriptionInput.value = h3.textContent;
 
+
+
+                    /* Reset the value of 'all_hotel_names_search_bar_input_id' after picking a hotek name */
+                    document.getElementById('hotel_room_type_description_search_bar_input_id').value = '';
+
+                    // Get the dropdown div associated with the input
+                    let dropdownDivOptions = document.getElementById('hotel_room_type_description_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
+
+                    // Reset the display of all <h3> elements
+                    dropdownDivOptions.forEach(option => {
+                        option.style.display = 'block'; // Show all options
+                    });
+
+
+
                     // Hide the overlay (assuming hideOverlay function is defined elsewhere)
                     hideOverlay();
                 });
@@ -574,29 +659,6 @@ let overlayLayer = null;
 
 
 
-// Function to filter options based on search bar input
-function filterOptions(inputId, dropdownId) {
-    let searchBar = document.getElementById(inputId);
-    let filter = searchBar.value.trim().toLowerCase();
-    let options = document.getElementById(dropdownId).querySelectorAll('h3');
-
-    options.forEach(option => {
-        let optionText = option.textContent.trim().toLowerCase();
-        if (optionText.includes(filter)) {
-            option.style.display = 'block';
-        } else {
-            option.style.display = 'none';
-        }
-    });
-
-
-}
-
-
-
-
-
-
 
 
 
@@ -608,10 +670,14 @@ function filterOptions(inputId, dropdownId) {
 /* Function to clear searchable dropdown input filter h3 */
 clearSearchableDropDownInputValue = function (targetInputToClear) {
     // Clear the input value
-    document.getElementById(targetInputToClear).value = '';
+    const inputElement = document.getElementById(targetInputToClear);
+    inputElement.value = '';
+
+    // Focus on the cleared input field
+    inputElement.focus();
 
     // Get the dropdown div associated with the input
-    let dropdownDiv = document.getElementById(targetInputToClear).closest('.searchable_names_dropdown_class');
+    let dropdownDiv = inputElement.closest('.searchable_names_dropdown_class');
 
     // Select all <h3> elements within the same dropdown div
     let options = dropdownDiv.querySelectorAll('h3');
@@ -621,6 +687,7 @@ clearSearchableDropDownInputValue = function (targetInputToClear) {
         option.style.display = 'block'; // Show all options
     });
 };
+
 
 
 
@@ -689,48 +756,6 @@ searchBarInputElements.forEach(input => {
 });
 
 
-
-
-// Event listeners for filtering h3 elements based on letteres inserted in the search bar input
-/* (Input id name & the same input dropdown div id name ) */
-document.getElementById('company_names_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('company_names_search_bar_input_id', 'company_names_dropdown');
-});
-document.getElementById('all_hotel_names_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('all_hotel_names_search_bar_input_id', 'all_hotel_names_dropdown');
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* clint movements hotel names dropdown */
-document.getElementById('hotel_room_type_description_input_id').addEventListener('input', () => {
-    filterOptions('hotel_room_type_description_input_id', 'hotel_room_type_description_dropdown');
-});
-
-
-
-
-
-
-
-
-
-
-
-/* clint movements hotel names dropdown */
-document.getElementById('clint_movements_hotel_names_search_bar_input_id').addEventListener('input', () => {
-    filterOptions('clint_movements_hotel_names_search_bar_input_id', 'clint_movements_hotel_names_dropdown');
-});
 
 
 
@@ -939,24 +964,6 @@ flightInfantPersonAmountInputOptions.forEach(option => {
 
 
 
-/* Clint movements functions */
-let clintMovementsAirportWelcomeInput = document.getElementById('clint_movements_airport_welcome_input_id');
-
-// Get the options within the dropdown
-let clintMovementsAirportWelcomeInputOptions = document.querySelectorAll('#clint_movemnt_welcome_airport_location_dropdown h3');
-
-clintMovementsAirportWelcomeInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-        if (option.textContent === 'حذف') {
-            clintMovementsAirportWelcomeInput.value = ''; // Set input value to selected option
-
-        } else {
-            clintMovementsAirportWelcomeInput.value = `الإستقبال في مطار ${option.textContent}`; // Set input value to selected option
-        }
-        hideOverlay(); // Hide overlay after selection
-    });
-});
 
 
 
@@ -1024,7 +1031,7 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
         bandung_clint_movements_places_div.style.display = 'none';
         lombok_clint_movements_places_div.style.display = 'none';
 
-    }else if(clickedClintMovementsPlacesLocation.innerText === 'باندونج'){
+    } else if (clickedClintMovementsPlacesLocation.innerText === 'باندونج') {
         kuta_clint_movements_places_div.style.display = 'none';
         ubud_clint_movements_places_div.style.display = 'none';
         jakarta_clint_movements_places_div.style.display = 'none';
@@ -1032,7 +1039,7 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
         bandung_clint_movements_places_div.style.display = 'block';
         lombok_clint_movements_places_div.style.display = 'none';
 
-    }else if(clickedClintMovementsPlacesLocation.innerText === 'لومبوك'){
+    } else if (clickedClintMovementsPlacesLocation.innerText === 'لومبوك') {
         kuta_clint_movements_places_div.style.display = 'none';
         ubud_clint_movements_places_div.style.display = 'none';
         jakarta_clint_movements_places_div.style.display = 'none';
@@ -1066,8 +1073,8 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
     // Function to hide the clint movements places page and remove the exit button
     exitClintMovementsPlacesPage.onclick = function () {
-        
-        
+
+
         /* Hide all clint movements places options */
         kuta_clint_movements_places_div.style.display = 'none';
         ubud_clint_movements_places_div.style.display = 'none';
@@ -1091,44 +1098,46 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
 /* Function to pick a clint movements place */
 pickThisClintMovementsPlace = function (clickedPlace) {
-    // Get the parent div of the clicked p element
-    var parentDiv = clickedPlace.parentElement;
 
-    // Get all div elements with ids starting with 'clint_movements_places_names_options_for'
-    var allDivs = document.querySelectorAll('[id^="clint_movements_places_names_options_for"]');
 
-    // Iterate through all divs
-    allDivs.forEach(function (div) {
-        // Check if the div is not the parent of the clicked p element
-        if (div !== parentDiv) {
-            // Get all p elements within the div
-            var pElements = div.getElementsByTagName('p');
+    // Copy the text of the clicked <p> element to the clipboard
+    const textToCopy = clickedPlace.innerText;
 
-            // Reset the background color of all p elements with class 'bandung_places_p_color_1_class' to rgb(0, 56, 99)
-            var color1Elements = div.getElementsByClassName('bandung_places_p_color_1_class');
-            for (var i = 0; i < color1Elements.length; i++) {
-                color1Elements[i].style.backgroundColor = 'rgb(0, 56, 99)';
-            }
+    // Create a temporary textarea element to facilitate copying
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = textToCopy;
+    document.body.appendChild(tempTextarea);
 
-            // Reset the background color of all p elements with class 'bandung_places_p_color_2_class' to rgb(0, 89, 157)
-            var color2Elements = div.getElementsByClassName('bandung_places_p_color_2_class');
-            for (var i = 0; i < color2Elements.length; i++) {
-                color2Elements[i].style.backgroundColor = 'rgb(0, 89, 157)';
-            }
-        }
-    });
+    // Select the text and copy it to the clipboard
+    tempTextarea.select();
+    document.execCommand('copy');
 
-    // Toggle the background color of the clicked p element based on its class
-    if (clickedPlace.style.backgroundColor === 'rgb(0, 155, 0)') {
-        if (clickedPlace.classList.contains('bandung_places_p_color_1_class')) {
-            clickedPlace.style.backgroundColor = 'rgb(0, 56, 99)';
-        } else if (clickedPlace.classList.contains('bandung_places_p_color_2_class')) {
-            clickedPlace.style.backgroundColor = 'rgb(0, 89, 157)';
-        }
-    } else {
-        clickedPlace.style.backgroundColor = 'rgb(0, 155, 0)';
-        clickedPlace.style.color = 'white';
-    }
+    // Remove the temporary textarea element
+    document.body.removeChild(tempTextarea);
+
+
+
+    /* Get the 'bali_kuta_clint_movements_places_page_div' element */
+    let clintMovementsPlacesPageDiv = document.getElementById('bali_kuta_clint_movements_places_page_div');
+
+
+    /* Hide all clint movements places options */
+    kuta_clint_movements_places_div.style.display = 'none';
+    ubud_clint_movements_places_div.style.display = 'none';
+    jakarta_clint_movements_places_div.style.display = 'none';
+    puncak_clint_movements_places_div.style.display = 'none';
+    bandung_clint_movements_places_div.style.display = 'none';
+    lombok_clint_movements_places_div.style.display = 'none';
+    clintMovementsPlacesPageDiv.style.display = 'none';
+
+
+    document.body.style.overflow = ''; // Restore body scrolling
+
+    exitClintMovementsPlacesPage.remove();
+
+
+    // Enable scrolling
+    document.body.style.overflow = ''; // Re-enable page scrolling
 
 }
 
@@ -1182,6 +1191,44 @@ function formatDate(date) {
 
 
 
+// Get the options within the dropdown
+let clintVisitingPlacesNamesOptions = document.querySelectorAll('#clint_visiting_places_names_dropdown h3');
+
+clintVisitingPlacesNamesOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+
+        // Copy the text of the clicked <p> element to the clipboard
+        const textToCopy = option.textContent;
+
+        // Create a temporary textarea element to facilitate copying
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = textToCopy;
+        document.body.appendChild(tempTextarea);
+
+        // Select the text and copy it to the clipboard
+        tempTextarea.select();
+        document.execCommand('copy');
+
+        // Remove the temporary textarea element
+        document.body.removeChild(tempTextarea);
+
+
+        /* Reset the value of 'company_names_search_bar_input_id' after picking a hotek name */
+        document.getElementById('all_hotel_names_search_bar_input_id').value = '';
+
+        // Get the dropdown div associated with the input
+        let dropdownDivOptions = document.getElementById('all_hotel_names_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
+
+        // Reset the display of all <h3> elements
+        dropdownDivOptions.forEach(option => {
+            option.style.display = 'block'; // Show all options
+        });
+
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
 
 
 
@@ -1453,6 +1500,11 @@ var wholePackageStartDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
         isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights();
         let selectedDate = this.getDate();
@@ -1481,6 +1533,10 @@ var wholePackageEndDatePicker = new Pikaday({
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         isWholePackageEndDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
     }
@@ -1555,7 +1611,6 @@ document.addEventListener('click', function (e) {
 
 /* Store the hotel total nights for later use (when inserting hotel row data) */
 let storeHotelTotalNights;
-
 
 // Variables to track the visibility of the date pickers
 var isHotelStartDatePickerVisible = false;
@@ -1639,6 +1694,10 @@ var hotelStartDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         isHotelStartDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights();
         let selectedDate = this.getDate();
@@ -1667,6 +1726,10 @@ var hotelEndDatePicker = new Pikaday({
     },
     disableDayFn: disableSpecificDates, // Disable the exact start date and any date before it in the end date picker
     onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
         isHotelEndDatePickerVisible = false; // Reset visibility state on date selection
         updateHotelTotalNights(); // Call 'updateHotelTotalNights' when a date is selected
     }
@@ -1701,6 +1764,16 @@ document.getElementById('hotel_check_out_input_id').addEventListener('click', fu
             hotelStartDatePicker.hide();
             isHotelStartDatePickerVisible = false;
         }
+
+        // Update the minDate for the end date picker based on the current start date
+        let startDateInput = document.getElementById('hotel_check_in_input_id').value;
+        if (startDateInput) {
+            let parsedStartDate = parseArabicDate(startDateInput);
+            let minEndDate = new Date(parsedStartDate);
+            minEndDate.setDate(minEndDate.getDate() + 1);
+            hotelEndDatePicker.setMinDate(minEndDate);
+        }
+
         hotelEndDatePicker.show();
         isHotelEndDatePickerVisible = true;
     }
@@ -1751,6 +1824,7 @@ document.addEventListener('click', function () {
 
 
 
+
 // Function to initialize Pikaday with Arabic support
 var startDatePicker = new Pikaday({
     field: document.getElementById('flight_date_input_id'),
@@ -1762,6 +1836,11 @@ var startDatePicker = new Pikaday({
         return `${day} ${month}`;
     },
     onSelect: function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
         isDatePickerVisible = false; // Reset the visibility state when a date is selected
     },
     i18n: {
@@ -1893,8 +1972,7 @@ $(document).ready(function () {
 
 
 
-/* Function for textarea auto resize */
-// Function to toggle full-screen mode for a textarea by ID
+/* Function to open full screen textarea */
 function toggleFullscreen(textAreaId) {
     let textarea = document.getElementById(textAreaId);
     let body = document.body;
@@ -1935,6 +2013,11 @@ function toggleFullscreen(textAreaId) {
     exitTextAreaFullScreenButton.name = 'arrow-undo';
     exitTextAreaFullScreenButton.classList.add('exit_full_screen_icon');
     exitTextAreaFullScreenButton.onclick = function () {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
         // Restore original styles
         textarea.style.width = originalStyles.width;
         textarea.style.height = originalStyles.height;
