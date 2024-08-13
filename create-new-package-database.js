@@ -12,6 +12,12 @@ form.addEventListener('submit', e => {
         // Play a sound effect
         new Audio('success.mp3').play();
 
+
+        /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+        existingDataStatus = 'existingData';
+        document.getElementById('website_users_name_input_id').disabled = true;
+
+
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
@@ -145,7 +151,7 @@ function updateDataBaseSavedDataNames() {
             sheetData.forEach(row => {
                 let h3Element = document.createElement('h3');
                 h3Element.innerText = row[0]; // Assuming the "name" is in the first cell
-                
+
                 // Check if the innerText is "Name" and hide the element if it is
                 if (h3Element.innerText === "Name") {
                     h3Element.style.display = 'none';
@@ -205,7 +211,7 @@ function findSelectedNameAndImportContent() {
 // Function to import content from localStorage
 function importContentFromLocalStorage() {
     let lastDownloadData = localStorage.getItem('lastDownloadWebsiteData');
-    
+
     if (lastDownloadData) {
         let parsedData = JSON.parse(lastDownloadData);
         let contentColumns = parsedData.e;
@@ -236,6 +242,8 @@ function importContentFromLocalStorage() {
 
             hideOverlay();
 
+
+            /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
             existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
