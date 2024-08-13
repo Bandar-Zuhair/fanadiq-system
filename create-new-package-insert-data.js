@@ -715,7 +715,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
         // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAirLineInput === '' || flightAdultPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '' || flightDateInput === '') {
+        if (flightAdultPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '') {
 
             // Play a sound effect
             new Audio('error.mp3').play();
@@ -1596,12 +1596,26 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.body.removeChild(overlayLayer);
                 }, 300); // Match transition duration in CSS
 
+
+
+
+                document.getElementById('hotel_check_in_input_id').value = '';
+                document.getElementById('hotel_check_in_input_id').disabled = false;
+                
+
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
                     // Hide section with id 'downloaded_pdf_hotel_data_page'
                     document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
 
+
+                    /* Reset the value of the saved hotel dates for later Re-arranging */
+                    saveOriginalHotelDates();
+
+                    /* Delete the value of the 'hotel_check_in_input_id' and make it clickable */
+                    document.getElementById('hotel_check_in_input_id').value = '';
+                    document.getElementById('hotel_check_in_input_id').disabled = false;
                 }
             };
 
