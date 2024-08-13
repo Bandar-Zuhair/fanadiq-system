@@ -40,7 +40,7 @@ let allHotelDataArray = [
         hotelRoomTypes: ['فيلا من غرفة نوم واحدة', 'فيلا ديلوكس من غرفة نوم واحدة', 'فيلا من غرفتين نوم', 'فيلا من ثلاث غرف نوم'],
     },
     {
-        hotelName: 'Tejaprana',
+        hotelName: 'Tejaprana Resort',
         hotelLocation: 'بالي',
         hotelArea: 'اوبود',
         hotelRoomTypes: ['فيلا تراس', 'فيلا فالي', 'فيلا من غرفتين نوم'],
