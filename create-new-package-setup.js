@@ -5,7 +5,15 @@ window.addEventListener('beforeunload', function (event) {
 });
 
 
-
+(function () {
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function (event) {
+            window.history.pushState(null, null, window.location.href);
+            alert("Use the navigation menu to leave the page");
+        };
+    }
+})();
 
 
 
@@ -684,24 +692,39 @@ let overlayLayer = null;
 
 
 /* Function to clear searchable dropdown input filter h3 */
-clearSearchableDropDownInputValue = function (targetInputToClear) {
-    // Clear the input value
-    const inputElement = document.getElementById(targetInputToClear);
-    inputElement.value = '';
+clearSearchableDropDownInputValue = function () {
 
-    // Focus on the cleared input field
-    inputElement.focus();
+    // Re-enable scrolling
+    document.documentElement.style.overflow = 'auto';
 
-    // Get the dropdown div associated with the input
-    let dropdownDiv = inputElement.closest('.searchable_names_dropdown_class');
 
-    // Select all <h3> elements within the same dropdown div
-    let options = dropdownDiv.querySelectorAll('h3');
+    // Check if any dropdown with the class name 'searchable_names_dropdown_class' is visible and hide it
+    let visibleDropdown_1 = document.querySelector('.searchable_names_dropdown_class.show');
+    if (visibleDropdown_1) {
+        visibleDropdown_1.classList.remove('show'); // Remove 'show' class to hide dropdown
+    }
 
-    // Reset the display of all <h3> elements
-    options.forEach(option => {
-        option.style.display = 'block'; // Show all options
+
+    // Reset all 'searchable_names_dropdown_class' elements back to their default styling
+    let dropdownDivElements = document.querySelectorAll('.searchable_names_dropdown_class');
+    dropdownDivElements.forEach(dropdown => {
+        dropdown.style.maxHeight = ''; // Reset maxHeight to default
+        dropdown.style.minHeight = ''; // Reset minHeight to default
+        dropdown.style.transition = ''; // Reset transition to default
     });
+
+    // Hide the overlay if it exists
+    if (overlayLayer) {
+        overlayLayer.style.opacity = '0'; // Set opacity to 0 for smooth disappearance
+
+        setTimeout(() => {
+            if (overlayLayer) {
+                document.body.removeChild(overlayLayer); // Remove overlay from DOM
+                overlayLayer = null; // Reset overlay variable
+            }
+        }, 200); // Assuming 200ms is the duration of your opacity transition
+    }
+
 };
 
 
@@ -731,8 +754,8 @@ searchBarInputElements.forEach(input => {
         dropdownDiv.style.transition = 'height 0.2s ease-in-out';
 
         // Set the height of the dropdown div to 80vh when the search bar is clicked
-        dropdownDiv.style.maxHeight = '70vh';
-        dropdownDiv.style.minHeight = '70vh';
+        dropdownDiv.style.maxHeight = '100vh';
+        dropdownDiv.style.minHeight = '100vh';
     });
 
     // Add an input event listener to the input element
@@ -837,19 +860,45 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
         if (lastClickedClintMovementsCityInput) { // Check if an input field was clicked before
             if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
                 lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
+
+                
             } else { // If the clicked h3 element's inner text is not "حذف"
                 if (lastClickedClintMovementsCityInput.id === 'sms_card_with_internet_amount_input_id') {
-                    // Set the value of the sms card input field with the selected option
-                    lastClickedClintMovementsCityInput.value = `شرائح إنترنت ل${option.textContent}`;
+
+                    if (option.textContent === 'غير شامل') {
+                        lastClickedClintMovementsCityInput.value = '';
+
+                    } else {
+                        // Set the value of the sms card input field with the selected option
+                        lastClickedClintMovementsCityInput.value = `شرائح إنترنت ل${option.textContent}`;
+
+                    }
+
+
 
 
                 } else if (lastClickedClintMovementsCityInput.id === 'inner_flight_tickets_amount_input_id') {
-                    // Set the value of the inner flight tickets input field with the selected option
-                    lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+
+                    if (option.textContent === 'غير شامل') {
+                        lastClickedClintMovementsCityInput.value = '';
+
+                    } else {
+                        // Set the value of the inner flight tickets input field with the selected option
+                        lastClickedClintMovementsCityInput.value = `تذاكر الطيران الداخلي ل${option.textContent}`;
+
+                    }
 
 
                 } else if (lastClickedClintMovementsCityInput.id === 'hotel_breakfast_people_amount_input_id') {
-                    lastClickedClintMovementsCityInput.value = `شامل الإفطار ل${option.textContent}`;
+
+                    if (option.textContent === 'غير شامل') {
+                        lastClickedClintMovementsCityInput.value = 'غير شامل الإفطار';
+
+                    } else {
+                        lastClickedClintMovementsCityInput.value = `شامل الإفطار ل${option.textContent}`;
+
+                    }
+
                 }
             }
             hideOverlay(); // Hide the dropdown overlay after selection
@@ -1607,6 +1656,14 @@ var wholePackageEndDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     disableDayFn: function (date) { return disableSpecificDates(date, 'whole_package_start_date_input_id'); }, // Disable the exact start date and any date before it in the end date picker
+    onOpen: function () {
+        // Sync with the start date picker's month view
+        let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
+        if (startDateInput) {
+            let parsedStartDate = parseArabicDate(startDateInput);
+            this.gotoDate(parsedStartDate);
+        }
+    },
     onSelect: function () {
 
         // Play a sound effect
@@ -1666,6 +1723,14 @@ var hotelEndDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     disableDayFn: function (date) { return disableSpecificDates(date, 'hotel_check_in_input_id'); }, // Disable the exact start date and any date before it in the end date picker
+    onOpen: function () {
+        // Sync with the start date picker's month view
+        let startDateInput = document.getElementById('hotel_check_in_input_id').value;
+        if (startDateInput) {
+            let parsedStartDate = parseArabicDate(startDateInput);
+            this.gotoDate(parsedStartDate);
+        }
+    },
     onSelect: function () {
 
         // Play a sound effect
@@ -1676,127 +1741,50 @@ var hotelEndDatePicker = new Pikaday({
     }
 });
 
-// Toggle the whole package start date picker on input field click
-document.getElementById('whole_package_start_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isWholePackageStartDatePickerVisible) {
-        wholePackageStartDatePicker.hide();
-        isWholePackageStartDatePickerVisible = false;
-    } else {
-        if (isWholePackageEndDatePickerVisible) {
-            wholePackageEndDatePicker.hide();
-            isWholePackageEndDatePickerVisible = false;
-        }
+// Function to toggle the visibility of the Whole Package Start Date Picker
+document.getElementById('whole_package_start_date_input_id').addEventListener('click', function () {
+    if (!isWholePackageStartDatePickerVisible) {
         wholePackageStartDatePicker.show();
         isWholePackageStartDatePickerVisible = true;
-    }
-});
-
-// Toggle the whole package end date picker on input field click
-document.getElementById('whole_package_end_date_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isWholePackageEndDatePickerVisible) {
-        wholePackageEndDatePicker.hide();
-        isWholePackageEndDatePickerVisible = false;
     } else {
-        if (isWholePackageStartDatePickerVisible) {
-            wholePackageStartDatePicker.hide();
-            isWholePackageStartDatePickerVisible = false;
-        }
-
-        // Update the minDate for the end date picker based on the current start date
-        let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
-        if (startDateInput) {
-            let parsedStartDate = parseArabicDate(startDateInput);
-            let minEndDate = new Date(parsedStartDate);
-            minEndDate.setDate(minEndDate.getDate() + 1);
-            wholePackageEndDatePicker.setMinDate(minEndDate);
-        }
-
-        wholePackageEndDatePicker.show();
-        isWholePackageEndDatePickerVisible = true;
-    }
-});
-
-// Toggle the hotel check-in date picker on input field click
-document.getElementById('hotel_check_in_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isHotelStartDatePickerVisible) {
-        hotelStartDatePicker.hide();
-        isHotelStartDatePickerVisible = false;
-    } else {
-        if (isHotelEndDatePickerVisible) {
-            hotelEndDatePicker.hide();
-            isHotelEndDatePickerVisible = false;
-        }
-        hotelStartDatePicker.show();
-        isHotelStartDatePickerVisible = true;
-    }
-});
-
-// Toggle the hotel check-out date picker on input field click
-document.getElementById('hotel_check_out_input_id').addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (isHotelEndDatePickerVisible) {
-        hotelEndDatePicker.hide();
-        isHotelEndDatePickerVisible = false;
-    } else {
-        if (isHotelStartDatePickerVisible) {
-            hotelStartDatePicker.hide();
-            isHotelStartDatePickerVisible = false;
-        }
-
-        // Update the minDate for the end date picker based on the current start date
-        let startDateInput = document.getElementById('hotel_check_in_input_id').value;
-        if (startDateInput) {
-            let parsedStartDate = parseArabicDate(startDateInput);
-            let minEndDate = new Date(parsedStartDate);
-            minEndDate.setDate(minEndDate.getDate() + 1);
-            hotelEndDatePicker.setMinDate(minEndDate);
-        }
-
-        hotelEndDatePicker.show();
-        isHotelEndDatePickerVisible = true;
-    }
-});
-
-// Prevent the date pickers from hiding when clicking inside them
-wholePackageStartDatePicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-wholePackageEndDatePicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-hotelStartDatePicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-hotelEndDatePicker.el.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-
-// Hide the date pickers when clicking outside
-document.addEventListener('click', function () {
-    if (isWholePackageStartDatePickerVisible) {
         wholePackageStartDatePicker.hide();
         isWholePackageStartDatePickerVisible = false;
     }
-    if (isWholePackageEndDatePickerVisible) {
+});
+
+// Function to toggle the visibility of the Whole Package End Date Picker
+document.getElementById('whole_package_end_date_input_id').addEventListener('click', function () {
+    if (!isWholePackageEndDatePickerVisible) {
+        wholePackageEndDatePicker.show();
+        isWholePackageEndDatePickerVisible = true;
+    } else {
         wholePackageEndDatePicker.hide();
         isWholePackageEndDatePickerVisible = false;
     }
-    if (isHotelStartDatePickerVisible) {
+});
+
+// Function to toggle the visibility of the Hotel Start Date Picker
+document.getElementById('hotel_check_in_input_id').addEventListener('click', function () {
+    if (!isHotelStartDatePickerVisible) {
+        hotelStartDatePicker.show();
+        isHotelStartDatePickerVisible = true;
+    } else {
         hotelStartDatePicker.hide();
         isHotelStartDatePickerVisible = false;
     }
-    if (isHotelEndDatePickerVisible) {
+});
+
+// Function to toggle the visibility of the Hotel End Date Picker
+document.getElementById('hotel_check_out_input_id').addEventListener('click', function () {
+    if (!isHotelEndDatePickerVisible) {
+        hotelEndDatePicker.show();
+        isHotelEndDatePickerVisible = true;
+    } else {
         hotelEndDatePicker.hide();
         isHotelEndDatePickerVisible = false;
     }
 });
+
 
 
 
@@ -1887,7 +1875,7 @@ $(document).ready(function () {
         interval: 5,
         min: [0, 0],
         max: [23, 59],
-        onSet: function() {
+        onSet: function () {
             // Play a sound effect
             new Audio('click.mp3').play();
         }
@@ -1898,7 +1886,7 @@ $(document).ready(function () {
         interval: 5,
         min: [0, 0],
         max: [23, 59],
-        onSet: function() {
+        onSet: function () {
             // Play a sound effect
             new Audio('click.mp3').play();
         }
@@ -2047,8 +2035,6 @@ function toggleFullscreen(textAreaId) {
     // Append exit button to body
     document.body.appendChild(exitTextAreaFullScreenButton);
 }
-
-
 
 
 
