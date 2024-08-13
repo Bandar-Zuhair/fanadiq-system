@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 
 
 
@@ -274,8 +274,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="adult_whole_package_people_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>1 بالغ</h3>
                 <h3>2 بالغين</h3>
@@ -420,8 +418,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="website_users_names_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>سامي</h3>
                 <h3>عبد الله</h3>
@@ -578,8 +574,6 @@
 
         <!-- Dropdown div for room amount -->
         <div id="hotel_room_contain_pool_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>مسبح</h3>
@@ -593,8 +587,6 @@
 
         <!-- Dropdown div for room amount -->
         <div id="hotel_room_view_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>الطبيعة</h3>
@@ -622,8 +614,6 @@
 
         <!-- Dropdown div for room amount -->
         <div id="hotel_unit_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>1</h3>
                 <h3>2</h3>
@@ -653,12 +643,11 @@
         <div id="all_hotel_names_dropdown" class="searchable_names_dropdown_class">
             <div class="search_bar_div_class">
                 <input type="text" id="all_hotel_names_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث..">
+                    placeholder="بحث.." style="direction: ltr;">
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('all_hotel_names_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue()"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -666,7 +655,7 @@
                 <h3>Four Seasons Sayan</h3>
                 <h3>Komaneka Tanggayuda</h3>
                 <h3>Samsara Ubud</h3>
-                <h3>Tejaprana</h3>
+                <h3>Tejaprana Resort</h3>
                 <h3>K Club</h3>
                 <h3>Ulaman Eco Luxury</h3>
                 <h3>Aksari Ubud</h3>
@@ -922,10 +911,9 @@
 
     <!-- Dropdown div for hotel locations -->
     <div id="breakfast_and_sms_card_and_ticket_amount_dropdown" class="searchable_names_dropdown_class">
-        <div class="search_bar_div_class">
-        </div>
         <div class="company_names_options_dropdown_class">
             <h3 style="color: red;">حذف</h3>
+            <h3 style="color: red;">غير شامل</h3>
             <h3>شخص واحد</h3>
             <h3>شخصين</h3>
             <h3>ثلاثة أشخاص</h3>
@@ -997,35 +985,46 @@
             <div class="package_info_input_div">
 
 
-                <input type="text" id="flight_air_line_input_id" placeholder="الخط الجوي" readonly autocomplete="off"
-                    onclick="showOverlay('airport_line_name_dropdown')" style="cursor: pointer;">
+                <div>
 
-                <input type="text" id="flight_adult_person_amount_input_id" placeholder="عدد البالغين" readonly
-                    autocomplete="off" onclick="showOverlay('flight_adult_people_amount_dropdown')"
-                    style="cursor: pointer;">
+                    <input type="text" id="flight_air_line_input_id" placeholder="الخط الجوي" readonly
+                        autocomplete="off" onclick="showOverlay('airport_line_name_dropdown')" style="cursor: pointer;">
 
-                <input type="text" id="flight_infant_person_amount_input_id" placeholder="عدد الرضاع" readonly
-                    autocomplete="off" onclick="showOverlay('flight_infant_people_amount_dropdown')"
-                    style="cursor: pointer;">
+                    <input type="text" id="flight_adult_person_amount_input_id" placeholder="عدد البالغين" readonly
+                        autocomplete="off" onclick="showOverlay('flight_adult_people_amount_dropdown')"
+                        style="cursor: pointer;">
 
-                <input type="text" id="flight_from_city_input_id" placeholder="من مدينة" readonly autocomplete="off"
-                    onclick="insertFlightDestinationCityInputValue('flight_from_city_input_id')"
-                    style="cursor: pointer;">
+                    <input type="text" id="flight_infant_person_amount_input_id" placeholder="عدد الرضاع" readonly
+                        autocomplete="off" onclick="showOverlay('flight_infant_people_amount_dropdown')"
+                        style="cursor: pointer;">
 
-                <input type="text" id="flight_to_city_input_id" placeholder="الى مدينة" readonly autocomplete="off"
-                    onclick="insertFlightDestinationCityInputValue('flight_to_city_input_id')" style="cursor: pointer;">
+                    <input type="text" id="flight_from_city_input_id" placeholder="من مدينة" readonly autocomplete="off"
+                        onclick="insertFlightDestinationCityInputValue('flight_from_city_input_id')"
+                        style="cursor: pointer;">
 
-                <input type="text" id="flight_date_input_id" placeholder="تاريخ السفر" readonly autocomplete="off"
-                    style="cursor: pointer;">
+                    <input type="text" id="flight_to_city_input_id" placeholder="الى مدينة" readonly autocomplete="off"
+                        onclick="insertFlightDestinationCityInputValue('flight_to_city_input_id')"
+                        style="cursor: pointer;">
 
-                <input type="text" id="flight_fly_away_time_input_id" placeholder="وقت الإقلاع" readonly
-                    autocomplete="off">
+                    <input type="text" id="flight_date_input_id" placeholder="تاريخ السفر" readonly autocomplete="off"
+                        style="cursor: pointer;">
 
-                <input type="text" id="flight_arrival_time_input_id" placeholder="وقت الوصول" readonly
-                    autocomplete="off">
+                    <input type="text" id="flight_fly_away_time_input_id" placeholder="وقت الإقلاع" readonly
+                        autocomplete="off">
+
+                    <input type="text" id="flight_arrival_time_input_id" placeholder="وقت الوصول" readonly
+                        autocomplete="off">
+
+
+                </div>
 
 
 
+
+
+
+
+                
 
                 <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="clint_flight_inputs_submit_icon"
@@ -1066,8 +1065,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="flight_adult_people_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>1 بالغ</h3>
                 <h3>2 بالغين</h3>
@@ -1093,8 +1090,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="flight_infant_people_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>1 رضيع</h3>
@@ -1114,8 +1109,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="airport_line_name_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>الجارودا</h3>
                 <h3>سوبر اير جت</h3>
@@ -1129,8 +1122,6 @@
 
         <!-- Dropdown Div For Hotel Locations -->
         <div id="airport_destination_name_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-            </div>
             <div class="company_names_options_dropdown_class">
                 <h3>جاكرتا</h3>
                 <h3>بالي</h3>
