@@ -232,7 +232,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             if (packageClintNameInput !== '') {
 
                 /* Set the innerText of the p element */
-                clint_full_name_p.innerText = `الأستاذ : ${packageClintNameInput}`;
+                clint_full_name_p.innerText = `الأستاذ/ة : ${packageClintNameInput}`;
 
                 /* Change the border styling for better looking */
                 pdf_clint_info_section_title_div_id.style.borderBottom = '0.5px solid black';
@@ -255,6 +255,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 document.getElementById('store_google_sheet_clint_name_value').innerText = '';
             }
+
+
+
+
 
 
 
@@ -306,7 +310,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
                     saveOriginalHotelDates();
+
+
                 }
+
 
                 // Adjust flight dates if there are any flight rows for editing
                 if (document.querySelectorAll('.flight_row_class_for_editing').length > 0) {
@@ -352,6 +359,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                             dateElement.innerText = `${newDate.getDate()} ${getArabicMonthName(newDate.getMonth())}`;
                         }
                     });
+
+
                 }
 
 
@@ -361,6 +370,21 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             }
+
+
+
+
+
+
+
+            // Adjust hotel dates if there are any hotel rows for editing
+            if (document.querySelectorAll('.hotel_row_class_for_editing').length === 0) {
+
+                document.getElementById('hotel_check_in_input_id').value = wholePackageStartDateInput;
+                document.getElementById('hotel_check_in_input_id').disabled = true;
+
+            }
+
 
 
 
@@ -1599,9 +1623,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-                document.getElementById('hotel_check_in_input_id').value = '';
-                document.getElementById('hotel_check_in_input_id').disabled = false;
-                
+
+
 
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
@@ -1613,9 +1636,39 @@ checkInputsToInsertData = function (clickedButtonId) {
                     /* Reset the value of the saved hotel dates for later Re-arranging */
                     saveOriginalHotelDates();
 
-                    /* Delete the value of the 'hotel_check_in_input_id' and make it clickable */
-                    document.getElementById('hotel_check_in_input_id').value = '';
-                    document.getElementById('hotel_check_in_input_id').disabled = false;
+
+                    /* in case if there is no remaaining 'inserted_hotel_data_row' then check if the 'create_new_clint_data_section' is visible */
+                    if (document.getElementById('create_new_clint_data_section').style.display !== 'none') {
+
+                        /* Set the date of the 'hotel_check_in_input_id' as the the date in the 'whole_package_start_date_input_id' */
+                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('whole_package_start_date_input_id').value;
+                        document.getElementById('hotel_check_in_input_id').disabled = true;
+
+                    } else {
+
+                        document.getElementById('hotel_check_in_input_id').value = '';
+                        document.getElementById('hotel_check_in_input_id').disabled = false;
+                    }
+
+
+                } else {
+
+                    // Get all divs with the class name 'hotel_row_class_for_editing'
+                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                    // Get the last found div with the class name "hotel_row_class_for_editing"
+                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
+
+                    // Get the date value from the h3 element inside the lastHotelRowDiv
+                    let dateElement = lastHotelRowDiv.querySelector('h3');
+                    let dateValue = dateElement ? dateElement.innerText.trim() : '';
+
+                    // Set the value of the hotel_check_in_input_id to the extracted date value
+                    document.getElementById('hotel_check_in_input_id').value = dateValue;
+
+                    // Store the last stopped hotel check-out date for later use (when importing data)
+                    document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = dateValue;
+
                 }
             };
 
@@ -1703,6 +1756,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
                 document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
                 document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
+
+                console.log(hotelBreakfastPeopleAmountText);
+
+
                 document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
 
 
@@ -1748,8 +1805,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('hotel_room_type_description_input_id').value = '';
                     document.getElementById('hotel_room_contain_pool_input_id').value = '';
                     document.getElementById('hotel_room_view_input_id').value = '';
-                    document.getElementById('hotel_unit_amount_input_id').value = '';
-                    document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
@@ -1847,19 +1902,19 @@ checkInputsToInsertData = function (clickedButtonId) {
                         // Append <p> elements for each input with text
                         if (hotelRoomContainPoolText !== '') {
                             let poolP = document.createElement('span');
-                            poolP.id = `hotel_pool_p_id_${currentHotelDataDivId}`;
+                            poolP.id = `hotel_pool_p_id_${insertedHotelDataDivUniqueId}`;
                             poolP.innerText = hotelRoomContainPoolText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolP);
                         }
                         if (hotelRoomViewText !== '') {
                             let viewP = document.createElement('span');
-                            viewP.id = `hotel_view_p_id_${currentHotelDataDivId}`;
+                            viewP.id = `hotel_view_p_id_${insertedHotelDataDivUniqueId}`;
                             viewP.innerText = hotelRoomViewText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewP);
                         }
                         if (hotelBreakfastPeopleAmountText !== '') {
                             let breakfastP = document.createElement('span');
-                            breakfastP.id = `hotel_breakfast_p_id_${currentHotelDataDivId}`;
+                            breakfastP.id = `hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}`;
                             breakfastP.innerText = hotelBreakfastPeopleAmountText;
                             clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastP);
                         }
@@ -2838,7 +2893,7 @@ downloadPdfWithCurrentUserCodeName = function () {
 
         // Play a sound effect
         new Audio('success.mp3').play();
-        
+
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
         document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').innerText = 'جاري التحميل..';
 
