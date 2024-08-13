@@ -2287,7 +2287,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                         // Construct the checkInOutText without `+` after certain texts
                         let additionalText = "";
                         if (isAirportWelcomeIncluded && (cityName === "بالي" || cityName === "جاكرتا") && cityName !== previousCityName) {
-                            additionalText = `الإستقبال في مطار ${cityName} + `;
+                            if (!(previousCityName === "بونشاك" && cityName === "جاكرتا")) {
+                                additionalText = `الإستقبال في مطار ${cityName} + `;
+                            }
                         }
 
                         if (!isCheckOutTextAdded) {
@@ -2316,10 +2318,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                     checkInOutText = cleanUpText(checkInOutText);
 
                     clintMovementsRowTableDiv.innerHTML = `
-                        <div><h1>${newDate}</h1></div>
-                        <div><h2>${checkInOutText}</h2></div>
-                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
-                    `;
+            <div><h1>${newDate}</h1></div>
+            <div><h2>${checkInOutText}</h2></div>
+            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
+        `;
 
                     // Apply the new condition to append text if needed
                     if (!isFirstJakartaHotelFound && cityName === "جاكرتا" && i === 0) {
@@ -2372,10 +2374,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                     extraClintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
 
                     extraClintMovementsRowTableDiv.innerHTML = `
-                        <div><h1>${extraDate}</h1></div>
-                        <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
-                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
-                    `;
+            <div><h1>${extraDate}</h1></div>
+            <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
+            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
+        `;
 
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(extraClintMovementsRowTableDiv);
 
@@ -2385,6 +2387,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     };
                 }
             });
+
 
 
 
@@ -2819,6 +2822,9 @@ downloadPdfWithCurrentUserCodeName = function () {
     /* If there is no value then change the 'check_pdf_name_button' color */
     if (document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').style.backgroundColor !== 'red') {
 
+        // Play a sound effect
+        new Audio('success.mp3').play();
+        
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
         document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').innerText = 'جاري التحميل..';
 
@@ -2896,6 +2902,11 @@ checkThePdfNameToDownload = function () {
 
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
     } else {
+
+        // Play a sound effect
+        new Audio('success.mp3').play();
+
+
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(85, 127, 137)';
         document.getElementById('check_pdf_name_button').style.color = 'white';
         document.getElementById('check_pdf_name_button').innerText = 'جاري التحميل..';
