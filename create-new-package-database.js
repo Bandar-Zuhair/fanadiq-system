@@ -13,10 +13,6 @@ form.addEventListener('submit', e => {
         new Audio('success.mp3').play();
 
 
-        /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-        existingDataStatus = 'existingData';
-        document.getElementById('website_users_name_input_id').disabled = true;
-
 
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
@@ -64,6 +60,7 @@ form.addEventListener('submit', e => {
                 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
                 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
 
+
                 setTimeout(() => {
                     document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
                     document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
@@ -74,10 +71,20 @@ form.addEventListener('submit', e => {
                 // Only call submitForm if 'existingDataStatus' is equal to "newData"
                 if (existingDataStatus === "newData") {
                     submitForm();
+                    console.log('New Save');
+
+                }else{
+                    console.log('Exiting Save');
                 }
 
 
                 updateDataBaseSavedDataNames();
+
+
+
+                /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+                existingDataStatus = 'existingData';
+                document.getElementById('website_users_name_input_id').disabled = true;
             });
 
     } else {
@@ -102,7 +109,16 @@ function cleanHTML(html) {
     return html.replace(/\s+/g, ' ').trim();
 }
 
+// Add click event listener to trigger form submission
+document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').addEventListener('click', function () {
+    form.dispatchEvent(new Event('submit'));
+});
 
+
+// Add click event listener to trigger form submission
+document.getElementById('check_pdf_name_button').addEventListener('click', function () {
+    form.dispatchEvent(new Event('submit'));
+});
 
 
 
@@ -1386,7 +1402,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
-                
+
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
