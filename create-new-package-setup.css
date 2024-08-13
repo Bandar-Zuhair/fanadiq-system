@@ -321,8 +321,8 @@ body {
     color: white;
     font-size: 5vw;
     position: fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 0.5px;
+    left: 0.5px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -799,16 +799,23 @@ body {
 }
 
 /* Search bar input */
-.search_bar_div_class input {
+.search_bar_input_class {
+    text-align: center; /* Align text to the left */
     width: 100%;
     font-size: 2vw;
     padding: 10px;
-    text-align: center;
     border: none;
     outline: none;
     border-radius: 7px;
     transition: all 0.1s ease-in-out;
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
+
+/* To ensure the caret is visually aligned to the right of the text */
+.search_bar_input_class::placeholder {
+    direction: ltr; /* Ensure placeholder text is also aligned correctly */
+}
+
 
 /* Company name options */
 .company_names_options_dropdown_class {
