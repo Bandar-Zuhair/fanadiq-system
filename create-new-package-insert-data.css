@@ -843,6 +843,10 @@
         font-size: 6vw;
     }
 
+    #name_pdf_file_div p {
+        font-size: 3vw;
+    }
+
     #name_pdf_file_div input {
         font-size: 4vw;
     }
@@ -1151,6 +1155,10 @@
 
     #name_pdf_file_div span {
         font-size: 8vw;
+    }
+
+    #name_pdf_file_div p {
+        font-size: 4vw;
     }
 
     #name_pdf_file_div input {
