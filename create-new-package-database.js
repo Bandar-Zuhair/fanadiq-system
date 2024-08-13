@@ -1380,6 +1380,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.body.removeChild(overlayLayer);
                 }, 300); // Match transition duration in CSS
 
+
+
+                document.getElementById('hotel_check_in_input_id').value = '';
+                document.getElementById('hotel_check_in_input_id').disabled = false;
+
+
+                
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
