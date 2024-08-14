@@ -957,7 +957,13 @@ flightAirLineInputOptions.forEach(option => {
         // Play a sound effect
         new Audio('click.mp3').play();
 
-        flightAirLineInput.value = option.textContent; // Set input value to selected option
+        if (option.textContent === 'حذف') {
+            flightAirLineInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
+
+        } else {
+            flightAirLineInput.value = option.textContent; // Set input value to selected option
+        }
+
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -1033,6 +1039,30 @@ flightInfantPersonAmountInputOptions.forEach(option => {
         } else {
             flightInfantPersonAmountInput.value = option.textContent; // Set input value to selected option
         }
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+let flightExtraBagsInput = document.getElementById('flight_extra_bags_input_id');
+
+// Get the options within the dropdown
+let flightExtraBagsInputOptions = document.querySelectorAll('#airport_extra_bags_name_dropdown h3');
+
+flightExtraBagsInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+        if (option.textContent === 'حذف') {
+            flightExtraBagsInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
+
+        } else {
+            flightExtraBagsInput.value = option.textContent; // Set input value to selected option
+        }
+
         hideOverlay(); // Hide overlay after selection
     });
 });
