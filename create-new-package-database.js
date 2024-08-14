@@ -263,6 +263,19 @@ function importContentFromLocalStorage() {
             existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
+
+            // Make sure to hide all elements with the class name before checking visibility
+            let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
+            images.forEach(img => {
+                img.style.display = 'none';
+            });
+
+
+            /* Show the 'inserted_company_name_image_position_div' element */
+            document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
+
+
+
         } catch (error) {
             console.error('Error importing data from localStorage:', error);
         }
@@ -327,13 +340,15 @@ function importContentForSelectedName(name) {
             });
 
 
+            /* Show the 'inserted_company_name_image_position_div' element */
+            document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
+
+
         } catch (error) {
         }
     }
-
-
-
 }
+
 
 // Function to format the raw HTML content for placing in the website
 function formatHtmlForWebsite(rawHtml) {
@@ -631,16 +646,35 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         /* Check the package type checkbox based on the innerText of the 'store_google_sheet_clint_package_type_checkbox_value' */
         if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شهل عسل') {
             document.getElementById('honeymoon_checkbox').checked = true;
+            document.getElementById('guys_checkbox').checked = false;
+            document.getElementById('family_checkbox').checked = false;
+            document.getElementById('two_people_checkbox').checked = false;
 
         } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شباب') {
+            document.getElementById('honeymoon_checkbox').checked = false;
             document.getElementById('guys_checkbox').checked = true;
+            document.getElementById('family_checkbox').checked = false;
+            document.getElementById('two_people_checkbox').checked = false;
 
         } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج عائلة') {
+            document.getElementById('honeymoon_checkbox').checked = false;
+            document.getElementById('guys_checkbox').checked = false;
             document.getElementById('family_checkbox').checked = true;
+            document.getElementById('two_people_checkbox').checked = false;
 
         } else if (document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText === 'بكج شخصين') {
+            document.getElementById('honeymoon_checkbox').checked = false;
+            document.getElementById('guys_checkbox').checked = false;
+            document.getElementById('family_checkbox').checked = false;
             document.getElementById('two_people_checkbox').checked = true;
 
+
+            /* in case if there is no any check input then unckeck all inputs */
+        }else{
+            document.getElementById('honeymoon_checkbox').checked = false;
+            document.getElementById('guys_checkbox').checked = false;
+            document.getElementById('family_checkbox').checked = false;
+            document.getElementById('two_people_checkbox').checked = false;
         }
 
 
