@@ -47,8 +47,8 @@
             <a id="header_navbar_links_flight_a" onclick="showPackageTypeSection('flight', this)">الطيران</a>
             <a id="header_navbar_links_package_icluding_and_not_including_a"
                 onclick="showPackageTypeSection('package_including', this)">يشمل</a>
-            <a id="header_navbar_links_clint_movements_a"
-                onclick="showPackageTypeSection('transportation', this)" style="border-left: none;">التحركات</a>
+            <a id="header_navbar_links_clint_movements_a" onclick="showPackageTypeSection('transportation', this)"
+                style="border-left: none;">التحركات</a>
         </div>
     </header>
 
@@ -647,7 +647,8 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('all_hotel_names_search_bar_input_id')"></ion-icon>
+                <ion-icon name="close-circle-outline"
+                    onclick="clearSearchableDropDownInputValue('all_hotel_names_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -1016,6 +1017,10 @@
                     <input type="text" id="flight_arrival_time_input_id" placeholder="وقت الوصول" readonly
                         autocomplete="off">
 
+                    <input type="text" id="flight_extra_bags_input_id" placeholder="وزن إضافي" readonly
+                        autocomplete="off" onclick="showOverlay('airport_extra_bags_name_dropdown')"
+                        style="cursor: pointer;">
+
 
                 </div>
 
@@ -1093,16 +1098,16 @@
         <div id="flight_infant_people_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
-                <h3>1 رضيع</h3>
-                <h3>2 رضاع</h3>
-                <h3>3 رضاع</h3>
-                <h3>4 رضاع</h3>
-                <h3>5 رضاع</h3>
-                <h3>6 رضاع</h3>
-                <h3>7 رضاع</h3>
-                <h3>8 رضاع</h3>
-                <h3>9 رضاع</h3>
-                <h3>10 رضاع</h3>
+                <h3>+ 1 رضيع</h3>
+                <h3>+ 2 رضاع</h3>
+                <h3>+ 3 رضاع</h3>
+                <h3>+ 4 رضاع</h3>
+                <h3>+ 5 رضاع</h3>
+                <h3>+ 6 رضاع</h3>
+                <h3>+ 7 رضاع</h3>
+                <h3>+ 8 رضاع</h3>
+                <h3>+ 9 رضاع</h3>
+                <h3>+ 10 رضاع</h3>
             </div>
         </div>
 
@@ -1111,6 +1116,7 @@
         <!-- Dropdown Div For Hotel Locations -->
         <div id="airport_line_name_dropdown" class="searchable_names_dropdown_class">
             <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
                 <h3>الجارودا</h3>
                 <h3>سوبر اير جت</h3>
                 <h3>اير اسيا</h3>
@@ -1127,6 +1133,21 @@
                 <h3>جاكرتا</h3>
                 <h3>بالي</h3>
                 <h3>باندونق</h3>
+            </div>
+        </div>
+
+
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="airport_extra_bags_name_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>+ 5 كيلو</h3>
+                <h3>+ 10 كيلو</h3>
+                <h3>+ 15 كيلو</h3>
+                <h3>+ 20 كيلو</h3>
+                <h3>+ 25 كيلو</h3>
+                <h3>+ 30 كيلو</h3>
             </div>
         </div>
 
