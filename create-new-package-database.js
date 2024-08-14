@@ -320,6 +320,13 @@ function importContentForSelectedName(name) {
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
+            // Make sure to hide all elements with the class name before checking visibility
+            let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
+            images.forEach(img => {
+                img.style.display = 'none';
+            });
+
+
         } catch (error) {
         }
     }
