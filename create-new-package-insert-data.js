@@ -20,6 +20,34 @@ function saveOriginalHotelDates() {
 
 
 
+function hideDuplicatePlaces() {
+    // Get all the dynamically generated rows
+    const rowsContainer = document.getElementById('all_clint_movements_places_page_divs_container');
+    const generatedRows = rowsContainer.querySelectorAll('.extraClintMovementsRowTableDiv');
+
+    // Store all the text content of the <h2> elements inside an array
+    let existingPlaceNames = [];
+    generatedRows.forEach(row => {
+        const h2Elements = row.querySelectorAll('h2');
+        h2Elements.forEach(h2 => {
+            existingPlaceNames.push(h2.innerText.trim());
+        });
+    });
+
+    // Get all the <p> elements
+    const pElements = rowsContainer.querySelectorAll('p');
+
+    // Loop through each <p> element and hide it if its text content exists in the array
+    pElements.forEach(p => {
+        if (existingPlaceNames.includes(p.innerText.trim())) {
+            p.style.display = 'none';
+        }
+    });
+}
+
+/* Update the available clint visiting places based on the current existing visiting places */
+hideDuplicatePlaces();
+
 
 
 /* Function for checking if ready or no to insert the data */
@@ -2076,8 +2104,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-
-
             // Function to clean up text and ensure no duplicated '+'
             function cleanUpText(text) {
                 return text.replace(/\+\s*\+/g, ' + ').trim();
@@ -2203,10 +2229,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                     checkInOutText = cleanUpText(checkInOutText);
 
                     clintMovementsRowTableDiv.innerHTML = `
-            <div><h1>${newDate}</h1></div>
-            <div><h2>${checkInOutText}</h2></div>
-            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
-        `;
+                        <div><h1>${newDate}</h1></div>
+                        <div><h2>${checkInOutText}</h2></div>
+                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
+                    `;
 
                     // Apply the new condition to append text if needed
                     if (!isFirstJakartaHotelFound && cityName === "جاكرتا" && i === 0) {
@@ -2259,10 +2285,10 @@ checkInputsToInsertData = function (clickedButtonId) {
                     extraClintMovementsRowTableDiv.classList.add('clint_movements_row_class', 'clint_movements_row_class_for_editing');
 
                     extraClintMovementsRowTableDiv.innerHTML = `
-            <div><h1>${extraDate}</h1></div>
-            <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
-            <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
-        `;
+                        <div><h1>${extraDate}</h1></div>
+                        <div><h2>تسجيل الخروج من ${hotelName} والتحرك للمطار للمغادرة</h2></div>
+                        <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${cityName}-مغادرة</h3></div>
+                    `;
 
                     document.getElementById('inserted_clint_movements_data_position_div').appendChild(extraClintMovementsRowTableDiv);
 
@@ -2280,7 +2306,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-
+            
+            
 
 
 
@@ -2417,6 +2444,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                     /* Reset the innerText and styling to defualt */
                     document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
                     document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+
+                    /* Update the available clint visiting places based on the current existing visiting places */
+                    hideDuplicatePlaces();
                 }
 
 
