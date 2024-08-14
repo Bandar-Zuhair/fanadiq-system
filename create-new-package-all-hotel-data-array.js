@@ -195,6 +195,12 @@ let allHotelDataArray = [
         hotelArea: 'نوسا دوا',
         hotelRoomTypes: ['فيلا من غرفة نوم واحدة', 'فيلا من غرفتين نوم'],
     },
+    {
+        hotelName: 'Conrad Bali',
+        hotelLocation: 'بالي',
+        hotelArea: 'نوسا دوا',
+        hotelRoomTypes: ['ديلوكس روم', 'ديلوكس لاجون اكسس', 'كونراد سويت', 'سويت ماجهة للمحيط'],
+    },
 
 
 
