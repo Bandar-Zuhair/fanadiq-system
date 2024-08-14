@@ -2869,11 +2869,6 @@ function minifyHTML(html) {
     return html.replace(/\s+/g, ' ').trim();
 }
 
-// Function to check if an element is visible (dummy implementation, you can replace it with a real visibility check function if needed)
-function isVisible(element) {
-    return element.offsetWidth > 0 && element.offsetHeight > 0;
-}
-
 
 /* Download the pdf file with the given name */
 downloadPdfWithCustomName = async function (pdfName) {
@@ -2883,15 +2878,17 @@ downloadPdfWithCustomName = async function (pdfName) {
     let captureCanvas = async function (section, scale) {
         try {
             // Ensure resources are loaded and elements are visible before capturing
-            await new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Increase the wait to 1000ms
 
             let canvas = await html2canvas(section, {
                 scale: scale,
                 backgroundColor: null,
-                scrollY: 0
+                scrollY: 0,
+                useCORS: true, // Ensure cross-origin images are loaded correctly
             });
             return canvas;
         } catch (error) {
+            console.error("Error capturing canvas:", error);
         }
     };
 
@@ -3030,7 +3027,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         return;
     }
 
-    let scale = /Mobi|Android/i.test(navigator.userAgent) ? 5 : 3.5;
+    let scale = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 5 : 3.5;
 
     // Process visible sections to generate canvases
     let combinedCanvas1 = await processSections(sections1, scale);
@@ -3078,8 +3075,6 @@ downloadPdfWithCustomName = async function (pdfName) {
     // Hide the 'pdf_section_package_icluding_data_title_id_2' image
     document.getElementById('pdf_section_package_icluding_data_title_id_2').style.display = 'none';
 
-
-
     document.getElementById('downloaded_pdf_important_notes_data_page').style.display = 'none';
     document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
@@ -3089,8 +3084,13 @@ downloadPdfWithCustomName = async function (pdfName) {
     document.getElementById('check_pdf_name_button').style.color = 'black';
     document.getElementById('check_pdf_name_button').innerText = 'تحميل';
 
-
     let packageUserCodeNameForLaterImportReferenceP = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
     document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').innerText = `استخدم كود البكج ${packageUserCodeNameForLaterImportReferenceP}`;
 };
+
+// Helper function to check if an element is visible
+function isVisible(element) {
+    return element.offsetWidth > 0 && element.offsetHeight > 0;
+}
+
 
