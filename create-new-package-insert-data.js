@@ -61,25 +61,6 @@ checkInputsToInsertData = function (clickedButtonId) {
         } else {
 
 
-            if (!honeymoonCheckbox.checked && !guysCheckbox.checked && !familyCheckbox.checked && !twoPeopleCheckbox.checked) {
-
-                // Play a sound effect
-                new Audio('error.mp3').play();
-
-
-                // Change the submit icon color to green to indicate success
-                clint_inputs_submit_icon.style.backgroundColor = 'red';
-                // Set the background color of the submit icon back to default color
-                setTimeout(() => {
-                    clint_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                }, 500);
-
-
-                /* Exit the function and stop the process */
-                return;
-            }
-
-
             // Play a sound effect
             new Audio('success.mp3').play();
 
@@ -209,6 +190,9 @@ checkInputsToInsertData = function (clickedButtonId) {
             } else if (twoPeopleCheckbox.checked) {
                 clintPackageTypeH6.innerHTML = 'بكج شخصين';
                 document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText = 'بكج شخصين';
+
+            }else{
+                clintPackageTypeH6.innerHTML = 'بكج جديد';
 
             }
 
@@ -2111,7 +2095,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     "بكج شهر عسل": "honeymoon",
                     "بكج شباب": "guys",
                     "بكج عائلة": "family",
-                    "بكج شخصين": "twopeople"
+                    "بكج شخصين": "twopeople",
+                    "بكج جديد": "family"
                 };
                 let packageKey = packageMapping[packageType];
 
@@ -2789,9 +2774,6 @@ checkThePdfNameToDownload = function () {
 
         /* If there is any value then pass the value to the 'downloadPdfWithCustomName' function */
     } else {
-
-        // Play a sound effect
-        new Audio('success.mp3').play();
 
 
         document.getElementById('check_pdf_name_button').style.backgroundColor = 'rgb(85, 127, 137)';
