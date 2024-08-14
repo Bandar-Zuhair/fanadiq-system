@@ -3027,7 +3027,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         return;
     }
 
-    let scale = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 5 : 3.5;
+    let scale = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 3 : 3;
 
     // Process visible sections to generate canvases
     let combinedCanvas1 = await processSections(sections1, scale);
