@@ -191,7 +191,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 clintPackageTypeH6.innerHTML = 'بكج شخصين';
                 document.getElementById('store_google_sheet_clint_package_type_checkbox_value').innerText = 'بكج شخصين';
 
-            }else{
+            } else {
                 clintPackageTypeH6.innerHTML = 'بكج جديد';
 
             }
@@ -713,6 +713,13 @@ checkInputsToInsertData = function (clickedButtonId) {
             new Audio('success.mp3').play();
 
 
+
+            // First delete all old flights row data'
+            document.getElementById('inserted_flight_data_position_div').innerHTML = '';
+
+
+
+
             /* Change the 'تم' button color */
             clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             // Set the background color of the submit icon back to default color
@@ -754,15 +761,15 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Create the HTML content for the new flight row div
                     let flightRowTableDivContent = `
-                <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
-                <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
-                <div><p>20 كيلو للشخص</p></div>
-                <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${lastCity}</h2></div>
-                <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${currentCity}</h3></div>
-                <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
-                <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
-                <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
-            `;
+                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
+                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
+                        <div><p>20 كيلو للشخص</p></div>
+                        <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${lastCity}</h2></div>
+                        <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${currentCity}</h3></div>
+                        <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
+                        <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
+                        <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
+                    `;
 
                     flightRowTableDiv.innerHTML = flightRowTableDivContent;  // Insert the generated HTML content into the new div
 
@@ -931,31 +938,25 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Function to edit the clicked flight row data */
             editClickedFlightData = function (clickedFlightDataDivIdName) {
 
-
-                /* Make sure the correct section is the one that is visiable */
+                /* Make sure the correct section is the one that is visible */
                 create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'none';
                 create_new_flight_package_section.style.display = 'flex';
                 create_new_package_including_and_not_including_data_section.style.display = 'none';
                 create_new_clint_movements_plan_section.style.display = 'none';
 
-
                 document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
                 document.getElementById('confirm_new_flight_data_row_icon').style.display = 'block';
                 document.getElementById('cancel_new_flight_data_row_icon').style.display = 'block';
 
-
                 document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
                 document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
-
 
                 document.getElementById('flight_data_dropdown_content').scrollIntoView({
                     block: 'center',
                     inline: 'center',
                     behavior: 'smooth',
                 });
-
-
 
                 // Hide delete button div
                 let overlayLayer = document.querySelector('.black_overlay');
@@ -970,42 +971,34 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.body.removeChild(overlayLayer);
                 }, 300); // Match transition duration in CSS
 
-
-
-
                 /* Show all inputs for editing the flight data */
                 document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'flex';
-
-
-
 
                 // Get the clicked flight data row
                 let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
                 let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
 
-
-
-
                 // Extract data using IDs
                 let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFromCityInput = clickedFlightDataDiv.querySelector(`h2[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightToCityInput = clickedFlightDataDiv.querySelector(`h3[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightExtraBagsInput = clickedFlightDataDiv.querySelector(`p[id^='flight_extra_bags_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
 
                 // Assign values to inputs
                 document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
                 document.getElementById('flight_adult_person_amount_input_id').value = flightAdultPersonAmountInput;
+                document.getElementById('flight_infant_person_amount_input_id').value = flightInfantPersonAmountInput;
                 document.getElementById('flight_from_city_input_id').value = flightFromCityInput;
                 document.getElementById('flight_to_city_input_id').value = flightToCityInput;
                 document.getElementById('flight_date_input_id').value = flightDateInput;
                 document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
                 document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
-
-
-
+                document.getElementById('flight_extra_bags_input_id').value = flightExtraBagsInput;
 
                 /* Function to cancel the flight row data editing process */
                 cancelNewFlightDataRow = function () {
@@ -1017,80 +1010,100 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('flight_fly_away_time_input_id').value = '';
                     document.getElementById('flight_arrival_time_input_id').value = '';
 
+                    /* Hide and show different icons */
+                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
+                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
+                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
+
+                    /* Reset the innerText and styling to default */
+                    document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
+                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+                    /* Hide all inputs for editing the flight data */
+                    document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
+                }
+
+                /* Function to confirm the new flight row data */
+                confirmNewFlightDataRow = function () {
+                    // Play a sound effect
+                    new Audio('success.mp3').play();
+
+                    // Get the clicked flight data row
+                    let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
+
+                    // Clear the old data
+                    clickedFlightDataDiv.innerHTML = '';
+
+                    // Extract the new data from the input fields
+                    let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
+                    let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
+                    let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
+                    let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
+                    let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
+                    let flightDateInput = document.getElementById('flight_date_input_id').value;
+                    let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
+                    let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+                    let flightExtraBagsInput = document.getElementById('flight_extra_bags_input_id').value;
+
+                    // Create the HTML content for a new flight row, only including non-empty values
+                    let flightRowTableDivContent = `
+                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;">
+                            ${flightAirLineInput ? `<p id="flight_air_line_${insertedFlightDataDivUniqueId}">${flightAirLineInput}</p>` : ''}
+                        </div>
+                        <div>
+                            <p id="flight_adult_person_amount_${insertedFlightDataDivUniqueId}">${flightAdultPersonAmountInput}</p>
+                            ${flightInfantPersonAmountInput ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
+                        </div>
+                        <div>
+                            <p>20 كيلو للشخص</p>
+                            ${flightExtraBagsInput ? `<p id="flight_extra_bags_${insertedFlightDataDivUniqueId}">${flightExtraBagsInput}</p>` : ''}
+                        </div>
+                        <div>
+                            ${flightFromCityInput ? `<h2 id="flight_from_city_${insertedFlightDataDivUniqueId}">${flightFromCityInput}</h2>` : ''}
+                        </div>
+                        <div>
+                            ${flightToCityInput ? `<h3 id="flight_to_city_${insertedFlightDataDivUniqueId}">${flightToCityInput}</h3>` : ''}
+                        </div>
+                        <div>
+                            ${flightDateInput ? `<h1 id="flight_date_${insertedFlightDataDivUniqueId}" class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1>` : ''}
+                        </div>
+                        <div>
+                            ${flightFlyAwayTimeInput ? `<p id="flight_fly_away_time_${insertedFlightDataDivUniqueId}">${flightFlyAwayTimeInput}</p>` : ''}
+                        </div>
+                        <div>
+                            ${flightArrivalTimeInput ? `<p id="flight_arrival_time_${insertedFlightDataDivUniqueId}">${flightArrivalTimeInput}</p>` : ''}
+                        </div>
+                    `;
+
+
+                    // Insert the new data into the clicked flight data div
+                    clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
+
+                    // Clear the input fields
+                    document.getElementById('flight_air_line_input_id').value = '';
+                    document.getElementById('flight_adult_person_amount_input_id').value = '';
+                    document.getElementById('flight_infant_person_amount_input_id').value = '';
+                    document.getElementById('flight_from_city_input_id').value = '';
+                    document.getElementById('flight_to_city_input_id').value = '';
+                    document.getElementById('flight_date_input_id').value = '';
+                    document.getElementById('flight_fly_away_time_input_id').value = '';
+                    document.getElementById('flight_arrival_time_input_id').value = '';
+                    document.getElementById('flight_extra_bags_input_id').value = '';
 
                     /* Hide and show different icons */
                     document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
                     document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
                     document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
 
-
-                    /* Reset the innerText and styling to defualt */
+                    /* Reset the innerText and styling to default */
                     document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
                     document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
 
-
-
                     /* Hide all inputs for editing the flight data */
                     document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
-
-                }
-
-
-
-
-                /* Function to confirm the new flight row data */
-                confirmNewFlightDataRow = function () {
-
-                    // Play a sound effect
-                    new Audio('success.mp3').play();
-
-
-                    // Get the clicked flight data row
-                    let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
-
-                    // Clear the old data
-                    clickedFlightDataDiv.innerHTML = '';
-
-
-                    // Extract the new data from the input fields
-                    let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-                    let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
-                    let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-                    let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-                    let flightDateInput = document.getElementById('flight_date_input_id').value;
-                    let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-                    let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
-
-
-                    // Create the HTML content for a new hotel row
-                    let flightRowTableDivContent = `
-                    <div><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;" id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
-                    <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p></div>
-                    <div><p>20 كيلو للشخص</p></div>
-                    <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
-                    <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                    <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1></div>
-                    <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                    <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
-                `;
-
-
-                    // Insert the HTML content into the newly created div
-                    clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
-
-
-                    // Reattach event listeners to the image controllers
-                    let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
-                    hotelRowImageControllers.forEach(element => {
-                        handleFlightMouseEvent(element); // Handle mouse events with click detection
-                        handleFlightTouchEvent(element); // Handle touch events with tap detection
-                    });
-
-
-                    // Clear the input after confirm the new flight data
-                    cancelNewFlightDataRow();
                 }
             }
+
 
 
 
@@ -3027,7 +3040,7 @@ downloadPdfWithCustomName = async function (pdfName) {
         return;
     }
 
-    let scale = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 3 : 3;
+    let scale = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 3.5 : 3.5;
 
     // Process visible sections to generate canvases
     let combinedCanvas1 = await processSections(sections1, scale);
