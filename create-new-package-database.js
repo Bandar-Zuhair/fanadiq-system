@@ -73,7 +73,7 @@ form.addEventListener('submit', e => {
                     submitForm();
                     console.log('New Save');
 
-                }else{
+                } else {
                     console.log('Exiting Save');
                 }
 
@@ -945,6 +945,12 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 }, 300); // Match transition duration in CSS
 
 
+
+                /* Show all inputs for editing the flight data */
+                document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'flex';
+
+
+
                 // Get the clicked hotel data row
                 let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
                 let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
@@ -956,8 +962,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightFromCityInput = clickedFlightDataDiv.querySelector(`h2[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightToCityInput = clickedFlightDataDiv.querySelector(`h3[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
@@ -997,8 +1003,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
 
 
-                    // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
-                    saveOriginalFlightDates();
+                    /* Hide all inputs for editing the flight data */
+                    document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
                 }
 
 
@@ -1120,164 +1126,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     }
                 }
             };
-
-
-
-
-
-
-
-
-            // Function to update dates inside 'flight_row_class_for_editing' divs based on their order in the DOM
-            function updateFlightRowDates() {
-                const hotelRows = document.querySelectorAll('.flight_row_class_for_editing');
-
-                hotelRows.forEach((row, index) => {
-                    const h2Element = row.querySelector('h2');
-                    const h3Element = row.querySelector('h3');
-
-                    if (h2Element && h3Element && originalFlightDates[index]) {
-                        // Update the dates based on the new order of elements
-                        h2Element.innerText = originalFlightDates[index].h2Date; // Or any date calculation logic here
-                        h3Element.innerText = originalFlightDates[index].h3Date; // Or any date calculation logic here
-                    }
-                });
-            }
-
-            // Function to handle the drop and reapply the dates
-            function handleDropFlightRow() {
-                // After dropping, reapply the dates based on the current DOM order
-                updateFlightRowDates(); // Call the update function here
-            }
-
-
-
-
-
-
-
-            // Praper drag-and-drop functionality for the newly added flight row
-            createFlightDragAndDropMood();
-
-            // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-            function createFlightDragAndDropMood() {
-                // Common function to handle dragging logic
-                function handleDrag(event, touch = false) {
-                    if (event.target.classList.contains('flight_row_flight_arrival_time_controller')) {
-                        event.preventDefault();
-                        let draggingElement = event.target.closest('.flight_row_class');
-                        draggingElement.classList.add('dragging');
-                        draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
-                        document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                        document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                        // Disable scrolling without affecting layout
-                        document.body.style.touchAction = 'none';
-                        document.body.style.userSelect = 'none';
-                    }
-                }
-
-                // Event listener for the drop zone
-                let flightDropZone = document.getElementById('inserted_flight_data_position_div');
-
-                // Function to handle mouse down event
-                function mouseDown(event) {
-                    handleDrag(event, false);
-                }
-
-                // Function to handle touch start event
-                function touchStart(event) {
-                    handleDrag(event, true);
-                }
-
-                // Function to handle move event
-                function move(event, touch = false) {
-                    let draggingElement = document.querySelector('.dragging');
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                    let dropElements = Array.from(flightDropZone.children);
-                    let currentIndex = dropElements.indexOf(draggingElement);
-
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect();
-                        if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
-                            if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
-                        }
-                    }
-
-                    if (targetIndex !== currentIndex) {
-                        flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                    }
-                }
-
-                // Function to handle mouse move event
-                function mouseMove(event) {
-                    move(event, false);
-                }
-
-                // Function to handle touch move event
-                function touchMove(event) {
-                    move(event, true);
-                }
-
-                // Function to handle end event
-                function end(event, touch = false) {
-                    let draggingElement = document.querySelector('.dragging');
-
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging');
-                        draggingElement.style.transform = '';
-                        draggingElement.removeAttribute('data-start-y');
-
-                        draggingElement.classList.add('drop-transition');
-                        setTimeout(() => {
-                            draggingElement.classList.remove('drop-transition');
-                        }, 300);
-                    }
-
-                    document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                    document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                    // Restore scrolling
-                    document.body.style.touchAction = '';
-                    document.body.style.userSelect = '';
-                }
-
-                // Function to handle mouse up event
-                function mouseUp(event) {
-                    end(event, false);
-
-                    handleDropFlightRow(); // Call the function to update dates after drop ends
-                }
-
-                // Function to handle touch end event
-                function touchEnd(event) {
-                    end(event, true);
-
-                    handleDropFlightRow(); // Call the function to update dates after drop ends
-                }
-
-                // Add event listeners for each insertedFlightDataDiv element
-                let insertedFlightDataDivs = document.querySelectorAll('.flight_row_class');
-
-                insertedFlightDataDivs.forEach((div) => {
-                    div.addEventListener('mousedown', mouseDown);
-                    div.addEventListener('touchstart', touchStart);
-                });
-            }
-
-
-            // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
-            saveOriginalFlightDates();
         });
 
 
