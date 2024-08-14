@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 
 
 
@@ -48,7 +48,7 @@
             <a id="header_navbar_links_package_icluding_and_not_including_a"
                 onclick="showPackageTypeSection('package_including', this)">يشمل</a>
             <a id="header_navbar_links_clint_movements_a"
-                onclick="showPackageTypeSection('transportation', this)">التحركات</a>
+                onclick="showPackageTypeSection('transportation', this)" style="border-left: none;">التحركات</a>
         </div>
     </header>
 
@@ -647,7 +647,7 @@
             </div>
 
             <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue()"></ion-icon>
+                <ion-icon name="close-circle-outline" onclick="clearSearchableDropDownInputValue('all_hotel_names_search_bar_input_id')"></ion-icon>
             </div>
 
             <div class="company_names_options_dropdown_class">
@@ -985,7 +985,7 @@
             <div class="package_info_input_div">
 
 
-                <div>
+                <div id="all_editing_flight_row_data_inputs_div" style="display: none;">
 
                     <input type="text" id="flight_air_line_input_id" placeholder="الخط الجوي" readonly
                         autocomplete="off" onclick="showOverlay('airport_line_name_dropdown')" style="cursor: pointer;">
@@ -1024,7 +1024,7 @@
 
 
 
-                
+
 
                 <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="clint_flight_inputs_submit_icon"
