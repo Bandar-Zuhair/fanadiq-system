@@ -692,7 +692,7 @@ let overlayLayer = null;
 
 
 /* Function to clear searchable dropdown input filter h3 */
-clearSearchableDropDownInputValue = function () {
+clearSearchableDropDownInputValue = function (targetInputToClear) {
 
     // Re-enable scrolling
     document.documentElement.style.overflow = 'auto';
@@ -725,6 +725,22 @@ clearSearchableDropDownInputValue = function () {
         }, 200); // Assuming 200ms is the duration of your opacity transition
     }
 
+
+    // Clear the input value
+    const inputElement = document.getElementById(targetInputToClear);
+    inputElement.value = '';
+
+
+    // Get the dropdown div associated with the input
+    let dropdownDiv = inputElement.closest('.searchable_names_dropdown_class');
+
+    // Select all <h3> elements within the same dropdown div
+    let options = dropdownDiv.querySelectorAll('h3');
+
+    // Reset the display of all <h3> elements
+    options.forEach(option => {
+        option.style.display = 'block'; // Show all options
+    });
 };
 
 
@@ -751,7 +767,7 @@ searchBarInputElements.forEach(input => {
         let dropdownDiv = input.closest('.searchable_names_dropdown_class');
 
         // Set a smooth transition for the height property
-        dropdownDiv.style.transition = 'height 0.2s ease-in-out';
+        dropdownDiv.style.transition = 'height 0.1s ease-in-out';
 
         // Set the height of the dropdown div to 80vh when the search bar is clicked
         dropdownDiv.style.maxHeight = '100vh';
