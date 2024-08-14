@@ -275,7 +275,7 @@ body {
     transition: all 0.1s ease-in-out;
     background: rgb(85, 127, 137);
     color: white;
-    border: 0.5px solid black;
+    border-left: 0.5px solid black;
     flex: 1;
     /* Allows each link to take an equal share of the container's width */
     box-sizing: border-box;
@@ -524,6 +524,15 @@ body {
 
 
 
+#all_editing_flight_row_data_inputs_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+
 
 #clint_package_type_div {
     display: flex;
@@ -766,7 +775,6 @@ body {
 
 
 /* Filter company names div */
-/* Company names dropdown container */
 .searchable_names_dropdown_class {
     z-index: 1000;
     background: rgb(0, 93, 163);
