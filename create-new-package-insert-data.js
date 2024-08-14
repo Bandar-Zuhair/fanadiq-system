@@ -9,25 +9,12 @@ let insertedClintMovementsRowDivUniqueId = 1;
 // Function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
 function saveOriginalHotelDates() {
     originalHotelDates = [];
-    const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+    const allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
 
-    hotelRows.forEach(row => {
+    allHotelRows.forEach(row => {
         const h2Date = row.querySelector('h2').innerText;
         const h3Date = row.querySelector('h3').innerText;
         originalHotelDates.push({ h2Date, h3Date, element: row });
-    });
-}
-
-
-
-// Function to save the current dates of all flights for later re-arranging use (when drag and drop)
-function saveOriginalFlightDates() {
-    originalFlightDates = [];
-    const flightRows = document.querySelectorAll('.flight_row_class_for_editing');
-
-    flightRows.forEach(row => {
-        const h1Date = row.querySelector('h1').innerText;
-        originalFlightDates.push({ h1Date, element: row });
     });
 }
 
@@ -328,9 +315,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                         element.innerText = `${newFlightDate.getDate()} ${getArabicMonthName(newFlightDate.getMonth())}`;
                     });
 
-
-                    // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
-                    saveOriginalFlightDates();
                 }
 
                 // Adjust client movement dates if there are any client movement rows for editing
@@ -724,82 +708,380 @@ checkInputsToInsertData = function (clickedButtonId) {
     /* Check if all hotel data inputs are filled */
     else if (clickedButtonId === 'clint_flight_inputs_submit_icon') {
 
-        // Get references to all input elements for later use
-        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-        let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
-        let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
-        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-        let flightDateInput = document.getElementById('flight_date_input_id').value;
-        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
 
-
-
-
-
-        // If Not All Inputs Are Valid, Show The Error Message
-        if (flightAdultPersonAmountInput === '' || flightFromCityInput === '' || flightToCityInput === '') {
+        if (document.getElementById('downloaded_pdf_hotel_data_page').style.display === 'none') {
 
             // Play a sound effect
             new Audio('error.mp3').play();
 
-            /* Chnage the sumbit icon background color */
-            clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
 
+            /* Change the 'تم' button color */
+            clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
             // Set the background color of the submit icon back to default color
             setTimeout(() => {
                 clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-            }, 500);
+            }, 2000);
 
 
         } else {
 
-            /* in case if the two city inputs were the same then dont continue the process */
-            if (flightFromCityInput === flightToCityInput) {
-
-                // Play a sound effect
-                new Audio('error.mp3').play();
+            // Play a sound effect
+            new Audio('success.mp3').play();
 
 
-                /* Chnage the sumbit icon background color */
-                clint_flight_inputs_submit_icon.style.backgroundColor = 'red';
+            /* Change the 'تم' button color */
+            clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+            }, 2000);
 
-                // Set the background color of the submit icon back to default color
-                setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                }, 500);
 
+
+
+
+            /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
+            if (document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText !== '') {
+                insertedFlightDataDivUniqueId = document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText;
             } else {
+                insertedFlightDataDivUniqueId = 1;
+            }
 
-                // Play a sound effect
-                new Audio('success.mp3').play();
 
 
-                /* Change the 'تم' button color */
-                clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
-                // Set the background color of the submit icon back to default color
+            // Get all divs with the class name 'hotel_row_class_for_editing'
+            const allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+
+            let lastCity = null;  // Variable to store the last valid city encountered
+            let lastDate = null;  // Variable to store the date associated with the last valid city
+            const validCities = ["بالي", "جاكرتا", "باندونق"];  // Array of valid cities to check against
+
+            // Iterate through all found hotel rows
+            allHotelRows.forEach((hotelRow, index) => {
+                const currentCity = hotelRow.querySelector('h5').innerText;  // Get the city name from the current hotel row's h5 element
+                const currentDate = hotelRow.querySelector('h2').innerText;  // Get the date from the current hotel row's h2 element
+
+                // Check if the current city and last city are valid and different
+                if (validCities.includes(currentCity) && lastCity && lastCity !== currentCity && validCities.includes(lastCity)) {
+                    // Create a new div with flight details if the cities change between valid ones
+                    let flightRowTableDiv = document.createElement('div');
+                    flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`;  // Set a unique ID for the new div
+                    flightRowTableDiv.className = 'flight_row_class flight_row_class_for_editing';  // Assign class names to the new div
+
+                    // Create the HTML content for the new flight row div
+                    let flightRowTableDivContent = `
+                <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
+                <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
+                <div><p>20 كيلو للشخص</p></div>
+                <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${lastCity}</h2></div>
+                <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${currentCity}</h3></div>
+                <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
+                <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
+                <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
+            `;
+
+                    flightRowTableDiv.innerHTML = flightRowTableDivContent;  // Insert the generated HTML content into the new div
+
+                    // Append the new div to the container with id 'inserted_flight_data_position_div'
+                    document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
+
+                    // Increment the unique ID for the next div
+                    insertedFlightDataDivUniqueId++;
+                }
+
+                // Update the lastCity and lastDate for the next iteration
+                lastCity = currentCity;
+                lastDate = currentDate;
+            });
+
+
+
+
+
+            document.getElementById('downloaded_pdf_flight_data_page').style.display = 'block';
+
+            // Get references to all input elements and reset their values thier
+            document.getElementById('flight_from_city_input_id').value = document.getElementById('flight_to_city_input_id').value;
+            document.getElementById('flight_to_city_input_id').value = '';
+            document.getElementById('flight_date_input_id').value = '';
+            document.getElementById('flight_fly_away_time_input_id').value = '';
+            document.getElementById('flight_arrival_time_input_id').value = '';
+
+
+
+
+            // Get the dynamically created 'flightRowAirLineController' element
+            let flightRowFlightArrivalTimeControllers = document.querySelectorAll('.flight_row_flight_arrival_time_controller');
+
+
+            // Function to handle touch events and distinguish between tap and scroll for flight row
+            function handleFlightTouchEvent(element) {
+                let touchStartX, touchStartY, touchStartTime;
+
+                // Record the starting touch position and time
+                element.addEventListener('touchstart', (event) => {
+                    let touch = event.touches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                    touchStartTime = new Date().getTime();
+                });
+
+                // Compare the ending touch position and time to determine if it was a tap
+                element.addEventListener('touchend', (event) => {
+                    let touch = event.changedTouches[0];
+                    let touchEndX = touch.clientX;
+                    let touchEndY = touch.clientY;
+                    let touchEndTime = new Date().getTime();
+
+                    let deltaX = touchEndX - touchStartX;
+                    let deltaY = touchEndY - touchStartY;
+                    let deltaTime = touchEndTime - touchStartTime;
+
+                    // Check if the touch event qualifies as a tap
+                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                    // If it's a tap, run the click function
+                    if (isTap) {
+                        flightRowAirLineControllerFunction(event);
+                    }
+                });
+            }
+
+            // Function to handle mouse events and distinguish between click and drag for flight row
+            function handleFlightMouseEvent(element) {
+                let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
+
+                // Record the starting mouse position and time
+                element.addEventListener('mousedown', (event) => {
+                    mouseStartX = event.clientX;
+                    mouseStartY = event.clientY;
+                    mouseStartTime = new Date().getTime();
+                    isDragging = false;
+                });
+
+                // Mark as dragging if mouse moves significantly
+                element.addEventListener('mousemove', (event) => {
+                    let deltaX = event.clientX - mouseStartX;
+                    let deltaY = event.clientY - mouseStartY;
+                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                        isDragging = true;
+                    }
+                });
+
+                // Compare the ending mouse position and time to determine if it was a click
+                element.addEventListener('mouseup', (event) => {
+                    let mouseEndX = event.clientX;
+                    let mouseEndY = event.clientY;
+                    let mouseEndTime = new Date().getTime();
+
+                    let deltaX = mouseEndX - mouseStartX;
+                    let deltaY = mouseEndY - mouseStartY;
+                    let deltaTime = mouseEndTime - mouseStartTime;
+
+                    // Check if the mouse event qualifies as a click
+                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
+
+                    // If it's a click, run the click function
+                    if (isClick) {
+                        flightRowAirLineControllerFunction(event);
+                    }
+                });
+            }
+
+            // Attach click and touch event listeners to each element
+            flightRowFlightArrivalTimeControllers.forEach(element => {
+                handleFlightMouseEvent(element); // Handle mouse events with click detection
+                handleFlightTouchEvent(element); // Handle touch events with tap detection
+            });
+
+
+
+
+
+
+
+
+
+
+
+            // Define a global variable to store the reference
+            let currentFlightDataDivId;
+
+            // Function to handle delete clicked hotel data
+            deleteClickedFlightData = function (clickedFlightDataDivId) {
+
+                let overlayLayer = document.querySelector('.black_overlay');
+                let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
+
+                if (clickedFlightDataElement) {
+                    clickedFlightDataElement.remove();
+                }
+
+                // Hide edit/delete options div
+                let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
+                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                // Hide overlay layer with opacity transition
+                overlayLayer.style.opacity = '0';
+
+                // Remove overlay and edit/delete div from DOM after transition
                 setTimeout(() => {
-                    clint_flight_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                }, 2000);
+                    document.body.removeChild(overlayLayer);
+                }, 300); // Match transition duration in CSS
+
+                // Check if there are any remaining inserted flight data div (Searching by the second image class name)
+                let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
+                if (remainingFlightDataDivs.length === 0) {
+                    // Hide section with id 'downloaded_pdf_flight_data_page'
+                    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+                }
+            }
 
 
 
 
 
-                /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
-                if (document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText !== '') {
-                    insertedFlightDataDivUniqueId = document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText;
-                } else {
-                    insertedFlightDataDivUniqueId = 1;
+
+
+
+            /* Function to edit the clicked flight row data */
+            editClickedFlightData = function (clickedFlightDataDivIdName) {
+
+
+                /* Make sure the correct section is the one that is visiable */
+                create_new_clint_data_section.style.display = 'none';
+                create_new_hotel_package_section.style.display = 'none';
+                create_new_flight_package_section.style.display = 'flex';
+                create_new_package_including_and_not_including_data_section.style.display = 'none';
+                create_new_clint_movements_plan_section.style.display = 'none';
+
+
+                document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
+                document.getElementById('confirm_new_flight_data_row_icon').style.display = 'block';
+                document.getElementById('cancel_new_flight_data_row_icon').style.display = 'block';
+
+
+                document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
+                document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
+
+
+                document.getElementById('flight_data_dropdown_content').scrollIntoView({
+                    block: 'center',
+                    inline: 'center',
+                    behavior: 'smooth',
+                });
+
+
+
+                // Hide delete button div
+                let overlayLayer = document.querySelector('.black_overlay');
+                let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
+                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+
+                // Hide overlay layer with opacity transition
+                overlayLayer.style.opacity = '0';
+
+                // Remove overlay and edit/delete div from DOM after transition
+                setTimeout(() => {
+                    document.body.removeChild(overlayLayer);
+                }, 300); // Match transition duration in CSS
+
+
+
+
+                /* Show all inputs for editing the flight data */
+                document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'flex';
+
+
+
+
+                // Get the clicked flight data row
+                let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
+                let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
+
+
+
+
+                // Extract data using IDs
+                let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightFromCityInput = clickedFlightDataDiv.querySelector(`h2[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightToCityInput = clickedFlightDataDiv.querySelector(`h3[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+
+                // Assign values to inputs
+                document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
+                document.getElementById('flight_adult_person_amount_input_id').value = flightAdultPersonAmountInput;
+                document.getElementById('flight_from_city_input_id').value = flightFromCityInput;
+                document.getElementById('flight_to_city_input_id').value = flightToCityInput;
+                document.getElementById('flight_date_input_id').value = flightDateInput;
+                document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
+                document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
+
+
+
+
+                /* Function to cancel the flight row data editing process */
+                cancelNewFlightDataRow = function () {
+                    // Get references to all input elements and reset their values
+                    document.getElementById('flight_air_line_input_id').value = '';
+                    document.getElementById('flight_from_city_input_id').value = '';
+                    document.getElementById('flight_to_city_input_id').value = '';
+                    document.getElementById('flight_date_input_id').value = '';
+                    document.getElementById('flight_fly_away_time_input_id').value = '';
+                    document.getElementById('flight_arrival_time_input_id').value = '';
+
+
+                    /* Hide and show different icons */
+                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
+                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
+                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
+
+
+                    /* Reset the innerText and styling to defualt */
+                    document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
+                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+
+                    /* Hide all inputs for editing the flight data */
+                    document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
+
                 }
 
 
 
-                // Create the HTML content for a new hotel row
-                let flightRowTableDivContent = `
+
+                /* Function to confirm the new flight row data */
+                confirmNewFlightDataRow = function () {
+
+                    // Play a sound effect
+                    new Audio('success.mp3').play();
+
+
+                    // Get the clicked flight data row
+                    let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
+
+                    // Clear the old data
+                    clickedFlightDataDiv.innerHTML = '';
+
+
+                    // Extract the new data from the input fields
+                    let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
+                    let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
+                    let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
+                    let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
+                    let flightDateInput = document.getElementById('flight_date_input_id').value;
+                    let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
+                    let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+
+
+                    // Create the HTML content for a new hotel row
+                    let flightRowTableDivContent = `
                     <div><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;" id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
-                    <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
+                    <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p></div>
                     <div><p>20 كيلو للشخص</p></div>
                     <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
                     <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
@@ -809,559 +1091,95 @@ checkInputsToInsertData = function (clickedButtonId) {
                 `;
 
 
+                    // Insert the HTML content into the newly created div
+                    clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
 
 
-
-
-
-                // Create a new div element to hold the flight row
-                let flightRowTableDiv = document.createElement('div');
-                flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`; // Set a unique ID for the hotel row div
-                flightRowTableDiv.classList.add('flight_row_class', 'flight_row_class_for_editing'); // Add a class to the div for styling
-                insertedFlightDataDivUniqueId++;
-
-
-                /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
-                document.getElementById('store_google_sheet_flight_uniuqe_id_name_value').innerText = insertedFlightDataDivUniqueId;
-
-
-                // Insert the HTML content into the newly created div
-                flightRowTableDiv.innerHTML = flightRowTableDivContent;
-
-
-
-
-                // Get the dynamically created 'flightRowAirLineController' element
-                let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
-
-
-                // Function to handle touch events and distinguish between tap and scroll for flight row
-                function handleFlightTouchEvent(element) {
-                    let touchStartX, touchStartY, touchStartTime;
-
-                    // Record the starting touch position and time
-                    element.addEventListener('touchstart', (event) => {
-                        let touch = event.touches[0];
-                        touchStartX = touch.clientX;
-                        touchStartY = touch.clientY;
-                        touchStartTime = new Date().getTime();
+                    // Reattach event listeners to the image controllers
+                    let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
+                    hotelRowImageControllers.forEach(element => {
+                        handleFlightMouseEvent(element); // Handle mouse events with click detection
+                        handleFlightTouchEvent(element); // Handle touch events with tap detection
                     });
 
-                    // Compare the ending touch position and time to determine if it was a tap
-                    element.addEventListener('touchend', (event) => {
-                        let touch = event.changedTouches[0];
-                        let touchEndX = touch.clientX;
-                        let touchEndY = touch.clientY;
-                        let touchEndTime = new Date().getTime();
 
-                        let deltaX = touchEndX - touchStartX;
-                        let deltaY = touchEndY - touchStartY;
-                        let deltaTime = touchEndTime - touchStartTime;
-
-                        // Check if the touch event qualifies as a tap
-                        let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                        // If it's a tap, run the click function
-                        if (isTap) {
-                            flightRowAirLineControllerFunction(event);
-                        }
-                    });
+                    // Clear the input after confirm the new flight data
+                    cancelNewFlightDataRow();
                 }
-
-                // Function to handle mouse events and distinguish between click and drag for flight row
-                function handleFlightMouseEvent(element) {
-                    let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
-
-                    // Record the starting mouse position and time
-                    element.addEventListener('mousedown', (event) => {
-                        mouseStartX = event.clientX;
-                        mouseStartY = event.clientY;
-                        mouseStartTime = new Date().getTime();
-                        isDragging = false;
-                    });
-
-                    // Mark as dragging if mouse moves significantly
-                    element.addEventListener('mousemove', (event) => {
-                        let deltaX = event.clientX - mouseStartX;
-                        let deltaY = event.clientY - mouseStartY;
-                        if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                            isDragging = true;
-                        }
-                    });
-
-                    // Compare the ending mouse position and time to determine if it was a click
-                    element.addEventListener('mouseup', (event) => {
-                        let mouseEndX = event.clientX;
-                        let mouseEndY = event.clientY;
-                        let mouseEndTime = new Date().getTime();
-
-                        let deltaX = mouseEndX - mouseStartX;
-                        let deltaY = mouseEndY - mouseStartY;
-                        let deltaTime = mouseEndTime - mouseStartTime;
-
-                        // Check if the mouse event qualifies as a click
-                        let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                        // If it's a click, run the click function
-                        if (isClick) {
-                            flightRowAirLineControllerFunction(event);
-                        }
-                    });
-                }
-
-                // Attach click and touch event listeners to each element
-                flightRowFlightArrivalTimeControllers.forEach(element => {
-                    handleFlightMouseEvent(element); // Handle mouse events with click detection
-                    handleFlightTouchEvent(element); // Handle touch events with tap detection
-                });
-
-
-
-
-
-                // Show and append the new flight data div
-                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'block';
-                document.getElementById('inserted_flight_data_position_div').appendChild(flightRowTableDiv);
-
-
-
-                // Get references to all input elements and reset their values thier
-                document.getElementById('flight_from_city_input_id').value = document.getElementById('flight_to_city_input_id').value;
-                document.getElementById('flight_to_city_input_id').value = '';
-                document.getElementById('flight_date_input_id').value = '';
-                document.getElementById('flight_fly_away_time_input_id').value = '';
-                document.getElementById('flight_arrival_time_input_id').value = '';
-
-
-
-
-
-                // Define a global variable to store the reference
-                let currentFlightDataDivId;
-
-                // Function to handle delete clicked hotel data
-                deleteClickedFlightData = function (clickedFlightDataDivId) {
-
-                    let overlayLayer = document.querySelector('.black_overlay');
-                    let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
-
-                    if (clickedFlightDataElement) {
-                        clickedFlightDataElement.remove();
-                    }
-
-                    // Hide edit/delete options div
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                    deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                    // Hide overlay layer with opacity transition
-                    overlayLayer.style.opacity = '0';
-
-                    // Remove overlay and edit/delete div from DOM after transition
-                    setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
-
-                    // Check if there are any remaining inserted flight data div (Searching by the second image class name)
-                    let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
-                    if (remainingFlightDataDivs.length === 0) {
-                        // Hide section with id 'downloaded_pdf_flight_data_page'
-                        document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
-                    }
-                }
-
-
-
-
-
-
-
-
-                /* Function to edit the clicked flight row data */
-                editClickedFlightData = function (clickedFlightDataDivIdName) {
-
-
-                    /* Make sure the correct section is the one that is visiable */
-                    create_new_clint_data_section.style.display = 'none';
-                    create_new_hotel_package_section.style.display = 'none';
-                    create_new_flight_package_section.style.display = 'flex';
-                    create_new_package_including_and_not_including_data_section.style.display = 'none';
-                    create_new_clint_movements_plan_section.style.display = 'none';
-
-
-                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
-                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'block';
-                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'block';
-
-
-                    document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
-                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
-
-
-                    document.getElementById('flight_data_dropdown_content').scrollIntoView({
-                        block: 'center',
-                        inline: 'center',
-                        behavior: 'smooth',
-                    });
-
-
-
-                    // Hide delete button div
-                    let overlayLayer = document.querySelector('.black_overlay');
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                    deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                    // Hide overlay layer with opacity transition
-                    overlayLayer.style.opacity = '0';
-
-                    // Remove overlay and edit/delete div from DOM after transition
-                    setTimeout(() => {
-                        document.body.removeChild(overlayLayer);
-                    }, 300); // Match transition duration in CSS
-
-
-                    // Get the clicked flight data row
-                    let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
-                    let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
-
-
-
-
-                    // Extract data using IDs
-                    let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightFromCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightToCityInput = clickedFlightDataDiv.querySelector(`p[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                    let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-
-                    // Assign values to inputs
-                    document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
-                    document.getElementById('flight_adult_person_amount_input_id').value = flightAdultPersonAmountInput;
-                    document.getElementById('flight_infant_person_amount_input_id').value = flightInfantPersonAmountInput;
-                    document.getElementById('flight_from_city_input_id').value = flightFromCityInput;
-                    document.getElementById('flight_to_city_input_id').value = flightToCityInput;
-                    document.getElementById('flight_date_input_id').value = flightDateInput;
-                    document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
-                    document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
-
-
-
-
-                    /* Function to cancel the flight row data editing process */
-                    cancelNewFlightDataRow = function () {
-                        // Get references to all input elements and reset their values
-                        document.getElementById('flight_air_line_input_id').value = '';
-                        document.getElementById('flight_from_city_input_id').value = '';
-                        document.getElementById('flight_to_city_input_id').value = '';
-                        document.getElementById('flight_date_input_id').value = '';
-                        document.getElementById('flight_fly_away_time_input_id').value = '';
-                        document.getElementById('flight_arrival_time_input_id').value = '';
-
-
-                        /* Hide and show different icons */
-                        document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
-                        document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
-                        document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
-
-
-                        /* Reset the innerText and styling to defualt */
-                        document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
-                        document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-
-
-                        // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
-                        saveOriginalFlightDates();
-                    }
-
-
-
-
-                    /* Function to confirm the new flight row data */
-                    confirmNewFlightDataRow = function () {
-
-                        // Play a sound effect
-                        new Audio('success.mp3').play();
-
-
-                        // Get the clicked flight data row
-                        let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
-
-                        // Clear the old data
-                        clickedFlightDataDiv.innerHTML = '';
-
-
-                        // Extract the new data from the input fields
-                        let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-                        let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
-                        let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
-                        let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-                        let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-                        let flightDateInput = document.getElementById('flight_date_input_id').value;
-                        let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-                        let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
-
-
-                        // Create the HTML content for a new hotel row
-                        let flightRowTableDivContent = `
-                            <div><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;" id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
-                            <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
-                            <div><p>20 كيلو للشخص</p></div>
-                            <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
-                            <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                            <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1></div>
-                            <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                            <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
-                        `;
-
-
-                        // Insert the HTML content into the newly created div
-                        clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
-
-
-                        // Reattach event listeners to the image controllers
-                        let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
-                        hotelRowImageControllers.forEach(element => {
-                            handleFlightMouseEvent(element); // Handle mouse events with click detection
-                            handleFlightTouchEvent(element); // Handle touch events with tap detection
-                        });
-
-
-                        // Clear the input after confirm the new flight data
-                        cancelNewFlightDataRow();
-                    }
-                }
-
-
-
-
-
-
-
-
-
-
-
-                // Function to handle flight row div click or touch
-                flightRowAirLineControllerFunction = function (event) {
-                    let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                    let clickedFlightDataDiv = event.target.closest('.flight_row_class');
-
-                    if (clickedFlightDataDiv) {
-                        currentFlightDataDivId = clickedFlightDataDiv.id;
-
-
-                        // Check if the overlay already exists
-                        let overlayLayer = document.querySelector('.black_overlay');
-                        if (!overlayLayer) {
-                            overlayLayer = document.createElement('div');
-                            overlayLayer.classList.add('black_overlay');
-                            document.body.appendChild(overlayLayer);
-
-                            setTimeout(() => {
-                                overlayLayer.style.opacity = '1';
-                                deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
-                            }, 50);
-
-                            // Handle both click and touch events on overlay for consistency
-                            let handleOverlayClick = () => {
-                                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-                                overlayLayer.style.opacity = '0';
-                                setTimeout(() => {
-                                    // Only remove the overlay if it is still a child of the body
-                                    if (document.body.contains(overlayLayer)) {
-                                        document.body.removeChild(overlayLayer);
-                                    }
-                                }, 300);
-                            };
-
-                            overlayLayer.addEventListener('click', handleOverlayClick);
-                            overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                            overlayLayer.addEventListener('click', (event) => {
-                                event.stopPropagation();
-                            });
-                        }
-
-
-                        /* Function to run delete clicked flight row data */
-                        runDeleteClickedFlightDataFunction = function () {
-                            deleteClickedFlightData(currentFlightDataDivId);
-                        }
-
-                        /* Function to run delete clicked flight row data */
-                        runEditClickedFlightDataFunction = function () {
-                            editClickedFlightData(currentFlightDataDivId);
-
-                            /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
-                            document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                            document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                            document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(0, 46, 57)';
-                            document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                            document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        }
-                    }
-                };
-
-
-
-
-
-
-
-                // Function to update dates inside 'flight_row_class_for_editing' divs based on their order in the DOM
-                function updateFlightRowDates() {
-                    const flightRows = document.querySelectorAll('.flight_row_class_for_editing');
-
-                    flightRows.forEach((row, index) => {
-                        const h1Element = row.querySelector('h1');
-
-                        if (h1Element && originalFlightDates[index]) {
-                            // Update the dates based on the new order of elements
-                            h1Element.innerText = originalFlightDates[index].h1Date; // Use h1Date to update
-                        }
-                    });
-                }
-
-
-                // Function to handle the drop and reapply the dates
-                function handleDropFlightRow() {
-                    // After dropping, reapply the dates based on the current DOM order
-                    updateFlightRowDates(); // Call the update function here
-                }
-
-
-
-
-
-
-                // Praper drag-and-drop functionality for the newly added flight row
-                createFlightDragAndDropMood();
-
-                // Function to prepare drag and drop 'insertedHotelDataDiv' elements functionality
-                function createFlightDragAndDropMood() {
-                    // Common function to handle dragging logic
-                    function handleDrag(event, touch = false) {
-                        if (event.target.classList.contains('flight_row_flight_arrival_time_controller')) {
-                            event.preventDefault();
-                            let draggingElement = event.target.closest('.flight_row_class');
-                            draggingElement.classList.add('dragging');
-                            draggingElement.dataset.startY = touch ? event.touches[0].clientY : event.clientY;
-                            document.addEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                            document.addEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                            // Disable scrolling without affecting layout
-                            document.body.style.touchAction = 'none';
-                            document.body.style.userSelect = 'none';
-                        }
-                    }
-
-                    // Event listener for the drop zone
-                    let flightDropZone = document.getElementById('inserted_flight_data_position_div');
-
-                    // Function to handle mouse down event
-                    function mouseDown(event) {
-                        handleDrag(event, false);
-                    }
-
-                    // Function to handle touch start event
-                    function touchStart(event) {
-                        handleDrag(event, true);
-                    }
-
-                    // Function to handle move event
-                    function move(event, touch = false) {
-                        let draggingElement = document.querySelector('.dragging');
-                        let startY = parseInt(draggingElement.dataset.startY || 0);
-                        let deltaY = (touch ? event.touches[0].clientY : event.clientY) - startY;
-                        draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                        let dropElements = Array.from(flightDropZone.children);
-                        let currentIndex = dropElements.indexOf(draggingElement);
-
-                        let targetIndex = currentIndex;
-                        for (let i = 0; i < dropElements.length; i++) {
-                            let element = dropElements[i];
-                            let rect = element.getBoundingClientRect();
-                            if (i !== currentIndex && (touch ? event.touches[0].clientY : event.clientY) > rect.top && (touch ? event.touches[0].clientY : event.clientY) < rect.bottom) {
-                                if (deltaY > 0 && (touch ? event.touches[0].clientY : event.clientY) > rect.bottom - 20) {
-                                    targetIndex = i + 1;
-                                } else if (deltaY < 0 && (touch ? event.touches[0].clientY : event.clientY) < rect.top + 20) {
-                                    targetIndex = i;
-                                }
-                                break;
-                            }
-                        }
-
-                        if (targetIndex !== currentIndex) {
-                            flightDropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                        }
-                    }
-
-                    // Function to handle mouse move event
-                    function mouseMove(event) {
-                        move(event, false);
-                    }
-
-                    // Function to handle touch move event
-                    function touchMove(event) {
-                        move(event, true);
-                    }
-
-                    // Function to handle end event
-                    function end(event, touch = false) {
-                        let draggingElement = document.querySelector('.dragging');
-
-                        if (draggingElement) {
-                            draggingElement.classList.remove('dragging');
-                            draggingElement.style.transform = '';
-                            draggingElement.removeAttribute('data-start-y');
-
-                            draggingElement.classList.add('drop-transition');
-                            setTimeout(() => {
-                                draggingElement.classList.remove('drop-transition');
-                            }, 300);
-                        }
-
-                        document.removeEventListener(touch ? 'touchmove' : 'mousemove', touch ? touchMove : mouseMove);
-                        document.removeEventListener(touch ? 'touchend' : 'mouseup', touch ? touchEnd : mouseUp);
-
-                        // Restore scrolling
-                        document.body.style.touchAction = '';
-                        document.body.style.userSelect = '';
-                    }
-
-                    // Function to handle mouse up event
-                    function mouseUp(event) {
-                        end(event, false);
-
-                        handleDropFlightRow();
-                    }
-
-                    // Function to handle touch end event
-                    function touchEnd(event) {
-                        end(event, true);
-
-                        handleDropFlightRow(); // Call the function to update dates after drop ends
-                    }
-
-                    // Add event listeners for each insertedFlightDataDiv element
-                    let insertedFlightDataDivs = document.querySelectorAll('.flight_row_class');
-
-                    insertedFlightDataDivs.forEach((div) => {
-                        div.addEventListener('mousedown', mouseDown);
-                        div.addEventListener('touchstart', touchStart);
-                    });
-                }
-
-
-                // Call a function to save the current dates of all flights for later Re-arranging use (when drag and drop)
-                saveOriginalFlightDates();
-
             }
 
+
+
+
+
+
+
+
+
+
+
+            // Function to handle flight row div click or touch
+            flightRowAirLineControllerFunction = function (event) {
+                let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
+                let clickedFlightDataDiv = event.target.closest('.flight_row_class');
+
+                if (clickedFlightDataDiv) {
+                    currentFlightDataDivId = clickedFlightDataDiv.id;
+
+
+                    // Check if the overlay already exists
+                    let overlayLayer = document.querySelector('.black_overlay');
+                    if (!overlayLayer) {
+                        overlayLayer = document.createElement('div');
+                        overlayLayer.classList.add('black_overlay');
+                        document.body.appendChild(overlayLayer);
+
+                        setTimeout(() => {
+                            overlayLayer.style.opacity = '1';
+                            deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
+                        }, 50);
+
+                        // Handle both click and touch events on overlay for consistency
+                        let handleOverlayClick = () => {
+                            deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
+                            overlayLayer.style.opacity = '0';
+                            setTimeout(() => {
+                                // Only remove the overlay if it is still a child of the body
+                                if (document.body.contains(overlayLayer)) {
+                                    document.body.removeChild(overlayLayer);
+                                }
+                            }, 300);
+                        };
+
+                        overlayLayer.addEventListener('click', handleOverlayClick);
+                        overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
+
+                        overlayLayer.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                        });
+                    }
+
+
+                    /* Function to run delete clicked flight row data */
+                    runDeleteClickedFlightDataFunction = function () {
+                        deleteClickedFlightData(currentFlightDataDivId);
+                    }
+
+                    /* Function to run delete clicked flight row data */
+                    runEditClickedFlightDataFunction = function () {
+                        editClickedFlightData(currentFlightDataDivId);
+
+                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
+                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(0, 46, 57)';
+                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
+                    }
+                }
+            };
         }
+
 
 
 
@@ -2019,9 +1837,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Function to update dates inside 'hotel_row_class_for_editing' divs based on their order in the DOM
             function updateHotelRowDates() {
-                const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+                const allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
 
-                hotelRows.forEach((row, index) => {
+                allHotelRows.forEach((row, index) => {
                     const h2Element = row.querySelector('h2');
                     const h3Element = row.querySelector('h3');
 
@@ -2270,8 +2088,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             // Get the state of the airport welcome checkbox
             let isAirportWelcomeIncluded = document.getElementById('include_airport_welcome__checkbox').checked;
-            let hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
-            let totalHotels = hotelRows.length;
+            let allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+            let totalHotels = allHotelRows.length;
             let usedVisitingPlaces = {};
 
             let previousCityName = '';
@@ -2281,7 +2099,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             let isFirstJakartaHotelFound = false; // Flag to track the first Jakarta hotel found
 
-            hotelRows.forEach((hotelRow, index) => {
+            allHotelRows.forEach((hotelRow, index) => {
                 let hotelName = hotelRow.querySelector('h1').innerText;
                 let checkInDate = hotelRow.querySelector('h2').innerText;
                 let nights = parseInt(hotelRow.querySelector('h4').innerText, 10);
@@ -2291,9 +2109,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 let packageMapping = {
                     "بكج شهر عسل": "honeymoon",
-                    "بكج الأصدقاء": "guys",
-                    "بكج عائلي": "family",
-                    "بكج لشخصين": "twopeople"
+                    "بكج شباب": "guys",
+                    "بكج عائلة": "family",
+                    "بكج شخصين": "twopeople"
                 };
                 let packageKey = packageMapping[packageType];
 
@@ -2346,8 +2164,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let combinedCityName = cityName;
 
                     if (i === 0 && index > 0) {
-                        previousCityName = hotelRows[index - 1].querySelector('h5').innerText;
-                        previousHotelName = hotelRows[index - 1].querySelector('h1').innerText;
+                        previousCityName = allHotelRows[index - 1].querySelector('h5').innerText;
+                        previousHotelName = allHotelRows[index - 1].querySelector('h1').innerText;
 
                         if (cityName !== previousCityName) {
                             combinedCityName = `${previousCityName}-${cityName}`;
