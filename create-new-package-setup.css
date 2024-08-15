@@ -779,8 +779,8 @@ body {
     z-index: 1000;
     background: rgb(0, 93, 163);
     width: 100%;
-    min-height: 100vh;
-    max-height: 100vh;
+    min-height: 100%;
+    max-height: 100%;
     padding-top: 60px; /* Adjust this to ensure content starts below the search bar */
     position: fixed;
     bottom: 0;
