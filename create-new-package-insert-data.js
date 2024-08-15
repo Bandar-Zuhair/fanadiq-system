@@ -807,7 +807,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Create the HTML content for the new flight row div
                     let flightRowTableDivContent = `
                         <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
-                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
+                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p>${document.getElementById('infant_package_person_amount_input_id').value ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${document.getElementById('infant_package_person_amount_input_id').value}</p>` : ''}</div>
                         <div><p>20 كيلو للشخص</p></div>
                         <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${fromCity}</h2></div>
                         <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${toCity}</h3></div>
@@ -982,13 +982,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 /* Function to cancel the flight row data editing process */
                 cancelNewFlightDataRow = function () {
-                    // Get references to all input elements and reset their values
+                    // Get references to all input elements and delete their values
                     document.getElementById('flight_air_line_input_id').value = '';
                     document.getElementById('flight_from_city_input_id').value = '';
                     document.getElementById('flight_to_city_input_id').value = '';
                     document.getElementById('flight_date_input_id').value = '';
                     document.getElementById('flight_fly_away_time_input_id').value = '';
                     document.getElementById('flight_arrival_time_input_id').value = '';
+                    document.getElementById('flight_extra_bags_input_id').value = '';
 
                     /* Hide and show different icons */
                     document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
@@ -1059,28 +1060,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Insert the new data into the clicked flight data div
                     clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
 
-                    // Clear the input fields
-                    document.getElementById('flight_air_line_input_id').value = '';
-                    document.getElementById('flight_adult_person_amount_input_id').value = '';
-                    document.getElementById('flight_infant_person_amount_input_id').value = '';
-                    document.getElementById('flight_from_city_input_id').value = '';
-                    document.getElementById('flight_to_city_input_id').value = '';
-                    document.getElementById('flight_date_input_id').value = '';
-                    document.getElementById('flight_fly_away_time_input_id').value = '';
-                    document.getElementById('flight_arrival_time_input_id').value = '';
-                    document.getElementById('flight_extra_bags_input_id').value = '';
-
-                    /* Hide and show different icons */
-                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
-                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
-                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
-
-                    /* Reset the innerText and styling to default */
-                    document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
-                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-
-                    /* Hide all inputs for editing the flight data */
-                    document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
+                    
+                    /* Run a function to exit the editing flight data mood */
+                    cancelNewFlightDataRow();
 
 
                     // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
