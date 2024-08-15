@@ -832,7 +832,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Create the HTML content for the new flight row div
                     let flightRowTableDivContent = `
                         <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
-                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p>${document.getElementById('infant_package_person_amount_input_id').value ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${document.getElementById('infant_package_person_amount_input_id').value}</p>` : ''}</div>
+                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p>${document.getElementById('infant_package_person_amount_input_id').value ? `<p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${document.getElementById('infant_package_person_amount_input_id').value}</p>` : ''}</div>
                         <div><p>20 كيلو للشخص</p></div>
                         <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${fromCity}</h2></div>
                         <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${toCity}</h3></div>
@@ -1058,7 +1058,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                         </div>
                         <div>
                             <p id="flight_adult_person_amount_${insertedFlightDataDivUniqueId}">${flightAdultPersonAmountInput}</p>
-                            ${flightInfantPersonAmountInput ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
+                            ${flightInfantPersonAmountInput ? `<p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
                         </div>
                         <div>
                             <p>20 كيلو للشخص</p>
@@ -1412,6 +1412,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_room_type_description_input_id').value = '';
             document.getElementById('hotel_room_contain_pool_input_id').value = '';
             document.getElementById('hotel_room_view_input_id').value = '';
+            document.getElementById('hotel_special_room_request_input_id').value = '';
             document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
@@ -1555,6 +1556,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
+                /* Get all the values from the clicked hotel row */
                 let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckInText = clickedHotelDataDiv.querySelector(`h2[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
@@ -1564,9 +1566,11 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_room_request_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
-                // Assign values to inputs
+
+                // Enter the values of the clicked hotel row div to inputs
                 document.getElementById('hotel_name_input_id').value = hotelNameText;
                 document.getElementById('hotel_check_in_input_id').value = hotelCheckInText;
                 document.getElementById('hotel_check_out_input_id').value = hotelCheckOutText;
@@ -1576,8 +1580,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
                 document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
                 document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
-
-
+                document.getElementById('hotel_special_room_request_input_id').value = hotelSpecialRoomRequestText;
                 document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
 
 
@@ -1623,6 +1626,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('hotel_room_type_description_input_id').value = '';
                     document.getElementById('hotel_room_contain_pool_input_id').value = '';
                     document.getElementById('hotel_room_view_input_id').value = '';
+                    document.getElementById('hotel_special_room_request_input_id').value = '';
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
