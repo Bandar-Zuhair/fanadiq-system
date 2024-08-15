@@ -186,7 +186,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
             visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
-            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة'],
+            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
         },
 
@@ -198,7 +198,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
             visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
-            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة'],
+            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
         },
 
@@ -210,7 +210,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
             visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
-            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة'],
+            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
         },
 
@@ -222,7 +222,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay4: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
             visitingPlaceNamesDay5: ['زيارة حديقة WISATA ALAM SEVILLAGE + زيارة مطل البرشوات'],
             visitingPlaceNamesDay6: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
-            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة'],
+            visitingPlaceNamesDay7: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
         },
 
@@ -247,7 +247,8 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay5: ['زيارة الكافي الجميل LOUNGE & SIERRA CAFE + زيارة حديقة KIARA ARTHA PARK'],
             visitingPlaceNamesDay6: ['زيارة قرية الخيزران الرائعة DUSUN BAMBU + زيارة شلال CURUG CIMAHI'],
             visitingPlaceNamesDay7: ['زيارة منتزه THE GREAT ASIA AFRICA + زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT'],
-            visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
+            visitingPlaceNamesDay8: ['زيارة غابة اورشيد + دوسون بانغو'],
+            visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
@@ -259,7 +260,8 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay5: ['زيارة الكافي الجميل LOUNGE & SIERRA CAFE + زيارة حديقة KIARA ARTHA PARK'],
             visitingPlaceNamesDay6: ['زيارة قرية الخيزران الرائعة DUSUN BAMBU + زيارة شلال CURUG CIMAHI'],
             visitingPlaceNamesDay7: ['زيارة منتزه THE GREAT ASIA AFRICA + زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT'],
-            visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
+            visitingPlaceNamesDay8: ['زيارة غابة اورشيد + دوسون بانغو'],
+            visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
@@ -271,7 +273,8 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay5: ['زيارة الكافي الجميل LOUNGE & SIERRA CAFE + زيارة حديقة KIARA ARTHA PARK'],
             visitingPlaceNamesDay6: ['زيارة قرية الخيزران الرائعة DUSUN BAMBU + زيارة شلال CURUG CIMAHI'],
             visitingPlaceNamesDay7: ['زيارة منتزه THE GREAT ASIA AFRICA + زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT'],
-            visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
+            visitingPlaceNamesDay8: ['زيارة غابة اورشيد + دوسون بانغو'],
+            visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
 
@@ -283,7 +286,8 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay5: ['زيارة الكافي الجميل LOUNGE & SIERRA CAFE + زيارة حديقة KIARA ARTHA PARK'],
             visitingPlaceNamesDay6: ['زيارة قرية الخيزران الرائعة DUSUN BAMBU + زيارة شلال CURUG CIMAHI'],
             visitingPlaceNamesDay7: ['زيارة منتزه THE GREAT ASIA AFRICA + زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT'],
-            visitingPlaceNamesDay8: ['يوم مفتوج للراحة والتسوق'],
+            visitingPlaceNamesDay8: ['زيارة غابة اورشيد + دوسون بانغو'],
+            visitingPlaceNamesDay9: ['يوم مفتوج للراحة والتسوق'],
         },
 
     },
