@@ -71,10 +71,6 @@ form.addEventListener('submit', e => {
                 // Only call submitForm if 'existingDataStatus' is equal to "newData"
                 if (existingDataStatus === "newData") {
                     submitForm();
-                    console.log('New Save');
-
-                } else {
-                    console.log('Exiting Save');
                 }
 
 
@@ -181,7 +177,6 @@ function updateDataBaseSavedDataNames() {
             });
         })
         .catch(error => {
-            console.error('Error fetching data from Google Sheets:', error);
         });
 }
 
@@ -276,7 +271,6 @@ function importContentFromLocalStorage() {
 
 
         } catch (error) {
-            console.error('Error importing data from localStorage:', error);
         }
     } else {
         // Play a sound effect if no data is found
@@ -324,8 +318,6 @@ function importContentForSelectedName(name) {
                     }
                 }
             }
-
-            console.log('Yess');
 
             hideOverlay()
 
@@ -640,6 +632,19 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('package_total_nights_input_id').value = document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText;
         storePackageTotalNights = document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText;
         document.getElementById('clint_company_name_input_id').value = document.getElementById('store_google_sheet_clint_company_name_value').innerText;
+
+
+        /* The following code will be replaced with the folloiwng one
+        document.getElementById('website_users_name_input_id').value = document.getElementById('store_google_sheet_package_user_name_value').innerText;
+
+        until 20 Sept Delete this following code and use the upper one
+        */
+        if (document.getElementById('store_google_sheet_package_user_name_value')) {
+            document.getElementById('website_users_name_input_id').value = document.getElementById('store_google_sheet_package_user_name_value').innerText;
+
+        } else {
+            document.getElementById('website_users_name_input_id').value = 'عبد الرحمن';
+        }
 
 
 
@@ -1777,6 +1782,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('show_and_hide_clint_movement_section_icon').style.display = 'inline';
 
 
+        /* Update the available clint visiting places based on the current existing visiting places */
+        processClintMovements();
+        
 
         // Loop through each 'flight_row_class' element
         clintMovementsRowTableDiv.forEach(clintMovementsRowTableDiv => {
@@ -1862,7 +1870,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = currentClintMovementsDataDiv.querySelector('h2').innerText;
 
 
-
+                /* Update the available clint visiting places based on the current existing visiting places */
+                processClintMovements();
 
 
 
@@ -1891,6 +1900,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     /* Re-enable the clint movements dates when editing */
                     document.getElementById('whole_package_start_date_input_id').disabled = false;
                     document.getElementById('whole_package_end_date_input_id').disabled = false;
+
+
+                    /* Update the available clint visiting places based on the current existing visiting places */
+                    processClintMovements();
                 }
 
 
