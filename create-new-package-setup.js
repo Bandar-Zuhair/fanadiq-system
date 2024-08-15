@@ -802,8 +802,8 @@ searchBarInputElements.forEach(input => {
         dropdownDiv.style.transition = 'height 0.1s ease-in-out';
 
         // Set the height of the dropdown div to 80vh when the search bar is clicked
-        dropdownDiv.style.maxHeight = '65vh';
-        dropdownDiv.style.minHeight = '65vh';
+        dropdownDiv.style.maxHeight = '70vh';
+        dropdownDiv.style.minHeight = '70vh';
     });
 
     // Add an input event listener to the input element
