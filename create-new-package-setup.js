@@ -10,7 +10,7 @@ window.addEventListener('beforeunload', function (event) {
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function (event) {
             window.history.pushState(null, null, window.location.href);
-            alert("Use the navigation menu to leave the page");
+            alert("يالحبيب هدي شوية وانتبه");
         };
     }
 })();
@@ -397,6 +397,38 @@ document.querySelectorAll('#package_including_details_div input[type="checkbox"]
 
 
 
+
+
+
+
+
+
+/* Function to run the dropdown functonality for special room request */
+let specialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id');
+
+// Get the options within the dropdown
+let specialRoomRequestInputOptions = document.querySelectorAll('#special_room_request_dropdown h3');
+
+specialRoomRequestInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+
+        if (option.textContent === 'حذف') {
+            specialRoomRequestInput.value = '';
+
+        } else if (option.textContent === 'باقة شهر عسل') {
+            specialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكه + شاي بعد الظهر'; // Set input value to selected option
+
+        }
+
+
+        hideOverlay(); // Hide overlay after selection
+
+    });
+});
 
 
 
@@ -877,7 +909,7 @@ smsCardWithInternetAmountInputOptions.forEach(option => {
             if (option.innerText === 'حذف') { // If the clicked h3 element's inner text is "حذف"
                 lastClickedClintMovementsCityInput.value = ''; // Clear the value of the last clicked input field
 
-                
+
             } else { // If the clicked h3 element's inner text is not "حذف"
                 if (lastClickedClintMovementsCityInput.id === 'sms_card_with_internet_amount_input_id') {
 
@@ -1181,8 +1213,8 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
 
 
-    /* Get the 'bali_kuta_clint_movements_places_page_div' element */
-    let clintMovementsPlacesPageDiv = document.getElementById('bali_kuta_clint_movements_places_page_div');
+    /* Get the 'all_clint_movements_places_page_divs_container' element */
+    let clintMovementsPlacesPageDiv = document.getElementById('all_clint_movements_places_page_divs_container');
 
     // Show the clint movements places page div
     clintMovementsPlacesPageDiv.style.display = 'flex';
@@ -1217,57 +1249,68 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
         document.body.style.overflow = ''; // Restore body scrolling
 
-        exitClintMovementsPlacesPage.remove();
 
+        if (exitClintMovementsPlacesPage) {
+            exitClintMovementsPlacesPage.remove();
+        }
 
         // Enable scrolling
         document.body.style.overflow = ''; // Re-enable page scrolling
     }
-}
-
-
-/* Function to pick a clint movements place */
-pickThisClintMovementsPlace = function (clickedPlace) {
-
-
-    // Copy the text of the clicked <p> element to the clipboard
-    const textToCopy = clickedPlace.innerText;
-
-    // Create a temporary textarea element to facilitate copying
-    const tempTextarea = document.createElement('textarea');
-    tempTextarea.value = textToCopy;
-    document.body.appendChild(tempTextarea);
-
-    // Select the text and copy it to the clipboard
-    tempTextarea.select();
-    document.execCommand('copy');
-
-    // Remove the temporary textarea element
-    document.body.removeChild(tempTextarea);
 
 
 
-    /* Get the 'bali_kuta_clint_movements_places_page_div' element */
-    let clintMovementsPlacesPageDiv = document.getElementById('bali_kuta_clint_movements_places_page_div');
+    /* Function to pick a clint movements place */
+    pickThisClintMovementsPlace = function (clickedPlace) {
 
 
-    /* Hide all clint movements places options */
-    kuta_clint_movements_places_div.style.display = 'none';
-    ubud_clint_movements_places_div.style.display = 'none';
-    jakarta_clint_movements_places_div.style.display = 'none';
-    puncak_clint_movements_places_div.style.display = 'none';
-    bandung_clint_movements_places_div.style.display = 'none';
-    lombok_clint_movements_places_div.style.display = 'none';
-    clintMovementsPlacesPageDiv.style.display = 'none';
+        // Copy the text of the clicked <p> element to the clipboard
+        const textToCopy = clickedPlace.innerText;
+
+        // Create a temporary textarea element to facilitate copying
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = textToCopy;
+        document.body.appendChild(tempTextarea);
+
+        // Select the text and copy it to the clipboard
+        tempTextarea.select();
+        document.execCommand('copy');
+
+        // Remove the temporary textarea element
+        document.body.removeChild(tempTextarea);
 
 
-    document.body.style.overflow = ''; // Restore body scrolling
 
-    exitClintMovementsPlacesPage.remove();
+        /* Get the 'all_clint_movements_places_page_divs_container' element */
+        let clintMovementsPlacesPageDiv = document.getElementById('all_clint_movements_places_page_divs_container');
 
 
-    // Enable scrolling
-    document.body.style.overflow = ''; // Re-enable page scrolling
+        /* Hide all clint movements places options */
+        kuta_clint_movements_places_div.style.display = 'none';
+        ubud_clint_movements_places_div.style.display = 'none';
+        jakarta_clint_movements_places_div.style.display = 'none';
+        puncak_clint_movements_places_div.style.display = 'none';
+        bandung_clint_movements_places_div.style.display = 'none';
+        lombok_clint_movements_places_div.style.display = 'none';
+
+
+
+        /* Hide the holde clint visiting places divs container */
+        clintMovementsPlacesPageDiv.style.display = 'none';
+
+
+        document.body.style.overflow = ''; // Restore body scrolling
+
+        if (exitClintMovementsPlacesPage) {
+            exitClintMovementsPlacesPage.remove();
+        }
+
+
+        // Enable scrolling
+        document.body.style.overflow = ''; // Re-enable page scrolling
+
+    }
+
 
 }
 
