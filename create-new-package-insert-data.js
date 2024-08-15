@@ -806,15 +806,15 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     // Create the HTML content for the new flight row div
                     let flightRowTableDivContent = `
-            <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
-            <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
-            <div><p>20 كيلو للشخص</p></div>
-            <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${fromCity}</h2></div>
-            <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${toCity}</h3></div>
-            <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
-            <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
-            <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
-        `;
+                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
+                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
+                        <div><p>20 كيلو للشخص</p></div>
+                        <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${fromCity}</h2></div>
+                        <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${toCity}</h3></div>
+                        <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
+                        <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
+                        <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
+                    `;
 
                     flightRowTableDiv.innerHTML = flightRowTableDivContent;  // Insert the generated HTML content into the new div
 
@@ -1081,6 +1081,14 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                     /* Hide all inputs for editing the flight data */
                     document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
+
+
+                    // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
+                    document.querySelectorAll('.flight_row_flight_arrival_time_controller').forEach(function (element) {
+                        element.onclick = function (event) {
+                            flightRowAirLineControllerFunction(event, element);
+                        };
+                    });
                 }
             }
 
