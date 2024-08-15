@@ -812,7 +812,6 @@ body {
     /* Align text to the left */
     width: 100%;
     font-size: 2vw;
-    margin-top: 100px;
     padding: 10px 0;
     border: none;
     outline: none;
@@ -1465,12 +1464,6 @@ body {
 
 
 
-    /* Search bar input */
-    .search_bar_input_class {
-        margin-top: 75px;
-    }
-
-
 
 
 
@@ -1737,12 +1730,6 @@ body {
 
 
 
-
-
-    /* Search bar input */
-    .search_bar_input_class {
-        margin-top: 50px;
-    }
 
 
 
