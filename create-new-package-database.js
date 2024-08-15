@@ -275,10 +275,6 @@ function importContentFromLocalStorage() {
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
 
-            /* Update the available clint visiting places based on the current existing visiting places */
-            hideDuplicatePlaces();
-            console.log('Update visiting places has been updated')
-
         } catch (error) {
             console.error('Error importing data from localStorage:', error);
         }
@@ -347,10 +343,6 @@ function importContentForSelectedName(name) {
             /* Show the 'inserted_company_name_image_position_div' element */
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-
-            /* Update the available clint visiting places based on the current existing visiting places */
-            hideDuplicatePlaces();
-            console.log('Update visiting places has been updated');
 
 
         } catch (error) {
@@ -1296,16 +1288,46 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-                document.getElementById('hotel_check_in_input_id').value = '';
-                document.getElementById('hotel_check_in_input_id').disabled = false;
-
-
-
                 // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
                 let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
                 if (remainingHotelDataDivs.length === 0) {
                     // Hide section with id 'downloaded_pdf_hotel_data_page'
                     document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+
+
+                    /* Reset the value of the saved hotel dates for later Re-arranging */
+                    saveOriginalHotelDates();
+
+
+                    /* in case if there is no remaaining 'inserted_hotel_data_row' then check if the 'create_new_clint_data_section' is visible */
+                    if (document.getElementById('create_new_clint_data_section').style.display !== 'none') {
+
+                        /* Set the date of the 'hotel_check_in_input_id' as the the date in the 'whole_package_start_date_input_id' */
+                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('whole_package_start_date_input_id').value;
+
+                    } else {
+
+                        document.getElementById('hotel_check_in_input_id').value = '';
+                    }
+
+
+                } else {
+
+                    // Get all divs with the class name 'hotel_row_class_for_editing'
+                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
+
+                    // Get the last found div with the class name "hotel_row_class_for_editing"
+                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
+
+                    // Get the date value from the h3 element inside the lastHotelRowDiv
+                    let dateElement = lastHotelRowDiv.querySelector('h3');
+                    let dateValue = dateElement ? dateElement.innerText.trim() : '';
+
+                    // Set the value of the hotel_check_in_input_id to the extracted date value
+                    document.getElementById('hotel_check_in_input_id').value = dateValue;
+
+                    // Store the last stopped hotel check-out date for later use (when importing data)
+                    document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = dateValue;
 
                 }
             };
