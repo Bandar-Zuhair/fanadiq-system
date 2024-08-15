@@ -1116,7 +1116,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
                         document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
                         document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(0, 46, 57)';
-                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.color = 'rgb(85, 127, 137)';
+                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
                         document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
                     }
                 }
@@ -1784,7 +1784,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
         /* Update the available clint visiting places based on the current existing visiting places */
         processClintMovements();
-        
+
 
         // Loop through each 'flight_row_class' element
         clintMovementsRowTableDiv.forEach(clintMovementsRowTableDiv => {
