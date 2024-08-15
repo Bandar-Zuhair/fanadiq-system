@@ -779,9 +779,9 @@ body {
     z-index: 1000;
     background: rgb(0, 93, 163);
     width: 100%;
-    min-height: 50vh;
-    max-height: 50vh;
-    padding: 5px 0;
+    min-height: 100vh;
+    max-height: 100vh;
+    padding-top: 60px; /* Adjust this to ensure content starts below the search bar */
     position: fixed;
     bottom: 0;
     display: flex;
@@ -800,7 +800,11 @@ body {
 
 /* Search bar container */
 .search_bar_div_class {
+    position: fixed;
+    top: env(safe-area-inset-top, 0); /* Takes into account safe area for devices with notches */
     width: 100%;
+    z-index: 1001; /* Higher than the dropdown to ensure visibility */
+    background: rgb(0, 93, 163);
     padding: 10px;
     box-sizing: border-box;
     transition: all 0.1s ease-in-out;
@@ -808,7 +812,7 @@ body {
 
 /* Search bar input */
 .search_bar_input_class {
-    text-align: center; /* Align text to the left */
+    text-align: center; /* Align text to the center */
     width: 100%;
     font-size: 2vw;
     padding: 10px;
@@ -825,10 +829,12 @@ body {
 }
 
 
+
 /* Company name options */
 .company_names_options_dropdown_class {
     background: rgb(0, 93, 163);
     width: 100%;
+    margin-top: 45px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -990,9 +996,17 @@ body {
 
 /* Searchable dropdown input filter h3 */
 .clear_searchable_dropdown_input_filter_h3_value_div {
+    position: fixed; /* Fix the position to keep it visible */
+    top: calc(env(safe-area-inset-top, 0) + 60px); /* Position it just below the search bar */
     width: 99%;
+    z-index: 1002; /* Ensure it's above other elements */
+    background: rgb(0, 93, 163); /* Match the background to make it seamless */
+    margin-top: 45px;
+    padding: 5px 0; /* Add padding to give it space */
+    box-sizing: border-box;
 }
 
+/* Ion-icon within the filter div */
 .clear_searchable_dropdown_input_filter_h3_value_div ion-icon {
     background: rgb(255, 0, 0);
     color: white;
@@ -1003,6 +1017,7 @@ body {
     border-radius: 7px;
     cursor: pointer;
 }
+
 
 
 
