@@ -977,12 +977,15 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
                 /* Function to confirm the new flight row data */
                 confirmNewFlightDataRow = function () {
+                    // Play a sound effect
+                    new Audio('success.mp3').play();
+
+                    
                     // Get the clicked hotel data row
                     let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
 
                     // Clear the old data
                     clickedFlightDataDiv.innerHTML = '';
-
 
                     // Extract the new data from the input fields
                     let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
@@ -993,18 +996,37 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     let flightDateInput = document.getElementById('flight_date_input_id').value;
                     let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
                     let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
+                    let flightExtraBagsInput = document.getElementById('flight_extra_bags_input_id').value;
 
 
-                    // Create the HTML content for a new hotel row
+                    // Create the HTML content for a new flight row, only including non-empty values
                     let flightRowTableDivContent = `
-                        <div><p class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;" id='flight_air_line_${insertedFlightDataDivUniqueId}'>${flightAirLineInput}</p></div>
-                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${flightAdultPersonAmountInput}</p>\n<p id='flight_infant_person_amount_${insertedFlightDataDivUniqueId}'>${flightInfantPersonAmountInput}</p></div>
-                        <div><p>20 كيلو للشخص</p></div>
-                        <div><p id='flight_from_city_${insertedFlightDataDivUniqueId}'>${flightFromCityInput}</p></div>
-                        <div><p id='flight_to_city_${insertedFlightDataDivUniqueId}'>${flightToCityInput}</p></div>
-                        <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}'>${flightDateInput}</h1></div>
-                        <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'>${flightFlyAwayTimeInput}</p></div>
-                        <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'>${flightArrivalTimeInput}</p></div>
+                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;">
+                            ${flightAirLineInput ? `<p id="flight_air_line_${insertedFlightDataDivUniqueId}">${flightAirLineInput}</p>` : ''}
+                        </div>
+                        <div>
+                            <p id="flight_adult_person_amount_${insertedFlightDataDivUniqueId}">${flightAdultPersonAmountInput}</p>
+                            ${flightInfantPersonAmountInput ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
+                        </div>
+                        <div>
+                            <p>20 كيلو للشخص</p>
+                            ${flightExtraBagsInput ? `<p id="flight_extra_bags_${insertedFlightDataDivUniqueId}">${flightExtraBagsInput}</p>` : ''}
+                        </div>
+                        <div>
+                            ${flightFromCityInput ? `<h2 id="flight_from_city_${insertedFlightDataDivUniqueId}">${flightFromCityInput}</h2>` : ''}
+                        </div>
+                        <div>
+                            ${flightToCityInput ? `<h3 id="flight_to_city_${insertedFlightDataDivUniqueId}">${flightToCityInput}</h3>` : ''}
+                        </div>
+                        <div>
+                            ${flightDateInput ? `<h1 id="flight_date_${insertedFlightDataDivUniqueId}" class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1>` : ''}
+                        </div>
+                        <div>
+                            ${flightFlyAwayTimeInput ? `<p id="flight_fly_away_time_${insertedFlightDataDivUniqueId}">${flightFlyAwayTimeInput}</p>` : ''}
+                        </div>
+                        <div>
+                            ${flightArrivalTimeInput ? `<p id="flight_arrival_time_${insertedFlightDataDivUniqueId}">${flightArrivalTimeInput}</p>` : ''}
+                        </div>
                     `;
 
 
@@ -1012,11 +1034,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
 
 
-                    // Reattach event listeners to the image controllers
-                    let hotelRowImageControllers = clickedFlightDataDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
-                    hotelRowImageControllers.forEach(element => {
-                        handleFlightMouseEvent(element); // Handle mouse events with click detection
-                        handleFlightTouchEvent(element); // Handle touch events with tap detection
+                    // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
+                    document.querySelectorAll('.flight_row_flight_arrival_time_controller').forEach(function (element) {
+                        element.onclick = function (event) {
+                            flightRowAirLineControllerFunction(event, element);
+                        };
                     });
 
 
