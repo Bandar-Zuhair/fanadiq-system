@@ -1054,6 +1054,29 @@ flightAdultPersonAmountInputOptions.forEach(option => {
 
 
 
+let infantPackagePersonAmountInput = document.getElementById('infant_package_person_amount_input_id');
+
+// Get the options within the dropdown
+let infantPackagePersonAmountInputOptions = document.querySelectorAll('#infat_whole_package_people_amount_dropdown h3');
+
+infantPackagePersonAmountInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        // Play a sound effect
+        new Audio('click.mp3').play();
+
+        if (option.textContent === 'حذف') {
+            infantPackagePersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
+
+        } else {
+            infantPackagePersonAmountInput.value = option.textContent; // Set input value to selected option
+        }
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
 let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id');
 
 // Get the options within the dropdown
