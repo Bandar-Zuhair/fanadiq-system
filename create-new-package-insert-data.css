@@ -226,7 +226,8 @@
 
 
 /* Inserted hotel data position */
-.hotel_row_class {
+.hotel_row_class,
+.all_hotel_row_data_divs_container {
     background: white;
     display: flex;
     justify-content: space-between;
@@ -234,7 +235,8 @@
     border-bottom: 0.5px solid black;
 }
 
-.hotel_row_class div {
+.hotel_row_class div,
+.all_hotel_row_data_divs_container {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -1084,9 +1086,12 @@
 
 
 
-
+    
     .hotel_row_class span {
         font-size: 2.4vw;
+    }
+    .hotel_special_room_request_p_class{
+        font-size: 1.7vw !important;
     }
 
 
