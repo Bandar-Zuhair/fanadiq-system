@@ -19,26 +19,59 @@ function saveOriginalHotelDates() {
 }
 
 
-function hideMatchingParagraphs() {
-    // Loop through each 'extraClintMovementsRowTableDiv' div
-    document.querySelectorAll('.extraClintMovementsRowTableDiv').forEach(row => {
-        // Get the innerText of the 'h2' element inside the current row
-        const h2Text = row.querySelector('h2').innerText.trim();
 
-        // Split the h2 text into an array of individual parts
-        const h2Parts = h2Text.split('+').map(part => part.trim());
+/* Function to update the available client visiting places based on the current existing visiting places */
+function processClintMovements() {
 
-        // Loop through each 'p' element with the specified onclick attribute inside the current row
-        row.querySelectorAll('p[onclick="pickThisClintMovementsPlace(this)"]').forEach(p => {
-            const pText = p.innerText.trim();
+    // Select all divs with the class 'clint_movements_row_class_for_editing'
+    const allClintMovementsDivs = document.querySelectorAll('.clint_movements_row_class_for_editing');
 
-            // If the pText matches any of the parts in h2Parts, hide the p element
-            if (h2Parts.some(part => part === pText)) {
-                p.style.display = 'none';
-            }
-        });
+    // Initialize an array to store all sentences from the h2 elements inside these divs
+    let sentencesFromH2 = [];
+
+    // Loop through each 'clint_movements_row_class_for_editing' div
+    allClintMovementsDivs.forEach((div) => {
+        // Get the innerText of the h2 element inside the current div
+        const h2Text = div.querySelector('h2').innerText;
+
+        // Split the h2 text into individual sentences based on the '+' delimiter
+        const sentences = h2Text.split('+').map(sentence => sentence.trim());
+
+        // Add each sentence to the 'sentencesFromH2' array
+        sentencesFromH2 = sentencesFromH2.concat(sentences);
+    });
+
+    // Select the div containing all the p elements
+    const allClintMovementsPlacesPageDivsContainer = document.getElementById('all_clint_movements_places_page_divs_container');
+
+    // Select all p elements inside the container
+    const allPElements = allClintMovementsPlacesPageDivsContainer.querySelectorAll('p');
+
+    // Function to normalize spaces in a text (replace multiple spaces with a single space)
+    function normalizeSpaces(text) {
+        return text.replace(/\s+/g, ' ').trim();
+    }
+
+    // Loop through each p element
+    allPElements.forEach((pElement) => {
+        // Get the normalized innerText of the current p element
+        const pText = normalizeSpaces(pElement.innerText);
+
+        // Check if the normalized innerText of the p element exists in the 'sentencesFromH2' array
+        if (sentencesFromH2.some(sentence => normalizeSpaces(sentence) === pText)) {
+            // If the sentence exists, set the display of the p element to 'none' to hide it
+            pElement.style.display = 'none';
+
+        } else {
+            // If the sentence does not exist, set the display of the p element to 'block' to show it
+            pElement.style.display = 'block';
+        }
     });
 }
+
+
+
+
 
 
 
@@ -351,16 +384,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             dateElement.innerText = `${newDate.getDate()} ${getArabicMonthName(newDate.getMonth())}`;
                         }
                     });
-
-
                 }
-
-
-
-                // Print the difference in days to the console
-                console.log(`The difference in days is: ${dayDifference}`);
-
-
             }
 
 
@@ -436,6 +460,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('store_google_sheet_whole_package_first_date_value').innerText = wholePackageStartDateInput;
             document.getElementById('store_google_sheet_whole_package_last_date_value').innerText = wholePackageEndDateInput;
             document.getElementById('store_google_sheet_whole_package_total_nights_value').innerText = storePackageTotalNights;
+            document.getElementById('store_google_sheet_package_user_name_value').innerText = websiteUsersNameInput;
 
 
 
@@ -1060,7 +1085,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Insert the new data into the clicked flight data div
                     clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
 
-                    
+
                     /* Run a function to exit the editing flight data mood */
                     cancelNewFlightDataRow();
 
@@ -1480,10 +1505,6 @@ checkInputsToInsertData = function (clickedButtonId) {
             /* Function to edit the clicked hotel row data */
             editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
-                console.log(clickedHotelRowIdName);
-
-
-
                 /* Make sure the correct section is the one that is visiable */
                 create_new_clint_data_section.style.display = 'none';
                 create_new_hotel_package_section.style.display = 'flex';
@@ -1555,8 +1576,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
                 document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
                 document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
-
-                console.log(hotelBreakfastPeopleAmountText);
 
 
                 document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
@@ -2256,63 +2275,12 @@ checkInputsToInsertData = function (clickedButtonId) {
             });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             /* Show up the 'downloaded_pdf_clint_movements_data_page' section */
             document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'block';
 
 
+            /* Update the available clint visiting places based on the current existing visiting places */
+            processClintMovements();
 
 
 
@@ -2376,7 +2344,8 @@ checkInputsToInsertData = function (clickedButtonId) {
                 document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = currentClintMovementsDataDiv.querySelector('h2').innerText;
 
 
-
+                /* Update the available clint visiting places based on the current existing visiting places */
+                processClintMovements();
 
 
 
@@ -2404,7 +2373,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* Update the available clint visiting places based on the current existing visiting places */
-                    hideMatchingParagraphs();
+                    processClintMovements();
                 }
 
 
@@ -2862,7 +2831,6 @@ function saveLastPdfDownloadData() {
     });
 
     localStorage.setItem('lastDownloadWebsiteData', JSON.stringify(newEntry));
-    console.log('Data saved successfully in localStorage as "lastDownloadWebsiteData".');
 }
 
 // Function to minify HTML (dummy implementation, you can replace it with a real minification function if needed)
@@ -2889,7 +2857,6 @@ downloadPdfWithCustomName = async function (pdfName) {
             });
             return canvas;
         } catch (error) {
-            console.error("Error capturing canvas:", error);
         }
     };
 
