@@ -204,6 +204,11 @@
                     autocomplete="off">
 
 
+                <input type="text" id="infant_package_person_amount_input_id" placeholder="عدد الرضع" autocomplete="off"
+                    readonly onclick="showOverlay('infat_whole_package_people_amount_dropdown')"
+                    style="cursor: pointer;">
+
+
                 <input type="text" id="whole_package_start_date_input_id" placeholder="تاريخ بداية البرنامج" readonly
                     autocomplete="off" style="cursor: pointer;">
 
@@ -294,6 +299,23 @@
         </div>
 
 
+
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="infat_whole_package_people_amount_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>+ 1 رضيع</h3>
+                <h3>+ 2 رضاع</h3>
+                <h3>+ 3 رضاع</h3>
+                <h3>+ 4 رضاع</h3>
+                <h3>+ 5 رضاع</h3>
+                <h3>+ 6 رضاع</h3>
+                <h3>+ 7 رضاع</h3>
+                <h3>+ 8 رضاع</h3>
+                <h3>+ 9 رضاع</h3>
+                <h3>+ 10 رضاع</h3>
+            </div>
+        </div>
 
 
         <!-- Company names options -->
@@ -1012,9 +1034,11 @@
                         autocomplete="off" onclick="showOverlay('flight_adult_people_amount_dropdown')"
                         style="cursor: pointer;">
 
-                    <input type="text" id="flight_infant_person_amount_input_id" placeholder="عدد الرضاع" readonly
-                        autocomplete="off" onclick="showOverlay('flight_infant_people_amount_dropdown')"
+
+                    <input type="text" id="flight_infant_person_amount_input_id" placeholder="عدد الرضع"
+                        autocomplete="off" readonly onclick="showOverlay('flight_infant_people_amount_dropdown')"
                         style="cursor: pointer;">
+
 
                     <input type="text" id="flight_from_city_input_id" placeholder="من مدينة" readonly autocomplete="off"
                         onclick="insertFlightDestinationCityInputValue('flight_from_city_input_id')"
@@ -1083,6 +1107,18 @@
 
 
 
+        <!-- Dropdown Div For Hotel Locations -->
+        <div id="airport_line_name_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>الجارودا</h3>
+                <h3>سوبر اير جت</h3>
+                <h3>اير اسيا</h3>
+                <h3>سيتيلنج</h3>
+                <h3>ترانس نوسا</h3>
+            </div>
+        </div>
+
 
 
         <!-- Dropdown Div For Hotel Locations -->
@@ -1107,9 +1143,6 @@
         </div>
 
 
-
-
-
         <!-- Dropdown Div For Hotel Locations -->
         <div id="flight_infant_people_amount_dropdown" class="searchable_names_dropdown_class">
             <div class="company_names_options_dropdown_class">
@@ -1124,20 +1157,6 @@
                 <h3>+ 8 رضاع</h3>
                 <h3>+ 9 رضاع</h3>
                 <h3>+ 10 رضاع</h3>
-            </div>
-        </div>
-
-
-
-        <!-- Dropdown Div For Hotel Locations -->
-        <div id="airport_line_name_dropdown" class="searchable_names_dropdown_class">
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3>الجارودا</h3>
-                <h3>سوبر اير جت</h3>
-                <h3>اير اسيا</h3>
-                <h3>سيتيلنج</h3>
-                <h3>ترانس نوسا</h3>
             </div>
         </div>
 
