@@ -19,34 +19,30 @@ function saveOriginalHotelDates() {
 }
 
 
+function hideMatchingParagraphs() {
+    // Loop through each 'extraClintMovementsRowTableDiv' div
+    document.querySelectorAll('.extraClintMovementsRowTableDiv').forEach(row => {
+        // Get the innerText of the 'h2' element inside the current row
+        const h2Text = row.querySelector('h2').innerText.trim();
 
-function hideDuplicatePlaces() {
-    // Get all the dynamically generated rows
-    const rowsContainer = document.getElementById('all_clint_movements_places_page_divs_container');
-    const generatedRows = rowsContainer.querySelectorAll('.extraClintMovementsRowTableDiv');
+        // Split the h2 text into an array of individual parts
+        const h2Parts = h2Text.split('+').map(part => part.trim());
 
-    // Store all the text content of the <h2> elements inside an array
-    let existingPlaceNames = [];
-    generatedRows.forEach(row => {
-        const h2Elements = row.querySelectorAll('h2');
-        h2Elements.forEach(h2 => {
-            existingPlaceNames.push(h2.innerText.trim());
+        // Loop through each 'p' element with the specified onclick attribute inside the current row
+        row.querySelectorAll('p[onclick="pickThisClintMovementsPlace(this)"]').forEach(p => {
+            const pText = p.innerText.trim();
+
+            // If the pText matches any of the parts in h2Parts, hide the p element
+            if (h2Parts.some(part => part === pText)) {
+                p.style.display = 'none';
+            }
         });
-    });
-
-    // Get all the <p> elements
-    const pElements = rowsContainer.querySelectorAll('p');
-
-    // Loop through each <p> element and hide it if its text content exists in the array
-    pElements.forEach(p => {
-        if (existingPlaceNames.includes(p.innerText.trim())) {
-            p.style.display = 'none';
-        }
     });
 }
 
-/* Update the available clint visiting places based on the current existing visiting places */
-hideDuplicatePlaces();
+
+
+
 
 
 
@@ -377,7 +373,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             if (document.querySelectorAll('.hotel_row_class_for_editing').length === 0) {
 
                 document.getElementById('hotel_check_in_input_id').value = wholePackageStartDateInput;
-                document.getElementById('hotel_check_in_input_id').disabled = true;
+                document.getElementById('hotel_check_out_input_id').value = '';
 
             }
 
@@ -773,31 +769,52 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             let lastCity = null;  // Variable to store the last valid city encountered
             let lastDate = null;  // Variable to store the date associated with the last valid city
-            const validCities = ["بالي", "جاكرتا", "باندونق"];  // Array of valid cities to check against
+            const validCities = ["بالي", "جاكرتا", "باندونق", "بونشاك"];  // Array of valid cities to check against
 
             // Iterate through all found hotel rows
             allHotelRows.forEach((hotelRow, index) => {
                 const currentCity = hotelRow.querySelector('h5').innerText;  // Get the city name from the current hotel row's h5 element
                 const currentDate = hotelRow.querySelector('h2').innerText;  // Get the date from the current hotel row's h2 element
 
-                // Check if the current city and last city are valid and different
-                if (validCities.includes(currentCity) && lastCity && lastCity !== currentCity && validCities.includes(lastCity)) {
-                    // Create a new div with flight details if the cities change between valid ones
+                // Check if transition between Jakarta and Bandung (in either order) and skip
+                if ((lastCity === "جاكرتا" && currentCity === "باندونق") || (lastCity === "باندونق" && currentCity === "جاكرتا")) {
+                    lastCity = currentCity;
+                    lastDate = currentDate;
+                    return; // Skip this iteration without creating a flightRowTableDiv
+                }
+
+                // Check if the current and last city are valid and different
+                if ((validCities.includes(currentCity) && lastCity && lastCity !== currentCity && validCities.includes(lastCity)) ||
+                    (lastCity === "بونشاك" && currentCity === "بالي") || (lastCity === "بالي" && currentCity === "بونشاك")) {
+
+                    let fromCity = lastCity;
+                    let toCity = currentCity;
+
+                    // Special case: if transition is from "بونشاك" to "بالي" or vice versa, set from/to cities accordingly
+                    if (lastCity === "بونشاك" && currentCity === "بالي") {
+                        fromCity = "جاكرتا";
+                        toCity = "بالي";
+                    } else if (lastCity === "بالي" && currentCity === "بونشاك") {
+                        fromCity = "بالي";
+                        toCity = "جاكرتا";
+                    }
+
+                    // Create a new div with flight details
                     let flightRowTableDiv = document.createElement('div');
                     flightRowTableDiv.id = `flight_row_id_${insertedFlightDataDivUniqueId}`;  // Set a unique ID for the new div
                     flightRowTableDiv.className = 'flight_row_class flight_row_class_for_editing';  // Assign class names to the new div
 
                     // Create the HTML content for the new flight row div
                     let flightRowTableDivContent = `
-                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
-                        <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
-                        <div><p>20 كيلو للشخص</p></div>
-                        <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${lastCity}</h2></div>
-                        <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${currentCity}</h3></div>
-                        <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
-                        <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
-                        <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
-                    `;
+            <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;"><p id='flight_air_line_${insertedFlightDataDivUniqueId}'></p></div>
+            <div><p id='flight_adult_person_amount_${insertedFlightDataDivUniqueId}'>${document.getElementById('adult_package_person_amount_input_id').value}</p></div>
+            <div><p>20 كيلو للشخص</p></div>
+            <div><h2 id='flight_from_city_${insertedFlightDataDivUniqueId}'>${fromCity}</h2></div>
+            <div><h3 id='flight_to_city_${insertedFlightDataDivUniqueId}'>${toCity}</h3></div>
+            <div><h1 id='flight_date_${insertedFlightDataDivUniqueId}' class="flight_date_for_matching_whole_package_date">${currentDate}</h1></div>
+            <div><p id='flight_fly_away_time_${insertedFlightDataDivUniqueId}'></p></div>
+            <div><p id='flight_arrival_time_${insertedFlightDataDivUniqueId}'></p></div>
+        `;
 
                     flightRowTableDiv.innerHTML = flightRowTableDivContent;  // Insert the generated HTML content into the new div
 
@@ -812,6 +829,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                 lastCity = currentCity;
                 lastDate = currentDate;
             });
+
+
+
 
 
 
@@ -1233,9 +1253,10 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id').value;
         let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id').value;
         let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
+        let hotelSpecialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id').value;
         let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
 
-        if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
+        if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '' || document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
 
             // Play a sound effect
             new Audio('error.mp3').play();
@@ -1300,6 +1321,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
             // Create a new div element to hold the hotel row
             let hotelRowTableDiv = document.createElement('div');
             hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`; // Set a unique ID for the hotel row div
@@ -1328,17 +1350,38 @@ checkInputsToInsertData = function (clickedButtonId) {
                 breakfastP.innerText = hotelBreakfastPeopleAmountInput;
                 hotelRowTableDiv.querySelector('.description_cell').appendChild(breakfastP);
             }
+            if (hotelSpecialRoomRequestInput !== '') {
+                let hotelExtraInfoSpan = document.createElement('span');
+                hotelExtraInfoSpan.id = `hotel_special_room_request_${insertedHotelDataDivUniqueId}`;
+                hotelExtraInfoSpan.className = 'hotel_special_room_request_p_class';
+                hotelExtraInfoSpan.innerText = hotelSpecialRoomRequestInput;
+                hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
+                hotelExtraInfoSpan.style.color = 'white';
+                hotelExtraInfoSpan.style.padding = '0 5px';
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+            }
             if (hotelRoomExtraInfoReadyText !== '') {
                 let hotelExtraInfoSpan = document.createElement('span');
                 hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
-                hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
+                hotelExtraInfoSpan.innerText = `+ ${hotelRoomExtraInfoReadyText}`;
                 hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
                 hotelExtraInfoSpan.style.color = 'white';
                 hotelExtraInfoSpan.style.padding = '0 5px';
                 hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
             }
 
+
+
             insertedHotelDataDivUniqueId++;
+
+
+            // Append the new hotel row div to the parent div that holds all inserted hotel data
+            document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
+
+
+            /* Show up the 'downloaded_pdf_hotel_data_page' section */
+            document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'block';
+
 
 
             /* Store the new unique id name 'insertedHotelDataDivUniqueId' for later refrence and use (when importing data) */
@@ -1400,12 +1443,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            // Append the new hotel row div to the parent div that holds all inserted hotel data
-            document.getElementById('inserted_hotel_data_position_div').appendChild(hotelRowTableDiv);
 
-
-            /* Show up the 'downloaded_pdf_hotel_data_page' section */
-            document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'block';
 
 
 
@@ -1422,7 +1460,6 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            document.getElementById('hotel_check_in_input_id').disabled = true;
             document.getElementById('hotel_check_out_input_id').value = '';
             document.getElementById('hotel_total_nights_input_id').value = '';
             document.getElementById('hotel_room_type_description_input_id').value = '';
@@ -1485,12 +1522,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                         /* Set the date of the 'hotel_check_in_input_id' as the the date in the 'whole_package_start_date_input_id' */
                         document.getElementById('hotel_check_in_input_id').value = document.getElementById('whole_package_start_date_input_id').value;
-                        document.getElementById('hotel_check_in_input_id').disabled = true;
 
                     } else {
 
                         document.getElementById('hotel_check_in_input_id').value = '';
-                        document.getElementById('hotel_check_in_input_id').disabled = false;
                     }
 
 
@@ -1575,7 +1610,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 /* Save the last saved hotel check in date for later re-use (after finishing the editing process) */
                 let lastSavedHotelCheckInDate = document.getElementById('hotel_check_in_input_id').value;
                 document.getElementById('hotel_check_in_input_id').disabled = false;
-
 
 
                 let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
@@ -2306,8 +2340,8 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            
-            
+
+
 
 
 
@@ -2448,7 +2482,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* Update the available clint visiting places based on the current existing visiting places */
-                    hideDuplicatePlaces();
+                    hideMatchingParagraphs();
                 }
 
 
