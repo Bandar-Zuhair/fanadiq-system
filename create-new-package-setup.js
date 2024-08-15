@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-window.addEventListener('beforeunload', function (event) {
+/* window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-});
+}); */
 
 
 (function () {
@@ -802,8 +802,8 @@ searchBarInputElements.forEach(input => {
         dropdownDiv.style.transition = 'height 0.1s ease-in-out';
 
         // Set the height of the dropdown div to 80vh when the search bar is clicked
-        dropdownDiv.style.maxHeight = '100vh';
-        dropdownDiv.style.minHeight = '100vh';
+        dropdownDiv.style.maxHeight = '65vh';
+        dropdownDiv.style.minHeight = '65vh';
     });
 
     // Add an input event listener to the input element
