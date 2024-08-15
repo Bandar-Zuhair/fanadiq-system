@@ -1014,7 +1014,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                         </div>
                         <div>
                             <p id="flight_adult_person_amount_${insertedFlightDataDivUniqueId}">${flightAdultPersonAmountInput}</p>
-                            ${flightInfantPersonAmountInput ? `<br><p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
+                            ${flightInfantPersonAmountInput ? `<p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
                         </div>
                         <div>
                             <p>20 كيلو للشخص</p>
@@ -1337,7 +1337,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
-
+                
+                /* Get all the values from the clicked hotel row */
                 let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckInText = clickedHotelDataDiv.querySelector(`h2[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
@@ -1347,9 +1348,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_room_request_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
-                // Assign values to inputs
+
+                // Enter the values of the clicked hotel row div to inputs
                 document.getElementById('hotel_name_input_id').value = hotelNameText;
                 document.getElementById('hotel_check_in_input_id').value = hotelCheckInText;
                 document.getElementById('hotel_check_out_input_id').value = hotelCheckOutText;
@@ -1359,6 +1362,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
                 document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
                 document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
+                document.getElementById('hotel_special_room_request_input_id').value = hotelSpecialRoomRequestText;
                 document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
 
 
@@ -1410,6 +1414,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.getElementById('hotel_room_view_input_id').value = '';
                     document.getElementById('hotel_unit_amount_input_id').value = '';
                     document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
+                    document.getElementById('hotel_special_room_request_input_id').value = '';
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
@@ -1789,7 +1794,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         // Loop through each 'flight_row_class' element
         clintMovementsRowTableDiv.forEach(clintMovementsRowTableDiv => {
 
-            // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
+            // Get all dynamically created elements with the class 'clint_movements_row_controller'
             clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller').forEach(function (element) {
                 element.onclick = function (event) {
                     clintMovementsRowCityNameControllerFunction(event, element);
