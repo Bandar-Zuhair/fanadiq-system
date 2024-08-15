@@ -1467,7 +1467,7 @@ body {
 
     /* Search bar input */
     .search_bar_input_class {
-        margin-top: 70px;
+        margin-top: 75px;
     }
 
 
@@ -1596,7 +1596,7 @@ body {
     }
 
     .company_names_options_dropdown_class {
-        padding: 3px 0;
+        padding: 2px 0;
     }
 
     .company_names_options_dropdown_class h3 {
