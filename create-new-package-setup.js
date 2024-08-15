@@ -420,7 +420,7 @@ specialRoomRequestInputOptions.forEach(option => {
             specialRoomRequestInput.value = '';
 
         } else if (option.textContent === 'باقة شهر عسل') {
-            specialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكه + شاي بعد الظهر'; // Set input value to selected option
+            specialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكة + شاي بعد الظهر'; // Set input value to selected option
 
         }
 
