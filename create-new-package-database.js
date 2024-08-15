@@ -932,6 +932,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
                 let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
+                let flightExtraBagsInput = clickedFlightDataDiv.querySelector(`p[id^='flight_extra_bags_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
 
                 // Assign values to inputs
                 document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
@@ -942,19 +943,21 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('flight_date_input_id').value = flightDateInput;
                 document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
                 document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
+                document.getElementById('flight_extra_bags_input_id').value = flightExtraBagsInput;
 
 
 
 
                 /* Function to cancel the flight row data editing process */
                 cancelNewFlightDataRow = function () {
-                    // Get references to all input elements and reset their values
+                    // Get references to all input elements and delete their values
                     document.getElementById('flight_air_line_input_id').value = '';
                     document.getElementById('flight_from_city_input_id').value = '';
                     document.getElementById('flight_to_city_input_id').value = '';
                     document.getElementById('flight_date_input_id').value = '';
                     document.getElementById('flight_fly_away_time_input_id').value = '';
                     document.getElementById('flight_arrival_time_input_id').value = '';
+                    document.getElementById('flight_extra_bags_input_id').value = '';
 
 
                     /* Hide and show different icons */
@@ -980,7 +983,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     // Play a sound effect
                     new Audio('success.mp3').play();
 
-                    
+
                     // Get the clicked hotel data row
                     let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
 
@@ -1030,8 +1033,12 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     `;
 
 
-                    // Insert the HTML content into the newly created div
+                    // Insert the new data into the clicked flight data div
                     clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
+
+
+                    /* Run a function to exit the editing flight data mood */
+                    cancelNewFlightDataRow();
 
 
                     // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
@@ -1040,10 +1047,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                             flightRowAirLineControllerFunction(event, element);
                         };
                     });
-
-
-                    // Clear the input after confirm the new flight data
-                    cancelNewFlightDataRow();
                 }
             }
 
