@@ -470,7 +470,7 @@
 
 
                 <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
-                    style="cursor: pointer;">
+                    style="cursor: pointer;" disabled>
 
                 <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" readonly autocomplete="off"
                     style="cursor: pointer;">
@@ -503,6 +503,10 @@
                 <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
                     autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
                     style="cursor: pointer;">
+
+
+                <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
+                    autocomplete="off" onclick="showOverlay('special_room_request_dropdown')" style="cursor: pointer;">
 
 
                 <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
@@ -561,6 +565,9 @@
             </div>
 
             <div class="company_names_options_dropdown_class" id="hotel_room_type_description_h3_elements_div_id">
+                <h3>Komaneka Keramas</h3>
+                <h3>مسبح عميق</h3>
+                <h3>مسبح</h3>
             </div>
 
         </div>
@@ -630,6 +637,18 @@
                 <h3>13</h3>
                 <h3>14</h3>
                 <h3>15</h3>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="special_room_request_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>باقة شهر عسل</h3>
             </div>
         </div>
 
@@ -1433,7 +1452,7 @@
 
 
 
-    <div id="bali_kuta_clint_movements_places_page_div" class="clint_movements_places_full_page_div">
+    <div id="all_clint_movements_places_page_divs_container" class="clint_movements_places_full_page_div">
 
         <div id="kuta_clint_movements_places_div" style="display: none;">
             <h6>مزارات كوتا</h6>
@@ -1571,6 +1590,7 @@
             </p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة فينيسيا</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزة THE NICE FANTASTIC</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مصنع الشوكولاتة</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة الجنة
             </p>
 
@@ -1608,6 +1628,8 @@
             <p onclick="pickThisClintMovementsPlace(this)">زيارة منطقة الكافيهات الجميلة KAWASAN PUNCLUT</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة الشلالات السبعة</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة تلاقا سات</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة غابة اورشيد</p>
+            <p onclick="pickThisClintMovementsPlace(this)">دوسون بانغو</p>
             <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
                 والتسوق</p>
             <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
