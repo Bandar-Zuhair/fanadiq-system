@@ -850,47 +850,34 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            // Function to handle touch and mouse events to distinguish between click and drag for flight row
+            // Function to handle touch and mouse events separately
             function handleFlightRowClickEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
-                let isDragging = false;
                 let isTouchEvent = false; // Flag to distinguish between touch and mouse events
 
+                // Handle touchstart event
                 element.addEventListener('touchstart', (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                    isDragging = false;
                     isTouchEvent = true; // Set the flag to indicate a touch event
+                    setTimeout(() => { isTouchEvent = false; }, 100); // Reset the flag after a short delay
                 });
 
-                element.addEventListener('touchmove', () => {
-                    isDragging = true;
-                });
-
+                // Handle touchend event
                 element.addEventListener('touchend', (event) => {
-                    if (!isDragging && isTouchEvent) {
+                    if (isTouchEvent) {
                         flightRowAirLineControllerFunction(event); // Call the function for touch events
+                        isTouchEvent = false; // Reset the flag after handling
                     }
-                    isTouchEvent = false; // Reset the flag after the touch event ends
                 });
 
+                // Handle mousedown event
                 element.addEventListener('mousedown', (event) => {
                     if (!isTouchEvent) { // Only execute if it is not a touch event
-                        touchStartX = event.clientX;
-                        touchStartY = event.clientY;
-                        touchStartTime = new Date().getTime();
-                        isDragging = false;
+                        flightRowAirLineControllerFunction(event); // Call the function for mouse events
                     }
                 });
 
-                element.addEventListener('mousemove', () => {
-                    isDragging = true;
-                });
-
+                // Handle mouseup event
                 element.addEventListener('mouseup', (event) => {
-                    if (!isDragging && !isTouchEvent) { // Only execute if it is not a touch event
+                    if (!isTouchEvent) { // Only execute if it is not a touch event
                         flightRowAirLineControllerFunction(event); // Call the function for mouse events
                     }
                 });
@@ -903,6 +890,8 @@ checkInputsToInsertData = function (clickedButtonId) {
             flightRowFlightArrivalTimeControllers.forEach(element => {
                 handleFlightRowClickEvent(element);
             });
+
+
 
 
 
