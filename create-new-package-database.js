@@ -810,88 +810,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
         // Loop through each 'flight_row_class' element
         flightRowTableDivs.forEach(flightRowTableDiv => {
-            // Get the dynamically created 'flightRowAirLineController' element
-            let flightRowFlightArrivalTimeControllers = flightRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller');
-
-
-            // Function to handle touch events and distinguish between tap and scroll for flight row
-            function handleFlightTouchEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
-
-                // Record the starting touch position and time
-                element.addEventListener('touchstart', (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                });
-
-                // Compare the ending touch position and time to determine if it was a tap
-                element.addEventListener('touchend', (event) => {
-                    let touch = event.changedTouches[0];
-                    let touchEndX = touch.clientX;
-                    let touchEndY = touch.clientY;
-                    let touchEndTime = new Date().getTime();
-
-                    let deltaX = touchEndX - touchStartX;
-                    let deltaY = touchEndY - touchStartY;
-                    let deltaTime = touchEndTime - touchStartTime;
-
-                    // Check if the touch event qualifies as a tap
-                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a tap, run the click function
-                    if (isTap) {
-                        flightRowAirLineControllerFunction(event);
-                    }
-                });
-            }
-
-            // Function to handle mouse events and distinguish between click and drag for flight row
-            function handleFlightMouseEvent(element) {
-                let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
-
-                // Record the starting mouse position and time
-                element.addEventListener('mousedown', (event) => {
-                    mouseStartX = event.clientX;
-                    mouseStartY = event.clientY;
-                    mouseStartTime = new Date().getTime();
-                    isDragging = false;
-                });
-
-                // Mark as dragging if mouse moves significantly
-                element.addEventListener('mousemove', (event) => {
-                    let deltaX = event.clientX - mouseStartX;
-                    let deltaY = event.clientY - mouseStartY;
-                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                        isDragging = true;
-                    }
-                });
-
-                // Compare the ending mouse position and time to determine if it was a click
-                element.addEventListener('mouseup', (event) => {
-                    let mouseEndX = event.clientX;
-                    let mouseEndY = event.clientY;
-                    let mouseEndTime = new Date().getTime();
-
-                    let deltaX = mouseEndX - mouseStartX;
-                    let deltaY = mouseEndY - mouseStartY;
-                    let deltaTime = mouseEndTime - mouseStartTime;
-
-                    // Check if the mouse event qualifies as a click
-                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a click, run the click function
-                    if (isClick) {
-                        flightRowAirLineControllerFunction(event);
-                    }
-                });
-            }
-
-            // Attach click and touch event listeners to each element
-            flightRowFlightArrivalTimeControllers.forEach(element => {
-                handleFlightMouseEvent(element); // Handle mouse events with click detection
-                handleFlightTouchEvent(element); // Handle touch events with tap detection
+            // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
+            flightRowTableDiv.querySelectorAll('.flight_row_flight_arrival_time_controller').forEach(function (element) {
+                element.onclick = function (event) {
+                    flightRowAirLineControllerFunction(event, element);
+                };
             });
 
 
@@ -1832,88 +1755,12 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
         // Loop through each 'flight_row_class' element
         clintMovementsRowTableDiv.forEach(clintMovementsRowTableDiv => {
-            // Get all dynamically created elements with the class 'clint_movements_row_controller'
-            let clintMovementsRowImageControllers = clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller');
 
-
-            // Function to handle touch events and distinguish between tap and scroll for flight row
-            function handleClintMovementsTouchEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
-
-                // Record the starting touch position and time
-                element.addEventListener('touchstart', (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                });
-
-                // Compare the ending touch position and time to determine if it was a tap
-                element.addEventListener('touchend', (event) => {
-                    let touch = event.changedTouches[0];
-                    let touchEndX = touch.clientX;
-                    let touchEndY = touch.clientY;
-                    let touchEndTime = new Date().getTime();
-
-                    let deltaX = touchEndX - touchStartX;
-                    let deltaY = touchEndY - touchStartY;
-                    let deltaTime = touchEndTime - touchStartTime;
-
-                    // Check if the touch event qualifies as a tap
-                    let isTap = Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a tap, run the click function
-                    if (isTap) {
-                        clintMovementsRowCityNameControllerFunction(event);
-                    }
-                });
-            }
-
-            // Function to handle mouse events and distinguish between click and drag for flight row
-            function handleClintMovementsMouseEvent(element) {
-                let mouseStartX, mouseStartY, mouseStartTime, isDragging = false;
-
-                // Record the starting mouse position and time
-                element.addEventListener('mousedown', (event) => {
-                    mouseStartX = event.clientX;
-                    mouseStartY = event.clientY;
-                    mouseStartTime = new Date().getTime();
-                    isDragging = false;
-                });
-
-                // Mark as dragging if mouse moves significantly
-                element.addEventListener('mousemove', (event) => {
-                    let deltaX = event.clientX - mouseStartX;
-                    let deltaY = event.clientY - mouseStartY;
-                    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                        isDragging = true;
-                    }
-                });
-
-                // Compare the ending mouse position and time to determine if it was a click
-                element.addEventListener('mouseup', (event) => {
-                    let mouseEndX = event.clientX;
-                    let mouseEndY = event.clientY;
-                    let mouseEndTime = new Date().getTime();
-
-                    let deltaX = mouseEndX - mouseStartX;
-                    let deltaY = mouseEndY - mouseStartY;
-                    let deltaTime = mouseEndTime - mouseStartTime;
-
-                    // Check if the mouse event qualifies as a click
-                    let isClick = !isDragging && Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 500;
-
-                    // If it's a click, run the click function
-                    if (isClick) {
-                        clintMovementsRowCityNameControllerFunction(event);
-                    }
-                });
-            }
-
-            // Attach click and touch event listeners to each element
-            clintMovementsRowImageControllers.forEach(element => {
-                handleClintMovementsMouseEvent(element); // Handle mouse events with click detection
-                handleClintMovementsTouchEvent(element); // Handle touch events with tap detection
+            // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
+            clintMovementsRowTableDiv.querySelectorAll('.clint_movements_row_controller').forEach(function (element) {
+                element.onclick = function (event) {
+                    clintMovementsRowCityNameControllerFunction(event, element);
+                };
             });
 
 
