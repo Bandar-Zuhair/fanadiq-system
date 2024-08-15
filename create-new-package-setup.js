@@ -1396,62 +1396,6 @@ function formatDate(date) {
 
 
 
-// Get the options within the dropdown
-let clintVisitingPlacesNamesOptions = document.querySelectorAll('#clint_visiting_places_names_dropdown h3');
-
-clintVisitingPlacesNamesOptions.forEach(option => {
-    option.addEventListener('click', () => {
-
-
-        // Copy the text of the clicked <p> element to the clipboard
-        const textToCopy = option.textContent;
-
-        // Create a temporary textarea element to facilitate copying
-        const tempTextarea = document.createElement('textarea');
-        tempTextarea.value = textToCopy;
-        document.body.appendChild(tempTextarea);
-
-        // Select the text and copy it to the clipboard
-        tempTextarea.select();
-        document.execCommand('copy');
-
-        // Remove the temporary textarea element
-        document.body.removeChild(tempTextarea);
-
-
-        /* Reset the value of 'company_names_search_bar_input_id' after picking a hotek name */
-        document.getElementById('all_hotel_names_search_bar_input_id').value = '';
-
-        // Get the dropdown div associated with the input
-        let dropdownDivOptions = document.getElementById('all_hotel_names_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
-
-        // Reset the display of all <h3> elements
-        dropdownDivOptions.forEach(option => {
-            option.style.display = 'block'; // Show all options
-        });
-
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
