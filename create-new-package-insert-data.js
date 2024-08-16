@@ -499,6 +499,9 @@ checkInputsToInsertData = function (clickedButtonId) {
                     } else if (document.getElementById('website_users_name_input_id').value === 'بكج مستر ابو سما') {
                         websiteUsersNameInput = 'abo_sma';
 
+                    }else if(document.getElementById('website_users_name_input_id').value === 'بكج بندر للتجربة'){
+                        websiteUsersNameInput = 'bn_dr';
+
                     }
 
 
