@@ -2120,9 +2120,9 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 let targetObject;
                 if (cityName === "بالي" && areaName) {
-                    if (areaName === "اوبود") {
+                    if (areaName === "اوبود" || areaName === "كيراماس") {
                         targetObject = allClintVisitingPlacesArray[1][packageKey];
-                    } else if (["كوتا", "كيراماس", "نوسا دوا", "سيمنياك", "جيمباران", "اولواتو", "ليجين"].includes(areaName)) {
+                    } else if (["كوتا", "نوسا دوا", "سيمنياك", "جيمباران", "اولواتو", "ليجين"].includes(areaName)) {
                         targetObject = allClintVisitingPlacesArray[0][packageKey];
                     }
                 } else if (cityName === 'جاكرتا') {
