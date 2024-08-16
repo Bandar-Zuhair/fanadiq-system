@@ -448,6 +448,7 @@
                 <h3>عبد الرحمن</h3>
                 <h3>علي</h3>
                 <h3>ابو سما</h3>
+                <h3>بندر للتجربة</h3>
             </div>
         </div>
 
@@ -501,47 +502,106 @@
                     autocomplete="off" style="cursor: default;">
 
 
-                <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
-                    autocomplete="off"
-                    onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
-                    style="cursor: pointer;">
+
+                <div id="hotel_two_room_data_input_divs_container">
+
+
+                    <div id="hotel_first_room_data_input_div">
+                        <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
+                            autocomplete="off"
+                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                            style="cursor: pointer;">
 
 
 
-                <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
-                    autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
-                    style="cursor: pointer;">
+                        <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
+                            style="cursor: pointer;">
 
 
 
-                <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_room_view_dropdown')" style="cursor: pointer;">
+                        <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_room_view_dropdown')"
+                            style="cursor: pointer;">
 
 
-                <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly autocomplete="off"
-                    onclick="showOverlay('hotel_unit_amount_dropdown')" style="cursor: pointer;">
+                        <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_unit_amount_dropdown')"
+                            style="cursor: pointer;">
 
 
-                <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
-                    autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
-                    style="cursor: pointer;">
+                        <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟"
+                            readonly autocomplete="off"
+                            onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                            style="cursor: pointer;">
 
 
-                <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
-                    autocomplete="off" onclick="showOverlay('special_room_request_dropdown')" style="cursor: pointer;">
+                        <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
+                            autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
+                            style="cursor: pointer;">
 
 
-                <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
-                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
-                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+                        <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
+                            placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
+                        <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+                    </div>
 
 
-                <div class="submit_package_pdf_div">
-                    <ion-icon name="send" id="hotel_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
+                    <div id="hotel_second_room_data_input_div">
+                        <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
+                            autocomplete="off"
+                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                            style="cursor: pointer;">
+
+
+
+                        <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
+                            style="cursor: pointer;">
+
+
+
+                        <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_room_view_dropdown')"
+                            style="cursor: pointer;">
+
+
+                        <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_unit_amount_dropdown')"
+                            style="cursor: pointer;">
+
+
+                        <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟"
+                            readonly autocomplete="off"
+                            onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                            style="cursor: pointer;">
+
+
+                        <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
+                            autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
+                            style="cursor: pointer;">
+
+
+                        <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
+                            placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
+                        <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+                    </div>
+
+
                 </div>
 
+
+
+                <div class="submit_package_pdf_div submit_clint_movement_package_pdf_div">
+                    <ion-icon name="send" id="hotel_inputs_submit_icon"
+                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
+
+
+                    <ion-icon name="add-circle-outline" id="show_and_hide_clint_movement_section_icon"
+                        onclick="new Audio('success.mp3').play(); showSecondHotelRoomData()"></ion-icon>
+                </div>
 
 
 
