@@ -468,7 +468,7 @@ async function submitForm() {
 async function fetchData() {
     try {
         // Send a GET request to the Google Apps Script URL
-        const response = await fetch("https://script.google.com/macros/s/AKfycby1RWmnezTeabEZ1VkczgLeIDilocuU4ezEe7iFbura4eE7wK2gWaOyS-MLiUtoVRgi/exec");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzzOPqv4b5wrZ3tVrk26fr3OeofPi1Y0CRi4TYu8YQwNm52du6P6xMnBt9azLPqu2vY/exec");
         // Parse the response as JSON
         const data = await response.json();
         // Process the fetched data
@@ -548,6 +548,8 @@ function getColumnIndex(packageName) {
             return 5;
         case 'بكج مستر ابو سما':
             return 6;
+        case 'بكج بندر للتجربة':
+            return 7;
         default:
             // Return -1 for invalid package names
             return -1;
