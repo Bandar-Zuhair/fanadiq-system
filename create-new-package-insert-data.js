@@ -499,7 +499,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                     } else if (document.getElementById('website_users_name_input_id').value === 'بكج مستر ابو سما') {
                         websiteUsersNameInput = 'abo_sma';
 
-                    }else if(document.getElementById('website_users_name_input_id').value === 'بكج بندر للتجربة'){
+                    } else if (document.getElementById('website_users_name_input_id').value === 'بكج بندر للتجربة') {
                         websiteUsersNameInput = 'bn_dr';
 
                     }
@@ -811,6 +811,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                     return; // Skip this iteration without creating a flightRowTableDiv
                 }
 
+                // Check if transition between Jakarta and Puncak and skip
+                if (lastCity === "جاكرتا" && currentCity === "بونشاك") {
+                    lastCity = currentCity;
+                    lastDate = currentDate;
+                    return; // Skip this iteration without creating a flightRowTableDiv
+                }
+
                 // Check if the current and last city are valid and different
                 if ((validCities.includes(currentCity) && lastCity && lastCity !== currentCity && validCities.includes(lastCity)) ||
                     (lastCity === "بونشاك" && currentCity === "بالي") || (lastCity === "بالي" && currentCity === "بونشاك")) {
@@ -857,6 +864,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 lastCity = currentCity;
                 lastDate = currentDate;
             });
+
 
 
 
@@ -1206,6 +1214,15 @@ checkInputsToInsertData = function (clickedButtonId) {
         let hotelSpecialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id').value;
         let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
 
+        /* Second hotel room data input values */
+        let hotelRoomTypeDescriptionInput_2 = document.getElementById('hotel_room_type_description_input_id_2').value;
+        let hotelRoomContainPoolInput_2 = document.getElementById('hotel_room_contain_pool_input_id_2').value;
+        let hotelRoomViewInput_2 = document.getElementById('hotel_room_view_input_id_2').value;
+        let hotelUnitAmountInput_2 = document.getElementById('hotel_unit_amount_input_id_2').value;
+        let hotelBreakfastPeopleAmountInput_2 = document.getElementById('hotel_breakfast_people_amount_input_id_2').value;
+        let hotelSpecialRoomRequestInput_2 = document.getElementById('hotel_special_room_request_input_id_2').value;
+        let hotelRoomExtraInfoReadyText_2 = document.getElementById('hotel_room_extra_info_textarea_id_2').value;
+
         if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '' || document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
 
             // Play a sound effect
@@ -1224,7 +1241,6 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Play a sound effect
             new Audio('success.mp3').play();
 
-
             // Change the submit icon background color
             hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
             // Set the background color of the submit icon back to default color
@@ -1235,14 +1251,10 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
             let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
-
             /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
-            if (document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText !== '') {
-                insertedHotelDataDivUniqueId = document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText;
-            } else {
-                insertedHotelDataDivUniqueId = 1;
-            }
-
+            let insertedHotelDataDivUniqueId = document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText !== ''
+                ? document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText
+                : 1;
 
             let hotelLocationReadyText = '';
             let hotelAreaReadyText = '';
@@ -1257,69 +1269,143 @@ checkInputsToInsertData = function (clickedButtonId) {
                 }
             }
 
-
             // Create the HTML content for a new hotel row
             let hotelRowTableDivContent = `
                 <div><h1 id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</h1></div>
                 <div><h2 id='hotel_check_in_${insertedHotelDataDivUniqueId}' class="hotel_check_in_date_for_matching_whole_package_date">${hotelCheckInReadyText}</h2></div>
                 <div><h3 style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}' class="hotel_check_out_date_for_matching_whole_package_date">${hotelCheckOutReadyText}</h3></div>
                 <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
-                <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
-                <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
-                <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                <div class="description_cell">
+                    <span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
+                <div>
+                    <p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p>
+                    ${hotelUnitAmountInput_2 && document.getElementById('hotel_second_room_data_input_div').style.display !== "none" ? `<p style="width: 100%; background: rgb(40, 62, 68); color: white">+ </p><p id="hotel_total_unit_2_${insertedHotelDataDivUniqueId}" style="width: 100%; background: rgb(40, 62, 68); color: white">${storeHotelTotalUnitNumber_2}</p>` : ''}
+                </div>
+                <div>
+                    <h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>
+                    ${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}
+                    <img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer">
+                </div>
             `;
-
-
-
 
             // Create a new div element to hold the hotel row
             let hotelRowTableDiv = document.createElement('div');
             hotelRowTableDiv.id = `hotel_row_id_${insertedHotelDataDivUniqueId}`; // Set a unique ID for the hotel row div
             hotelRowTableDiv.classList.add('hotel_row_class', 'hotel_row_class_for_editing'); // Add a class to the div for styling
 
-
             // Insert the HTML content into the newly created div
             hotelRowTableDiv.innerHTML = hotelRowTableDivContent;
 
-            // Append <p> elements for each input with text
+            // Append <span> elements for each input with text
             if (hotelRoomContainPoolInput !== '') {
-                let poolP = document.createElement('span');
-                poolP.id = `hotel_pool_p_id_${insertedHotelDataDivUniqueId}`;
-                poolP.innerText = hotelRoomContainPoolInput;
-                hotelRowTableDiv.querySelector('.description_cell').appendChild(poolP);
+                let poolSpan = document.createElement('span');
+                poolSpan.id = `hotel_pool_span_id_${insertedHotelDataDivUniqueId}`;
+                poolSpan.innerText = hotelRoomContainPoolInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(poolSpan);
             }
             if (hotelRoomViewInput !== '') {
-                let viewP = document.createElement('span');
-                viewP.id = `hotel_view_p_id_${insertedHotelDataDivUniqueId}`;
-                viewP.innerText = hotelRoomViewInput;
-                hotelRowTableDiv.querySelector('.description_cell').appendChild(viewP);
+                let viewSpan = document.createElement('span');
+                viewSpan.id = `hotel_view_span_id_${insertedHotelDataDivUniqueId}`;
+                viewSpan.innerText = hotelRoomViewInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(viewSpan);
             }
             if (hotelBreakfastPeopleAmountInput !== '') {
-                let breakfastP = document.createElement('span');
-                breakfastP.id = `hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}`;
-                breakfastP.innerText = hotelBreakfastPeopleAmountInput;
-                hotelRowTableDiv.querySelector('.description_cell').appendChild(breakfastP);
+                let breakfastSpan = document.createElement('span');
+                breakfastSpan.id = `hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}`;
+                breakfastSpan.innerText = hotelBreakfastPeopleAmountInput;
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(breakfastSpan);
             }
             if (hotelSpecialRoomRequestInput !== '') {
-                let hotelExtraInfoSpan = document.createElement('span');
-                hotelExtraInfoSpan.id = `hotel_special_room_request_${insertedHotelDataDivUniqueId}`;
-                hotelExtraInfoSpan.className = 'hotel_special_room_request_p_class';
-                hotelExtraInfoSpan.innerText = hotelSpecialRoomRequestInput;
-                hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
-                hotelExtraInfoSpan.style.color = 'white';
-                hotelExtraInfoSpan.style.padding = '0 5px';
-                hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+                let specialRequestSpan = document.createElement('span');
+                specialRequestSpan.id = `hotel_special_request_span_id_${insertedHotelDataDivUniqueId}`;
+                specialRequestSpan.className = 'hotel_special_request_span_class';
+                specialRequestSpan.innerText = hotelSpecialRoomRequestInput;
+                specialRequestSpan.style.background = 'rgb(85, 127, 137)';
+                specialRequestSpan.style.color = 'white';
+                specialRequestSpan.style.padding = '0 5px';
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(specialRequestSpan);
             }
             if (hotelRoomExtraInfoReadyText !== '') {
-                let hotelExtraInfoSpan = document.createElement('span');
-                hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
-                hotelExtraInfoSpan.innerText = `+ ${hotelRoomExtraInfoReadyText}`;
-                hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
-                hotelExtraInfoSpan.style.color = 'white';
-                hotelExtraInfoSpan.style.padding = '0 5px';
-                hotelRowTableDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+                let extraInfoSpan = document.createElement('span');
+                extraInfoSpan.id = `hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}`;
+                extraInfoSpan.innerText = `+ ${hotelRoomExtraInfoReadyText}`;
+                extraInfoSpan.style.background = 'rgb(85, 127, 137)';
+                extraInfoSpan.style.color = 'white';
+                extraInfoSpan.style.padding = '0 5px';
+                hotelRowTableDiv.querySelector('.description_cell').appendChild(extraInfoSpan);
             }
 
+
+
+
+            // Handle the second room data if the second room div is visible
+            if (document.getElementById('hotel_second_room_data_input_div').style.display !== "none") {
+                if (hotelRoomTypeDescriptionInput_2 !== '') {
+                    let roomTypeDescriptionSpan_2 = document.createElement('span');
+                    roomTypeDescriptionSpan_2.id = `hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`;
+                    roomTypeDescriptionSpan_2.innerText = hotelRoomTypeDescriptionInput_2;
+                    roomTypeDescriptionSpan_2.style.width = '100%';
+                    roomTypeDescriptionSpan_2.style.background = 'rgb(40, 62, 68)';
+                    roomTypeDescriptionSpan_2.style.color = 'white';
+
+
+                    let plusSign = document.createElement('span');
+                    plusSign.innerText = '+ ';
+                    plusSign.style.width = '100%';
+                    plusSign.style.background = 'rgb(40, 62, 68)';
+                    plusSign.style.color = 'white';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(plusSign);
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(roomTypeDescriptionSpan_2);
+                }
+                if (hotelRoomContainPoolInput_2 !== '') {
+                    let poolSpan_2 = document.createElement('span');
+                    poolSpan_2.id = `hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}`;
+                    poolSpan_2.innerText = hotelRoomContainPoolInput_2;
+                    poolSpan_2.style.width = '100%';
+                    poolSpan_2.style.background = 'rgb(40, 62, 68)';
+                    poolSpan_2.style.color = 'white';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(poolSpan_2);
+                }
+                if (hotelRoomViewInput_2 !== '') {
+                    let viewSpan_2 = document.createElement('span');
+                    viewSpan_2.id = `hotel_view_span_id_2_${insertedHotelDataDivUniqueId}`;
+                    viewSpan_2.style.width = '100%';
+                    viewSpan_2.innerText = hotelRoomViewInput_2;
+                    viewSpan_2.style.background = 'rgb(40, 62, 68)';
+                    viewSpan_2.style.color = 'white';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(viewSpan_2);
+                }
+                if (hotelBreakfastPeopleAmountInput_2 !== '') {
+                    let breakfastSpan_2 = document.createElement('span');
+                    breakfastSpan_2.id = `hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}`;
+                    breakfastSpan_2.innerText = hotelBreakfastPeopleAmountInput_2;
+                    breakfastSpan_2.style.width = '100%';
+                    breakfastSpan_2.style.background = 'rgb(40, 62, 68)';
+                    breakfastSpan_2.style.color = 'white';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(breakfastSpan_2);
+                }
+                if (hotelSpecialRoomRequestInput_2 !== '') {
+                    let specialRequestSpan_2 = document.createElement('span');
+                    specialRequestSpan_2.id = `hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}`;
+                    specialRequestSpan_2.className = 'hotel_special_request_span_class';
+                    specialRequestSpan_2.innerText = hotelSpecialRoomRequestInput_2;
+                    specialRequestSpan_2.style.width = '100%';
+                    specialRequestSpan_2.style.background = 'rgb(5, 17, 21)';
+                    specialRequestSpan_2.style.color = 'white';
+                    specialRequestSpan_2.style.padding = '0 5px';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(specialRequestSpan_2);
+                }
+                if (hotelRoomExtraInfoReadyText_2 !== '') {
+                    let extraInfoSpan_2 = document.createElement('span');
+                    extraInfoSpan_2.id = `hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}`;
+                    extraInfoSpan_2.innerText = `+ ${hotelRoomExtraInfoReadyText_2}`;
+                    extraInfoSpan_2.style.width = '100%';
+                    extraInfoSpan_2.style.background = 'rgb(5, 17, 21)';
+                    extraInfoSpan_2.style.color = 'white';
+                    extraInfoSpan_2.style.padding = '0 5px';
+                    hotelRowTableDiv.querySelector('.description_cell').appendChild(extraInfoSpan_2);
+                }
+            }
 
 
             insertedHotelDataDivUniqueId++;
@@ -1417,6 +1503,13 @@ checkInputsToInsertData = function (clickedButtonId) {
             document.getElementById('hotel_room_view_input_id').value = '';
             document.getElementById('hotel_special_room_request_input_id').value = '';
             document.getElementById('hotel_room_extra_info_textarea_id').value = '';
+
+
+            document.getElementById('hotel_room_type_description_input_id_2').value = '';
+            document.getElementById('hotel_room_contain_pool_input_id_2').value = '';
+            document.getElementById('hotel_room_view_input_id_2').value = '';
+            document.getElementById('hotel_special_room_request_input_id_2').value = '';
+            document.getElementById('hotel_room_extra_info_textarea_id_2').value = '';
 
 
 
@@ -1519,8 +1612,10 @@ checkInputsToInsertData = function (clickedButtonId) {
 
                 /* Hide and show different icons */
                 document.getElementById('hotel_inputs_submit_icon').style.display = 'none';
+                document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'none';
                 document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'block';
                 document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'block';
+                document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'block';
 
 
                 /* Change the innerText and the background color of the 'hotel_content_section_title_text_id' */
@@ -1554,8 +1649,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
 
 
-                /* Save the last saved hotel check in date for later re-use (after finishing the editing process) */
-                let lastSavedHotelCheckInDate = document.getElementById('hotel_check_in_input_id').value;
+                /* Make the 'hotel_check_in_input_id' clickable for users to change the date */
                 document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
@@ -1565,12 +1659,62 @@ checkInputsToInsertData = function (clickedButtonId) {
                 let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelTotalNightsText = clickedHotelDataDiv.querySelector(`h4[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelRoomTypeDescriptionText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_room_request_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+
+
+
+                /* in case if there was a second room data in the clicked hotel row then target those data */
+                if (clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`)) {
+
+
+                    // Get all hotel first and second room data inputs for width styling
+                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
+                    document.getElementById('hotel_second_room_data_input_div').style.display = 'flex';
+
+                    // Save the current width before changing it to 100%
+                    inputsAndTextareas.forEach(element => {
+                        if (!element.dataset.originalWidth) {
+                            element.dataset.originalWidth = element.style.width; // Save the original width
+                        }
+                        element.style.width = '100%'; // Set width to 100%
+                    });
+
+
+                    let hotelRoomTypeDescriptionText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelRoomContainPoolText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelRoomViewText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelUnitAmountText_2 = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelBreakfastPeopleAmountText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelSpecialRoomRequestText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                    let hotelRoomExtraInfoText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+
+
+                    document.getElementById('hotel_room_type_description_input_id_2').value = hotelRoomTypeDescriptionText_2;
+                    document.getElementById('hotel_room_contain_pool_input_id_2').value = hotelRoomContainPoolText_2;
+                    document.getElementById('hotel_room_view_input_id_2').value = hotelRoomViewText_2;
+                    document.getElementById('hotel_unit_amount_input_id_2').value = `عدد الوحدات ${hotelUnitAmountText_2}`;
+                    document.getElementById('hotel_breakfast_people_amount_input_id_2').value = hotelBreakfastPeopleAmountText_2;
+                    document.getElementById('hotel_special_room_request_input_id_2').value = hotelSpecialRoomRequestText_2;
+                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = hotelRoomExtraInfoText_2;
+
+
+                    /* In case if the clicked hotel row data does not have a second room type data then hide the second room inputs div */
+                } else {
+                    // Get all hotel first and second room data inputs for width styling
+                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
+                    document.getElementById('hotel_second_room_data_input_div').style.display = 'none';
+
+                    // Set width back to the original saved width value
+                    inputsAndTextareas.forEach(element => {
+                        element.style.width = element.dataset.originalWidth; // Use the saved width value
+                    });
+
+                }
 
 
                 // Enter the values of the clicked hotel row div to inputs
@@ -1592,6 +1736,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
+
+
+
+
+
+
                 /* Function to cancel the hotel row data editing process */
                 cancelNewHotelDataRow = function () {
 
@@ -1601,29 +1751,17 @@ checkInputsToInsertData = function (clickedButtonId) {
                     // Get the last found div with the class name "hotel_row_class_for_editing"
                     let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
 
+                    /* if the last found div is the one that got clicked then make sure to set the value of the check in as the value of the check out */
+                    document.getElementById('hotel_check_in_input_id').value = lastHotelRowDiv.querySelector('h3').innerText;
+
+                    /* Store the last stooped hotel check out date for later use (when importing data) */
+                    document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = lastHotelRowDiv.querySelector('h3').innerText;
+
+
+
 
                     // Get references to all input elements and reset their values
                     document.getElementById('hotel_name_input_id').value = '';
-
-
-                    /* if the last found div is the one that got clicked then make sure to set the value of the check in as the value of the check out */
-                    if (lastHotelRowDiv.id === clickedHotelRowIdName) {
-                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('hotel_check_out_input_id').value;
-
-                        /* Store the last stooped hotel check out date for later use (when importing data) */
-                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
-
-
-                        /* but if the last found div is not the one that got clicked then set the check in value as it got saved before in the 'lastSavedHotelCheckInDate' */
-                    } else {
-                        document.getElementById('hotel_check_in_input_id').value = lastSavedHotelCheckInDate;
-
-
-                        /* Store the last stooped hotel check out date for later use (when importing data) */
-                        document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = document.getElementById('hotel_check_in_input_id').value;
-
-                    }
-
                     document.getElementById('hotel_check_out_input_id').value = '';
                     document.getElementById('hotel_total_nights_input_id').value = '';
                     document.getElementById('hotel_room_type_description_input_id').value = '';
@@ -1633,10 +1771,20 @@ checkInputsToInsertData = function (clickedButtonId) {
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
+                    document.getElementById('hotel_room_type_description_input_id_2').value = '';
+                    document.getElementById('hotel_room_contain_pool_input_id_2').value = '';
+                    document.getElementById('hotel_room_view_input_id_2').value = '';
+                    document.getElementById('hotel_special_room_request_input_id_2').value = '';
+                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = '';
+
+
                     /* Hide and show different icons */
                     document.getElementById('hotel_inputs_submit_icon').style.display = 'block';
+                    document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'block';
                     document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'none';
                     document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'none';
+                    document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'none';
+
 
 
                     /* Reset the innerText and styling to defualt */
@@ -1653,9 +1801,6 @@ checkInputsToInsertData = function (clickedButtonId) {
                 };
 
 
-
-                // Initialize a global object to store dates
-                let savedHotelDates = {};
 
                 // Function to confirm the new hotel row data
                 confirmNewHotelDataRow = function () {
@@ -1674,10 +1819,23 @@ checkInputsToInsertData = function (clickedButtonId) {
                     let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
                     let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
                     let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
-                    let hotelRoomContainPoolText = document.getElementById('hotel_room_contain_pool_input_id').value;
-                    let hotelRoomViewText = document.getElementById('hotel_room_view_input_id').value;
-                    let hotelBreakfastPeopleAmountText = document.getElementById('hotel_breakfast_people_amount_input_id').value;
+                    let hotelRoomContainPoolInput = document.getElementById('hotel_room_contain_pool_input_id').value;
+                    let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id').value;
+                    let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id').value;
+                    let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
+                    let hotelSpecialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id').value;
                     let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
+
+
+                    /* Second hotel room data input values */
+                    let hotelRoomTypeDescriptionInput_2 = document.getElementById('hotel_room_type_description_input_id_2').value;
+                    let hotelRoomContainPoolInput_2 = document.getElementById('hotel_room_contain_pool_input_id_2').value;
+                    let hotelRoomViewInput_2 = document.getElementById('hotel_room_view_input_id_2').value;
+                    let hotelUnitAmountInput_2 = document.getElementById('hotel_unit_amount_input_id_2').value;
+                    let hotelBreakfastPeopleAmountInput_2 = document.getElementById('hotel_breakfast_people_amount_input_id_2').value;
+                    let hotelSpecialRoomRequestInput_2 = document.getElementById('hotel_special_room_request_input_id_2').value;
+                    let hotelRoomExtraInfoReadyText_2 = document.getElementById('hotel_room_extra_info_textarea_id_2').value;
+
 
                     /* if one of the inputs is empty then stop the process */
                     if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
@@ -1689,10 +1847,7 @@ checkInputsToInsertData = function (clickedButtonId) {
                             confirm_new_hotel_data_row_icon.style.backgroundColor = 'rgb(255, 174, 0)';
                         }, 500);
                     } else {
-                        // Save current dates before updating
-                        let h2Date = document.querySelector(`.hotel_row_class_for_editing #hotel_check_in_${clickedHotelRowIdName}`)?.innerText || '';
-                        let h3Date = document.querySelector(`.hotel_row_class_for_editing #hotel_check_out_${clickedHotelRowIdName}`)?.innerText || '';
-                        savedHotelDates[clickedHotelRowIdName] = { startDate: h2Date, endDate: h3Date };
+
 
                         // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
                         let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
@@ -1716,42 +1871,134 @@ checkInputsToInsertData = function (clickedButtonId) {
                             <div><h2 id='hotel_check_in_${insertedHotelDataDivUniqueId}' class="hotel_check_in_date_for_matching_whole_package_date">${hotelCheckInReadyText}</h2></div>
                             <div><h3 style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}' class="hotel_check_out_date_for_matching_whole_package_date">${hotelCheckOutReadyText}</h3></div>
                             <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
-                            <div class="description_cell"><span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
-                            <div><p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p></div>
-                            <div><h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}</p><img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer"></div>
+                            <div class="description_cell">
+                                <span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
+                            <div>
+                                <p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p>
+                                ${hotelUnitAmountInput_2 && document.getElementById('hotel_second_room_data_input_div').style.display !== "none" ? `<p style="width: 100%; background: rgb(40, 62, 68); color: white">+ </p><p id="hotel_total_unit_2_${insertedHotelDataDivUniqueId}" style="width: 100%; background: rgb(40, 62, 68); color: white">${storeHotelTotalUnitNumber_2}</p>` : ''}
+                            </div>
+                            <div>
+                                <h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>
+                                ${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}
+                                <img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer">
+                            </div>
                         `;
 
                         // Insert the new HTML content into the clicked hotel data div
                         clickedHotelDataDiv.innerHTML = hotelRowTableDivContent;
 
-                        // Append <p> elements for each input with text
-                        if (hotelRoomContainPoolText !== '') {
-                            let poolP = document.createElement('span');
-                            poolP.id = `hotel_pool_p_id_${insertedHotelDataDivUniqueId}`;
-                            poolP.innerText = hotelRoomContainPoolText;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolP);
+
+                        // Append <span> elements for each input with text
+                        if (hotelRoomContainPoolInput !== '') {
+                            let poolSpan = document.createElement('span');
+                            poolSpan.id = `hotel_pool_span_id_${insertedHotelDataDivUniqueId}`;
+                            poolSpan.innerText = hotelRoomContainPoolInput;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolSpan);
                         }
-                        if (hotelRoomViewText !== '') {
-                            let viewP = document.createElement('span');
-                            viewP.id = `hotel_view_p_id_${insertedHotelDataDivUniqueId}`;
-                            viewP.innerText = hotelRoomViewText;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewP);
+                        if (hotelRoomViewInput !== '') {
+                            let viewSpan = document.createElement('span');
+                            viewSpan.id = `hotel_view_span_id_${insertedHotelDataDivUniqueId}`;
+                            viewSpan.innerText = hotelRoomViewInput;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewSpan);
                         }
-                        if (hotelBreakfastPeopleAmountText !== '') {
-                            let breakfastP = document.createElement('span');
-                            breakfastP.id = `hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}`;
-                            breakfastP.innerText = hotelBreakfastPeopleAmountText;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastP);
+                        if (hotelBreakfastPeopleAmountInput !== '') {
+                            let breakfastSpan = document.createElement('span');
+                            breakfastSpan.id = `hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}`;
+                            breakfastSpan.innerText = hotelBreakfastPeopleAmountInput;
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastSpan);
+                        }
+                        if (hotelSpecialRoomRequestInput !== '') {
+                            let specialRequestSpan = document.createElement('span');
+                            specialRequestSpan.id = `hotel_special_request_span_id_${insertedHotelDataDivUniqueId}`;
+                            specialRequestSpan.className = 'hotel_special_request_span_class';
+                            specialRequestSpan.innerText = hotelSpecialRoomRequestInput;
+                            specialRequestSpan.style.background = 'rgb(85, 127, 137)';
+                            specialRequestSpan.style.color = 'white';
+                            specialRequestSpan.style.padding = '0 5px';
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(specialRequestSpan);
                         }
                         if (hotelRoomExtraInfoReadyText !== '') {
-                            let hotelExtraInfoSpan = document.createElement('span');
-                            hotelExtraInfoSpan.id = `hotel_room_extra_info_${insertedHotelDataDivUniqueId}`;
-                            hotelExtraInfoSpan.innerText = hotelRoomExtraInfoReadyText;
-                            hotelExtraInfoSpan.style.background = 'rgb(85, 127, 137)';
-                            hotelExtraInfoSpan.style.color = 'white';
-                            hotelExtraInfoSpan.style.padding = '0 5px';
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(hotelExtraInfoSpan);
+                            let extraInfoSpan = document.createElement('span');
+                            extraInfoSpan.id = `hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}`;
+                            extraInfoSpan.innerText = `+ ${hotelRoomExtraInfoReadyText}`;
+                            extraInfoSpan.style.background = 'rgb(85, 127, 137)';
+                            extraInfoSpan.style.color = 'white';
+                            extraInfoSpan.style.padding = '0 5px';
+                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(extraInfoSpan);
                         }
+
+
+
+
+                        // Handle the second room data if the second room div is visible
+                        if (document.getElementById('hotel_second_room_data_input_div').style.display !== "none") {
+                            if (hotelRoomTypeDescriptionInput_2 !== '') {
+                                let roomTypeDescriptionSpan_2 = document.createElement('span');
+                                roomTypeDescriptionSpan_2.id = `hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`;
+                                roomTypeDescriptionSpan_2.innerText = hotelRoomTypeDescriptionInput_2;
+                                roomTypeDescriptionSpan_2.style.width = '100%';
+                                roomTypeDescriptionSpan_2.style.background = 'rgb(40, 62, 68)';
+                                roomTypeDescriptionSpan_2.style.color = 'white';
+
+
+                                let plusSign = document.createElement('span');
+                                plusSign.innerText = '+ ';
+                                plusSign.style.width = '100%';
+                                plusSign.style.background = 'rgb(40, 62, 68)';
+                                plusSign.style.color = 'white';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(plusSign);
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(roomTypeDescriptionSpan_2);
+                            }
+                            if (hotelRoomContainPoolInput_2 !== '') {
+                                let poolSpan_2 = document.createElement('span');
+                                poolSpan_2.id = `hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}`;
+                                poolSpan_2.innerText = hotelRoomContainPoolInput_2;
+                                poolSpan_2.style.width = '100%';
+                                poolSpan_2.style.background = 'rgb(40, 62, 68)';
+                                poolSpan_2.style.color = 'white';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolSpan_2);
+                            }
+                            if (hotelRoomViewInput_2 !== '') {
+                                let viewSpan_2 = document.createElement('span');
+                                viewSpan_2.id = `hotel_view_span_id_2_${insertedHotelDataDivUniqueId}`;
+                                viewSpan_2.style.width = '100%';
+                                viewSpan_2.innerText = hotelRoomViewInput_2;
+                                viewSpan_2.style.background = 'rgb(40, 62, 68)';
+                                viewSpan_2.style.color = 'white';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewSpan_2);
+                            }
+                            if (hotelBreakfastPeopleAmountInput_2 !== '') {
+                                let breakfastSpan_2 = document.createElement('span');
+                                breakfastSpan_2.id = `hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}`;
+                                breakfastSpan_2.innerText = hotelBreakfastPeopleAmountInput_2;
+                                breakfastSpan_2.style.width = '100%';
+                                breakfastSpan_2.style.background = 'rgb(40, 62, 68)';
+                                breakfastSpan_2.style.color = 'white';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastSpan_2);
+                            }
+                            if (hotelSpecialRoomRequestInput_2 !== '') {
+                                let specialRequestSpan_2 = document.createElement('span');
+                                specialRequestSpan_2.id = `hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}`;
+                                specialRequestSpan_2.className = 'hotel_special_request_span_class';
+                                specialRequestSpan_2.innerText = hotelSpecialRoomRequestInput_2;
+                                specialRequestSpan_2.style.width = '100%';
+                                specialRequestSpan_2.style.background = 'rgb(5, 17, 21)';
+                                specialRequestSpan_2.style.color = 'white';
+                                specialRequestSpan_2.style.padding = '0 5px';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(specialRequestSpan_2);
+                            }
+                            if (hotelRoomExtraInfoReadyText_2 !== '') {
+                                let extraInfoSpan_2 = document.createElement('span');
+                                extraInfoSpan_2.id = `hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}`;
+                                extraInfoSpan_2.innerText = `+ ${hotelRoomExtraInfoReadyText_2}`;
+                                extraInfoSpan_2.style.width = '100%';
+                                extraInfoSpan_2.style.background = 'rgb(5, 17, 21)';
+                                extraInfoSpan_2.style.color = 'white';
+                                extraInfoSpan_2.style.padding = '0 5px';
+                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(extraInfoSpan_2);
+                            }
+                        }
+
 
                         // Reattach event listeners to the image controllers
                         let hotelRowImageControllers = clickedHotelDataDiv.querySelectorAll('.hotel_row_image_controller');
@@ -3067,4 +3314,5 @@ downloadPdfWithCustomName = async function (pdfName) {
 function isVisible(element) {
     return element.offsetWidth > 0 && element.offsetHeight > 0;
 }
+
 
