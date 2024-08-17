@@ -1,8 +1,8 @@
 /* Function to prevent the page refresh by mistake */
-/* window.addEventListener('beforeunload', function (event) {
+window.addEventListener('beforeunload', function (event) {
     event.preventDefault(); // Prevent the default action
     event.returnValue = ''; // Set the return value to trigger the default browser confirmation dialog
-}); */
+});
 
 
 (function () {
@@ -403,44 +403,32 @@ document.querySelectorAll('#package_including_details_div input[type="checkbox"]
 
 
 
-// Variable to track the last clicked input field for special room requests
-let lastClickedSpecialRoomRequestInput = null;
+/* Function to run the dropdown functonality for special room request */
+let specialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id');
 
-// Add event listeners to track the last clicked input
-document.getElementById('hotel_special_room_request_input_id').addEventListener('click', function () {
-    lastClickedSpecialRoomRequestInput = this;
-});
-
-document.getElementById('hotel_special_room_request_input_id_2').addEventListener('click', function () {
-    lastClickedSpecialRoomRequestInput = this;
-});
-
-/* Function to run the dropdown functionality for special room request */
 // Get the options within the dropdown
 let specialRoomRequestInputOptions = document.querySelectorAll('#special_room_request_dropdown h3');
 
 specialRoomRequestInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
         // Play a sound effect
         new Audio('click.mp3').play();
 
-        if (lastClickedSpecialRoomRequestInput) {
-            if (option.textContent === 'حذف') {
-                lastClickedSpecialRoomRequestInput.value = '';
 
-            } else if (option.textContent === 'باقة شهر عسل') {
-                lastClickedSpecialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكة + شاي بعد الظهر';
+        if (option.textContent === 'حذف') {
+            specialRoomRequestInput.value = '';
 
-            } else {
-                lastClickedSpecialRoomRequestInput.value = `+ ${option.textContent}`;
+        } else if (option.textContent === 'باقة شهر عسل') {
+            specialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكة + شاي بعد الظهر'; // Set input value to selected option
 
-            }
         }
 
+
         hideOverlay(); // Hide overlay after selection
+
     });
 });
-
 
 
 
@@ -491,7 +479,6 @@ hotelNameInputOptions.forEach(option => {
 
         if (option.textContent !== currentHotelName) {
             document.getElementById('hotel_room_type_description_input_id').value = '';
-            document.getElementById('hotel_room_type_description_input_id_2').value = '';
         }
 
 
@@ -510,34 +497,27 @@ hotelNameInputOptions.forEach(option => {
 
 /* Function to insert the hotel room view and including pool text */
 
-// Variable to track the last clicked input field
-let lastClickedPoolInput = null;
-
-// Add event listeners to track the last clicked input
-document.getElementById('hotel_room_contain_pool_input_id').addEventListener('click', function () {
-    lastClickedPoolInput = this;
-});
-
-document.getElementById('hotel_room_contain_pool_input_id_2').addEventListener('click', function () {
-    lastClickedPoolInput = this;
-});
-
 /* Dropdown airport line names functionality */
+let hotelRoomContainPoolInput = document.getElementById('hotel_room_contain_pool_input_id');
+
 // Get the options within the dropdown
 let hotelRoomContainPoolInputOptions = document.querySelectorAll('#hotel_room_contain_pool_dropdown h3');
 
 hotelRoomContainPoolInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
         new Audio('click.mp3').play();
 
-        if (lastClickedPoolInput) {
-            if (option.textContent === 'حذف') {
-                lastClickedPoolInput.value = ''; // Clear the input value if "حذف" is selected
-            } else {
-                lastClickedPoolInput.value = `مع ${option.textContent}`; // Set the input value to the selected option
-            }
+        if (option.textContent === 'حذف') {
+            hotelRoomContainPoolInput.value = '';
+
+        } else {
+            hotelRoomContainPoolInput.value = `مع ${option.textContent}`;
+
         }
 
+        /* Set the input value with the clicked rooms number h3 innerText */
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -546,101 +526,27 @@ hotelRoomContainPoolInputOptions.forEach(option => {
 
 
 
-
-// Variable to track the last clicked input field
-let lastClickedViewInput = null;
-
-// Add event listeners to track the last clicked input
-document.getElementById('hotel_room_view_input_id').addEventListener('click', function () {
-    lastClickedViewInput = this;
-});
-
-document.getElementById('hotel_room_view_input_id_2').addEventListener('click', function () {
-    lastClickedViewInput = this;
-});
-
 /* Dropdown airport line names functionality */
+let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id');
+
 // Get the options within the dropdown
 let hotelRoomViewInputOptions = document.querySelectorAll('#hotel_room_view_dropdown h3');
 
 hotelRoomViewInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
         new Audio('click.mp3').play();
 
-        if (lastClickedViewInput) {
-            if (option.textContent === 'حذف') {
-                lastClickedViewInput.value = ''; // Clear the input value if "حذف" is selected
-            } else {
-                lastClickedViewInput.value = `بإطلالة على ${option.textContent}`; // Set the input value to the selected option
-            }
-        }
-
-        hideOverlay(); // Hide overlay after selection
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Function to store the clicked hotel unit amount */
-
-// Variable to track the last clicked input field for unit amount
-let lastClickedBreakFastAmountInput = null;
-
-// Add event listeners to track the last clicked input
-document.getElementById('hotel_breakfast_people_amount_input_id').addEventListener('click', function () {
-    lastClickedBreakFastAmountInput = this;
-});
-
-document.getElementById('hotel_breakfast_people_amount_input_id_2').addEventListener('click', function () {
-    lastClickedBreakFastAmountInput = this;
-});
-
-/* Dropdown airport line names functionality */
-// Get the options within the dropdown
-let hotelBreakFastAmountInputOptions = document.querySelectorAll('#breakfast_amount_dropdown h3');
-
-hotelBreakFastAmountInputOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        new Audio('click.mp3').play();
-
-
-        /* Set the input value with the clicked rooms number h3 innerText */
         if (option.textContent === 'حذف') {
-            lastClickedBreakFastAmountInput.value = '';
-
-        } else if (option.textContent === 'غير شامل') {
-            lastClickedBreakFastAmountInput.value = `غير شامل الإفطار`
+            hotelRoomViewInput.value = '';
 
         } else {
-            lastClickedBreakFastAmountInput.value = `شامل الإفطار ل${option.textContent}`;
+            hotelRoomViewInput.value = `بإطلالة على ${option.textContent}`;
 
         }
 
-
+        /* Set the input value with the clicked rooms number h3 innerText */
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -669,44 +575,29 @@ hotelBreakFastAmountInputOptions.forEach(option => {
 
 
 
+
 /* Function to store the clicked hotel unit amount */
-
-// Variable to track the last clicked input field for unit amount
-let lastClickedUnitAmountInput = null;
-
-// Add event listeners to track the last clicked input
-document.getElementById('hotel_unit_amount_input_id').addEventListener('click', function () {
-    lastClickedUnitAmountInput = this;
-});
-
-document.getElementById('hotel_unit_amount_input_id_2').addEventListener('click', function () {
-    lastClickedUnitAmountInput = this;
-});
 
 /* Store the hotel total rooms number for later use (in hotel row data) */
 let storeHotelTotalUnitNumber;
-let storeHotelTotalUnitNumber_2;
 
-/* Dropdown unit amount functionality */
+/* Dropdown airport line names functionality */
+let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id');
+
 // Get the options within the dropdown
 let hotelUnitAmountInputOptions = document.querySelectorAll('#hotel_unit_amount_dropdown h3');
 
 hotelUnitAmountInputOptions.forEach(option => {
     option.addEventListener('click', () => {
+
+        // Play a sound effect
         new Audio('click.mp3').play();
 
-        // Store the clicked h3 innerText in the appropriate variable based on the last clicked input
-        if (lastClickedUnitAmountInput === document.getElementById('hotel_unit_amount_input_id')) {
-            storeHotelTotalUnitNumber = option.textContent;
-        } else if (lastClickedUnitAmountInput === document.getElementById('hotel_unit_amount_input_id_2')) {
-            storeHotelTotalUnitNumber_2 = option.textContent;
-        }
+        /* Save the clicked number in the variable for later use */
+        storeHotelTotalUnitNumber = option.textContent;
 
-        if (lastClickedUnitAmountInput) {
-            // Set the input value with the clicked h3 innerText
-            lastClickedUnitAmountInput.value = `عدد الوحدات ${option.textContent}`;
-        }
-
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelUnitAmountInput.value = `عدد الوحدات ${option.textContent}`;
         hideOverlay(); // Hide overlay after selection
     });
 });
@@ -726,56 +617,71 @@ hotelUnitAmountInputOptions.forEach(option => {
 
 
 
-
-// Variable to track the last clicked input field
-let lastClickedInput = null;
-
-// Add event listeners to the inputs to track which one was last clicked
-document.getElementById('hotel_room_type_description_input_id').addEventListener('click', function () {
-    lastClickedInput = this;
-});
-
-document.getElementById('hotel_room_type_description_input_id_2').addEventListener('click', function () {
-    lastClickedInput = this;
-});
-
 /* Function to create hotel room type description h3 dropdown elements */
 let createRoomTypeDescripyionDropDown = function () {
+    // Get the value of the hotel name input field
     let hotelNameInput = document.getElementById('hotel_name_input_id').value;
+
+    // Get the input field where the selected room type description will be displayed
+    let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id');
+
+    // Get the div where the room type description h3 elements will be appended
     let hotelRoomTypeDescriptionH3ElementsDiv = document.getElementById('hotel_room_type_description_h3_elements_div_id');
 
+    // Check if the hotel name input field is not empty
     if (hotelNameInput !== '') {
+        // Clear any existing content in the h3 elements div
         hotelRoomTypeDescriptionH3ElementsDiv.innerHTML = '';
+
+        // Find the hotel object in the 'allHotelDataArray' that matches the hotel name input value
         let hotel = allHotelDataArray.find(hotel => hotel.hotelName === hotelNameInput);
 
+        // If a matching hotel object is found
         if (hotel) {
+            // Loop through each room type in the hotelRoomTypes array of the matching hotel object
             hotel.hotelRoomTypes.forEach(roomType => {
+                // Create a new h3 element for the room type
                 let h3 = document.createElement('h3');
+
+                // Set the text content of the h3 element to the current room type
                 h3.textContent = roomType;
+
+                // Append the h3 element to the h3 elements div
                 hotelRoomTypeDescriptionH3ElementsDiv.appendChild(h3);
 
+                // Add a click event listener to the h3 element
                 h3.addEventListener('click', () => {
+
+                    // Play a sound effect
                     new Audio('click.mp3').play();
 
-                    // Check if an input field was clicked before the h3 was clicked
-                    if (lastClickedInput) {
-                        // Set the value of the last clicked input field to the text content of the clicked h3 element
-                        lastClickedInput.value = h3.textContent;
-                    }
+                    // When the h3 element is clicked, set the value of the room type description input field to the text content of the h3 element
+                    hotelRoomTypeDescriptionInput.value = h3.textContent;
 
+
+
+                    /* Reset the value of 'all_hotel_names_search_bar_input_id' after picking a hotek name */
                     document.getElementById('hotel_room_type_description_search_bar_input_id').value = '';
-                    let dropdownDivOptions = document.getElementById('hotel_room_type_description_search_bar_input_id')
-                        .closest('.searchable_names_dropdown_class').querySelectorAll('h3');
 
+                    // Get the dropdown div associated with the input
+                    let dropdownDivOptions = document.getElementById('hotel_room_type_description_search_bar_input_id').closest('.searchable_names_dropdown_class').querySelectorAll('h3');
+
+                    // Reset the display of all <h3> elements
                     dropdownDivOptions.forEach(option => {
-                        option.style.display = 'block';
+                        option.style.display = 'block'; // Show all options
                     });
 
+
+
+                    // Hide the overlay (assuming hideOverlay function is defined elsewhere)
                     hideOverlay();
                 });
             });
         }
+
+        /* But if the hotel name input was empty then hide all the h3 elements */
     } else {
+        // Clear any existing content in the h3 elements div
         hotelRoomTypeDescriptionH3ElementsDiv.innerHTML = '';
     }
 }
@@ -783,39 +689,6 @@ let createRoomTypeDescripyionDropDown = function () {
 
 
 
-
-
-
-
-
-
-
-/* Function to show and hide the second hotel room data input dive */
-showSecondHotelRoomData = function () {
-
-    // Get all hotel first and second room data inputs for width styling
-    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
-
-    if (document.getElementById('hotel_second_room_data_input_div').style.display === 'flex') {
-        document.getElementById('hotel_second_room_data_input_div').style.display = 'none';
-
-        // Set width back to the original saved width value
-        inputsAndTextareas.forEach(element => {
-            element.style.width = element.dataset.originalWidth; // Use the saved width value
-        });
-
-    } else {
-        document.getElementById('hotel_second_room_data_input_div').style.display = 'flex';
-
-        // Save the current width before changing it to 100%
-        inputsAndTextareas.forEach(element => {
-            if (!element.dataset.originalWidth) {
-                element.dataset.originalWidth = element.style.width; // Save the original width
-            }
-            element.style.width = '100%'; // Set width to 100%
-        });
-    }
-}
 
 
 
@@ -886,7 +759,7 @@ clearSearchableDropDownInputValue = function (targetInputToClear) {
 
 
     // Clear the input value
-    let inputElement = document.getElementById(targetInputToClear);
+    const inputElement = document.getElementById(targetInputToClear);
     inputElement.value = '';
 
 
@@ -1415,10 +1288,10 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
 
         // Copy the text of the clicked <p> element to the clipboard
-        let textToCopy = clickedPlace.innerText;
+        const textToCopy = clickedPlace.innerText;
 
         // Create a temporary textarea element to facilitate copying
-        let tempTextarea = document.createElement('textarea');
+        const tempTextarea = document.createElement('textarea');
         tempTextarea.value = textToCopy;
         document.body.appendChild(tempTextarea);
 
@@ -2218,7 +2091,6 @@ function toggleFullscreen(textAreaId) {
     // Append exit button to body
     document.body.appendChild(exitTextAreaFullScreenButton);
 }
-
 
 
 
