@@ -323,7 +323,7 @@ body {
     position: fixed;
     bottom: 0.5px;
     left: 0.5px;
-    border-radius: 10%;
+    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -489,49 +489,6 @@ body {
 .dropdown_content_div_class {
     width: 100%;
 }
-
-
-
-
-
-
-#hotel_two_room_data_input_divs_container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#hotel_first_room_data_input_div {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#hotel_second_room_data_input_div {
-    width: 100%;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.hotel_two_room_data_input_divs_container_class input,
-.hotel_two_room_data_input_divs_container_class textarea {
-    width: 86.7%;
-}
-
-
-
-/* Styling for setting the second hotel room data inputs width value */
-.second_room_data_inputs_full_width_class input,
-.second_room_data_inputs_full_width_class textarea {
-    width: 100%;
-}
-
-
 
 
 
@@ -788,17 +745,13 @@ body {
 
 
 
-/* Styling for separating two insert package data to pdf icons */
-.two_icons_insert_data_package_pdf_div {
+/* Submit clint movement package pdf div */
+.submit_clint_movement_package_pdf_div {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
-
-
-
 
 
 
@@ -1269,10 +1222,7 @@ body {
 
 
 
-    #hotel_two_room_data_input_divs_container input,
-    #hotel_two_room_data_input_divs_container textarea {
-        width: 90.9%;
-    }
+
 
 
 
@@ -1546,20 +1496,6 @@ body {
         font-size: 5vw;
         padding: 8px;
     }
-
-
-
-
-
-    #hotel_two_room_data_input_divs_container input,
-    #hotel_two_room_data_input_divs_container textarea {
-        width: 95.9%;
-    }
-
-
-
-
-
 
     .package_info_input_div {
         padding: 3px;
