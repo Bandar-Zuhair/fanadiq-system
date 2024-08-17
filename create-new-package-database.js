@@ -1540,6 +1540,31 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     } else {
 
 
+                        /* in case the second room data inputs div is visible and there are empty inputs then stop the process */
+                        if (document.getElementById('hotel_second_room_data_input_div').style.display !== 'none') {
+
+                            if (hotelRoomTypeDescriptionInput_2 === '' || hotelUnitAmountInput_2 === '') {
+
+                                // Play a sound effect
+                                new Audio('error.mp3').play();
+
+                                // Change the submit icon background color
+                                hotel_inputs_submit_icon.style.backgroundColor = 'red';
+
+                                // Set the background color of the submit icon back to default color
+                                setTimeout(() => {
+                                    hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                                }, 500);
+
+                                return;
+                            }
+                        }
+
+
+                        // Play a sound effect
+                        new Audio('success.mp3').play();
+
+
                         // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
                         let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
 
