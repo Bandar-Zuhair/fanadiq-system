@@ -96,15 +96,6 @@ form.addEventListener('submit', e => {
             document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
             document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
         }, 500);
-
-
-        document.getElementById('scroll_bottom_page_icon').style.background = 'red';
-        document.getElementById('scroll_bottom_page_icon').style.color = 'white';
-
-        setTimeout(() => {
-            document.getElementById('scroll_bottom_page_icon').style.background = 'rgb(85, 127, 137)';
-            document.getElementById('scroll_bottom_page_icon').style.color = 'white';
-        }, 500);
     }
 
 });
@@ -122,12 +113,6 @@ document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_
 
 // Add click event listener to trigger form submission
 document.getElementById('check_pdf_name_button').addEventListener('click', function () {
-    form.dispatchEvent(new Event('submit'));
-});
-
-
-// Add click event listener to trigger form submission
-document.getElementById('scroll_bottom_page_icon').addEventListener('click', function () {
     form.dispatchEvent(new Event('submit'));
 });
 
@@ -401,7 +386,7 @@ document.getElementById('refresh_import_saved_packages_data_input_value_icon').o
     // Delay setting the value back to simulate a reset and apply the filter
     setTimeout(() => {
         input.value = importGoogleSheetDataNamesSearchBarValue;
-        updateDataBaseSavedDataNames(); // Apply the filter after resetting the value
+        filterDropdown(input); // Apply the filter after resetting the value
     }, 500);
 };
 
@@ -1317,13 +1302,9 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 create_new_clint_movements_plan_section.style.display = 'none';
 
 
-                /* Hide and show different icons */
                 document.getElementById('hotel_inputs_submit_icon').style.display = 'none';
-                document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'none';
                 document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'block';
                 document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'block';
-                document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'block';
-
 
                 document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
                 document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
@@ -1358,72 +1339,19 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 document.getElementById('hotel_check_in_input_id').disabled = false;
 
 
-
+                
                 /* Get all the values from the clicked hotel row */
                 let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckInText = clickedHotelDataDiv.querySelector(`h2[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelTotalNightsText = clickedHotelDataDiv.querySelector(`h4[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelRoomTypeDescriptionText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
                 let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-
-
-
-                /* in case if there was a second room data in the clicked hotel row then target those data */
-                if (clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`)) {
-
-
-                    // Get all hotel first and second room data inputs for width styling
-                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
-
-                    document.getElementById('hotel_second_room_data_input_div').style.display = 'flex';
-
-                    // Save the current width before changing it to 100%
-                    inputsAndTextareas.forEach(element => {
-                        if (!element.dataset.originalWidth) {
-                            element.dataset.originalWidth = element.style.width; // Save the original width
-                        }
-                        element.style.width = '100%'; // Set width to 100%
-                    });
-
-
-                    let hotelRoomTypeDescriptionText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomContainPoolText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomViewText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelUnitAmountText_2 = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelBreakfastPeopleAmountText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelSpecialRoomRequestText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomExtraInfoText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-
-
-                    document.getElementById('hotel_room_type_description_input_id_2').value = hotelRoomTypeDescriptionText_2;
-                    document.getElementById('hotel_room_contain_pool_input_id_2').value = hotelRoomContainPoolText_2;
-                    document.getElementById('hotel_room_view_input_id_2').value = hotelRoomViewText_2;
-                    document.getElementById('hotel_unit_amount_input_id_2').value = `عدد الوحدات ${hotelUnitAmountText_2}`;
-                    document.getElementById('hotel_breakfast_people_amount_input_id_2').value = hotelBreakfastPeopleAmountText_2;
-                    document.getElementById('hotel_special_room_request_input_id_2').value = hotelSpecialRoomRequestText_2;
-                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = hotelRoomExtraInfoText_2;
-
-
-                } else {
-                    // Get all hotel first and second room data inputs for width styling
-                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
-
-                    document.getElementById('hotel_second_room_data_input_div').style.display = 'flex';
-
-                    // Save the current width before changing it to 100%
-                    inputsAndTextareas.forEach(element => {
-                        if (!element.dataset.originalWidth) {
-                            element.dataset.originalWidth = element.style.width; // Save the original width
-                        }
-                        element.style.width = '100%'; // Set width to 100%
-                    });
-                }
+                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_p_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_room_request_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_extra_info_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
 
                 // Enter the values of the clicked hotel row div to inputs
@@ -1486,24 +1414,15 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                     document.getElementById('hotel_room_type_description_input_id').value = '';
                     document.getElementById('hotel_room_contain_pool_input_id').value = '';
                     document.getElementById('hotel_room_view_input_id').value = '';
+                    document.getElementById('hotel_unit_amount_input_id').value = '';
+                    document.getElementById('hotel_breakfast_people_amount_input_id').value = '';
                     document.getElementById('hotel_special_room_request_input_id').value = '';
                     document.getElementById('hotel_room_extra_info_textarea_id').value = '';
 
 
-                    document.getElementById('hotel_room_type_description_input_id_2').value = '';
-                    document.getElementById('hotel_room_contain_pool_input_id_2').value = '';
-                    document.getElementById('hotel_room_view_input_id_2').value = '';
-                    document.getElementById('hotel_special_room_request_input_id_2').value = '';
-                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = '';
-
-
-                    /* Hide and show different icons */
                     document.getElementById('hotel_inputs_submit_icon').style.display = 'block';
-                    document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'block';
                     document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'none';
                     document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'none';
-                    document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'none';
-
 
                     document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
                     document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
