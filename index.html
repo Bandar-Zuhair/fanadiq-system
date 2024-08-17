@@ -21,6 +21,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#ffffff">
@@ -57,7 +58,8 @@
 
 
 
-    <ion-icon name="save-outline" id="scroll_bottom_page_icon"></ion-icon>
+    <ion-icon name="caret-down-circle-outline" id="scroll_bottom_page_icon"
+        onclick="new Audio('click.mp3').play(); window.scrollTo(0, document.body.scrollHeight);"></ion-icon>
 
 
 
@@ -68,6 +70,10 @@
     <!-- create-new-package-setup -->
     <!-- create-new-package-setup -->
     <!-- create-new-package-setup -->
+
+
+
+
 
 
 
@@ -496,106 +502,47 @@
                     autocomplete="off" style="cursor: default;">
 
 
-
-                <div id="hotel_two_room_data_input_divs_container">
-
-                    <!-- First hotel room data inputs div -->
-
-                    <div id="hotel_first_room_data_input_div">
-                        <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
-                            autocomplete="off"
-                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
+                    autocomplete="off"
+                    onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                    style="cursor: pointer;">
 
 
 
-                        <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_room_contain_pool_input_id" placeholder="مع مسبح..؟" readonly
+                    autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
+                    style="cursor: pointer;">
 
 
 
-                        <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_room_view_dropdown')"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_room_view_input_id" placeholder="مطلة على..؟" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_room_view_dropdown')" style="cursor: pointer;">
 
 
-                        <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_unit_amount_dropdown')"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_unit_amount_input_id" placeholder="عدد الوحدات" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_unit_amount_dropdown')" style="cursor: pointer;">
 
 
-                        <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟"
-                            readonly autocomplete="off" onclick="showOverlay('breakfast_amount_dropdown')"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_breakfast_people_amount_input_id" placeholder="عدد الإفطار؟" readonly
+                    autocomplete="off" onclick="showOverlay('breakfast_and_sms_card_and_ticket_amount_dropdown')"
+                    style="cursor: pointer;">
 
 
-                        <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
-                            autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
-                            style="cursor: pointer;">
+                <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
+                    autocomplete="off" onclick="showOverlay('special_room_request_dropdown')" style="cursor: pointer;">
 
 
-                        <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
-                            placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
-                        <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
-                    </div>
-
-                    <!-- Second hotel room data inputs div -->
-
-                    <div id="hotel_second_room_data_input_div">
-                        <input type="text" id="hotel_room_type_description_input_id_2" placeholder="نوع السكن" readonly
-                            autocomplete="off"
-                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
-                            style="cursor: pointer;">
+                <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
+                    placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
+                <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
+                    onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
 
 
-
-                        <input type="text" id="hotel_room_contain_pool_input_id_2" placeholder="مع مسبح..؟" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_room_contain_pool_dropdown')"
-                            style="cursor: pointer;">
-
-
-
-                        <input type="text" id="hotel_room_view_input_id_2" placeholder="مطلة على..؟" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_room_view_dropdown')"
-                            style="cursor: pointer;">
-
-
-                        <input type="text" id="hotel_unit_amount_input_id_2" placeholder="عدد الوحدات" readonly
-                            autocomplete="off" onclick="showOverlay('hotel_unit_amount_dropdown')"
-                            style="cursor: pointer;">
-
-
-                        <input type="text" id="hotel_breakfast_people_amount_input_id_2" placeholder="عدد الإفطار؟"
-                            readonly autocomplete="off" onclick="showOverlay('breakfast_amount_dropdown')"
-                            style="cursor: pointer;">
-
-
-                        <input type="text" id="hotel_special_room_request_input_id_2" placeholder="الإضافات" readonly
-                            autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
-                            style="cursor: pointer;">
-
-
-                        <textarea id="hotel_room_extra_info_textarea_id_2" class="package_details_input_class"
-                            placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
-                        <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id_2')"></ion-icon>
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="submit_package_pdf_div two_icons_insert_data_package_pdf_div">
+                <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="hotel_inputs_submit_icon"
                         onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
-
-
-                    <ion-icon name="add-circle-outline" id="show_or_hide_second_room_inputs_div_icon"
-                        onclick="new Audio('success.mp3').play(); showSecondHotelRoomData()"></ion-icon>
                 </div>
+
 
 
 
@@ -615,13 +562,9 @@
                             onclick="new Audio('click.mp3').play(); cancelNewHotelDataRow()"
                             style=" display: none; background: red;"></ion-icon>
                     </div>
-
-                    <div class="submit_package_pdf_div">
-                        <ion-icon name="add-circle-outline" id="show_or_hide_second_room_inputs_div_icon_2"
-                            onclick="new Audio('click.mp3').play(); showSecondHotelRoomData()"
-                            style="display: none;"></ion-icon>
-                    </div>
                 </div>
+
+
             </div>
 
         </div>
@@ -721,41 +664,11 @@
 
 
 
-
-        <!-- Dropdown div for hotel locations -->
-        <div id="breakfast_amount_dropdown" class="searchable_names_dropdown_class">
-            <div class="company_names_options_dropdown_class">
-                <h3 style="color: red;">حذف</h3>
-                <h3 style="color: red;">غير شامل</h3>
-                <h3>شخص واحد</h3>
-                <h3>شخصين</h3>
-                <h3>ثلاثة أشخاص</h3>
-                <h3>اربعة أشخاص</h3>
-                <h3>خمسة أشخاص</h3>
-                <h3>ستة أشخاص</h3>
-                <h3>سبعة أشخاص</h3>
-                <h3>ثمانية أشخاص</h3>
-                <h3>تسعة أشخاص</h3>
-                <h3>عشر أشخاص</h3>
-                <h3>احد عشر شخص</h3>
-                <h3>اثنا عشر شخص</h3>
-                <h3>ثلاثة عشر شخص</h3>
-                <h3>اربعة عشر شخص</h3>
-                <h3>خمسة عشر شخص</h3>
-            </div>
-        </div>
-
-
-
-
-
         <!-- Dropdown div for room amount -->
         <div id="special_room_request_dropdown" class="searchable_names_dropdown_class">
             <div class="company_names_options_dropdown_class">
                 <h3 style="color: red;">حذف</h3>
                 <h3>باقة شهر عسل</h3>
-                <h3>مساج لشخصين لمرة واحدة فقط</h3>
-                <h3>ديكور الغرفة (Honeymoon)</h3>
             </div>
         </div>
 
@@ -1355,7 +1268,7 @@
 
 
 
-                <div class="submit_package_pdf_div two_icons_insert_data_package_pdf_div">
+                <div class="submit_package_pdf_div submit_clint_movement_package_pdf_div">
                     <ion-icon name="send" id="clint_movements_auto_create_icon"
                         onclick="checkInputsToInsertData('clint_movements_auto_create_icon')"></ion-icon>
 
