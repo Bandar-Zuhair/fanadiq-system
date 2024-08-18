@@ -627,6 +627,11 @@ let allHotelDataArray = [
         hotelLocation: 'جاكرتا',
         hotelRoomTypes: ['هاريس يونيكيو من غرفة نوم واحدة', 'ديلوكس روم'],
     },
+    {
+        hotelName: 'Mulia Senayan',
+        hotelLocation: 'جاكرتا',
+        hotelRoomTypes: ['جرانديور روم', 'جرانديور ديلوكس روم', 'سيجناشور روم', 'تنفيذي روم', 'جونيور سويت'],
+    },
 
 
 
