@@ -1378,7 +1378,7 @@ showClintMovemtsPlacesPage = function (clickedClintMovementsPlacesLocation) {
 
     // Create the exit icon
     let exitClintMovementsPlacesPage = document.createElement('ion-icon');
-    exitClintMovementsPlacesPage.name = 'arrow-undo';
+    exitClintMovementsPlacesPage.name = 'arrow-undo-circle-outline';
     exitClintMovementsPlacesPage.className = 'exit_full_screen_icon';
     document.body.appendChild(exitClintMovementsPlacesPage);
 
@@ -2187,7 +2187,7 @@ function toggleFullscreen(textAreaId) {
 
     // Create an exit button
     let exitTextAreaFullScreenButton = document.createElement('ion-icon');
-    exitTextAreaFullScreenButton.name = 'arrow-undo';
+    exitTextAreaFullScreenButton.name = 'arrow-undo-circle-outline';
     exitTextAreaFullScreenButton.classList.add('exit_full_screen_icon');
     exitTextAreaFullScreenButton.onclick = function () {
 
