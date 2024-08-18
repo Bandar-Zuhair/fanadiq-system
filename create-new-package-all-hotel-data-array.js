@@ -345,6 +345,12 @@ let allHotelDataArray = [
         hotelArea: 'سيمنياك',
         hotelRoomTypes: ['ديلوكس روم'],
     },
+    {
+        hotelName: 'Eight Palms Villa',
+        hotelLocation: 'بالي',
+        hotelArea: 'سيمنياك',
+        hotelRoomTypes: ['فيلا من غرفتين نوم وحوض إستحمام', 'فيلا من ثلاث غرف نوم وحوض إستحمام', 'فيلا رويال من ثلاث غرف نوم وجاكوزي', 'فيلا رويال من ثلاث غرف نوم مع زحليقة مائية وجاكوزي'],
+    },
 
 
 
@@ -499,12 +505,6 @@ let allHotelDataArray = [
 
 
     /* Legian */
-    {
-        hotelName: 'Eight Palms Villa',
-        hotelLocation: 'بالي',
-        hotelArea: 'ليجين',
-        hotelRoomTypes: ['فيلا من غرفتين نوم وحوض إستحمام', 'فيلا من ثلاث غرف نوم وحوض إستحمام', 'فيلا رويال من ثلاث غرف نوم وجاكوزي', 'فيلا رويال من ثلاث غرف نوم مع زحليقة مائية وجاكوزي'],
-    },
     {
         hotelName: 'La Vie Villa',
         hotelLocation: 'بالي',
