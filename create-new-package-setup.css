@@ -126,8 +126,8 @@ body {
     z-index: 1001;
     background-color: rgb(255, 0, 0);
     color: white;
-    font-size: 3vw;
-    padding: 10px;
+    font-size: 5vw;
+    padding: 2px;
     position: fixed;
     top: 20px;
     left: 0;
@@ -1350,8 +1350,7 @@ body {
     }
 
     .exit_full_screen_icon {
-        font-size: 4vw;
-        padding: 10px;
+        font-size: 6vw;
     }
 
     .search_bar_div_class {
@@ -1639,8 +1638,7 @@ body {
     }
 
     .exit_full_screen_icon {
-        font-size: 7vw;
-        padding: 5px;
+        font-size: 8vw;
     }
 
     .search_bar_div_class {
@@ -1902,8 +1900,8 @@ body {
     }
 
     .exit_full_screen_icon {
-        font-size: 10vw;
-        padding: 3px;
+        font-size: 12vw;
+        padding: 1px;
     }
 
     .search_bar_div_class {
