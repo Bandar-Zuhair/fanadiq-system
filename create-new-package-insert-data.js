@@ -21,7 +21,7 @@ function saveOriginalHotelDates() {
 
 
 /* Function to update the available client visiting places based on the current existing visiting places */
-function processClintMovements() {
+function filterUsedClintVisitingPlacesNames() {
 
     // Select all divs with the class 'clint_movements_row_class_for_editing'
     const allClintMovementsDivs = document.querySelectorAll('.clint_movements_row_class_for_editing');
@@ -1240,7 +1240,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             /* in case the second room data inputs div is visible and there are empty inputs then stop the process */
-            if (document.getElementById('hotel_second_room_data_input_div').style.display !== 'none') {
+            if (document.getElementById('hotel_second_room_data_input_div').style.display === 'flex') {
 
                 if (hotelRoomTypeDescriptionInput_2 === '' || hotelUnitAmountInput_2 === '') {
 
@@ -2367,6 +2367,12 @@ checkInputsToInsertData = function (clickedButtonId) {
 
             let isFirstJakartaHotelFound = false; // Flag to track the first Jakarta hotel found
 
+
+            /* Variable to store if the h5 inside the first found 'hotel_row_class_for_editing' is "بونشاك" or "باندونق" */
+            let firstHotelCityName = allHotelRows[0].querySelector('h5').innerText;
+
+
+            
             allHotelRows.forEach((hotelRow, index) => {
                 let hotelName = hotelRow.querySelector('h1').innerText;
                 let checkInDate = hotelRow.querySelector('h2').innerText;
@@ -2470,8 +2476,21 @@ checkInputsToInsertData = function (clickedButtonId) {
                         isFirstHotelRowCreated = true;
                     }
 
+
+
+                    // Additional condition for the first hotel row
+                    if (!isFirstHotelRowCreated && index === 0 && isAirportWelcomeIncluded && (firstHotelCityName === "بونشاك" || firstHotelCityName === "باندونق")) {
+                        checkInOutText = `الإستقبال في مطار جاكرتا + الذهاب الى ${cityName} + تسجيل الدخول في ${hotelName}`;
+                        isFirstHotelRowCreated = true; // Set the flag to avoid reapplying this condition
+                    }
+
+
+
                     // Clean up text to ensure no duplicated '+'
                     checkInOutText = cleanUpText(checkInOutText);
+
+
+
 
                     clintMovementsRowTableDiv.innerHTML = `
                         <div><h1>${newDate}</h1></div>
@@ -2550,7 +2569,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
             /* Update the available clint visiting places based on the current existing visiting places */
-            processClintMovements();
+            filterUsedClintVisitingPlacesNames();
 
 
 
@@ -2562,6 +2581,46 @@ checkInputsToInsertData = function (clickedButtonId) {
             // Define a global variable to store the reference
             let currentClintMovementsDataDiv;
 
+
+
+            /* Function to delete the clicked clint movement row data */
+            deleteClickedClintMovementsData = function (currentClintMovementsDataDiv) {
+
+                /* Delete the clicked 'currentClintMovementsDataDiv' from the document */
+                currentClintMovementsDataDiv.remove();
+
+
+                // Get the following element to hide them
+                let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
+                let overlayLayer = document.querySelector('.black_overlay');
+
+                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+                overlayLayer.style.opacity = '0';
+                setTimeout(() => {
+                    // Only remove the overlay if it is still a child of the body
+                    if (document.body.contains(overlayLayer)) {
+                        document.body.removeChild(overlayLayer);
+                    }
+                }, 300);
+
+
+
+                // Get references to all input elements and reset their values
+                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
+
+                /* Hide and show different icons */
+                document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
+                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
+                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
+
+                /* Reset the innerText and styling to defualt */
+                document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
+                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+                /* Update the available clint visiting places based on the current existing visiting places */
+                filterUsedClintVisitingPlacesNames();
+            }
 
 
 
@@ -2615,7 +2674,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                 /* Update the available clint visiting places based on the current existing visiting places */
-                processClintMovements();
+                filterUsedClintVisitingPlacesNames();
 
 
 
@@ -2643,7 +2702,7 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
                     /* Update the available clint visiting places based on the current existing visiting places */
-                    processClintMovements();
+                    filterUsedClintVisitingPlacesNames();
                 }
 
 
@@ -2695,6 +2754,13 @@ checkInputsToInsertData = function (clickedButtonId) {
                 // Ensure the target is a clint_movements_row_class div
                 if (clickedclintMovementsDataDiv) {
                     currentClintMovementsDataDiv = clickedclintMovementsDataDiv;
+
+                    /* Function to run edit the clicked client movements row data */
+                    runDeleteClickedClintMovementsDataFunction = function () {
+                        deleteClickedClintMovementsData(currentClintMovementsDataDiv);
+
+                    }
+
 
                     /* Function to run edit the clicked client movements row data */
                     runEditClickedClintMovementsDataFunction = function () {
