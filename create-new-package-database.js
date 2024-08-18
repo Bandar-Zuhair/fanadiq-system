@@ -1541,7 +1541,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                         /* in case the second room data inputs div is visible and there are empty inputs then stop the process */
-                        if (document.getElementById('hotel_second_room_data_input_div').style.display !== 'none') {
+                        if (document.getElementById('hotel_second_room_data_input_div').style.display === 'flex') {
 
                             if (hotelRoomTypeDescriptionInput_2 === '' || hotelUnitAmountInput_2 === '') {
 
@@ -1977,7 +1977,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
         /* Update the available clint visiting places based on the current existing visiting places */
-        processClintMovements();
+        filterUsedClintVisitingPlacesNames();
 
 
         // Loop through each 'flight_row_class' element
@@ -2003,10 +2003,44 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
+            /* Function to delete the clicked clint movement row data */
+            deleteClickedClintMovementsData = function (currentClintMovementsDataDiv) {
+
+                /* Delete the clicked 'currentClintMovementsDataDiv' from the document */
+                currentClintMovementsDataDiv.remove();
+
+
+                // Get the following element to hide them
+                let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
+                let overlayLayer = document.querySelector('.black_overlay');
+
+                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
+                overlayLayer.style.opacity = '0';
+                setTimeout(() => {
+                    // Only remove the overlay if it is still a child of the body
+                    if (document.body.contains(overlayLayer)) {
+                        document.body.removeChild(overlayLayer);
+                    }
+                }, 300);
 
 
 
+                // Get references to all input elements and reset their values
+                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
 
+                /* Hide and show different icons */
+                document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
+                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
+                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
+
+                /* Reset the innerText and styling to defualt */
+                document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
+                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
+
+
+                /* Update the available clint visiting places based on the current existing visiting places */
+                filterUsedClintVisitingPlacesNames();
+            }
 
 
 
@@ -2065,7 +2099,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                 /* Update the available clint visiting places based on the current existing visiting places */
-                processClintMovements();
+                filterUsedClintVisitingPlacesNames();
 
 
 
@@ -2097,7 +2131,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
                     /* Update the available clint visiting places based on the current existing visiting places */
-                    processClintMovements();
+                    filterUsedClintVisitingPlacesNames();
                 }
 
 
@@ -2139,6 +2173,12 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
             let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class_for_editing');
 
+
+            /* Function to run edit the clicked client movements row data */
+            runDeleteClickedClintMovementsDataFunction = function () {
+                deleteClickedClintMovementsData(clickedclintMovementsDataDiv);
+
+            }
 
             /* Function to run edit the clicked clint movements row data */
             runEditClickedClintMovementsDataFunction = function () {
