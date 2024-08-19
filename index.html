@@ -87,17 +87,8 @@
 
     <!-- Google Sheet data controller div -->
     <div id="google_sheet_data_controller_div">
-
-
-        <form method="post"
-            action="https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec"
-            name="save-package">
-            <input id="sumbit_save_new_data_to_sheet_input_button_id" type="submit" value="حفظ" id="submit"
-                style="color: black; cursor: pointer; border-right: none; transition: all 0.2s ease-in-out;">
-        </form>
-
-
-
+        <p id="sumbit_save_new_data_to_sheet_input_button_id" style="user-select: none;">
+            حفظ</p>
         <p style="user-select: none;" onclick="showOverlay('import_google_sheet_data_names_dropdown')">
             إستعادة</p>
         <p style="user-select: none;" onclick="openPdfDownloadBox()">تحميل</p>
@@ -482,6 +473,7 @@
         <div id="hotel_data_dropdown_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
+                
                 <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
                     onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
 
