@@ -135,7 +135,7 @@ document.getElementById('scroll_bottom_page_icon').addEventListener('click', fun
 
 
 
-const sheetURL = 'https://script.google.com/macros/s/AKfycbyYKdJJLk39czGy6GPO-DDvmWXuyGOPO9cCNOK1ST_dhi--GJSaXW5qiTSXBACtOhWRRA/exec'; // Replace with your web app URL
+const sheetURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec'; // Replace with your web app URL
 let sheetData = [];
 
 // Fetch data from Google Sheets via web app and store it locally
@@ -2227,6 +2227,16 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('inner_flight_tickets_amount_input_id').value = document.getElementById('store_google_sheet_package_including_inner_tickets_value').innerText;
         document.getElementById('package_details_textarea_id').value = document.getElementById('store_google_sheet_package_details_textarea_value').innerText.replace(/\\n/g, '\n');
         document.getElementById('package_totla_price_input_id').value = document.getElementById('store_google_sheet_package_total_price_value').innerText;
+        
+
+        /* Check or uncheck the show total package price in the pdf file checkbox input */
+        if(document.getElementById('store_google_sheet_show_price_in_pdf_checked_or_no').innerHTML == 'showPrice'){
+            document.getElementById('show_package_total_price_checkbox').checked = true;
+
+        }else if (document.getElementById('store_google_sheet_show_price_in_pdf_checked_or_no').innerHTML == 'hidePrice'){
+            document.getElementById('show_package_total_price_checkbox').checked = false;
+
+        }
 
     }
 }
