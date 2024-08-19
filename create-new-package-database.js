@@ -3,24 +3,21 @@ let existingDataStatus = 'newData'; // Example status for updating existing data
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
 const form = document.forms['save-package'];
 
-form.addEventListener('submit', e => {
-
-    e.preventDefault();
+function submitFormAndSaveData() {
+    // Prevent the default form submission
+    event.preventDefault();
 
     if (document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
-
         // Play a sound effect
         new Audio('success.mp3').play();
 
-
-
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'جاري الحفظ..';
+        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'جاري الحفظ..';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
 
         let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
-        if (document.getElementById('downloaded_pdf_clint_data_page').style === 'none') {
+        if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
             alert('تأكد من إدخال معلومات العميل');
             return;
         }
@@ -30,7 +27,6 @@ form.addEventListener('submit', e => {
             content: {},
             status: existingDataStatus
         };
-
 
         let divIds = [
             'downloaded_pdf_clint_data_page',
@@ -56,38 +52,31 @@ form.addEventListener('submit', e => {
             },
             mode: 'no-cors'
         })
-            .then(() => {
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'تم الحفظ بنجاح';
+        .then(() => {
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
+            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'تم الحفظ بنجاح';
 
+            setTimeout(() => {
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
+                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ جديد';
+            }, 5000);
 
-                setTimeout(() => {
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').value = 'حفظ جديد';
-                }, 5000);
+            // Only call submitForm if 'existingDataStatus' is equal to "newData"
+            if (existingDataStatus === "newData") {
+                submitForm();
+            }
 
+            updateDataBaseSavedDataNames();
 
-                // Only call submitForm if 'existingDataStatus' is equal to "newData"
-                if (existingDataStatus === "newData") {
-                    submitForm();
-                }
-
-
-                updateDataBaseSavedDataNames();
-
-
-
-                /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-                existingDataStatus = 'existingData';
-                document.getElementById('website_users_name_input_id').disabled = true;
-            });
+            // Change the value of 'existingDataStatus' for editing old data mode
+            existingDataStatus = 'existingData';
+            document.getElementById('website_users_name_input_id').disabled = true;
+        });
 
     } else {
-
         // Play a sound effect
         new Audio('error.mp3').play();
-
 
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'red';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
@@ -97,7 +86,6 @@ form.addEventListener('submit', e => {
             document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
         }, 500);
 
-
         document.getElementById('scroll_bottom_page_icon').style.background = 'red';
         document.getElementById('scroll_bottom_page_icon').style.color = 'white';
 
@@ -106,8 +94,7 @@ form.addEventListener('submit', e => {
             document.getElementById('scroll_bottom_page_icon').style.color = 'white';
         }, 500);
     }
-
-});
+}
 
 // Function to clean HTML
 function cleanHTML(html) {
@@ -115,21 +102,25 @@ function cleanHTML(html) {
 }
 
 // Add click event listener to trigger form submission
-document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').addEventListener('click', function () {
-    form.dispatchEvent(new Event('submit'));
+document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').addEventListener('click', function () {
+    submitFormAndSaveData();
 });
 
+// Add click event listener to trigger form submission
+document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').addEventListener('click', function () {
+    submitFormAndSaveData();
+});
 
 // Add click event listener to trigger form submission
 document.getElementById('check_pdf_name_button').addEventListener('click', function () {
-    form.dispatchEvent(new Event('submit'));
+    submitFormAndSaveData();
 });
-
 
 // Add click event listener to trigger form submission
 document.getElementById('scroll_bottom_page_icon').addEventListener('click', function () {
-    form.dispatchEvent(new Event('submit'));
+    submitFormAndSaveData();
 });
+
 
 
 
