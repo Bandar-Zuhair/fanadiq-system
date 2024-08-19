@@ -350,7 +350,6 @@ body {
     align-items: center;
 }
 
-#google_sheet_data_controller_div form,
 #google_sheet_data_controller_div p {
     flex: 1;
     /* Ensure the elements take equal width */
@@ -358,7 +357,6 @@ body {
     /* Reset any margin */
 }
 
-#google_sheet_data_controller_div input,
 #google_sheet_data_controller_div p {
     background: white;
     width: 100%;
@@ -374,7 +372,6 @@ body {
     /* Ensure padding and border are included in the width */
 }
 
-#google_sheet_data_controller_div input:hover,
 #google_sheet_data_controller_div p:hover {
     background: rgb(213, 213, 213);
 }
@@ -1220,7 +1217,6 @@ body {
         margin-top: 9vw;
     }
 
-    #google_sheet_data_controller_div input,
     #google_sheet_data_controller_div p {
         font-size: 3vw;
     }
@@ -1482,7 +1478,6 @@ body {
         margin-top: 10vw;
     }
 
-    #google_sheet_data_controller_div input,
     #google_sheet_data_controller_div p {
         font-size: 3.5vw;
         padding: 1px 2px;
@@ -1763,7 +1758,6 @@ body {
         margin-top: 11.5vw;
     }
 
-    #google_sheet_data_controller_div input,
     #google_sheet_data_controller_div p {
         font-size: 5vw;
         padding: 0;
