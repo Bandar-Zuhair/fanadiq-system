@@ -547,6 +547,7 @@ checkInputsToInsertData = function (clickedButtonId) {
         // Array of checkbox IDs
         let checkboxIds = [
             'privet_car_with_driver_to_welcome_and_etc_checkbox',
+            'extra_car_for_carring_bags_checkbox',
             'hotel_booking_with_breakfast_for_2_people_checkbox',
             'welcome_goodbye_hotel_delivery_checkbox',
             'customer_service_24_hour_checkbox',
