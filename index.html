@@ -1009,7 +1009,7 @@
                 <div class="package_including_details_div_class">
                     <div class="show_package_total_price_checkbox_div">
                         <input type="checkbox" id="show_package_total_price_checkbox" class="custom_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="new Audio('click.mp3').play(); togglePriceDisplayInPDF()">
                         <label for="show_package_total_price_checkbox">إظهار السعر في الملف؟</label>
                     </div>
                 </div>
@@ -1976,6 +1976,7 @@
         <p id="store_google_sheet_package_including_inner_tickets_value" style="display: none;"></p>
         <p id="store_google_sheet_package_total_price_value" style="display: none;"></p>
         <p id="store_google_sheet_package_details_textarea_value" style="display: none;"></p>
+        <p id="store_google_sheet_show_price_in_pdf_checked_or_no" style="display: none;"></p>
 
 
 
