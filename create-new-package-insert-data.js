@@ -874,7 +874,19 @@ checkInputsToInsertData = function (clickedButtonId) {
 
 
 
-            document.getElementById('downloaded_pdf_flight_data_page').style.display = 'block';
+            // Check if there is any element with the class 'flight_row_class_for_editing'
+            let allFlightRowdivs = document.getElementsByClassName('flight_row_class_for_editing');
+
+            if (allFlightRowdivs.length > 0) {
+                // If any element is found, set the display style of the 'downloaded_pdf_flight_data_page' to 'block'
+                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'block';
+
+            }else{
+                // If there is no found element, set the display style of the 'downloaded_pdf_flight_data_page' to 'none'
+                document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+            }
+
+            
 
             // Get references to all input elements and reset their values thier
             document.getElementById('flight_from_city_input_id').value = document.getElementById('flight_to_city_input_id').value;
@@ -2373,7 +2385,7 @@ checkInputsToInsertData = function (clickedButtonId) {
             let firstHotelCityName = allHotelRows[0].querySelector('h5').innerText;
 
 
-            
+
             allHotelRows.forEach((hotelRow, index) => {
                 let hotelName = hotelRow.querySelector('h1').innerText;
                 let checkInDate = hotelRow.querySelector('h2').innerText;
