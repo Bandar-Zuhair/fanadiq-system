@@ -47,6 +47,19 @@ setTimeout(function () {
 
 
 
+/* Function to store the status of the show or hide the total package price in the downloaded pdf file */
+function togglePriceDisplayInPDF() {
+    let showPackageTotalPriceCheckbox = document.getElementById('show_package_total_price_checkbox');
+    let storeGoogleSheetShowPriceInPdfCheckedOrNo = document.getElementById('store_google_sheet_show_price_in_pdf_checked_or_no');
+    
+    if (showPackageTotalPriceCheckbox.checked) {
+        storeGoogleSheetShowPriceInPdfCheckedOrNo.innerText = "showPrice";
+    } else {
+        storeGoogleSheetShowPriceInPdfCheckedOrNo.innerText = "hidePrice";
+    }
+}
+
+
 
 
 
