@@ -1,12 +1,7 @@
 /* Array to store the hotel room types description for later use */
 
-/* Tips
 
-    Don't use شقة or فرفة in the hotelRoomDescription
 
-    Instead use روم 
-
-*/
 let allHotelDataArray = [
     /* Keramas */
     {
