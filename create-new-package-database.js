@@ -2229,6 +2229,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('package_totla_price_input_id').value = document.getElementById('store_google_sheet_package_total_price_value').innerText;
 
 
+        /* in 2026 delete the condition of if 'store_google_sheet_show_price_in_pdf_checked_or_no' exist or no (because you will no need and it will always be exist since 2026) */
         if (document.getElementById('store_google_sheet_show_price_in_pdf_checked_or_no')) {
 
             /* Check or uncheck the show total package price in the pdf file checkbox input */
