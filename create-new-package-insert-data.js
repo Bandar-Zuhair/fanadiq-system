@@ -1376,6 +1376,7 @@ createHotelsDataFunction = function () {
     // Get references to all input elements for later use
     let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
     let hotelLocationInput = document.getElementById('hotel_location_input_id').value;
+    let hotelBaliAreaInput = document.getElementById('hotel_bali_area_input_id').value;
     let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
     let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
     let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
@@ -1490,6 +1491,25 @@ createHotelsDataFunction = function () {
                 hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
             }, 500);
 
+            return;
+        }
+
+
+        /* Stop the process if the hotel location is bali but the area is not selected */
+        if (document.getElementById('hotel_location_input_id').value === 'بالي' && document.getElementById('hotel_bali_area_input_id').value === '') {
+            // Play a sound effect only if the website is not muted
+            if (!document.getElementById('mute_website_checkbox').checked) {
+                // Play a sound effect
+                new Audio('error.mp3').play();
+            }
+
+            // Change the submit icon background color
+            hotel_inputs_submit_icon.style.backgroundColor = 'red';
+
+            // Set the background color of the submit icon back to default color
+            setTimeout(() => {
+                hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+            }, 500);
 
             return;
         }
@@ -1527,6 +1547,7 @@ createHotelsDataFunction = function () {
             </div>
             <div>
                 <h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationInput}</h5>
+                ${hotelBaliAreaInput ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelBaliAreaInput}</h6>` : ''}
                 <img src="صور-الشركات/${companyLogoReadyName}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer">
             </div>
         `;
@@ -1672,6 +1693,9 @@ createHotelsDataFunction = function () {
         // Hide the hotel location input
         document.getElementById('hotel_location_input_id').style.display = 'none';
         document.getElementById('hotel_location_input_id').value = '';
+        document.getElementById('hotel_bali_area_input_id').style.display = 'none';
+        document.getElementById('hotel_bali_area_input_id').value = '';
+
 
         // Make the following inputs readonly again
         document.getElementById('hotel_name_input_id').readOnly = true;
@@ -2014,7 +2038,8 @@ deleteClickedHotelData = function (clickedHotelRowIdName) {
 
 
 
-
+    // Call a function to update dates inside 'hotel_row_class_for_editing' divs based on their order in the DOM
+    updateHotelRowDates();
 
 
 
@@ -2121,6 +2146,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
     /* Get all the values from the clicked hotel row */
     let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
     let hotelLocationText = clickedHotelDataDiv.querySelector(`h5[id^='hotel_location_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+    let hotelBaliAreaInput = clickedHotelDataDiv.querySelector(`h6[id^='hotel_area_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
     let hotelCheckInText = clickedHotelDataDiv.querySelector(`h2[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
     let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
@@ -2146,7 +2172,6 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
     /* in case if there was a second room data in the clicked hotel row then target those data */
     if (clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`)) {
-
 
         // Get all hotel first and second room data inputs for width styling
         let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
@@ -2203,10 +2228,25 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
     if (clickedHotelDataDiv.classList.contains('new_hotel_data_by_user_writing_class')) {
         // Enter the values of the clicked hotel row div to inputs
         document.getElementById('hotel_location_input_id').value = hotelLocationText;
+        document.getElementById('hotel_bali_area_input_id').value = hotelBaliAreaInput;
 
 
         // Show the hotel location input
         document.getElementById('hotel_location_input_id').style.display = 'block';
+
+
+        /* Show the 'hotel_bali_area_input_id' if the value of the 'hotel_location_input_id' is 'بالي' */
+        if (document.getElementById('hotel_location_input_id').value === 'بالي') {
+            // Show the hotel bali area input
+            document.getElementById('hotel_bali_area_input_id').style.display = 'block';
+
+
+        } else {
+            // Hide the hotel bali area input
+            document.getElementById('hotel_bali_area_input_id').style.display = 'none';
+        }
+
+
 
         // Make the following inputs editable and remove the readonly attribute
         document.getElementById('hotel_name_input_id').readOnly = false;
@@ -2319,6 +2359,8 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
         // Hide the hotel location input
         document.getElementById('hotel_location_input_id').style.display = 'none';
         document.getElementById('hotel_location_input_id').value = '';
+        document.getElementById('hotel_bali_area_input_id').style.display = 'none';
+        document.getElementById('hotel_bali_area_input_id').value = '';
 
         // Make the following inputs readonly again
         document.getElementById('hotel_name_input_id').readOnly = true;
@@ -2369,6 +2411,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
         // Extract the new data from the input fields
         let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
         let hotelLocationInput = document.getElementById('hotel_location_input_id').value;
+        let hotelBaliAreaInput = document.getElementById('hotel_bali_area_input_id').value;
         let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
         let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
         let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
@@ -2444,7 +2487,29 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
         /* Stop the process if the 'hotel_location_input_id' is visible and it is empty */
         if (document.getElementById('hotel_location_input_id').style.display !== 'none') {
+
             if (document.getElementById('hotel_location_input_id').value === '') {
+                return;
+
+            }
+
+            
+            /* Stop the process if the hotel location is bali but the area is not selected */
+            if (document.getElementById('hotel_location_input_id').value === 'بالي' && document.getElementById('hotel_bali_area_input_id').value === '') {
+                // Play a sound effect only if the website is not muted
+                if (!document.getElementById('mute_website_checkbox').checked) {
+                    // Play a sound effect
+                    new Audio('error.mp3').play();
+                }
+
+                // Change the submit icon background color
+                confirm_new_hotel_data_row_icon.style.backgroundColor = 'red';
+
+                // Set the background color of the submit icon back to default color
+                setTimeout(() => {
+                    confirm_new_hotel_data_row_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+                }, 500);
+
                 return;
             }
         }
@@ -2471,7 +2536,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
                 companyLogoReadyName = document.getElementById('clint_company_name_input_id').value.toLowerCase().replace(/\s+/g, '-');
 
             } else {
-                companyLogoReadyName = 'defaultHotelWhitePicture';
+                companyLogoReadyName = 'default-hotel-picture';
 
             }
 
@@ -2490,6 +2555,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
                 </div>
                 <div>
                     <h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationInput}</h5>
+                    ${hotelBaliAreaInput ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelBaliAreaInput}</h6>` : ''}
                     <img src="صور-الشركات/${companyLogoReadyName}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer">
                 </div>
             `;
