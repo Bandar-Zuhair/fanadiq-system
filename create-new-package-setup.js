@@ -2153,85 +2153,6 @@ var today = new Date();
 
 
 
-// Object to store allowed dates
-let allowedDates = {};
-
-
-
-
-// Call createH3ElementsForAvailableDates whenever you need to update the dates
-function updateAllowedDates() {
-    // Get the start date and total nights inputs
-    let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
-    let totalNightsInput = document.getElementById('package_total_nights_input_id').value;
-
-    // If start date or total nights are empty, clear the allowed dates object
-    if (!startDateInput || !totalNightsInput) {
-        allowedDates = {};
-        createH3ElementsForAvailableDates(); // Clear the target div
-        return;
-    }
-
-    // Parse the start date
-    let parsedStartDate = parseArabicDate(startDateInput, selectedStartYear);
-
-    // Extract the number of nights (remove " ليالي" and convert to integer)
-    let totalNights = parseInt(totalNightsInput.replace(" ليالي", ""), 10);
-
-    // Clear the previous allowed dates
-    allowedDates = {};
-
-    // Populate the allowed dates object
-    for (let i = 0; i <= totalNights; i++) {
-        let allowedDate = addDaysToDate(parsedStartDate, i);
-
-        // Combine the day and month name in Arabic into a single string
-        let dateStr = `${allowedDate.getDate()} ${getArabicMonthName(allowedDate.getMonth())}`;
-        allowedDates[i] = dateStr;
-    }
-
-
-
-    // Call the function to create and append h3 elements
-    createH3ElementsForAvailableDates();
-}
-
-
-
-
-
-// Function to be called whenever the start date or total nights input changes
-function updateDatesOnInputChange() {
-    updateWholePackageTotalNights();
-    createH3ElementsForAvailableDates(); // Call to update and copy h3 elements
-}
-
-// Event listeners for start date and total nights inputs
-document.getElementById('whole_package_start_date_input_id').addEventListener('change', updateDatesOnInputChange);
-document.getElementById('package_total_nights_input_id').addEventListener('input', updateDatesOnInputChange);
-
-// Example helper functions
-function parseArabicDate(dateStr, year = null) {
-    let parts = dateStr.split(' ');
-    let day = parseInt(parts[0]);
-    let monthShortNames = {
-        "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3, "مايو": 4, "يونيو": 5,
-        "يوليو": 6, "أغسطس": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
-    };
-    let month = monthShortNames[parts[1]];
-    year = year || new Date().getFullYear(); // Use provided year or default to current year
-    return new Date(year, month, day);
-}
-
-function addDaysToDate(date, days) {
-    let newDate = new Date(date);
-    newDate.setDate(newDate.getDate() + days);
-    return newDate;
-}
-
-
-
-
 // Inputs date for whole package start period
 var wholePackageStartDatePicker = new Pikaday({
     field: document.getElementById('whole_package_start_date_input_id'),
@@ -2250,6 +2171,16 @@ var wholePackageStartDatePicker = new Pikaday({
         weekdaysShort: arabicDays
     },
     onSelect: function () {
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            new Audio('click.mp3').play();
+        }
+
+        // Clear the end date and total nights inputs
+        document.getElementById('whole_package_end_date_input_id').value = '';
+        document.getElementById('package_total_nights_input_id').value = '';
+
         isWholePackageStartDatePickerVisible = false; // Reset visibility state on date selection
         updateWholePackageTotalNights();
         let selectedDate = this.getDate();
@@ -2258,6 +2189,9 @@ var wholePackageStartDatePicker = new Pikaday({
         let minEndDate = new Date(selectedDate);
         minEndDate.setDate(minEndDate.getDate() + 1); // Ensure end date is at least one day after the start date
         wholePackageEndDatePicker.setMinDate(minEndDate); // Update min date for the second picker
+
+        // Automatically open the end date picker
+        wholePackageEndDatePicker.show();
     }
 });
 
@@ -2310,6 +2244,80 @@ var wholePackageEndDatePicker = new Pikaday({
     }
 });
 
+
+
+// Object to store allowed dates
+let allowedDates = {};
+
+
+
+
+// Call createH3ElementsForAvailableDates whenever you need to update the dates
+function updateAllowedDates() {
+    // Get the start date and total nights inputs
+    let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
+    let totalNightsInput = document.getElementById('package_total_nights_input_id').value;
+
+    // If start date or total nights are empty, clear the allowed dates object
+    if (!startDateInput || !totalNightsInput) {
+        allowedDates = {};
+        createH3ElementsForAvailableDates(); // Clear the target div
+        return;
+    }
+
+    // Parse the start date
+    let parsedStartDate = parseArabicDate(startDateInput, selectedStartYear);
+
+    // Extract the number of nights (remove " ليالي" and convert to integer)
+    let totalNights = parseInt(totalNightsInput.replace(" ليالي", ""), 10);
+
+    // Clear the previous allowed dates
+    allowedDates = {};
+
+    // Populate the allowed dates object
+    for (let i = 0; i <= totalNights; i++) {
+        let allowedDate = addDaysToDate(parsedStartDate, i);
+
+        // Combine the day and month name in Arabic into a single string
+        let dateStr = `${allowedDate.getDate()} ${getArabicMonthName(allowedDate.getMonth())}`;
+        allowedDates[i] = dateStr;
+    }
+
+
+
+    // Call the function to create and append h3 elements
+    createH3ElementsForAvailableDates();
+}
+
+
+// Function to be called whenever the start date or total nights input changes
+function updateDatesOnInputChange() {
+    updateWholePackageTotalNights();
+    createH3ElementsForAvailableDates(); // Call to update and copy h3 elements
+}
+
+// Event listeners for start date and total nights inputs
+document.getElementById('whole_package_start_date_input_id').addEventListener('change', updateDatesOnInputChange);
+document.getElementById('package_total_nights_input_id').addEventListener('input', updateDatesOnInputChange);
+
+// Example helper functions
+function parseArabicDate(dateStr, year = null) {
+    let parts = dateStr.split(' ');
+    let day = parseInt(parts[0]);
+    let monthShortNames = {
+        "يناير": 0, "فبراير": 1, "مارس": 2, "أبريل": 3, "مايو": 4, "يونيو": 5,
+        "يوليو": 6, "أغسطس": 7, "سبتمبر": 8, "أكتوبر": 9, "نوفمبر": 10, "ديسمبر": 11
+    };
+    let month = monthShortNames[parts[1]];
+    year = year || new Date().getFullYear(); // Use provided year or default to current year
+    return new Date(year, month, day);
+}
+
+function addDaysToDate(date, days) {
+    let newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + days);
+    return newDate;
+}
 
 
 
