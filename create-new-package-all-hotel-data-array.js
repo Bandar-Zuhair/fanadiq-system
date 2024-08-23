@@ -130,6 +130,12 @@ let allHotelDataArray = [
         hotelArea: 'اوبود',
         hotelRoomTypes: ['سكاي سويت', 'فيلا كورتيارد', 'سويت جراند تانداوا من غرفتين نوم'],
     },
+    {
+        hotelName: 'Bubble Bali',
+        hotelLocation: 'بالي',
+        hotelArea: 'اوبود',
+        hotelRoomTypes: ['سويت مع حوض إستحمام سبا'],
+    },
 
 
 
@@ -672,6 +678,41 @@ let allHotelDataArray = [
         hotelLocation: 'بونشاك',
         hotelRoomTypes: ['فيلا من ثلاث غرف نوم'],
     },
+    {
+        hotelName: 'Villa Neom',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من ثلاث غرف نوم'],
+    },
+    {
+        hotelName: 'Alandalus Puncak',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من غرفتين نوم', 'فيلا من ثلاث غرف نوم', 'فيلا من اربع غرف نوم', 'فيلا ديلوكس من اربع غرف نوم'],
+    },
+    {
+        hotelName: 'Alandalus Royal',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من ثلاث غرف نوم', 'فيلا ديلوكس من اربع غرف نوم', 'فيلا سوبريور من خمس غرف نوم'],
+    },
+    {
+        hotelName: 'Aljumeirah Puncak',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من ثلاث غرف نوم'],
+    },
+    {
+        hotelName: 'Marseillia Puncak',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من غرفة نوم واحدة'],
+    },
+    {
+        hotelName: 'Alwaha Villa',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من ثلاث غرف نوم'],
+    },
+    {
+        hotelName: 'Armada Puncak',
+        hotelLocation: 'بونشاك',
+        hotelRoomTypes: ['فيلا من غرفتين نوم', 'فيلا من ثلاث غرف نوم', 'فيلا سوبريور من خمس غرف نوم'],
+    },
 
 
 
@@ -694,7 +735,7 @@ let allHotelDataArray = [
         hotelRoomTypes: ['ديلوكس روم', 'تنفيذي روم', 'تاور روم', 'جونيور سويت', 'سويت تنفيذي', 'سويت تاور'],
     },
     {
-        hotelName: 'Trans Luxury',
+        hotelName: 'The Trans Luxury',
         hotelLocation: 'باندونق',
         hotelRoomTypes: ['بريمير روم'],
     },
