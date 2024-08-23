@@ -57,7 +57,7 @@
 
 
 
-    <ion-icon name="save-outline" id="scroll_bottom_page_icon"></ion-icon>
+    <ion-icon name="save-outline" id="scroll_bottom_page_icon" onclick="undoLastAction()"></ion-icon>
 
 
 
@@ -130,7 +130,7 @@
         </div>
 
 
-        <div id="confirm_import_package_data_and_refresh_input_div">
+        <div class="two_icons_in_searchable_dropdown_div">
             <p id="import_google_sheet_data_p_id" onclick="findSelectedNameAndImportContent()">تأكيد
             </p>
 
@@ -246,9 +246,15 @@
                 </form>
 
 
+                <div class="custom_checkbox">
+                    <input type="checkbox" id="mute_website_checkbox">
+                    <label for="mute_website_checkbox">كتم الصوت؟</label>
+                </div>
+
+
                 <div class="submit_package_pdf_div" id="submit_clint_data_to_pdf_div_id">
                     <ion-icon name="send" id="clint_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('clint_inputs_submit_icon')"></ion-icon>
+                        onclick="createWholePackageAndClintDataFunction(); updateAllowedDates()"></ion-icon>
                 </div>
 
 
@@ -473,15 +479,23 @@
         <div id="hotel_data_dropdown_content" class="dropdown_content_div_class">
 
             <div class="package_info_input_div">
-                
+
                 <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
                     onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
 
 
+
+                <!-- Hidden input for hotel inserting writing system -->
+                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" style="display: none;">
+
+
+
                 <input type="text" id="hotel_check_in_input_id" placeholder="تاريخ الدخول" readonly autocomplete="off"
+                    onclick="createH3ElementsForAvailableDates(); showOverlay('hotel_available_dates_dropdown')"
                     style="cursor: pointer;" disabled>
 
                 <input type="text" id="hotel_check_out_input_id" placeholder="تاريخ الخروج" readonly autocomplete="off"
+                    onclick="createH3ElementsForAvailableDates(); updateLeftHotelDatesFunction(); showOverlay('hotel_available_dates_dropdown')"
                     style="cursor: pointer;">
 
                 <input type="text" id="hotel_total_nights_input_id" placeholder="مجموع الليالي" readonly
@@ -496,7 +510,7 @@
                     <div id="hotel_first_room_data_input_div">
                         <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
                             autocomplete="off"
-                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
+                            onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown')"
                             style="cursor: pointer;">
 
 
@@ -530,7 +544,7 @@
                         <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
                             placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                         <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
                     </div>
 
                     <!-- Second hotel room data inputs div -->
@@ -572,7 +586,7 @@
                         <textarea id="hotel_room_extra_info_textarea_id_2" class="package_details_input_class"
                             placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                         <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                            onclick="new Audio('click.mp3').play(); toggleFullscreen('hotel_room_extra_info_textarea_id_2')"></ion-icon>
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('hotel_room_extra_info_textarea_id_2')"></ion-icon>
                     </div>
 
 
@@ -581,12 +595,16 @@
 
 
                 <div class="submit_package_pdf_div two_icons_insert_data_package_pdf_div">
-                    <ion-icon name="send" id="hotel_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('hotel_inputs_submit_icon')"></ion-icon>
+                    <ion-icon name="send" id="hotel_inputs_submit_icon" onclick="createHotelsDataFunction()"></ion-icon>
+
+
+                    <ion-icon name="color-wand-outline" id="change_insert_hotel_data_system_icon"
+                        onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; changeInsertHotelDataSystem()"
+                        style="background: rgb(0, 87, 116);"></ion-icon>
 
 
                     <ion-icon name="add-circle-outline" id="show_or_hide_second_room_inputs_div_icon"
-                        onclick="new Audio('success.mp3').play(); showSecondHotelRoomData()"></ion-icon>
+                        onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; showSecondHotelRoomData()"></ion-icon>
                 </div>
 
 
@@ -598,19 +616,18 @@
                 <div class="edit_data_controll_icons_div">
                     <div class="submit_package_pdf_div">
                         <ion-icon name="checkmark-outline" id="confirm_new_hotel_data_row_icon"
-                            onclick="confirmNewHotelDataRow()"
-                            style="display: none;"></ion-icon>
+                            onclick="confirmNewHotelDataRow()" style="display: none;"></ion-icon>
                     </div>
 
                     <div class="submit_package_pdf_div">
                         <ion-icon name="close-outline" id="cancel_new_hotel_data_row_icon"
-                            onclick="new Audio('click.mp3').play(); cancelNewHotelDataRow()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; cancelNewHotelDataRow()"
                             style=" display: none; background: red;"></ion-icon>
                     </div>
 
                     <div class="submit_package_pdf_div">
                         <ion-icon name="add-circle-outline" id="show_or_hide_second_room_inputs_div_icon_2"
-                            onclick="new Audio('click.mp3').play(); showSecondHotelRoomData()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; showSecondHotelRoomData()"
                             style="display: none;"></ion-icon>
                     </div>
                 </div>
@@ -626,15 +643,6 @@
 
         <!-- Hotel room type names options -->
         <div id="hotel_room_type_description_dropdown" class="searchable_names_dropdown_class">
-            <div class="search_bar_div_class">
-                <input type="text" id="hotel_room_type_description_search_bar_input_id" class="search_bar_input_class"
-                    placeholder="بحث..">
-            </div>
-
-            <div class="clear_searchable_dropdown_input_filter_h3_value_div">
-                <ion-icon name="close-circle-outline"
-                    onclick="clearSearchableDropDownInputValue('hotel_room_type_description_search_bar_input_id')"></ion-icon>
-            </div>
 
             <div id="hotel_room_type_description_h3_elements_div_id" class="company_names_options_dropdown_class">
             </div>
@@ -644,6 +652,14 @@
 
 
 
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_available_dates_dropdown" class="searchable_names_dropdown_class">
+
+            <div id="hotel_available_dates_h3_elements_div_id" class="company_names_options_dropdown_class">
+            </div>
+        </div>
 
 
 
@@ -672,6 +688,7 @@
                 <h3>البحيرة</h3>
                 <h3>الجبل</h3>
                 <h3>الجبل والمسبح</h3>
+                <h3>الجبل والنهر</h3>
                 <h3>المدينة</h3>
                 <h3>المحيط</h3>
                 <h3>المحيط (إطلالة جزئية)</h3>
@@ -757,8 +774,9 @@
 
 
 
+
         <!-- Company names options -->
-        <div id="all_hotel_names_dropdown" class="searchable_names_dropdown_class">
+        <div id="all_hotel_names_dropdown" class="searchable_names_dropdown_class google_sheet_dropdown_div_class">
             <div class="search_bar_div_class">
                 <input type="text" id="all_hotel_names_search_bar_input_id" class="search_bar_input_class"
                     placeholder="بحث.." style="direction: ltr;">
@@ -869,13 +887,21 @@
                 <h3>Pesona Alam</h3>
                 <h3>Botanica Sanctuary</h3>
                 <h3>Villa Marina</h3>
+                <h3>Villa Neom</h3>
+                <h3>Alandalus Puncak</h3>
+                <h3>Alandalus Royal</h3>
+                <h3>Aljumeirah Puncak</h3>
+                <h3>Marseillia Puncak</h3>
+                <h3>Armada Puncak</h3>
+                <h3>Alwaha Villa</h3>
                 <h3>Courtyard Bandung</h3>
                 <h3>Sheraton Bandung</h3>
-                <h3>Trans Luxury</h3>
+                <h3>The Trans Luxury</h3>
                 <h3>Four Points Sheraton</h3>
                 <h3>Kalandara</h3>
                 <h3>The Kayana Lombok</h3>
                 <h3>Conrad Bali</h3>
+                <h3>Bubble Bali</h3>
             </div>
         </div>
 
@@ -916,21 +942,21 @@
                 <div id="package_including_details_div" class="package_including_details_div_class">
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="privet_car_with_driver_to_welcome_and_etc_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="privet_car_with_driver_to_welcome_and_etc_checkbox">سيارة خاصة (تويوتا افانزا او
                             مايماثل حجمها) مع سائق خاص طوال مدة
-                            الرحلة ولا توجد أيام حره في البرنامج</label>
+                            الرحلة ولا توجد أيام حرة في البرنامج</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="extra_car_for_carring_bags_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="extra_car_for_carring_bags_checkbox">سيارة إضافية للعفش</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="hotel_booking_with_breakfast_for_2_people_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="hotel_booking_with_breakfast_for_2_people_checkbox">الفنادق والمنتجعات<br>(شاملة
                             وجبة
                             الإفطار لشخصين + طفل تحت ٥ سنوات لكل غرفة)</label>
@@ -938,46 +964,46 @@
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="welcome_goodbye_hotel_delivery_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="welcome_goodbye_hotel_delivery_checkbox">الإستقبال والتوديع والتوصيل للفنادق
                             والجولات السياحية</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="inner_flight_tickets_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="inner_flight_tickets_checkbox">تذاكر الطيران الداخلي</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="customer_service_24_hour_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="customer_service_24_hour_checkbox">خدمة عملاء 24 ساعة يتحدث العربية</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="sms_card_with_internet_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="sms_card_with_internet_checkbox">شرائح إنترنت</label>
                     </div>
 
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="outer_flight_tickets_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="outer_flight_tickets_checkbox">تذاكر الطيران الدولي</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="placese_visiting_cost_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="placese_visiting_cost_checkbox">تكاليف دخوليات + مواقف السيارت في الحدائق و
                             المنتزهات</label>
                     </div>
 
                     <div class="package_including_data_custom_checkbox">
                         <input type="checkbox" id="bali_taxes_not_covered_checkbox"
-                            onclick="new Audio('click.mp3').play();">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}">
                         <label for="bali_taxes_not_covered_checkbox">ضريبة دخول بالي</label>
                     </div>
                 </div>
@@ -996,10 +1022,15 @@
 
 
 
+                <input type="text" id="specific_car_type_input_id" placeholder="تحديد نوع السيارة" readonly
+                    autocomplete="off" onclick="showOverlay('specific_car_type_dropdown')" style="cursor: pointer;">
+
+
+
                 <textarea id="package_details_textarea_id" class="package_details_input_class"
                     placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="new Audio('click.mp3').play(); toggleFullscreen('package_details_textarea_id')"></ion-icon>
+                    onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('package_details_textarea_id')"></ion-icon>
 
 
                 <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
@@ -1009,7 +1040,7 @@
                 <div class="package_including_details_div_class">
                     <div class="show_package_total_price_checkbox_div">
                         <input type="checkbox" id="show_package_total_price_checkbox" class="custom_checkbox"
-                            onclick="new Audio('click.mp3').play(); togglePriceDisplayInPDF()">
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; togglePriceDisplayInPDF()">
                         <label for="show_package_total_price_checkbox">إظهار السعر في الملف؟</label>
                     </div>
                 </div>
@@ -1018,7 +1049,7 @@
                 <!-- Button for exiting full-screen mode -->
                 <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="package_including_data_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('package_including_data_inputs_submit_icon')"></ion-icon>
+                        onclick="createAllPackageIncludingAndNotIncludingData()"></ion-icon>
                 </div>
             </div>
         </div>
@@ -1070,27 +1101,48 @@
 
 
 
+
+    <!-- Dropdown div for hotel locations -->
+    <div id="specific_car_type_dropdown" class="searchable_names_dropdown_class">
+        <div class="company_names_options_dropdown_class">
+            <h3 style="color: red;">حذف</h3>
+            <h3>افانزا</h3>
+            <h3>اينوفا</h3>
+            <h3>باص هايس</h3>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     <!-- Delete the clint package data -->
     <div id="ensure_delete_clint_package__including_and_not_icluding_data_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); runDeleteClintPackageDataRow()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClintPackageDataRow()">حذف</button>
     </div>
 
 
     <!-- Delete the clicked company logo -->
     <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); deleteClickedCompanyLogo()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; deleteClickedCompanyLogo()">حذف</button>
     </div>
 
     <!-- Delete the clicked inserted hotel data -->
     <div id="ensure_delete_or_edit_hotel_data_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); runDeleteClickedHotelDataFunction()">حذف</button>
-        <button onclick="new Audio('click.mp3').play(); runEditClickedHotelDataFunction()">تعديل</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedHotelDataFunction()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedHotelDataFunction()">تعديل</button>
     </div>
 
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_package_including_data_text_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); passClickedPackageIncludingDataText()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; passClickedPackageIncludingDataText()">حذف</button>
     </div>
 
 
@@ -1162,7 +1214,7 @@
 
                 <div class="submit_package_pdf_div">
                     <ion-icon name="send" id="clint_flight_inputs_submit_icon"
-                        onclick="checkInputsToInsertData('clint_flight_inputs_submit_icon')"></ion-icon>
+                        onclick="createAllFlightDataFunction()"></ion-icon>
                 </div>
 
 
@@ -1171,13 +1223,13 @@
                 <div class="edit_data_controll_icons_div">
                     <div class="submit_package_pdf_div">
                         <ion-icon name="checkmark-outline" id="confirm_new_flight_data_row_icon"
-                            onclick="new Audio('success.mp3').play(); confirmNewFlightDataRow()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; confirmNewFlightDataRow()"
                             style="display: none;"></ion-icon>
                     </div>
 
                     <div class="submit_package_pdf_div">
                         <ion-icon name="close-outline" id="cancel_new_flight_data_row_icon"
-                            onclick="new Audio('click.mp3').play(); cancelNewFlightDataRow()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; cancelNewFlightDataRow()"
                             style=" display: none; background: red;"></ion-icon>
                     </div>
                 </div>
@@ -1299,8 +1351,10 @@
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_or_edit_flight_data_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); runDeleteClickedFlightDataFunction()">حذف</button>
-        <button onclick="new Audio('click.mp3').play(); runEditClickedFlightDataFunction()">تعديل</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedFlightDataFunction()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedFlightDataFunction()">تعديل</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('up')">إضافة خط للأعلى</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('down')">إضافة خط للأسفل</button>
     </div>
 
 
@@ -1329,7 +1383,7 @@
 
                 <div class="custom_checkbox">
                     <input type="checkbox" id="include_airport_welcome__checkbox" checked
-                        onclick="new Audio('click.mp3').play();">
+                        onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()};">
                     <label for="include_airport_welcome__checkbox">إستقبال في المطار؟</label>
                 </div>
 
@@ -1337,7 +1391,7 @@
                 <textarea id="clint_movements_whole_day_actions_details_textarea_id" class="package_details_input_class"
                     placeholder="المزارات" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
-                    onclick="new Audio('click.mp3').play(); toggleFullscreen('clint_movements_whole_day_actions_details_textarea_id')"></ion-icon>
+                    onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('clint_movements_whole_day_actions_details_textarea_id')"></ion-icon>
 
 
 
@@ -1353,14 +1407,16 @@
 
 
 
+                <input type="text" id="clint_movements_current_city_name_input_id" placeholder="المدينة">
+
 
 
                 <div class="submit_package_pdf_div two_icons_insert_data_package_pdf_div">
                     <ion-icon name="send" id="clint_movements_auto_create_icon"
-                        onclick="checkInputsToInsertData('clint_movements_auto_create_icon')"></ion-icon>
+                        onclick="autoCreateALlClintMovementsData()"></ion-icon>
 
                     <ion-icon name="cloud-offline-outline" id="show_and_hide_clint_movement_section_icon"
-                        onclick="new Audio('success.mp3').play(); hideAndShowClintMovementSectionFunction()"
+                        onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; hideAndShowClintMovementSectionFunction()"
                         style="display: none;"></ion-icon>
                 </div>
 
@@ -1375,13 +1431,13 @@
                 <div class="edit_data_controll_icons_div">
                     <div class="submit_package_pdf_div">
                         <ion-icon name="checkmark-outline" id="confirm_new_clint_movements_data_row_icon"
-                            onclick="new Audio('success.mp3').play(); confirmNewClintMovementsDataRow()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; confirmNewClintMovementsDataRow()"
                             style="display: none;"></ion-icon>
                     </div>
 
                     <div class="submit_package_pdf_div">
                         <ion-icon name="close-outline" id="cancel_new_clint_movements_data_row_icon"
-                            onclick="new Audio('click.mp3').play(); cancelNewClintMovementsDataRow()"
+                            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; cancelNewClintMovementsDataRow()"
                             style=" display: none; background: red;"></ion-icon>
                     </div>
                 </div>
@@ -1420,8 +1476,11 @@
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_or_edit_clint_movemnt_data_div" class="ensure_your_delete_action">
-        <button onclick="new Audio('success.mp3').play(); runDeleteClickedClintMovementsDataFunction()">حذف</button>
-        <button onclick="runEditClickedClintMovementsDataFunction()">تعديل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedClintMovementsDataFunction()">حذف</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()};runEditClickedClintMovementsDataFunction()">تعديل</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('up')">إضافة يوم للأعلى</button>
+        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('down')">إضافة يوم للأسفل</button>
     </div>
 
 
@@ -1533,8 +1592,6 @@
             </p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ انشول
             </p>
-            <p onclick="pickThisClintMovementsPlace(this)">مطعم السدة</p>
-
             <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
                 والتسوق</p>
             <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
@@ -1770,6 +1827,7 @@
         <p id="store_google_sheet_clint_company_name_value" style="display: none;"></p>
         <p id="store_google_sheet_clint_package_type_checkbox_value" style="display: none;"></p>
         <p id="store_google_sheet_package_user_name_value" style="display: none;"></p>
+        <p id="store_google_sheet_package_user_total_saving_number" style="display: none;"></p>
 
 
 
