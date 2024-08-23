@@ -314,7 +314,7 @@ body {
 
 
 
-/* Scroll down icon */
+/* Save website data in google sheet icon */
 #scroll_bottom_page_icon {
     z-index: 999;
     background: rgb(85, 127, 137);
@@ -393,7 +393,7 @@ body {
 
 
 /* Importing and deleting data from localStorage */
-#confirm_import_package_data_and_refresh_input_div {
+.two_icons_in_searchable_dropdown_div {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -439,6 +439,7 @@ body {
     margin-right: 5px;
     /* Adjust margin as needed */
 }
+
 
 
 
@@ -1057,6 +1058,9 @@ body {
 
 
 
+/*  */
+
+
 
 
 
@@ -1110,8 +1114,6 @@ body {
     cursor: not-allowed;
 }
 
-
-
 /* Style for month navigation icons */
 .pika-single .pika-prev,
 .pika-single .pika-next {
@@ -1132,6 +1134,13 @@ body {
 .pika-single .pika-prev:hover,
 .pika-single .pika-next:hover {
     background-color: rgb(85, 127, 137);
+}
+
+
+
+.pika-select-year,
+.pika-label-year {
+    display: none !important;
 }
 
 
@@ -1748,7 +1757,7 @@ body {
 
     /* Scroll down icon */
     #scroll_bottom_page_icon {
-        font-size: 14.5vw;
+        font-size: 15.5vw;
     }
 
 
