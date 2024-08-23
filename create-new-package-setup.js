@@ -666,7 +666,7 @@ function calculateTotalNights() {
 
 /* Function to store the clicked hotel unit amount */
 
-/* Dropdown airport line names functionality */
+/* Dropdown hotel names functionality */
 let hotelNameInput = document.getElementById('hotel_name_input_id');
 
 // Get the options within the dropdown
@@ -709,6 +709,98 @@ hotelNameInputOptions.forEach(option => {
             document.getElementById('hotel_room_type_description_input_id').value = '';
             document.getElementById('hotel_room_type_description_input_id_2').value = '';
         }
+
+
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Function to store the clicked hotel unit amount */
+
+/* Dropdown hotel location functionality */
+let hotelLocationInput = document.getElementById('hotel_location_input_id');
+
+// Get the options within the dropdown
+let hotelLocationInputOptions = document.querySelectorAll('#hotel_location_dropdown h3');
+
+hotelLocationInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            // Play a sound effect
+            new Audio('click.mp3').play();
+        }
+
+
+        /* First store the corrent hotel location for later comparing (to reset the hotel room type or no need) */
+        currentHotelLocation = hotelLocationInput.value
+
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelLocationInput.value = option.textContent;
+        hideOverlay(); // Hide overlay after selection
+
+
+
+        /* Make sure to show or hide the 'hotel_bali_area_input_id' input based on the clikced hotel location */
+        if(option.textContent === 'بالي'){
+            document.getElementById('hotel_bali_area_input_id').style.display = 'block';
+
+        }else{
+            document.getElementById('hotel_bali_area_input_id').style.display = 'none';
+        }
+
+
+        /* Delete the value of the 'hotel_bali_area_input_id' if a new clicked location h3 text */
+        if (option.textContent !== currentHotelLocation) {
+            document.getElementById('hotel_bali_area_input_id').value = '';
+        }
+
+
+    });
+});
+
+
+
+
+
+
+
+
+/* Function to store the clicked hotel unit amount */
+
+/* Dropdown hotel location functionality */
+let hotelBaliAreaInput = document.getElementById('hotel_bali_area_input_id');
+
+// Get the options within the dropdown
+let hotelBaliAreaInputOptions = document.querySelectorAll('#hotel_bali_area_dropdown h3');
+
+hotelBaliAreaInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            // Play a sound effect
+            new Audio('click.mp3').play();
+        }
+
+        /* Set the input value with the clicked rooms number h3 innerText */
+        hotelBaliAreaInput.value = option.textContent;
+        hideOverlay(); // Hide overlay after selection
 
 
     });
