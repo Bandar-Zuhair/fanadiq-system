@@ -486,7 +486,15 @@
 
 
                 <!-- Hidden input for hotel inserting writing system -->
-                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" style="display: none;">
+                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
+                    onclick="showOverlay('hotel_location_dropdown')" style="display: none; cursor: pointer;">
+
+
+
+                <!-- Hidden input for hotel inserting writing system -->
+                <input type="text" id="hotel_bali_area_input_id" placeholder="المنطقة في بالي" readonly
+                    autocomplete="off" onclick="showOverlay('hotel_bali_area_dropdown')"
+                    style="display: none; cursor: pointer;">
 
 
 
@@ -637,6 +645,34 @@
 
 
 
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_location_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3>بالي</h3>
+                <h3>جاكرتا</h3>
+                <h3>بونشاك</h3>
+                <h3>باندونق</h3>
+                <h3>لومبوك</h3>
+            </div>
+        </div>
+
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_bali_area_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3>كيراماس</h3>
+                <h3>كوتا</h3>
+                <h3>اوبود</h3>
+                <h3>نوسا دوا</h3>
+                <h3>سيمنياك</h3>
+                <h3>جيمباران</h3>
+                <h3>اولواتو</h3>
+                <h3>ليجين</h3>
+            </div>
+        </div>
 
 
 
@@ -1124,25 +1160,30 @@
 
     <!-- Delete the clint package data -->
     <div id="ensure_delete_clint_package__including_and_not_icluding_data_div" class="ensure_your_delete_action">
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClintPackageDataRow()">حذف</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClintPackageDataRow()">حذف</button>
     </div>
 
 
     <!-- Delete the clicked company logo -->
     <div id="ensure_delete_company_logo_div" class="ensure_your_delete_action">
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; deleteClickedCompanyLogo()">حذف</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; deleteClickedCompanyLogo()">حذف</button>
     </div>
 
     <!-- Delete the clicked inserted hotel data -->
     <div id="ensure_delete_or_edit_hotel_data_div" class="ensure_your_delete_action">
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedHotelDataFunction()">حذف</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedHotelDataFunction()">تعديل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedHotelDataFunction()">حذف</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedHotelDataFunction()">تعديل</button>
     </div>
 
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_package_including_data_text_div" class="ensure_your_delete_action">
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; passClickedPackageIncludingDataText()">حذف</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; passClickedPackageIncludingDataText()">حذف</button>
     </div>
 
 
@@ -1351,10 +1392,16 @@
 
     <!-- Delete the clicked inserted flight data -->
     <div id="ensure_delete_or_edit_flight_data_div" class="ensure_your_delete_action">
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedFlightDataFunction()">حذف</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedFlightDataFunction()">تعديل</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('up')">إضافة خط للأعلى</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('down')">إضافة خط للأسفل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedFlightDataFunction()">حذف</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; runEditClickedFlightDataFunction()">تعديل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('up')">إضافة
+            خط للأعلى</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; addMoreFlightRowTableDivFunction('down')">إضافة
+            خط للأسفل</button>
     </div>
 
 
@@ -1478,9 +1525,14 @@
     <div id="ensure_delete_or_edit_clint_movemnt_data_div" class="ensure_your_delete_action">
         <button
             onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()}; runDeleteClickedClintMovementsDataFunction()">حذف</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()};runEditClickedClintMovementsDataFunction()">تعديل</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('up')">إضافة يوم للأعلى</button>
-        <button onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('down')">إضافة يوم للأسفل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()};runEditClickedClintMovementsDataFunction()">تعديل</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('up')">إضافة
+            يوم للأعلى</button>
+        <button
+            onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('success.mp3').play()};addMoreClintMovementsRowTableDivFunction('down')">إضافة
+            يوم للأسفل</button>
     </div>
 
 
