@@ -1,26 +1,35 @@
 let existingDataStatus = 'newData'; // Example status for updating existing data
-
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
-const form = document.forms['save-package'];
+let scriptURL = 'https://script.google.com/macros/s/AKfycbzfCsf83fAX5TGNob-dHpasi0YF3ZSPTxqwEqAgOMCgRDE0W7uFOxyu2vs_0vM8sFuZsA/exec';
+let form = document.forms['save-package'];
 
 function submitFormAndSaveData() {
-    // Prevent the default form submission
     event.preventDefault();
 
     if (document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
-        // Play a sound effect
-        new Audio('success.mp3').play();
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            new Audio('success.mp3').play();
+        }
+
+
+        /* in Aug 23 in 2026 delete the if condition to check if 'store_google_sheet_package_user_total_saving_number' exist or no (I used this if condition now to avoid error) */
+        if (document.getElementById('store_google_sheet_package_user_total_saving_number')) {
+            // Update the store_google_sheet_package_user_total_saving_number based on existingDataStatus
+            let savingNumberElement = document.getElementById('store_google_sheet_package_user_total_saving_number');
+            if (existingDataStatus === "newData") {
+                savingNumberElement.innerText = 1;
+            } else if (existingDataStatus === "existingData") {
+                savingNumberElement.innerText = parseInt(savingNumberElement.innerText) + 1;
+            }
+        }
+
 
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'جاري الحفظ..';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
 
         let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
-
-        if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
-            alert('تأكد من إدخال معلومات العميل');
-            return;
-        }
 
         let newObject = {
             name: googleSheetNewSaveDataNameInput,
@@ -44,6 +53,7 @@ function submitFormAndSaveData() {
             }
         });
 
+
         fetch(scriptURL, {
             method: 'POST',
             body: JSON.stringify(newObject),
@@ -59,7 +69,7 @@ function submitFormAndSaveData() {
                 setTimeout(() => {
                     document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
                     document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ جديد';
+                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ التحديثات';
                 }, 5000);
 
                 // Only call submitForm if 'existingDataStatus' is equal to "newData"
@@ -67,6 +77,7 @@ function submitFormAndSaveData() {
                     submitForm();
                 }
 
+                /* Run a function to update the saved google sheet package names (for later use when importing) */
                 updateDataBaseSavedDataNames();
 
                 // Change the value of 'existingDataStatus' for editing old data mode
@@ -75,8 +86,12 @@ function submitFormAndSaveData() {
             });
 
     } else {
-        // Play a sound effect
-        new Audio('error.mp3').play();
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            new Audio('error.mp3').play();
+        }
+
 
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'red';
         document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
@@ -96,10 +111,15 @@ function submitFormAndSaveData() {
     }
 }
 
+
 // Function to clean HTML
 function cleanHTML(html) {
     return html.replace(/\s+/g, ' ').trim();
 }
+
+
+
+
 
 // Add click event listener to trigger form submission
 document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').addEventListener('click', function () {
@@ -135,7 +155,7 @@ document.getElementById('scroll_bottom_page_icon').addEventListener('click', fun
 
 
 
-const sheetURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec'; // Replace with your web app URL
+let sheetURL = 'https://script.google.com/macros/s/AKfycbzfCsf83fAX5TGNob-dHpasi0YF3ZSPTxqwEqAgOMCgRDE0W7uFOxyu2vs_0vM8sFuZsA/exec'; // Replace with your web app URL
 let sheetData = [];
 
 // Fetch data from Google Sheets via web app and store it locally
@@ -203,15 +223,23 @@ function findSelectedNameAndImportContent() {
             // Load data from localStorage
             importContentFromLocalStorage();
         } else if (selectedName !== 'Name') {
-            // Play a sound effect
-            new Audio('success.mp3').play();
+
+            // Play a sound effect only if the website is not muted
+            if (!document.getElementById('mute_website_checkbox').checked) {
+                // Play a sound effect
+                new Audio('success.mp3').play();
+            }
 
             // Run a function to import the data based on the name of the clicked h3
             importContentForSelectedName(selectedName);
         }
     } else {
-        // Play a sound effect
-        new Audio('error.mp3').play();
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            // Play a sound effect
+            new Audio('error.mp3').play();
+        }
 
         // Change the submit icon background color
         import_google_sheet_data_p_id.style.backgroundColor = 'red';
@@ -265,9 +293,21 @@ function importContentFromLocalStorage() {
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
+
+            /* Make sure to set the user code as riv based on the amount of user package total saved number */
+            document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
+
+
             // Make sure to hide all elements with the class name before checking visibility
             let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
             images.forEach(img => {
+                img.style.display = 'none';
+            });
+
+
+            // Make sure to hide all elements with the class name before checking visibility
+            let images2 = document.querySelectorAll('.inserted_package_data_section_page_image_class_2');
+            images2.forEach(img => {
                 img.style.display = 'none';
             });
 
@@ -276,12 +316,26 @@ function importContentFromLocalStorage() {
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
 
+
+            /* in case if the 'store_google_sheet_package_user_total_saving_number' has a number then show "_riv_" in the user code name */
+            if (document.getElementById('store_google_sheet_package_user_total_saving_number').innerText !== '') {
+                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
+            }
+
+
         } catch (error) {
         }
     } else {
-        // Play a sound effect if no data is found
-        new Audio('error.mp3').play();
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            // Play a sound effect if no data is found
+            new Audio('error.mp3').play();
+        }
     }
+
+    /* Show the 'inserted_company_name_image_position_div' element */
+    document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 }
 
 
@@ -338,14 +392,31 @@ function importContentForSelectedName(name) {
             });
 
 
+            // Make sure to hide all elements with the class name before checking visibility
+            let images2 = document.querySelectorAll('.inserted_package_data_section_page_image_class_2');
+            images2.forEach(img => {
+                img.style.display = 'none';
+            });
+
+
             /* Show the 'inserted_company_name_image_position_div' element */
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
 
 
+            /* in case if the 'store_google_sheet_package_user_total_saving_number' has a number then show "_riv_" in the user code name */
+            if (document.getElementById('store_google_sheet_package_user_total_saving_number').innerText !== '') {
+                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
+            }
+
         } catch (error) {
         }
     }
+
+
+    /* Call a function to make sure the hotel available dates are propperly set */
+    updateAllowedDates();
+    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ جديد';
 }
 
 
@@ -440,17 +511,17 @@ let mostTopEmptyCellRowNumberValue;
 // Function to handle form submission and insert data into the Google Sheets
 async function submitForm() {
     // Get the form element
-    const form = document.getElementById('save-package-unique-code');
+    let form = document.getElementById('save-package-unique-code');
     // Get the input field element
-    const inputField = document.getElementById('website_users_name_input_id');
+    let inputField = document.getElementById('website_users_name_input_id');
 
     // Get the package name value from the input field
-    const packageName = inputField.value;
+    let packageName = inputField.value;
 
     // Check if the package name is not empty
     if (packageName) {
         // Prepare the data to be sent in the POST request
-        const data = {
+        let data = {
             name: packageName,
             action: 'insert'
         };
@@ -474,9 +545,9 @@ async function submitForm() {
 async function fetchData() {
     try {
         // Send a GET request to the Google Apps Script URL
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzzOPqv4b5wrZ3tVrk26fr3OeofPi1Y0CRi4TYu8YQwNm52du6P6xMnBt9azLPqu2vY/exec");
+        let response = await fetch("https://script.google.com/macros/s/AKfycbzzOPqv4b5wrZ3tVrk26fr3OeofPi1Y0CRi4TYu8YQwNm52du6P6xMnBt9azLPqu2vY/exec");
         // Parse the response as JSON
-        const data = await response.json();
+        let data = await response.json();
         // Process the fetched data
         processSheetData(data);
     } catch (error) {
@@ -486,9 +557,9 @@ async function fetchData() {
 // Function to process the fetched data and find the most top empty cell row number
 function processSheetData(data) {
     // Get the input field element
-    const inputField = document.getElementById('website_users_name_input_id');
+    let inputField = document.getElementById('website_users_name_input_id');
     // Get the package name value from the input field
-    const packageName = inputField.value;
+    let packageName = inputField.value;
 
     // Check if the package name is empty
     if (!packageName) {
@@ -497,7 +568,7 @@ function processSheetData(data) {
     }
 
     // Get the column index based on the package name
-    const columnIndex = getColumnIndex(packageName);
+    let columnIndex = getColumnIndex(packageName);
     // Check if the column index is valid
     if (columnIndex === -1) {
         alert('Invalid package name.');
@@ -505,7 +576,7 @@ function processSheetData(data) {
     }
 
     // Get the sheet data values
-    const sheetData = data.values;
+    let sheetData = data.values;
     // Initialize the row index to -1 indicating no empty row found
     let rowIndex = -1;
 
@@ -642,10 +713,10 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('clint_company_name_input_id').value = document.getElementById('store_google_sheet_clint_company_name_value').innerText;
 
 
-        /* The following code will be replaced with the folloiwng one
+        /* The following code will be replaced with the folloiwng code line
         document.getElementById('website_users_name_input_id').value = document.getElementById('store_google_sheet_package_user_name_value').innerText;
 
-        until 20 Sept Delete this following code and use the upper one
+        until 20 Sept 2024 Delete this following code and use the upper code line
         */
         if (document.getElementById('store_google_sheet_package_user_name_value')) {
             document.getElementById('website_users_name_input_id').value = document.getElementById('store_google_sheet_package_user_name_value').innerText;
@@ -736,83 +807,11 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         }
 
 
-        /* Function to delete company logo */
-        deleteClickedCompanyLogo = function () {
-            document.getElementById('inserted_company_name_image_position_div').innerHTML = '';
-
-            // Slide in delete box options div
-            let deleteHotelCardDiv = document.getElementById('ensure_delete_company_logo_div');
-
-            // Event listener to close overlay and delete box div on click outside
-            // Hide delete box div
-            deleteHotelCardDiv.style.transform = 'translate(-50%, -100vh)';
-
-            // Hide overlay layer with opacity transition
-            let overlayLayer = document.getElementById('black_overlay_id')
-
-            overlayLayer.style.opacity = '0';
-
-            // Remove overlay and delete box div from DOM after transition
-            setTimeout(() => {
-                document.body.removeChild(overlayLayer);
-            }, 300); // Match transition duration in CSS
-        }
 
 
 
-        /* Function to delete the clint package data row */
-        deleteClintPackageDataRow = function () {
 
-            let deleteclintPackageDataDiv = document.getElementById('ensure_delete_clint_package__including_and_not_icluding_data_div');
 
-            /* Function to run delete the clicked clint row data */
-            runDeleteClintPackageDataRow = function () {
-
-                /* Hide the 'clint_data_row_main_div_id' if there is any data is inserted */
-                document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
-
-                deleteclintPackageDataDiv.style.transform = 'translate(-50%, -100vh)';
-                overlayLayer.style.opacity = '0';
-                setTimeout(() => {
-                    // Only remove the overlay if it is still a child of the body
-                    if (document.body.contains(overlayLayer)) {
-                        document.body.removeChild(overlayLayer);
-                    }
-                }, 300);
-            }
-
-            // Check if the overlay already exists
-            let overlayLayer = document.querySelector('.black_overlay');
-            if (!overlayLayer) {
-                overlayLayer = document.createElement('div');
-                overlayLayer.classList.add('black_overlay');
-                document.body.appendChild(overlayLayer);
-
-                setTimeout(() => {
-                    overlayLayer.style.opacity = '1';
-                    deleteclintPackageDataDiv.style.transform = 'translate(-50%, -50%)';
-                }, 50);
-
-                // Handle both click and touch events on overlay for consistency
-                let handleOverlayClick = () => {
-                    deleteclintPackageDataDiv.style.transform = 'translate(-50%, -100vh)';
-                    overlayLayer.style.opacity = '0';
-                    setTimeout(() => {
-                        // Only remove the overlay if it is still a child of the body
-                        if (document.body.contains(overlayLayer)) {
-                            document.body.removeChild(overlayLayer);
-                        }
-                    }, 300);
-                };
-
-                overlayLayer.addEventListener('click', handleOverlayClick);
-                overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                overlayLayer.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                });
-            }
-        }
 
 
     } else if (visiableDivIdName === 'downloaded_pdf_flight_data_page') {
@@ -830,305 +829,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 };
             });
 
-
-
-
-
-
-
-
-
-
-
-
-            // Define a global variable to store the reference
-            let currentFlightDataDivId;
-
-            // Function to handle delete clicked hotel data
-            deleteClickedFlightData = function (clickedFlightDataDivId) {
-
-                let overlayLayer = document.querySelector('.black_overlay');
-                let clickedFlightDataElement = document.getElementById(clickedFlightDataDivId);
-
-                if (clickedFlightDataElement) {
-                    clickedFlightDataElement.remove();
-                }
-
-                // Hide edit/delete options div
-                let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Check if there are any remaining inserted flight data div (Searching by the second image class name)
-                let remainingFlightDataDivs = document.querySelectorAll('.inserted_flight_data_row');
-                if (remainingFlightDataDivs.length === 0) {
-                    // Hide section with id 'downloaded_pdf_flight_data_page'
-                    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
-
-                }
-            }
-
-
-
-
-
-
-
-            /* Function to edit the clicked flight row data */
-            editClickedFlightData = function (clickedFlightDataDivIdName) {
-
-                /* Make sure the correct section is the one that is visiable */
-                create_new_clint_data_section.style.display = 'none';
-                create_new_hotel_package_section.style.display = 'none';
-                create_new_flight_package_section.style.display = 'flex';
-                create_new_package_including_and_not_including_data_section.style.display = 'none';
-                create_new_clint_movements_plan_section.style.display = 'none';
-
-
-                document.getElementById('clint_flight_inputs_submit_icon').style.display = 'none';
-                document.getElementById('confirm_new_flight_data_row_icon').style.display = 'block';
-                document.getElementById('cancel_new_flight_data_row_icon').style.display = 'block';
-
-
-                document.getElementById('flight_content_section_title_text_id').innerText = 'تعديل تفاصيل الطيران';
-                document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
-
-
-                document.getElementById('flight_data_dropdown_content').scrollIntoView({
-                    block: 'center',
-                    inline: 'center',
-                    behavior: 'smooth',
-                });
-
-
-
-                // Hide delete button div
-                let overlayLayer = document.querySelector('.black_overlay');
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-
-
-                /* Show all inputs for editing the flight data */
-                document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'flex';
-
-
-
-                // Get the clicked hotel data row
-                let clickedFlightDataDiv = document.getElementById(clickedFlightDataDivIdName);
-                let insertedFlightDataDivUniqueId = clickedFlightDataDivIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
-
-
-
-
-                // Extract data using IDs
-                let flightAirLineInput = clickedFlightDataDiv.querySelector(`p[id^='flight_air_line_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightAdultPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_adult_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightInfantPersonAmountInput = clickedFlightDataDiv.querySelector(`p[id^='flight_infant_person_amount_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightFromCityInput = clickedFlightDataDiv.querySelector(`h2[id^='flight_from_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightToCityInput = clickedFlightDataDiv.querySelector(`h3[id^='flight_to_city_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightDateInput = clickedFlightDataDiv.querySelector(`h1[id^='flight_date_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightFlyAwayTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_fly_away_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightArrivalTimeInput = clickedFlightDataDiv.querySelector(`p[id^='flight_arrival_time_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-                let flightExtraBagsInput = clickedFlightDataDiv.querySelector(`p[id^='flight_extra_bags_${insertedFlightDataDivUniqueId}']`)?.innerText || '';
-
-                // Assign values to inputs
-                document.getElementById('flight_air_line_input_id').value = flightAirLineInput;
-                document.getElementById('flight_adult_person_amount_input_id').value = flightAdultPersonAmountInput;
-                document.getElementById('flight_infant_person_amount_input_id').value = flightInfantPersonAmountInput;
-                document.getElementById('flight_from_city_input_id').value = flightFromCityInput;
-                document.getElementById('flight_to_city_input_id').value = flightToCityInput;
-                document.getElementById('flight_date_input_id').value = flightDateInput;
-                document.getElementById('flight_fly_away_time_input_id').value = flightFlyAwayTimeInput;
-                document.getElementById('flight_arrival_time_input_id').value = flightArrivalTimeInput;
-                document.getElementById('flight_extra_bags_input_id').value = flightExtraBagsInput;
-
-
-
-
-                /* Function to cancel the flight row data editing process */
-                cancelNewFlightDataRow = function () {
-                    // Get references to all input elements and delete their values
-                    document.getElementById('flight_air_line_input_id').value = '';
-                    document.getElementById('flight_from_city_input_id').value = '';
-                    document.getElementById('flight_to_city_input_id').value = '';
-                    document.getElementById('flight_date_input_id').value = '';
-                    document.getElementById('flight_fly_away_time_input_id').value = '';
-                    document.getElementById('flight_arrival_time_input_id').value = '';
-                    document.getElementById('flight_extra_bags_input_id').value = '';
-
-
-                    /* Hide and show different icons */
-                    document.getElementById('clint_flight_inputs_submit_icon').style.display = 'block';
-                    document.getElementById('confirm_new_flight_data_row_icon').style.display = 'none';
-                    document.getElementById('cancel_new_flight_data_row_icon').style.display = 'none';
-
-
-                    /* Reset the innerText and styling to defualt */
-                    document.getElementById('flight_content_section_title_text_id').innerText = 'تفاصيل الطيران';
-                    document.getElementById('flight_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-
-
-                    /* Hide all inputs for editing the flight data */
-                    document.getElementById('all_editing_flight_row_data_inputs_div').style.display = 'none';
-                }
-
-
-
-
-                /* Function to confirm the new flight row data */
-                confirmNewFlightDataRow = function () {
-                    // Play a sound effect
-                    new Audio('success.mp3').play();
-
-
-                    // Get the clicked hotel data row
-                    let clickedFlightDataDiv = document.getElementById(currentFlightDataDivId);
-
-                    // Clear the old data
-                    clickedFlightDataDiv.innerHTML = '';
-
-                    // Extract the new data from the input fields
-                    let flightAirLineInput = document.getElementById('flight_air_line_input_id').value;
-                    let flightAdultPersonAmountInput = document.getElementById('flight_adult_person_amount_input_id').value;
-                    let flightInfantPersonAmountInput = document.getElementById('flight_infant_person_amount_input_id').value;
-                    let flightFromCityInput = document.getElementById('flight_from_city_input_id').value;
-                    let flightToCityInput = document.getElementById('flight_to_city_input_id').value;
-                    let flightDateInput = document.getElementById('flight_date_input_id').value;
-                    let flightFlyAwayTimeInput = document.getElementById('flight_fly_away_time_input_id').value;
-                    let flightArrivalTimeInput = document.getElementById('flight_arrival_time_input_id').value;
-                    let flightExtraBagsInput = document.getElementById('flight_extra_bags_input_id').value;
-
-
-                    // Create the HTML content for a new flight row, only including non-empty values
-                    let flightRowTableDivContent = `
-                        <div class="flight_row_flight_arrival_time_controller inserted_flight_data_row" style="cursor: pointer;">
-                            ${flightAirLineInput ? `<p id="flight_air_line_${insertedFlightDataDivUniqueId}">${flightAirLineInput}</p>` : ''}
-                        </div>
-                        <div>
-                            <p id="flight_adult_person_amount_${insertedFlightDataDivUniqueId}">${flightAdultPersonAmountInput}</p>
-                            ${flightInfantPersonAmountInput ? `<p id="flight_infant_person_amount_${insertedFlightDataDivUniqueId}">${flightInfantPersonAmountInput}</p>` : ''}
-                        </div>
-                        <div>
-                            <p>20 كيلو للشخص</p>
-                            ${flightExtraBagsInput ? `<p id="flight_extra_bags_${insertedFlightDataDivUniqueId}">${flightExtraBagsInput}</p>` : ''}
-                        </div>
-                        <div>
-                            ${flightFromCityInput ? `<h2 id="flight_from_city_${insertedFlightDataDivUniqueId}">${flightFromCityInput}</h2>` : ''}
-                        </div>
-                        <div>
-                            ${flightToCityInput ? `<h3 id="flight_to_city_${insertedFlightDataDivUniqueId}">${flightToCityInput}</h3>` : ''}
-                        </div>
-                        <div>
-                            ${flightDateInput ? `<h1 id="flight_date_${insertedFlightDataDivUniqueId}" class="flight_date_for_matching_whole_package_date">${flightDateInput}</h1>` : ''}
-                        </div>
-                        <div>
-                            ${flightFlyAwayTimeInput ? `<p id="flight_fly_away_time_${insertedFlightDataDivUniqueId}">${flightFlyAwayTimeInput}</p>` : ''}
-                        </div>
-                        <div>
-                            ${flightArrivalTimeInput ? `<p id="flight_arrival_time_${insertedFlightDataDivUniqueId}">${flightArrivalTimeInput}</p>` : ''}
-                        </div>
-                    `;
-
-
-                    // Insert the new data into the clicked flight data div
-                    clickedFlightDataDiv.innerHTML = flightRowTableDivContent;
-
-
-                    /* Run a function to exit the editing flight data mood */
-                    cancelNewFlightDataRow();
-
-
-                    // Get all dynamically created elements with the class 'flight_row_flight_arrival_time_controller'
-                    document.querySelectorAll('.flight_row_flight_arrival_time_controller').forEach(function (element) {
-                        element.onclick = function (event) {
-                            flightRowAirLineControllerFunction(event, element);
-                        };
-                    });
-                }
-            }
-
-
-
-
-
-
-
-            // Function to handle flight row div click or touch
-            flightRowAirLineControllerFunction = function (event) {
-                let deleteFlightRowDiv = document.getElementById('ensure_delete_or_edit_flight_data_div');
-                let clickedFlightDataDiv = event.target.closest('.flight_row_class');
-
-                if (clickedFlightDataDiv) {
-                    currentFlightDataDivId = clickedFlightDataDiv.id;
-
-
-                    // Check if the overlay already exists
-                    let overlayLayer = document.querySelector('.black_overlay');
-                    if (!overlayLayer) {
-                        overlayLayer = document.createElement('div');
-                        overlayLayer.classList.add('black_overlay');
-                        document.body.appendChild(overlayLayer);
-
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = '1';
-                            deleteFlightRowDiv.style.transform = 'translate(-50%, -50%)';
-                        }, 50);
-
-                        // Handle both click and touch events on overlay for consistency
-                        let handleOverlayClick = () => {
-                            deleteFlightRowDiv.style.transform = 'translate(-50%, -100vh)';
-                            overlayLayer.style.opacity = '0';
-                            setTimeout(() => {
-                                // Only remove the overlay if it is still a child of the body
-                                if (document.body.contains(overlayLayer)) {
-                                    document.body.removeChild(overlayLayer);
-                                }
-                            }, 300);
-                        };
-
-                        overlayLayer.addEventListener('click', handleOverlayClick);
-                        overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                        overlayLayer.addEventListener('click', (event) => {
-                            event.stopPropagation();
-                        });
-                    }
-
-
-                    /* Function to run delete clicked flight row data */
-                    runDeleteClickedFlightDataFunction = function () {
-                        deleteClickedFlightData(currentFlightDataDivId);
-                    }
-
-                    /* Function to run delete clicked flight row data */
-                    runEditClickedFlightDataFunction = function () {
-                        editClickedFlightData(currentFlightDataDivId);
-
-                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
-                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(0, 46, 57)';
-                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                    }
-                }
-            };
         });
 
 
@@ -1140,6 +840,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
     } else if (visiableDivIdName === 'downloaded_pdf_hotel_data_page') {
+
 
 
         // Get all elements with the class name 'hotel_row_class'
@@ -1158,800 +859,22 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             let hotelRowImageControllers = hotelRowTableDiv.querySelectorAll('.hotel_row_image_controller');
 
 
-
-
-
-
-
-
-
-
-
-
-            // Function to handle touch and mouse events to distinguish between click and drag
-            function handleClickEvent(element) {
-                let touchStartX, touchStartY, touchStartTime;
-                let isDragging = false;
-                let isTouchEvent = false; // Flag to distinguish between touch and mouse events
-
-                element.addEventListener('touchstart', (event) => {
-                    let touch = event.touches[0];
-                    touchStartX = touch.clientX;
-                    touchStartY = touch.clientY;
-                    touchStartTime = new Date().getTime();
-                    isDragging = false;
-                    isTouchEvent = true; // Set the flag to indicate a touch event
-                });
-
-                element.addEventListener('touchmove', () => {
-                    isDragging = true;
-                });
-
-                element.addEventListener('touchend', (event) => {
-                    isTouchEvent = false; // Reset the flag after the touch event ends
-                });
-
-                element.addEventListener('mousedown', (event) => {
-                    if (!isTouchEvent) { // Only execute if it is not a touch event
-                        touchStartX = event.clientX;
-                        touchStartY = event.clientY;
-                        touchStartTime = new Date().getTime();
-                        isDragging = false;
-                    }
-                });
-
-                element.addEventListener('mousemove', () => {
-                    isDragging = true;
-                });
-
-                element.addEventListener('mouseup', (event) => {
-                    if (!isDragging && !isTouchEvent) { // Only execute if it is not a touch event
-
-                        hotelRowImageControllerFunction(event);
-                    }
-                });
-            }
-
             // Attach click and touch event listeners to each element
             hotelRowImageControllers.forEach(element => {
                 handleClickEvent(element);
             });
 
-
-
-
-
-
-
-            // Define a global variable to store the reference
-            let currentHotelDataDivId;
-
-            // Function to handle delete clicked hotel data
-            deleteClickedHotelData = function (clickedHotelRowIdName) {
-                let overlayLayer = document.querySelector('.black_overlay');
-
-                let clickedHotelCardElement = document.getElementById(clickedHotelRowIdName);
-                if (clickedHotelCardElement) {
-                    clickedHotelCardElement.remove();
-                }
-
-                // Hide delete button div
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
-                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-
-
-                // Check if there are any remaining inserted hotel data divs (Searching by the second image class name)
-                let remainingHotelDataDivs = document.querySelectorAll('.inserted_hotel_data_row');
-                if (remainingHotelDataDivs.length === 0) {
-                    // Hide section with id 'downloaded_pdf_hotel_data_page'
-                    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
-
-
-                    /* Reset the value of the saved hotel dates for later Re-arranging */
-                    saveOriginalHotelDates();
-
-
-                    /* in case if there is no remaaining 'inserted_hotel_data_row' then check if the 'create_new_clint_data_section' is visible */
-                    if (document.getElementById('create_new_clint_data_section').style.display !== 'none') {
-
-                        /* Set the date of the 'hotel_check_in_input_id' as the the date in the 'whole_package_start_date_input_id' */
-                        document.getElementById('hotel_check_in_input_id').value = document.getElementById('whole_package_start_date_input_id').value;
-
-                    } else {
-
-                        document.getElementById('hotel_check_in_input_id').value = '';
-                    }
-
-
-                } else {
-
-                    // Get all divs with the class name 'hotel_row_class_for_editing'
-                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
-
-                    // Get the last found div with the class name "hotel_row_class_for_editing"
-                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
-
-                    // Get the date value from the h3 element inside the lastHotelRowDiv
-                    let dateElement = lastHotelRowDiv.querySelector('h3');
-                    let dateValue = dateElement ? dateElement.innerText.trim() : '';
-
-                    // Set the value of the hotel_check_in_input_id to the extracted date value
-                    document.getElementById('hotel_check_in_input_id').value = dateValue;
-
-                    // Store the last stopped hotel check-out date for later use (when importing data)
-                    document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = dateValue;
-
-                }
-            };
-
-
-
-
-
-            /* Function to edit the clicked hotel row data */
-            editClickedHotelDataFunction = function (clickedHotelRowIdName) {
-
-                /* Make sure the correct section is the one that is visiable */
-                create_new_clint_data_section.style.display = 'none';
-                create_new_hotel_package_section.style.display = 'flex';
-                create_new_flight_package_section.style.display = 'none';
-                create_new_package_including_and_not_including_data_section.style.display = 'none';
-                create_new_clint_movements_plan_section.style.display = 'none';
-
-
-                /* Hide and show different icons */
-                document.getElementById('hotel_inputs_submit_icon').style.display = 'none';
-                document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'none';
-                document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'block';
-                document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'block';
-                document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'block';
-
-
-                document.getElementById('hotel_content_section_title_text_id').innerText = 'تعديل تفاصيل الفندق';
-                document.getElementById('hotel_content_section_title_text_id').style.backgroundColor = 'rgb(85, 127, 137)';
-
-                document.getElementById('hotel_data_dropdown_content').scrollIntoView({
-                    block: 'center',
-                    inline: 'center',
-                    behavior: 'smooth',
-                });
-
-
-                // Hide delete button div
-                let overlayLayer = document.querySelector('.black_overlay');
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
-                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                // Get the clicked hotel data row
-                let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
-                let insertedHotelDataDivUniqueId = clickedHotelRowIdName.split('_').pop(); // Extract the unique ID from the clicked row ID
-
-
-                /* Make the 'hotel_check_in_input_id' clickable for users to change the date */
-                document.getElementById('hotel_check_in_input_id').disabled = false;
-
-
-
-                /* Get all the values from the clicked hotel row */
-                let hotelNameText = clickedHotelDataDiv.querySelector(`h1[id^='hotel_name_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelCheckInText = clickedHotelDataDiv.querySelector(`h2[id^='hotel_check_in_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelCheckOutText = clickedHotelDataDiv.querySelector(`h3[id^='hotel_check_out_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelTotalNightsText = clickedHotelDataDiv.querySelector(`h4[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomTypeDescriptionText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomContainPoolText = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomViewText = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelUnitAmountText = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelBreakfastPeopleAmountText = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelSpecialRoomRequestText = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                let hotelRoomExtraInfoText = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-
-
-
-                /* in case if there was a second room data in the clicked hotel row then target those data */
-                if (clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`)) {
-
-
-                    // Get all hotel first and second room data inputs for width styling
-                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
-                    document.getElementById('hotel_second_room_data_input_div').style.display = 'flex';
-
-                    // Save the current width before changing it to 100%
-                    inputsAndTextareas.forEach(element => {
-                        if (!element.dataset.originalWidth) {
-                            element.dataset.originalWidth = element.style.width; // Save the original width
-                        }
-                        element.style.width = '100%'; // Set width to 100%
-                    });
-
-
-                    let hotelRoomTypeDescriptionText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomContainPoolText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomViewText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_view_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelUnitAmountText_2 = clickedHotelDataDiv.querySelector(`p[id^='hotel_total_unit_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelBreakfastPeopleAmountText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelSpecialRoomRequestText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-                    let hotelRoomExtraInfoText_2 = clickedHotelDataDiv.querySelector(`span[id^='hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
-
-
-                    document.getElementById('hotel_room_type_description_input_id_2').value = hotelRoomTypeDescriptionText_2;
-                    document.getElementById('hotel_room_contain_pool_input_id_2').value = hotelRoomContainPoolText_2;
-                    document.getElementById('hotel_room_view_input_id_2').value = hotelRoomViewText_2;
-                    document.getElementById('hotel_unit_amount_input_id_2').value = `عدد الوحدات ${hotelUnitAmountText_2}`;
-                    document.getElementById('hotel_breakfast_people_amount_input_id_2').value = hotelBreakfastPeopleAmountText_2;
-                    document.getElementById('hotel_special_room_request_input_id_2').value = hotelSpecialRoomRequestText_2;
-                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = hotelRoomExtraInfoText_2;
-
-
-                } else {
-                    // Get all hotel first and second room data inputs for width styling
-                    let inputsAndTextareas = document.querySelectorAll('#hotel_two_room_data_input_divs_container input, #hotel_two_room_data_input_divs_container textarea');
-                    document.getElementById('hotel_second_room_data_input_div').style.display = 'none';
-
-                    // Set width back to the original saved width value
-                    inputsAndTextareas.forEach(element => {
-                        element.style.width = element.dataset.originalWidth; // Use the saved width value
-                    });
-                }
-
-
-                // Enter the values of the clicked hotel row div to inputs
-                document.getElementById('hotel_name_input_id').value = hotelNameText;
-                document.getElementById('hotel_check_in_input_id').value = hotelCheckInText;
-                document.getElementById('hotel_check_out_input_id').value = hotelCheckOutText;
-                document.getElementById('hotel_total_nights_input_id').value = `${hotelTotalNightsText} ليالي`;
-                document.getElementById('hotel_room_type_description_input_id').value = hotelRoomTypeDescriptionText;
-                document.getElementById('hotel_room_contain_pool_input_id').value = hotelRoomContainPoolText;
-                document.getElementById('hotel_room_view_input_id').value = hotelRoomViewText;
-                document.getElementById('hotel_unit_amount_input_id').value = `عدد الوحدات ${hotelUnitAmountText}`;
-                document.getElementById('hotel_breakfast_people_amount_input_id').value = hotelBreakfastPeopleAmountText;
-                document.getElementById('hotel_special_room_request_input_id').value = hotelSpecialRoomRequestText;
-                document.getElementById('hotel_room_extra_info_textarea_id').value = hotelRoomExtraInfoText;
-
-
-
-                /* Restore the value in the viriables for later use (inside the hotel row data as raw number with no text) */
-                storeHotelTotalUnitNumber = hotelUnitAmountText;
-                storeHotelTotalNights = hotelTotalNightsText;
-
-
-
-
-                /* Function to cancel the hotel row data editing process */
-                cancelNewHotelDataRow = function () {
-
-                    // Get all divs with the class name 'hotel_row_class_for_editing' to compare its id name
-                    let allFoundHotelRowDivs = document.querySelectorAll('.hotel_row_class_for_editing');
-
-                    // Get the last found div with the class name "hotel_row_class_for_editing"
-                    let lastHotelRowDiv = allFoundHotelRowDivs[allFoundHotelRowDivs.length - 1];
-
-                    /* if the last found div is the one that got clicked then make sure to set the value of the check in as the value of the check out */
-                    document.getElementById('hotel_check_in_input_id').value = lastHotelRowDiv.querySelector('h3').innerText;
-
-                    /* Store the last stooped hotel check out date for later use (when importing data) */
-                    document.getElementById('store_google_sheet_hotel_last_stopped_check_out_date_value').innerText = lastHotelRowDiv.querySelector('h3').innerText;
-
-
-
-
-                    // Get references to all input elements and reset their values
-                    document.getElementById('hotel_name_input_id').value = '';
-                    document.getElementById('hotel_check_out_input_id').value = '';
-                    document.getElementById('hotel_total_nights_input_id').value = '';
-                    document.getElementById('hotel_room_type_description_input_id').value = '';
-                    document.getElementById('hotel_room_contain_pool_input_id').value = '';
-                    document.getElementById('hotel_room_view_input_id').value = '';
-                    document.getElementById('hotel_special_room_request_input_id').value = '';
-                    document.getElementById('hotel_room_extra_info_textarea_id').value = '';
-
-
-                    document.getElementById('hotel_room_type_description_input_id_2').value = '';
-                    document.getElementById('hotel_room_contain_pool_input_id_2').value = '';
-                    document.getElementById('hotel_room_view_input_id_2').value = '';
-                    document.getElementById('hotel_special_room_request_input_id_2').value = '';
-                    document.getElementById('hotel_room_extra_info_textarea_id_2').value = '';
-
-
-                    /* Hide and show different icons */
-                    document.getElementById('hotel_inputs_submit_icon').style.display = 'block';
-                    document.getElementById('show_or_hide_second_room_inputs_div_icon').style.display = 'block';
-                    document.getElementById('confirm_new_hotel_data_row_icon').style.display = 'none';
-                    document.getElementById('cancel_new_hotel_data_row_icon').style.display = 'none';
-                    document.getElementById('show_or_hide_second_room_inputs_div_icon_2').style.display = 'none';
-
-
-                    document.getElementById('hotel_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-                    document.getElementById('hotel_content_section_title_text_id').innerText = 'تفاصيل الفندق';
-
-
-                    // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
-                    saveOriginalHotelDates();
-
-
-                    /* Make sure to Re-set the 'hotel_check_in_input_id' to unclickable */
-                    document.getElementById('hotel_check_in_input_id').disabled = true;
-                };
-
-                confirmNewHotelDataRow = function () {
-                    // Get the clicked hotel data row
-                    let clickedHotelDataDiv = document.getElementById(clickedHotelRowIdName);
-
-                    // Clear the old data
-                    clickedHotelDataDiv.innerHTML = '';
-
-                    // Extract the new data from the input fields
-                    let hotelNameReadyText = document.getElementById('hotel_name_input_id').value;
-                    let hotelCheckInReadyText = document.getElementById('hotel_check_in_input_id').value;
-                    let hotelCheckOutReadyText = document.getElementById('hotel_check_out_input_id').value;
-                    let hotelRoomTypeDescriptionInput = document.getElementById('hotel_room_type_description_input_id').value;
-                    let hotelRoomContainPoolInput = document.getElementById('hotel_room_contain_pool_input_id').value;
-                    let hotelRoomViewInput = document.getElementById('hotel_room_view_input_id').value;
-                    let hotelUnitAmountInput = document.getElementById('hotel_unit_amount_input_id').value;
-                    let hotelBreakfastPeopleAmountInput = document.getElementById('hotel_breakfast_people_amount_input_id').value;
-                    let hotelSpecialRoomRequestInput = document.getElementById('hotel_special_room_request_input_id').value;
-                    let hotelRoomExtraInfoReadyText = document.getElementById('hotel_room_extra_info_textarea_id').value;
-
-
-                    /* Second hotel room data input values */
-                    let hotelRoomTypeDescriptionInput_2 = document.getElementById('hotel_room_type_description_input_id_2').value;
-                    let hotelRoomContainPoolInput_2 = document.getElementById('hotel_room_contain_pool_input_id_2').value;
-                    let hotelRoomViewInput_2 = document.getElementById('hotel_room_view_input_id_2').value;
-                    let hotelUnitAmountInput_2 = document.getElementById('hotel_unit_amount_input_id_2').value;
-                    let hotelBreakfastPeopleAmountInput_2 = document.getElementById('hotel_breakfast_people_amount_input_id_2').value;
-                    let hotelSpecialRoomRequestInput_2 = document.getElementById('hotel_special_room_request_input_id_2').value;
-                    let hotelRoomExtraInfoReadyText_2 = document.getElementById('hotel_room_extra_info_textarea_id_2').value;
-
-
-                    /* if one of the inputs is empty then stop the process */
-                    if (hotelNameReadyText === '' || hotelCheckInReadyText === '' || hotelCheckOutReadyText === '' || hotelRoomTypeDescriptionInput === '' || hotelUnitAmountInput === '') {
-                        // Change the submit icon background color
-                        confirm_new_hotel_data_row_icon.style.backgroundColor = 'red';
-
-                        // Set the background color of the submit icon back to default color
-                        setTimeout(() => {
-                            confirm_new_hotel_data_row_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                        }, 500);
-                    } else {
-
-
-                        /* in case the second room data inputs div is visible and there are empty inputs then stop the process */
-                        if (document.getElementById('hotel_second_room_data_input_div').style.display === 'flex') {
-
-                            if (hotelRoomTypeDescriptionInput_2 === '' || hotelUnitAmountInput_2 === '') {
-
-                                // Play a sound effect
-                                new Audio('error.mp3').play();
-
-                                // Change the submit icon background color
-                                hotel_inputs_submit_icon.style.backgroundColor = 'red';
-
-                                // Set the background color of the submit icon back to default color
-                                setTimeout(() => {
-                                    hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-                                }, 500);
-
-                                return;
-                            }
-                        }
-
-
-                        // Play a sound effect
-                        new Audio('success.mp3').play();
-
-
-                        // Convert the hotel name to lowercase and replace spaces with hyphens to create a suitable image filename
-                        let hotelImgSrcReadyText = hotelNameReadyText.toLowerCase().replace(/\s+/g, '-');
-
-                        let hotelLocationReadyText = '';
-                        let hotelAreaReadyText = '';
-
-                        for (let hotelData of allHotelDataArray) {
-                            if (hotelData.hotelName === hotelNameReadyText) {
-                                hotelLocationReadyText = hotelData.hotelLocation;
-                                if (hotelData.hasOwnProperty('hotelArea')) {
-                                    hotelAreaReadyText = hotelData.hotelArea;
-                                }
-                                break;
-                            }
-                        }
-
-                        // Create the HTML content for a new hotel row
-                        let hotelRowTableDivContent = `
-                            <div><h1 id='hotel_name_${insertedHotelDataDivUniqueId}'>${hotelNameReadyText}</h1></div>
-                            <div><h2 id='hotel_check_in_${insertedHotelDataDivUniqueId}' class="hotel_check_in_date_for_matching_whole_package_date">${hotelCheckInReadyText}</h2></div>
-                            <div><h3 style="color: red" id='hotel_check_out_${insertedHotelDataDivUniqueId}' class="hotel_check_out_date_for_matching_whole_package_date">${hotelCheckOutReadyText}</h3></div>
-                            <div><h4 id='hotel_total_nights_${insertedHotelDataDivUniqueId}'>${storeHotelTotalNights}</h4></div>
-                            <div class="description_cell">
-                                <span id='hotel_room_type_description_${insertedHotelDataDivUniqueId}'>${hotelRoomTypeDescriptionInput}</span></div>
-                            <div>
-                                <p id='hotel_total_unit_${insertedHotelDataDivUniqueId}'>${storeHotelTotalUnitNumber}</p>
-                                ${hotelUnitAmountInput_2 && document.getElementById('hotel_second_room_data_input_div').style.display !== "none" ? `<p style="width: 100%; background: rgb(40, 62, 68); color: white">+ </p><p id="hotel_total_unit_2_${insertedHotelDataDivUniqueId}" style="width: 100%; background: rgb(40, 62, 68); color: white">${storeHotelTotalUnitNumber_2}</p>` : ''}
-                            </div>
-                            <div>
-                                <h5 id='hotel_location_${insertedHotelDataDivUniqueId}'>${hotelLocationReadyText}</h5>
-                                ${hotelAreaReadyText ? `<br><h6 id='hotel_area_${insertedHotelDataDivUniqueId}'>${hotelAreaReadyText}</h6>` : ''}
-                                <img src="صور-الفنادق/${hotelImgSrcReadyText}.jpg" class="hotel_row_image_controller inserted_hotel_data_row" style="cursor: pointer">
-                            </div>
-                        `;
-
-                        // Insert the new HTML content into the clicked hotel data div
-                        clickedHotelDataDiv.innerHTML = hotelRowTableDivContent;
-
-
-                        // Append <span> elements for each input with text
-                        if (hotelRoomContainPoolInput !== '') {
-                            let poolSpan = document.createElement('span');
-                            poolSpan.id = `hotel_pool_span_id_${insertedHotelDataDivUniqueId}`;
-                            poolSpan.innerText = hotelRoomContainPoolInput;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolSpan);
-                        }
-                        if (hotelRoomViewInput !== '') {
-                            let viewSpan = document.createElement('span');
-                            viewSpan.id = `hotel_view_span_id_${insertedHotelDataDivUniqueId}`;
-                            viewSpan.innerText = hotelRoomViewInput;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewSpan);
-                        }
-                        if (hotelBreakfastPeopleAmountInput !== '') {
-                            let breakfastSpan = document.createElement('span');
-                            breakfastSpan.id = `hotel_breakfast_span_id_${insertedHotelDataDivUniqueId}`;
-                            breakfastSpan.innerText = hotelBreakfastPeopleAmountInput;
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastSpan);
-                        }
-                        if (hotelSpecialRoomRequestInput !== '') {
-                            let specialRequestSpan = document.createElement('span');
-                            specialRequestSpan.id = `hotel_special_request_span_id_${insertedHotelDataDivUniqueId}`;
-                            specialRequestSpan.className = 'hotel_special_request_span_class';
-                            specialRequestSpan.innerText = hotelSpecialRoomRequestInput;
-                            specialRequestSpan.style.background = 'rgb(85, 127, 137)';
-                            specialRequestSpan.style.color = 'white';
-                            specialRequestSpan.style.padding = '0 5px';
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(specialRequestSpan);
-                        }
-                        if (hotelRoomExtraInfoReadyText !== '') {
-                            let extraInfoSpan = document.createElement('span');
-                            extraInfoSpan.id = `hotel_extra_info_span_id_${insertedHotelDataDivUniqueId}`;
-                            extraInfoSpan.innerText = `+ ${hotelRoomExtraInfoReadyText}`;
-                            extraInfoSpan.style.background = 'rgb(85, 127, 137)';
-                            extraInfoSpan.style.color = 'white';
-                            extraInfoSpan.style.padding = '0 5px';
-                            clickedHotelDataDiv.querySelector('.description_cell').appendChild(extraInfoSpan);
-                        }
-
-
-
-
-                        // Handle the second room data if the second room div is visible
-                        if (document.getElementById('hotel_second_room_data_input_div').style.display !== "none") {
-                            if (hotelRoomTypeDescriptionInput_2 !== '') {
-                                let roomTypeDescriptionSpan_2 = document.createElement('span');
-                                roomTypeDescriptionSpan_2.id = `hotel_room_type_description_2_${insertedHotelDataDivUniqueId}`;
-                                roomTypeDescriptionSpan_2.innerText = hotelRoomTypeDescriptionInput_2;
-                                roomTypeDescriptionSpan_2.style.width = '100%';
-                                roomTypeDescriptionSpan_2.style.background = 'rgb(40, 62, 68)';
-                                roomTypeDescriptionSpan_2.style.color = 'white';
-
-
-                                let plusSign = document.createElement('span');
-                                plusSign.innerText = '+ ';
-                                plusSign.style.width = '100%';
-                                plusSign.style.background = 'rgb(40, 62, 68)';
-                                plusSign.style.color = 'white';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(plusSign);
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(roomTypeDescriptionSpan_2);
-                            }
-                            if (hotelRoomContainPoolInput_2 !== '') {
-                                let poolSpan_2 = document.createElement('span');
-                                poolSpan_2.id = `hotel_pool_span_id_2_${insertedHotelDataDivUniqueId}`;
-                                poolSpan_2.innerText = hotelRoomContainPoolInput_2;
-                                poolSpan_2.style.width = '100%';
-                                poolSpan_2.style.background = 'rgb(40, 62, 68)';
-                                poolSpan_2.style.color = 'white';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(poolSpan_2);
-                            }
-                            if (hotelRoomViewInput_2 !== '') {
-                                let viewSpan_2 = document.createElement('span');
-                                viewSpan_2.id = `hotel_view_span_id_2_${insertedHotelDataDivUniqueId}`;
-                                viewSpan_2.style.width = '100%';
-                                viewSpan_2.innerText = hotelRoomViewInput_2;
-                                viewSpan_2.style.background = 'rgb(40, 62, 68)';
-                                viewSpan_2.style.color = 'white';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(viewSpan_2);
-                            }
-                            if (hotelBreakfastPeopleAmountInput_2 !== '') {
-                                let breakfastSpan_2 = document.createElement('span');
-                                breakfastSpan_2.id = `hotel_breakfast_span_id_2_${insertedHotelDataDivUniqueId}`;
-                                breakfastSpan_2.innerText = hotelBreakfastPeopleAmountInput_2;
-                                breakfastSpan_2.style.width = '100%';
-                                breakfastSpan_2.style.background = 'rgb(40, 62, 68)';
-                                breakfastSpan_2.style.color = 'white';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(breakfastSpan_2);
-                            }
-                            if (hotelSpecialRoomRequestInput_2 !== '') {
-                                let specialRequestSpan_2 = document.createElement('span');
-                                specialRequestSpan_2.id = `hotel_special_request_span_id_2_${insertedHotelDataDivUniqueId}`;
-                                specialRequestSpan_2.className = 'hotel_special_request_span_class';
-                                specialRequestSpan_2.innerText = hotelSpecialRoomRequestInput_2;
-                                specialRequestSpan_2.style.width = '100%';
-                                specialRequestSpan_2.style.background = 'rgb(5, 17, 21)';
-                                specialRequestSpan_2.style.color = 'white';
-                                specialRequestSpan_2.style.padding = '0 5px';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(specialRequestSpan_2);
-                            }
-                            if (hotelRoomExtraInfoReadyText_2 !== '') {
-                                let extraInfoSpan_2 = document.createElement('span');
-                                extraInfoSpan_2.id = `hotel_extra_info_span_id_2_${insertedHotelDataDivUniqueId}`;
-                                extraInfoSpan_2.innerText = `+ ${hotelRoomExtraInfoReadyText_2}`;
-                                extraInfoSpan_2.style.width = '100%';
-                                extraInfoSpan_2.style.background = 'rgb(5, 17, 21)';
-                                extraInfoSpan_2.style.color = 'white';
-                                extraInfoSpan_2.style.padding = '0 5px';
-                                clickedHotelDataDiv.querySelector('.description_cell').appendChild(extraInfoSpan_2);
-                            }
-                        }
-
-
-                        // Reattach event listeners to the image controllers
-                        let hotelRowImageControllers = clickedHotelDataDiv.querySelectorAll('.hotel_row_image_controller');
-                        hotelRowImageControllers.forEach(element => {
-                            handleClickEvent(element);
-                        });
-
-                        // Clear the input after confirm the new hotel data
-                        cancelNewHotelDataRow();
-                    };
-                }
-            };
-
-
-
-
-
-
-            // Function to show delete the inserted hotel data
-            hotelRowImageControllerFunction = function (event) {
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_hotel_data_div');
-                let clickedHotelDataDiv = event.target.closest('.hotel_row_class');
-
-                if (clickedHotelDataDiv) {
-                    currentHotelDataDivId = clickedHotelDataDiv.id;
-
-                    // Check if the overlay already exists
-                    let overlayLayer = document.querySelector('.black_overlay');
-                    if (!overlayLayer) {
-                        overlayLayer = document.createElement('div');
-                        overlayLayer.classList.add('black_overlay');
-                        document.body.appendChild(overlayLayer);
-
-                        setTimeout(() => {
-                            overlayLayer.style.opacity = '1';
-                            deleteHotelRowDiv.style.transform = 'translate(-50%, -50%)';
-                        }, 50);
-
-                        // Handle both click and touch events on overlay for consistency
-                        let handleOverlayClick = () => {
-                            deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-                            overlayLayer.style.opacity = '0';
-                            setTimeout(() => {
-                                // Only remove the overlay if it is still a child of the body
-                                if (document.body.contains(overlayLayer)) {
-                                    document.body.removeChild(overlayLayer);
-                                }
-                            }, 300);
-                        };
-
-                        overlayLayer.addEventListener('click', handleOverlayClick);
-                        overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                        overlayLayer.addEventListener('click', (event) => {
-                            event.stopPropagation();
-                        });
-                    }
-
-
-
-                    /* Function to run delete clikced hotel row data */
-                    runDeleteClickedHotelDataFunction = function () {
-                        deleteClickedHotelData(currentHotelDataDivId);
-                    }
-
-                    /* Function to run edit clikced hotel row data */
-                    runEditClickedHotelDataFunction = function () {
-                        editClickedHotelDataFunction(currentHotelDataDivId);
-
-                        /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
-                        document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(0, 46, 57)';
-                        document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                        document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                    }
-                }
-            };
-
-
-
-
-
-
-            // Function to update dates inside 'hotel_row_class_for_editing' divs based on their order in the DOM
-            function updateHotelRowDates() {
-                const hotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
-
-                hotelRows.forEach((row, index) => {
-                    const h2Element = row.querySelector('h2');
-                    const h3Element = row.querySelector('h3');
-
-                    if (h2Element && h3Element && originalHotelDates[index]) {
-                        // Update the dates based on the new order of elements
-                        h2Element.innerText = originalHotelDates[index].h2Date; // Or any date calculation logic here
-                        h3Element.innerText = originalHotelDates[index].h3Date; // Or any date calculation logic here
-                    }
-                });
-            }
-
-            // Function to handle the drop and reapply the dates
-            function handleDropHotelRow() {
-                // After dropping, reapply the dates based on the current DOM order
-                updateHotelRowDates(); // Call the update function here
-            }
-
-            // Function to prepare drag and drop functionality
-            function createHotelDragAndDropMood() {
-                let dropZone = document.getElementById('inserted_hotel_data_position_div');
-
-                function mouseDown(event) {
-                    if (event.target.tagName.toLowerCase() === 'img') {
-                        event.preventDefault();
-                        let draggingElement = event.target.closest('.hotel_row_class');
-                        draggingElement.classList.add('dragging');
-                        draggingElement.dataset.startY = event.clientY;
-                        document.addEventListener('mousemove', mouseMove);
-                        document.addEventListener('mouseup', mouseUp);
-
-                        document.body.style.touchAction = 'none';
-                        document.body.style.userSelect = 'none';
-                    }
-                }
-
-                function touchStart(event) {
-                    let touch = event.touches[0];
-                    if (touch.target.tagName.toLowerCase() === 'img') {
-                        let draggingElement = touch.target.closest('.hotel_row_class');
-                        draggingElement.classList.add('dragging');
-                        draggingElement.dataset.startY = touch.clientY;
-                        document.addEventListener('touchmove', touchMove, { passive: false });
-                        document.addEventListener('touchend', touchEnd);
-
-                        document.body.style.touchAction = 'none';
-                        document.body.style.userSelect = 'none';
-                    }
-                }
-
-                function mouseMove(event) {
-                    let draggingElement = document.querySelector('.dragging');
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    let deltaY = event.clientY - startY;
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                    let dropElements = Array.from(dropZone.children);
-                    let currentIndex = dropElements.indexOf(draggingElement);
-
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect();
-                        if (i !== currentIndex && event.clientY > rect.top && event.clientY < rect.bottom) {
-                            if (deltaY > 0 && event.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && event.clientY < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
-                        }
-                    }
-
-                    if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                    }
-                }
-
-                function touchMove(event) {
-                    event.preventDefault();
-                    let draggingElement = document.querySelector('.dragging');
-                    let touch = event.touches[0];
-                    let startY = parseInt(draggingElement.dataset.startY || 0);
-                    let deltaY = touch.clientY - startY;
-                    draggingElement.style.transform = `translateY(${deltaY}px)`;
-
-                    let dropElements = Array.from(dropZone.children);
-                    let currentIndex = dropElements.indexOf(draggingElement);
-
-                    let targetIndex = currentIndex;
-                    for (let i = 0; i < dropElements.length; i++) {
-                        let element = dropElements[i];
-                        let rect = element.getBoundingClientRect();
-                        if (i !== currentIndex && touch.clientY > rect.top && touch.clientY < rect.bottom) {
-                            if (deltaY > 0 && touch.clientY > rect.bottom - 20) {
-                                targetIndex = i + 1;
-                            } else if (deltaY < 0 && touch.clientY < rect.top + 20) {
-                                targetIndex = i;
-                            }
-                            break;
-                        }
-                    }
-
-                    if (targetIndex !== currentIndex) {
-                        dropZone.insertBefore(draggingElement, dropElements[targetIndex]);
-                    }
-                }
-
-                function mouseUp(event) {
-                    let draggingElement = document.querySelector('.dragging');
-
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging');
-                        draggingElement.style.transform = '';
-                        draggingElement.removeAttribute('data-start-y');
-
-                        handleDropHotelRow(); // Call the function to update dates after drop ends
-                    }
-
-                    document.removeEventListener('mousemove', mouseMove);
-                    document.removeEventListener('mouseup', mouseUp);
-
-                    document.body.style.touchAction = '';
-                    document.body.style.userSelect = '';
-                }
-
-                function touchEnd(event) {
-                    let draggingElement = document.querySelector('.dragging');
-
-                    if (draggingElement) {
-                        draggingElement.classList.remove('dragging');
-                        draggingElement.style.transform = '';
-                        draggingElement.removeAttribute('data-start-y');
-
-                        handleDropHotelRow(); // Call the function to update dates after drop ends
-                    }
-
-                    document.removeEventListener('touchmove', touchMove);
-                    document.removeEventListener('touchend', touchEnd);
-
-                    document.body.style.touchAction = '';
-                    document.body.style.userSelect = '';
-                }
-
-                let insertedHotelDataDivs = document.querySelectorAll('.hotel_row_class');
-                insertedHotelDataDivs.forEach((div) => {
-                    div.addEventListener('mousedown', mouseDown);
-                    div.addEventListener('touchstart', touchStart);
-                });
-            }
-
-            // Call the function to set up drag-and-drop functionality
-            createHotelDragAndDropMood();
-
-            // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
-            saveOriginalHotelDates();
         });
 
+
+
+        // Call the function to set up drag-and-drop functionality
+        createHotelDragAndDropMood();
+
+
+
+        // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+        saveOriginalHotelDates();
 
 
 
@@ -1981,240 +904,20 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
                 };
             });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /* Function to delete the clicked clint movement row data */
-            deleteClickedClintMovementsData = function (currentClintMovementsDataDiv) {
-
-                /* Delete the clicked 'currentClintMovementsDataDiv' from the document */
-                currentClintMovementsDataDiv.remove();
-
-
-                // Get the following element to hide them
-                let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
-                let overlayLayer = document.querySelector('.black_overlay');
-
-                deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
-                overlayLayer.style.opacity = '0';
-                setTimeout(() => {
-                    // Only remove the overlay if it is still a child of the body
-                    if (document.body.contains(overlayLayer)) {
-                        document.body.removeChild(overlayLayer);
-                    }
-                }, 300);
-
-
-
-                // Get references to all input elements and reset their values
-                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
-
-                /* Hide and show different icons */
-                document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
-                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
-                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
-
-                /* Reset the innerText and styling to defualt */
-                document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
-                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-
-
-                /* Update the available clint visiting places based on the current existing visiting places */
-                filterUsedClintVisitingPlacesNames();
-            }
-
-
-
-
-
-
-
-
-            // Function to handle delete clicked clint movements data
-            editClickedClintMovementsData = function (currentClintMovementsDataDiv) {
-
-
-
-                // Make sure the correct section is the one that is visible
-                create_new_clint_data_section.style.display = 'none';
-                create_new_hotel_package_section.style.display = 'none';
-                create_new_flight_package_section.style.display = 'none';
-                create_new_package_including_and_not_including_data_section.style.display = 'none';
-                create_new_clint_movements_plan_section.style.display = 'block';
-
-                // Show and hide different icons
-                document.getElementById('clint_movements_auto_create_icon').style.display = 'none';
-                document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'block';
-                document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'block';
-
-                // Change the innerText and styling to default
-                document.getElementById('clint_movements_content_section_title_text_id').innerText = `تعديل خط سير يوم ${currentClintMovementsDataDiv.querySelector('h1').innerText}`;
-                document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(85, 127, 137)';
-
-                // Scroll up to the middle of the 'toggle_clint_movements_details_title_div_id'
-                document.getElementById('toggle_clint_movements_details_title_div_id').scrollIntoView({
-                    block: 'center',
-                    inline: 'center',
-                    behavior: 'smooth',
-                });
-
-                // Disable the clint movements dates when editing
-                document.getElementById('whole_package_start_date_input_id').disabled = true;
-                document.getElementById('whole_package_end_date_input_id').disabled = true;
-
-                // Hide delete button div
-                let overlayLayer = document.querySelector('.black_overlay');
-                let deleteHotelRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
-                deleteHotelRowDiv.style.transform = 'translate(-50%, -100vh)';
-
-                // Hide overlay layer with opacity transition
-                overlayLayer.style.opacity = '0';
-
-                // Remove overlay and edit/delete div from DOM after transition
-                setTimeout(() => {
-                    document.body.removeChild(overlayLayer);
-                }, 300); // Match transition duration in CSS
-
-                /* Set the clicked clint movemenet row h2 innerText inside the input to start editing */
-                document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = currentClintMovementsDataDiv.querySelector('h2').innerText;
-
-
-                /* Update the available clint visiting places based on the current existing visiting places */
-                filterUsedClintVisitingPlacesNames();
-
-
-
-
-
-                /* Function to cancel the clint movements row data editing process */
-                cancelNewClintMovementsDataRow = function () {
-                    // Get references to all input elements and reset their values
-                    document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value = '';
-
-
-
-                    /* Hide and show different icons */
-                    document.getElementById('clint_movements_auto_create_icon').style.display = 'block';
-                    document.getElementById('confirm_new_clint_movements_data_row_icon').style.display = 'none';
-                    document.getElementById('cancel_new_clint_movements_data_row_icon').style.display = 'none';
-
-
-                    /* Reset the innerText and styling to defualt */
-                    document.getElementById('clint_movements_content_section_title_text_id').innerText = 'برنامج تحركات مقترح';
-                    document.getElementById('clint_movements_content_section_title_text_id').style.background = 'rgb(131, 0, 148)';
-
-
-
-
-                    /* Re-enable the clint movements dates when editing */
-                    document.getElementById('whole_package_start_date_input_id').disabled = false;
-                    document.getElementById('whole_package_end_date_input_id').disabled = false;
-
-
-                    /* Update the available clint visiting places based on the current existing visiting places */
-                    filterUsedClintVisitingPlacesNames();
-                }
-
-
-
-
-                /* Function to confirm the new clint movements row data */
-                confirmNewClintMovementsDataRow = function () {
-
-                    // Get references to all input elements for later use
-                    currentClintMovementsDataDiv.querySelector('h2').innerText = document.getElementById('clint_movements_whole_day_actions_details_textarea_id').value;
-
-
-
-
-
-                    // Get all dynamically created elements with the class 'clint_movements_row_controller'
-                    let ClintMovementsRowImageController = document.querySelectorAll('.clint_movements_row_controller');
-                    ClintMovementsRowImageController.onclick = function (event) {
-                        clintMovementsRowCityNameControllerFunction(event); // Pass the event object to the function
-                    };
-
-
-                    // Clear the input after confirm the new flight data
-                    cancelNewClintMovementsDataRow()
-                }
-            }
         });
 
 
 
 
+        // Call the function to set up drag-and-drop functionality
+        createHotelDragAndDropMood();
+
+        // Call a function to save the current dates of all hotels for later Re-arranging use (when drag and drop)
+        saveOriginalHotelDates();
 
 
 
 
-
-        // Function to handle clint movements row div click or touch
-        clintMovementsRowCityNameControllerFunction = function (event) {
-            let deleteclintMovementsRowDiv = document.getElementById('ensure_delete_or_edit_clint_movemnt_data_div');
-            let clickedclintMovementsDataDiv = event.target.closest('.clint_movements_row_class_for_editing');
-
-
-            /* Function to run edit the clicked client movements row data */
-            runDeleteClickedClintMovementsDataFunction = function () {
-                deleteClickedClintMovementsData(clickedclintMovementsDataDiv);
-
-            }
-
-            /* Function to run edit the clicked clint movements row data */
-            runEditClickedClintMovementsDataFunction = function () {
-                editClickedClintMovementsData(clickedclintMovementsDataDiv);
-
-                /* Make sure hotel package type text is colored in rgb(0, 46, 57) */
-                document.getElementById('header_navbar_links_clint_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_hotel_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_flight_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_package_icluding_and_not_including_a').style.backgroundColor = 'rgb(85, 127, 137)';
-                document.getElementById('header_navbar_links_clint_movements_a').style.backgroundColor = 'rgb(0, 46, 57)';
-            }
-
-            // Check if the overlay already exists
-            let overlayLayer = document.querySelector('.black_overlay');
-            if (!overlayLayer) {
-                overlayLayer = document.createElement('div');
-                overlayLayer.classList.add('black_overlay');
-                document.body.appendChild(overlayLayer);
-
-                setTimeout(() => {
-                    overlayLayer.style.opacity = '1';
-                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -50%)';
-                }, 50);
-
-                // Handle both click and touch events on overlay for consistency
-                let handleOverlayClick = () => {
-                    deleteclintMovementsRowDiv.style.transform = 'translate(-50%, -100vh)';
-                    overlayLayer.style.opacity = '0';
-                    setTimeout(() => {
-                        // Only remove the overlay if it is still a child of the body
-                        if (document.body.contains(overlayLayer)) {
-                            document.body.removeChild(overlayLayer);
-                        }
-                    }, 300);
-                };
-
-                overlayLayer.addEventListener('click', handleOverlayClick);
-                overlayLayer.addEventListener('touchstart', handleOverlayClick); // Add touch event handling
-
-                overlayLayer.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                });
-            }
-        };
 
 
 
@@ -2229,7 +932,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('package_totla_price_input_id').value = document.getElementById('store_google_sheet_package_total_price_value').innerText;
 
 
-        /* in 2026 delete the condition of if 'store_google_sheet_show_price_in_pdf_checked_or_no' exist or no (because you will no need and it will always be exist since 2026) */
+        /* in 2026 delete the condition if the 'store_google_sheet_show_price_in_pdf_checked_or_no' is exist or no (I just used it now to avoid error in the website becaues it's still new) */
         if (document.getElementById('store_google_sheet_show_price_in_pdf_checked_or_no')) {
 
             /* Check or uncheck the show total package price in the pdf file checkbox input */
@@ -2242,5 +945,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             }
 
         }
+
     }
 }
