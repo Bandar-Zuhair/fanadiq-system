@@ -434,7 +434,15 @@ createWholePackageAndClintDataFunction = function () {
                 let lastTwoNumbersOfTheCurrentYear = currentYear % 100;
 
 
+                /* Store the package user name code for displaying in the pdf file */
                 document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${websiteUsersNameInput}_${lastTwoNumbersOfTheCurrentYear}_${mostTopEmptyCellRowNumberValue}`;
+
+
+
+
+
+                /* Store the package user name code with no year for later use when importing data */
+                document.getElementById('store_google_sheet_package_user_with_no_year_for_later_reference_when_importing').innerText = `${websiteUsersNameInput}_${lastTwoNumbersOfTheCurrentYear}`;
 
 
                 /* Store the last clicked website user name for later refrence if it got changed */
@@ -2493,7 +2501,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
             }
 
-            
+
             /* Stop the process if the hotel location is bali but the area is not selected */
             if (document.getElementById('hotel_location_input_id').value === 'بالي' && document.getElementById('hotel_bali_area_input_id').value === '') {
                 // Play a sound effect only if the website is not muted
@@ -4297,6 +4305,8 @@ downloadPdfWithCustomName = async function (pdfName) {
 
     let packageUserCodeNameForLaterImportReferenceP = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
     document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').innerText = `استخدم كود البكج ${packageUserCodeNameForLaterImportReferenceP}`;
+
+    submitFormAndSaveData();
 };
 
 // Helper function to check if an element is visible
