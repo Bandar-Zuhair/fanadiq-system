@@ -681,7 +681,7 @@ let allHotelDataArray = [
     {
         hotelName: 'Villa Neom',
         hotelLocation: 'بونشاك',
-        hotelRoomTypes: ['فيلا من ثلاث غرف نوم'],
+        hotelRoomTypes: ['فيلا من ثلاث غرف نوم', 'فيلا من غرفتين نوم'],
     },
     {
         hotelName: 'Alandalus Puncak',
