@@ -757,10 +757,10 @@ hotelLocationInputOptions.forEach(option => {
 
 
         /* Make sure to show or hide the 'hotel_bali_area_input_id' input based on the clikced hotel location */
-        if(option.textContent === 'بالي'){
+        if (option.textContent === 'بالي') {
             document.getElementById('hotel_bali_area_input_id').style.display = 'block';
 
-        }else{
+        } else {
             document.getElementById('hotel_bali_area_input_id').style.display = 'none';
         }
 
@@ -1530,9 +1530,18 @@ specificCarTypeInputOptions.forEach(option => {
             specificCarTypeInput.value = 'سيارة اينوفا خاصة مع سائق خاص طوال مدة الرحلة ولاتوجد أيام حرة في البرنامج';
 
 
+        } else if (option.textContent === 'اينوفا ريبون') {
+            /* Set the input value with the clicked rooms number h3 innerText */
+            specificCarTypeInput.value = 'سيارة اينوفا ريبون خاصة مع سائق خاص طوال مدة الرحلة ولاتوجد أيام حرة في البرنامج';
+
+
         } else if (option.textContent === 'باص هايس') {
             /* Set the input value with the clicked rooms number h3 innerText */
             specificCarTypeInput.value = 'باص هايس خاص مع سائق خاص طوال مدة الرحلة ولاتوجد أيام حرة في البرنامج';
+
+        } else if (option.textContent === 'باص الفارد') {
+            /* Set the input value with the clicked rooms number h3 innerText */
+            specificCarTypeInput.value = 'باص الفارد خاص مع سائق خاص طوال مدة الرحلة ولاتوجد أيام حرة في البرنامج';
 
         }
 
@@ -1659,8 +1668,16 @@ infantPackagePersonAmountInputOptions.forEach(option => {
         if (option.textContent === 'حذف') {
             infantPackagePersonAmountInput.value = ''; // Set input value as '' if the 'حذف' h3 is clicked
 
+            /* Store the package infant amount for later use when importing */
+            document.getElementById('store_google_sheet_package_infant_amount_value').innerText = '';
+
+
         } else {
             infantPackagePersonAmountInput.value = option.textContent; // Set input value to selected option
+
+            /* Store the package infant amount for later use when importing */
+            document.getElementById('store_google_sheet_package_infant_amount_value').innerText = option.textContent;
+
         }
         hideOverlay(); // Hide overlay after selection
     });
