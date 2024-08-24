@@ -444,10 +444,14 @@ changeInsertHotelDataSystem = function () {
         // Show the hotel location input
         document.getElementById('hotel_location_input_id').style.display = 'block';
 
+
+
         // Make the following inputs editable and remove the readonly attribute
         document.getElementById('hotel_name_input_id').readOnly = false;
         document.getElementById('hotel_room_type_description_input_id').readOnly = false;
         document.getElementById('hotel_room_type_description_input_id_2').readOnly = false;
+
+
 
         // Change the cursor to text and remove the onclick event
         document.getElementById('hotel_name_input_id').style.cursor = 'text';
@@ -459,10 +463,13 @@ changeInsertHotelDataSystem = function () {
         document.getElementById('hotel_room_type_description_input_id_2').style.cursor = 'text';
         document.getElementById('hotel_room_type_description_input_id_2').onclick = null;
 
+
+
         // Set autocomplete to on
         document.getElementById('hotel_name_input_id').setAttribute('autocomplete', 'on');
         document.getElementById('hotel_room_type_description_input_id').setAttribute('autocomplete', 'on');
         document.getElementById('hotel_room_type_description_input_id_2').setAttribute('autocomplete', 'on');
+
 
 
         /* Chnage the color of the icon as a refernce you're in hotel writing system */
@@ -475,16 +482,20 @@ changeInsertHotelDataSystem = function () {
         document.getElementById('hotel_location_input_id').style.display = 'none';
         document.getElementById('hotel_location_input_id').value = '';
 
+
+
         // Make the following inputs readonly again
         document.getElementById('hotel_name_input_id').readOnly = true;
         document.getElementById('hotel_room_type_description_input_id').readOnly = true;
         document.getElementById('hotel_room_type_description_input_id_2').readOnly = true;
 
 
+
         // Set autocomplete to on
         document.getElementById('hotel_name_input_id').setAttribute('autocomplete', 'off');
         document.getElementById('hotel_room_type_description_input_id').setAttribute('autocomplete', 'off');
         document.getElementById('hotel_room_type_description_input_id_2').setAttribute('autocomplete', 'off');
+
 
 
         // Change the cursor to pointer and properly set the onclick event
@@ -502,6 +513,7 @@ changeInsertHotelDataSystem = function () {
         document.getElementById('hotel_room_type_description_input_id_2').onclick = function () {
             createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');
         };
+
 
 
         /* Chnage the color of the icon as a refernce you're in hotel writing system */
@@ -1160,18 +1172,90 @@ specialRoomRequestInputOptions.forEach(option => {
             new Audio('click.mp3').play();
         }
 
-        if (lastClickedSpecialRoomRequestInput) {
-            if (option.textContent === 'حذف') {
-                lastClickedSpecialRoomRequestInput.value = '';
+        if (option.textContent === 'حذف') {
+            lastClickedSpecialRoomRequestInput.value = '';
 
-            } else if (option.textContent === 'باقة شهر عسل') {
-                lastClickedSpecialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكة + شاي بعد الظهر';
+        } else if (option.textContent === 'باقة شهر عسل') {
+            lastClickedSpecialRoomRequestInput.value = '+ باقة شهر عسل بعشاء رومانسي على ضوء الشموع + عصير + زينة لمرة واحدة + علاج سبا لمدة 60 دقيقة + إفطار عائم لمرة واحدة بالإضافة لسلة فواكة + شاي بعد الظهر';
 
-            } else {
-                lastClickedSpecialRoomRequestInput.value = `+ ${option.textContent}`;
+        } else {
+            lastClickedSpecialRoomRequestInput.value = `+ ${option.textContent}`;
 
-            }
         }
+
+        hideOverlay(); // Hide overlay after selection
+    });
+});
+
+
+
+
+
+
+
+
+
+// Variable to track the last clicked input field for special room requests
+let lastClickedHotelExtraBedInput = null;
+
+// Add event listeners to track the last clicked input
+document.getElementById('hotel_extra_bed_input_id').addEventListener('click', function () {
+    lastClickedHotelExtraBedInput = this;
+});
+
+document.getElementById('hotel_extra_bed_input_id_2').addEventListener('click', function () {
+    lastClickedHotelExtraBedInput = this;
+});
+
+/* Function to run the dropdown functionality for special room request */
+// Get the options within the dropdown
+let lastClickedHotelExtraBedInputOptions = document.querySelectorAll('#hotel_extra_bed_dropdown h3');
+
+lastClickedHotelExtraBedInputOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+        // Play a sound effect only if the website is not muted
+        if (!document.getElementById('mute_website_checkbox').checked) {
+            // Play a sound effect
+            new Audio('click.mp3').play();
+        }
+
+        if (option.textContent === 'حذف') {
+            lastClickedHotelExtraBedInput.value = '';
+
+        } else if(option.textContent === 'سرير إضافي') {
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + إفطار إضافي`;
+
+        }else if(option.textContent === '2 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 2 إفطار إضافي`;
+            
+        }else if(option.textContent === '3 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 3 إفطار إضافي`;
+
+        }else if(option.textContent === '4 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 4 إفطار إضافي`;
+            
+        }else if(option.textContent === '5 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 5 إفطار إضافي`;
+            
+        }else if(option.textContent === '6 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 6 إفطار إضافي`;
+            
+        }else if(option.textContent === '7 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 7 إفطار إضافي`;
+            
+        }else if(option.textContent === '8 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 8 إفطار إضافي`;
+            
+        }else if(option.textContent === '9 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 9 إفطار إضافي`;
+            
+        }else if(option.textContent === '10 سرير اضافي'){
+            lastClickedHotelExtraBedInput.value = `+ ${option.textContent} + 10 إفطار إضافي`;
+            
+        }
+
+
 
         hideOverlay(); // Hide overlay after selection
     });
@@ -2325,21 +2409,27 @@ var wholePackageEndDatePicker = new Pikaday({
         return disableSpecificDates(date, 'whole_package_start_date_input_id');
     },
     onOpen: function () {
+        let endDateInput = document.getElementById('whole_package_end_date_input_id').value;
         let startDateInput = document.getElementById('whole_package_start_date_input_id').value;
-        if (startDateInput) {
-            let parsedStartDate = parseArabicDate(startDateInput);
-            let currentDate = this.getDate() || new Date();
 
-            if (selectedStartYear && selectedStartMonth !== undefined) {
-                currentDate.setFullYear(selectedStartYear);
-                currentDate.setMonth(selectedStartMonth);
-            } else {
-                currentDate.setFullYear(parsedStartDate.getFullYear());
-                currentDate.setMonth(parsedStartDate.getMonth());
-            }
-
-            this.gotoDate(currentDate);
+        let currentDate;
+        if (endDateInput) {
+            // If there's a date in the end date input, parse it and navigate to that date
+            currentDate = parseArabicDate(endDateInput);
+        } else if (startDateInput) {
+            // If there's a start date, parse it and navigate to that date
+            currentDate = parseArabicDate(startDateInput);
+        } else {
+            // Default to today or previously selected date
+            currentDate = this.getDate() || new Date();
         }
+
+        if (selectedStartYear && selectedStartMonth !== undefined) {
+            currentDate.setFullYear(selectedStartYear);
+            currentDate.setMonth(selectedStartMonth);
+        }
+
+        this.gotoDate(currentDate);
     },
     onSelect: function () {
 
@@ -2352,6 +2442,7 @@ var wholePackageEndDatePicker = new Pikaday({
         updateWholePackageTotalNights(); // Call 'updateWholePackageTotalNights' when a date is selected
     }
 });
+
 
 
 
