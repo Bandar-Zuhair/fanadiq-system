@@ -2160,7 +2160,7 @@ editClickedHotelDataFunction = function (clickedHotelRowIdName) {
 
 
     /* Store the extracted number form the hotel total night just (as a number) */
-    let storeHotelTotalNights = clickedHotelDataDiv.querySelector(`h4[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
+    storeHotelTotalNights = clickedHotelDataDiv.querySelector(`h4[id^='hotel_total_nights_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
 
 
     let hotelRoomTypeDescriptionText = clickedHotelDataDiv.querySelector(`span[id^='hotel_room_type_description_${insertedHotelDataDivUniqueId}']`)?.innerText || '';
