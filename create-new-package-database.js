@@ -1,21 +1,27 @@
-let scriptURL = 'https://script.google.com/macros/s/AKfycbzfCsf83fAX5TGNob-dHpasi0YF3ZSPTxqwEqAgOMCgRDE0W7uFOxyu2vs_0vM8sFuZsA/exec';
-let form = document.forms['save-package'];
+let existingDataStatus = 'newData'; // Example status for updating existing data
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
+const form = document.forms['save-package'];
 
 function submitFormAndSaveData() {
+    // Prevent the default form submission
     event.preventDefault();
 
     if (document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
-
-        // Play a sound effect only if the website is not muted
-        if (!document.getElementById('mute_website_checkbox').checked) {
-            new Audio('success.mp3').play();
-        }
+        // Play a sound effect
+        new Audio('success.mp3').play();
 
         let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
+        if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
+            alert('تأكد من إدخال معلومات العميل');
+            return;
+        }
+
         let newObject = {
             name: googleSheetNewSaveDataNameInput,
-            content: {}
+            content: {},
+            status: existingDataStatus
         };
 
         let divIds = [
@@ -44,42 +50,23 @@ function submitFormAndSaveData() {
         })
             .then(() => {
 
+                // Only call submitForm if 'existingDataStatus' is equal to "newData"
+                if (existingDataStatus === "newData") {
+                    submitForm();
+                }
 
-                /* Call a function to add new "Done" text in the google sheet */
-                submitForm();
-
-
-                /* Call a function to get the most top empty cell row number again */
-                fetchData();
-
-
-                /* Run a function to update the saved google sheet package names (for later use when importing) */
                 updateDataBaseSavedDataNames();
 
-
+                // Change the value of 'existingDataStatus' for editing old data mode
+                existingDataStatus = 'existingData';
                 document.getElementById('website_users_name_input_id').disabled = true;
-
-
-                /* Refresh the page */
-                window.location.reload();
             });
 
     } else {
-
-        // Play a sound effect only if the website is not muted
-        if (!document.getElementById('mute_website_checkbox').checked) {
-            new Audio('error.mp3').play();
-        }
-
+        // Play a sound effect
+        new Audio('error.mp3').play();
     }
 }
-
-// Function to clean HTML
-function cleanHTML(html) {
-    return html.replace(/\s+/g, ' ').trim();
-}
-
-
 
 // Function to clean HTML
 function cleanHTML(html) {
@@ -242,7 +229,8 @@ function importContentFromLocalStorage() {
             hideOverlay();
 
 
-            /* Set the 'website_users_name_input_id' to make it unclickable */
+            /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+            existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
@@ -331,7 +319,8 @@ function importContentForSelectedName(name) {
 
             hideOverlay()
 
-            /* Set the 'website_users_name_input_id' to make it unclickable */
+            /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+            existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
@@ -670,13 +659,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
             document.getElementById('website_users_name_input_id').value = 'عبد الرحمن';
         }
 
-
-
-
-        fetchData();
-
-        /* Store the package user name code for displaying in the pdf file as a new package with a new unique package user name code number */
-        document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_with_no_year_for_later_reference_when_importing').innerText}_${mostTopEmptyCellRowNumberValue}`;
 
 
 
