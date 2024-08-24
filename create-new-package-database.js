@@ -641,7 +641,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         document.getElementById('adult_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_adult_amount_value').innerText;
         document.getElementById('kids_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_kids_amount_value').innerText;
 
-        
+
         /* in 24 Aug 2026 Delete the following if condition for checking if the 'store_google_sheet_package_infant_amount_value' exist or no (I used it to avoid issues in old packages) */
         if(document.getElementById('store_google_sheet_package_infant_amount_value')){
             document.getElementById('infant_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_infant_amount_value').innerText;
@@ -669,6 +669,13 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
+
+        /* Just for making sure no doublicated packegs will be saved with the same package user name code */
+        /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+        existingDataStatus = 'existingData';
+        document.getElementById('website_users_name_input_id').disabled = true;
+
+        
 
 
         /* Check the package type checkbox based on the innerText of the 'store_google_sheet_clint_package_type_checkbox_value' */
