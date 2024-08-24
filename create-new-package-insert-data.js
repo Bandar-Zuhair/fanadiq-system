@@ -3465,13 +3465,14 @@ autoCreateALlClintMovementsData = function () {
                     <div class="clint_movements_row_controller" style="cursor: pointer;"><h3>${i === 0 ? combinedCityName : cityName}</h3></div>
                 `;
 
-                // Apply the new condition to append text if needed
-                if (!isFirstJakartaHotelFound && cityName === "جاكرتا" && i === 0) {
+                // Apply the new condition to append text if needed, but skip the first hotel row
+                if (!isFirstJakartaHotelFound && cityName === "جاكرتا" && i === 0 && index !== 0) {
                     let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
                     currentH2.innerText += " + الذهاب لمطعم السدة للعشاء";
                     currentH2.innerText = cleanUpText(currentH2.innerText); // Clean up text to ensure no duplicated '+'
                     isFirstJakartaHotelFound = true;
                 }
+
 
                 if (targetObject && i === 0) {
                     let dayIndex = 1;
@@ -3486,7 +3487,7 @@ autoCreateALlClintMovementsData = function () {
                         }
                     }
                 }
-                
+
                 if (targetObject && i > 0) {
                     let dayIndex = i + 1;
                     while (usedDays[dayIndex] && targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
@@ -3506,7 +3507,7 @@ autoCreateALlClintMovementsData = function () {
                         }
                     }
                 }
-                
+
 
                 document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
 
