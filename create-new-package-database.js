@@ -1,4 +1,3 @@
-let existingDataStatus = 'newData'; // Example status for updating existing data
 let scriptURL = 'https://script.google.com/macros/s/AKfycbzfCsf83fAX5TGNob-dHpasi0YF3ZSPTxqwEqAgOMCgRDE0W7uFOxyu2vs_0vM8sFuZsA/exec';
 let form = document.forms['save-package'];
 
@@ -12,29 +11,11 @@ function submitFormAndSaveData() {
             new Audio('success.mp3').play();
         }
 
-
-        /* in Aug 23 in 2026 delete the if condition to check if 'store_google_sheet_package_user_total_saving_number' exist or no (I used this if condition now to avoid error) */
-        if (document.getElementById('store_google_sheet_package_user_total_saving_number')) {
-            // Update the store_google_sheet_package_user_total_saving_number based on existingDataStatus
-            let savingNumberElement = document.getElementById('store_google_sheet_package_user_total_saving_number');
-            if (existingDataStatus === "newData") {
-                savingNumberElement.innerText = 1;
-            } else if (existingDataStatus === "existingData") {
-                savingNumberElement.innerText = parseInt(savingNumberElement.innerText) + 1;
-            }
-        }
-
-
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'جاري الحفظ..';
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(85, 127, 137)';
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
-
         let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
         let newObject = {
             name: googleSheetNewSaveDataNameInput,
-            content: {},
-            status: existingDataStatus
+            content: {}
         };
 
         let divIds = [
@@ -53,7 +34,6 @@ function submitFormAndSaveData() {
             }
         });
 
-
         fetch(scriptURL, {
             method: 'POST',
             body: JSON.stringify(newObject),
@@ -63,26 +43,25 @@ function submitFormAndSaveData() {
             mode: 'no-cors'
         })
             .then(() => {
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'rgb(0, 46, 57)';
-                document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'تم الحفظ بنجاح';
 
-                setTimeout(() => {
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
-                    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ التحديثات';
-                }, 5000);
 
-                // Only call submitForm if 'existingDataStatus' is equal to "newData"
-                if (existingDataStatus === "newData") {
-                    submitForm();
-                }
+                /* Call a function to add new "Done" text in the google sheet */
+                submitForm();
+
+
+                /* Call a function to get the most top empty cell row number again */
+                fetchData();
+
 
                 /* Run a function to update the saved google sheet package names (for later use when importing) */
                 updateDataBaseSavedDataNames();
 
-                // Change the value of 'existingDataStatus' for editing old data mode
-                existingDataStatus = 'existingData';
+
                 document.getElementById('website_users_name_input_id').disabled = true;
+
+
+                /* Refresh the page */
+                window.location.reload();
             });
 
     } else {
@@ -92,24 +71,14 @@ function submitFormAndSaveData() {
             new Audio('error.mp3').play();
         }
 
-
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'red';
-        document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'white';
-
-        setTimeout(() => {
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.background = 'white';
-            document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').style.color = 'black';
-        }, 500);
-
-        document.getElementById('scroll_bottom_page_icon').style.background = 'red';
-        document.getElementById('scroll_bottom_page_icon').style.color = 'white';
-
-        setTimeout(() => {
-            document.getElementById('scroll_bottom_page_icon').style.background = 'rgb(85, 127, 137)';
-            document.getElementById('scroll_bottom_page_icon').style.color = 'white';
-        }, 500);
     }
 }
+
+// Function to clean HTML
+function cleanHTML(html) {
+    return html.replace(/\s+/g, ' ').trim();
+}
+
 
 
 // Function to clean HTML
@@ -121,25 +90,6 @@ function cleanHTML(html) {
 
 
 
-// Add click event listener to trigger form submission
-document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').addEventListener('click', function () {
-    submitFormAndSaveData();
-});
-
-// Add click event listener to trigger form submission
-document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').addEventListener('click', function () {
-    submitFormAndSaveData();
-});
-
-// Add click event listener to trigger form submission
-document.getElementById('check_pdf_name_button').addEventListener('click', function () {
-    submitFormAndSaveData();
-});
-
-// Add click event listener to trigger form submission
-document.getElementById('scroll_bottom_page_icon').addEventListener('click', function () {
-    submitFormAndSaveData();
-});
 
 
 
@@ -164,6 +114,10 @@ function updateDataBaseSavedDataNames() {
 
     // Clear existing content
     allGoogleSheetStoredDataNamesForImportingDataDiv.innerHTML = '';
+
+    /* Call a function to get the most top empty cell row number again */
+    fetchData();
+
 
     // Check if there is any data in localStorage
     let lastDownloadData = localStorage.getItem('lastDownloadWebsiteData');
@@ -288,14 +242,15 @@ function importContentFromLocalStorage() {
             hideOverlay();
 
 
-            /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-            existingDataStatus = 'existingData';
+            /* Set the 'website_users_name_input_id' to make it unclickable */
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
 
-            /* Make sure to set the user code as riv based on the amount of user package total saved number */
-            document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
+
+            /* Store the package user name code for displaying in the pdf file */
+            document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_with_no_year_for_later_reference_when_importing').innerText}_${mostTopEmptyCellRowNumberValue}`;
+
 
 
             // Make sure to hide all elements with the class name before checking visibility
@@ -315,12 +270,6 @@ function importContentFromLocalStorage() {
             /* Show the 'inserted_company_name_image_position_div' element */
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-
-
-            /* in case if the 'store_google_sheet_package_user_total_saving_number' has a number then show "_riv_" in the user code name */
-            if (document.getElementById('store_google_sheet_package_user_total_saving_number').innerText !== '') {
-                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
-            }
 
 
         } catch (error) {
@@ -343,6 +292,7 @@ function importContentFromLocalStorage() {
 
 // Function to import the content for the selected name
 function importContentForSelectedName(name) {
+
     // Assuming the first column is the name and subsequent columns are the contents
     let selectedRow = sheetData.find(row => row[0] === name);
 
@@ -381,7 +331,7 @@ function importContentForSelectedName(name) {
 
             hideOverlay()
 
-            existingDataStatus = 'existingData';
+            /* Set the 'website_users_name_input_id' to make it unclickable */
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
@@ -404,10 +354,6 @@ function importContentForSelectedName(name) {
 
 
 
-            /* in case if the 'store_google_sheet_package_user_total_saving_number' has a number then show "_riv_" in the user code name */
-            if (document.getElementById('store_google_sheet_package_user_total_saving_number').innerText !== '') {
-                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText}_riv_${document.getElementById('store_google_sheet_package_user_total_saving_number').innerText}`;
-            }
 
         } catch (error) {
         }
@@ -416,7 +362,6 @@ function importContentForSelectedName(name) {
 
     /* Call a function to make sure the hotel available dates are propperly set */
     updateAllowedDates();
-    document.getElementById('sumbit_save_new_data_to_sheet_input_button_id').innerText = 'حفظ جديد';
 }
 
 
@@ -724,6 +669,14 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         } else {
             document.getElementById('website_users_name_input_id').value = 'عبد الرحمن';
         }
+
+
+
+
+        fetchData();
+
+        /* Store the package user name code for displaying in the pdf file as a new package with a new unique package user name code number */
+        document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_with_no_year_for_later_reference_when_importing').innerText}_${mostTopEmptyCellRowNumberValue}`;
 
 
 
