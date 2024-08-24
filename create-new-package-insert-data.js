@@ -3380,6 +3380,7 @@ autoCreateALlClintMovementsData = function () {
             }
 
             let isCheckOutTextAdded = false; // Flag to track if check-out text has been added for this hotel
+            let dayIndex = 0; // Initialize dayIndex separately for each hotel
 
             for (let i = 0; i < nights; i++) {
                 let clintMovementsRowTableDiv = document.createElement('div');
@@ -3388,8 +3389,9 @@ autoCreateALlClintMovementsData = function () {
                 let newDate = incrementDate(checkInDate, i);
 
                 let visitingPlacesText = "";
-                if (i === 0 && targetObject) {
-                    let dayIndex = 1;
+
+                // Skip appending text for the first created div
+                if (i > 0 && targetObject) {
                     while (usedDays[dayIndex] && targetObject[`visitingPlaceNamesDay${dayIndex}`]) {
                         dayIndex++;
                     }
@@ -3399,12 +3401,14 @@ autoCreateALlClintMovementsData = function () {
                         if (textArray && textArray.length > 0) {
                             visitingPlacesText = `${textArray.join(' + ')} `;
                         }
+                        dayIndex++; // Increment dayIndex after appending text
                     }
                 }
 
                 let checkInOutText = i === 0 ? `تسجيل الدخول في ${hotelName}` : '';
                 let combinedCityName = cityName;
 
+                // Logic for check-in/out text and combined city name based on previous city/hotel
                 if (i === 0 && index > 0) {
                     previousCityName = allHotelRows[index - 1].querySelector('h5').innerText;
                     previousHotelName = allHotelRows[index - 1].querySelector('h1').innerText;
@@ -3413,7 +3417,6 @@ autoCreateALlClintMovementsData = function () {
                         combinedCityName = `${previousCityName}-${cityName}`;
                     }
 
-                    // letruct the checkInOutText without `+` after certain texts
                     let additionalText = "";
                     if (isAirportWelcomeIncluded && (cityName === "بالي" || cityName === "جاكرتا") && cityName !== previousCityName) {
                         if (!(previousCityName === "بونشاك" && cityName === "جاكرتا")) {
@@ -3455,9 +3458,6 @@ autoCreateALlClintMovementsData = function () {
 
                 // Clean up text to ensure no duplicated '+'
                 checkInOutText = cleanUpText(checkInOutText);
-
-
-
 
                 clintMovementsRowTableDiv.innerHTML = `
                     <div><h1>${newDate}</h1></div>
