@@ -314,20 +314,6 @@ body {
 
 
 
-/* Save website data in google sheet icon */
-#scroll_bottom_page_icon {
-    z-index: 999;
-    background: rgb(85, 127, 137);
-    color: white;
-    font-size: 5vw;
-    position: fixed;
-    bottom: 0.5px;
-    left: 0.5px;
-    border-radius: 10%;
-    cursor: pointer;
-}
-
-
 
 
 
@@ -1199,11 +1185,6 @@ body {
 
 
 
-    /* Scroll down icon */
-    #scroll_bottom_page_icon {
-        font-size: 7vw;
-    }
-
 
 
 
@@ -1475,10 +1456,6 @@ body {
 
 
 
-    /* Scroll down icon */
-    #scroll_bottom_page_icon {
-        font-size: 10vw;
-    }
 
 
 
@@ -1753,12 +1730,6 @@ body {
 
 
 
-
-
-    /* Scroll down icon */
-    #scroll_bottom_page_icon {
-        font-size: 15.5vw;
-    }
 
 
 
