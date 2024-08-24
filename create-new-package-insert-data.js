@@ -405,25 +405,25 @@ createWholePackageAndClintDataFunction = function () {
                     websiteUsersNameInput = 'mr_sa';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الله') {
-                    websiteUsersNameInput = 'abd_amr';
+                    websiteUsersNameInput = 'tt';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج معتز') {
-                    websiteUsersNameInput = 'mo_ta';
+                    websiteUsersNameInput = 'mo';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج وائل') {
-                    websiteUsersNameInput = 'wa_el';
+                    websiteUsersNameInput = 'wa';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج عبد الرحمن') {
-                    websiteUsersNameInput = 'abd_rah';
+                    websiteUsersNameInput = 'abod';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج علي') {
-                    websiteUsersNameInput = 'ali_amr';
+                    websiteUsersNameInput = 'ali';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج مستر ابو سما') {
-                    websiteUsersNameInput = 'abo_sma';
+                    websiteUsersNameInput = 'sama';
 
                 } else if (document.getElementById('website_users_name_input_id').value === 'بكج بندر للتجربة') {
-                    websiteUsersNameInput = 'bn_dr';
+                    websiteUsersNameInput = 'bndr';
 
                 }
 
