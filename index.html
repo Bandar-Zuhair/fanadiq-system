@@ -559,6 +559,11 @@
                             style="cursor: pointer;">
 
 
+                        <input type="text" id="hotel_extra_bed_input_id" placeholder="سرير إضافي؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_extra_bed_dropdown')"
+                            style="cursor: pointer;">
+
+
                         <input type="text" id="hotel_special_room_request_input_id" placeholder="الإضافات" readonly
                             autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
                             style="cursor: pointer;">
@@ -600,6 +605,10 @@
                             readonly autocomplete="off" onclick="showOverlay('breakfast_amount_dropdown')"
                             style="cursor: pointer;">
 
+
+                        <input type="text" id="hotel_extra_bed_input_id_2" placeholder="سرير إضافي؟" readonly
+                            autocomplete="off" onclick="showOverlay('hotel_extra_bed_dropdown')"
+                            style="cursor: pointer;">
 
                         <input type="text" id="hotel_special_room_request_input_id_2" placeholder="الإضافات" readonly
                             autocomplete="off" onclick="showOverlay('special_room_request_dropdown')"
@@ -802,6 +811,27 @@
                 <h3>ثلاثة عشر شخص</h3>
                 <h3>اربعة عشر شخص</h3>
                 <h3>خمسة عشر شخص</h3>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Dropdown div for room amount -->
+        <div id="hotel_extra_bed_dropdown" class="searchable_names_dropdown_class">
+            <div class="company_names_options_dropdown_class">
+                <h3 style="color: red;">حذف</h3>
+                <h3>سرير إضافي</h3>
+                <h3>2 سرير اضافي</h3>
+                <h3>3 سرير اضافي</h3>
+                <h3>4 سرير اضافي</h3>
+                <h3>5 سرير اضافي</h3>
+                <h3>6 سرير اضافي</h3>
+                <h3>7 سرير اضافي</h3>
+                <h3>8 سرير اضافي</h3>
+                <h3>9 سرير اضافي</h3>
+                <h3>10 إفطار إضافي</h3>
             </div>
         </div>
 
@@ -1460,12 +1490,12 @@
 
 
                 <div id="clint_movements_places_cities_options">
-                    <p onclick="showClintMovemtsPlacesPage(this)">كوتا</p>
-                    <p onclick="showClintMovemtsPlacesPage(this)">اوبود</p>
-                    <p onclick="showClintMovemtsPlacesPage(this)">جاكرتا</p>
-                    <p onclick="showClintMovemtsPlacesPage(this)">بونشاك</p>
-                    <p onclick="showClintMovemtsPlacesPage(this)">باندونج</p>
-                    <p onclick="showClintMovemtsPlacesPage(this)">لومبوك</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">كوتا</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">اوبود</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">جاكرتا</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">بونشاك</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">باندونج</p>
+                    <p onclick="filterUsedClintVisitingPlacesNames(); showClintMovemtsPlacesPage(this)">لومبوك</p>
                 </div>
 
 
@@ -1562,42 +1592,22 @@
             <h6>مزارات كوتا</h6>
 
 
-            <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر
-            </p>
-            <p onclick="pickThisClintMovementsPlace(this)">الألعاب البحرية في
-                منطقة نوسادوا</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ PANTAI
-                PANDAWA</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ اطلاله
-                الجرف الصخري ULUWATU</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ جمبران
-                و الجلوس في احد المطاعم و مشاهدة الغروب
-                الجميل</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة جزيرة NUSA
-                PENIDA المشهورة بشواطئها الجميلة وتكون
-                الرحلة بالقوارب ويتم زيارة من 3 الى 4 شواطئ شاملة التوصيل من والى الفندق و المواصلات داخل الجزيرة
-            </p>
-            <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر
-                تلاقاواجا</p>
-            <p onclick="pickThisClintMovementsPlace(this)">فعالية ركوب الخيل
-                على الشاطئ الأسود</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة احد اجمل
-                المعالم قرية جاتلويه المشهورة بمدرجات
-                الأرز</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ The
-                Beach Love والجلوس في الكافي المطل</p>
-            <p onclick="pickThisClintMovementsPlace(this)">الألعاب المائية
-                WATERBOM</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحريه
-                DOLPIN WATERSPORT</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس
-                ستديو</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا
-                (ديسكفري + ليبو مول + بيتش ووك مول)</p>
-            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
-                والتسوق</p>
-            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
-                والإستجمام</p>
+            <p onclick="pickThisClintMovementsPlace(this)">التجول في السنتر</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ PANTAI PANDAWA</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ اطلالة الجرف الصخري ULUWATU</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ جمبران والجلوس في احد المطاعم ومشاهدة الغروب الجميل</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جزيرة NUSA PENDIA المشهورة بشواطئها الجميلة وتكون الرحلة بالقوارب ويتم زيارة 3 الى 4 شواطئ شاملة التوصيل من والى الفندق والمواصلات داخل الجزيرة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">التجديف في نهر تلاقاوجا</p>
+            <p onclick="pickThisClintMovementsPlace(this)">فعالية ركوب الخيل على الشاطئ الاسود</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة احد اجمل المعالم قرية جاتلوية المشهورة بمدرجات الأرز</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة شاطئ The Beach Love والجلوس في الكافي المطل</p>
+            <p onclick="pickThisClintMovementsPlace(this)">الالعاب المائية في منطقة نوسا دوا WATERBOM</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة تمثال بالي GWK</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة فعالية بحرية DOLPIN WATERSPORT</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة ملاهي ترانس ستوديو</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة مولات كوتا (ديسكفوي + ليبو مول + بيتش ووك مول)</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوج للراحة والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوج للراحة والإستجمام</p>
 
         </div>
 
@@ -1613,31 +1623,22 @@
             <h6>مزارات اوبود</h6>
 
 
-            <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية
-                وسط الطبيعة والشلالات</p>
+            <p onclick="pickThisClintMovementsPlace(this)">الدبابات الرباعية وسط الطبيعة والشلالات</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال تيغينونغان الجميل</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة منتزه ALOHA مراجيح الهواء</p>
             <p onclick="pickThisClintMovementsPlace(this)">سنتر اوبود للغدا حسب الرغبة</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة شمال الجزيرة المعروفة بأجوائها الساحرة</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة واخذ جولة بالقارب</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرتين التوام</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بحيرة براتان الفاتنة</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة حديقة النباتات</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي
-            </p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة
-            </p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة بوابة منتجع هندارا الشهيرة</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل كنتامي</p>
+            <p onclick="pickThisClintMovementsPlace(this)">زيارة جبل و بحيرة بانور و الجلوس في احد الكافيهات الجميلة</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة Alas Harum اجمل مزرعة قهوة في بالي</p>
             <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال GIT GIT</p>
-            <p onclick="pickThisClintMovementsPlace(this)">زيارة شلال TEGENUNGAN</p>
             <p onclick="pickThisClintMovementsPlace(this)">PRAVARSA SWING</p>
-            <p onclick="pickThisClintMovementsPlace(this)">ALAS HARUM</p>
             <p onclick="pickThisClintMovementsPlace(this)">TIS CAFE</p>
-
-            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
-                والتسوق</p>
-            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوح للراحة
-                والإستجمام</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوج للراحة والتسوق</p>
+            <p onclick="pickThisClintMovementsPlace(this)">يوم مفتوج للراحة والإستجمام</p>
         </div>
 
 
@@ -1897,7 +1898,8 @@
         <p id="store_google_sheet_clint_company_name_value" style="display: none;"></p>
         <p id="store_google_sheet_clint_package_type_checkbox_value" style="display: none;"></p>
         <p id="store_google_sheet_package_user_name_value" style="display: none;"></p>
-        <p id="store_google_sheet_package_user_with_no_year_for_later_reference_when_importing" style="display: none;"></p>
+        <p id="store_google_sheet_package_user_with_no_year_for_later_reference_when_importing" style="display: none;">
+        </p>
 
 
 
