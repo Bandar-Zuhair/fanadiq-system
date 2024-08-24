@@ -224,6 +224,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay7: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة'],
+            visitingPlaceNamesDay10: ['زيارة حديقة شيموري'],
         },
 
 
@@ -237,6 +238,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay7: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة'],
+            visitingPlaceNamesDay10: ['زيارة حديقة شيموري'],
         },
 
 
@@ -250,6 +252,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay7: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة'],
+            visitingPlaceNamesDay10: ['زيارة حديقة شيموري'],
         },
 
 
@@ -263,6 +266,7 @@ let allClintVisitingPlacesArray = [
             visitingPlaceNamesDay7: ['زيارة كافي ROOF PARK + زيارة بحيرة تلاقا سات'],
             visitingPlaceNamesDay8: ['زيارة الشلالات السبعة + زيارة مصنع الشوكولاتة'],
             visitingPlaceNamesDay9: ['يوم مفتوج للراحة'],
+            visitingPlaceNamesDay10: ['زيارة حديقة شيموري'],
         },
 
     },
