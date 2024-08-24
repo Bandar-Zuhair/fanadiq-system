@@ -198,6 +198,18 @@ function findSelectedNameAndImportContent() {
 function importContentFromLocalStorage() {
     let lastDownloadData = localStorage.getItem('lastDownloadWebsiteData');
 
+
+
+    /* Hide all pdf pages content for re-show them if they exist in the inported packages data */
+    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+
+
+    
     if (lastDownloadData) {
         let parsedData = JSON.parse(lastDownloadData);
         let contentColumns = parsedData.e;
@@ -284,6 +296,18 @@ function importContentForSelectedName(name) {
     // Assuming the first column is the name and subsequent columns are the contents
     let selectedRow = sheetData.find(row => row[0] === name);
 
+
+
+    /* Hide all pdf pages content for re-show them if they exist in the inported packages data */
+    document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_flight_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_hotel_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
+    document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
+
+
+    
     if (selectedRow) {
         let contentColumns = {
             downloaded_pdf_clint_data_page: selectedRow[1],
