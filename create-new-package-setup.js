@@ -9,11 +9,27 @@ window.addEventListener('beforeunload', function (event) {
     if (window.history && window.history.pushState) {
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function (event) {
-            window.history.pushState(null, null, window.location.href);
-            alert("يالحبيب هدي شوية وانتبه");
+            const messages = [
+                "يالحبيب هدي شوية وانتبه",
+                "من جدك انت؟",
+                "لا معليش كذا زوتها",
+                "الموقع سهل وبسيط بس لازم تهدي",
+                "خلي بالك ترا اشوفك",
+                "حبه حبه الامور كلها سهالات",
+                "يعني كم مرة لازم اقولك",
+                "شغلك نضيف بس ركز شوية",
+                "شكلو ماعبجك النظام",
+                "لا لا كذا كثير لازم نسوي اجتماع",
+                "تعجبني لمن تجيب العيد",
+                "بصراحة انا تعبت"
+            ];
+            // Select a random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
         };
     }
 })();
+
 
 
 
