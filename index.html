@@ -194,6 +194,8 @@
 
                 <input type="text" id="package_clint_name_input_id" placeholder="اسم العميل" autocomplete="off">
 
+                <input type="text" id="package_clint_code_number_input_id" placeholder="رقم الكود" autocomplete="off">
+
 
                 <input type="text" id="adult_package_person_amount_input_id" placeholder="عدد البالغين"
                     autocomplete="off" readonly onclick="showOverlay('adult_whole_package_people_amount_dropdown')"
@@ -1851,7 +1853,10 @@
         </div>
 
 
-        <p id="package_user_code_name_for_later_import_reference_p_id"></p>
+        <div id="package_user_code_namd_and_clint_code_number_div">
+            <p id="package_clint_code_number_p_id"></p>
+            <p id="package_user_code_name_for_later_import_reference_p_id"></p>
+        </div>
 
 
         <div id="pdf_clint_info_section_title_div_id" class="pdf_section_title_div_class">
@@ -1900,6 +1905,7 @@
         <p id="store_google_sheet_package_user_name_value" style="display: none;"></p>
         <p id="store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing" style="display: none;">
         </p>
+        <p id="store_google_sheet_package_clint_code_number_value" style="display: none;"></p>
 
 
 
