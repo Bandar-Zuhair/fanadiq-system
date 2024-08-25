@@ -1303,10 +1303,30 @@ addMoreFlightRowTableDivFunction = function (position) {
     });
 
 
-    // Clear the innerText of the h1 element inside the cloned row
-    let h1Element = clonedRow.querySelector('h1');
-    if (h1Element) {
-        h1Element.innerText = '';
+    // Swap the innerText of h2 and h3 elements in the cloned row
+    let h2Element = clonedRow.querySelector('h2');
+    let h3Element = clonedRow.querySelector('h3');
+
+    if (h2Element && h3Element) {
+        let tempText = h2Element.innerText;
+        h2Element.innerText = h3Element.innerText;
+        h3Element.innerText = tempText;
+    }
+
+    // Get all divs with the class name 'hotel_row_class_for_editing'
+    let allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+    if (allHotelRows.length > 0) {
+        // Target the last found hotel_row_class_for_editing
+        let lastHotelRow = allHotelRows[allHotelRows.length - 1];
+
+        // Get the innerText of the h3 element of the last hotel row
+        let lastHotelRowH3Text = lastHotelRow.querySelector('h3')?.innerText;
+
+        // Clear the innerText of the h1 element inside the cloned row and set it to the last hotel's h3 text
+        let h1Element = clonedRow.querySelector('h1');
+        if (h1Element && lastHotelRowH3Text) {
+            h1Element.innerText = lastHotelRowH3Text;
+        }
     }
 
 
