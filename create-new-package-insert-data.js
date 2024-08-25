@@ -457,7 +457,7 @@ createWholePackageAndClintDataFunction = function () {
 
 
         /* in 25 Aug 2026 delete the following if condition if 'package_clint_code_number_p_id' exist or no (I used it to avoid error in old packages) */
-        if(document.getElementById('package_clint_code_number_p_id')){
+        if (document.getElementById('package_clint_code_number_p_id')) {
 
             /* Set the inserted clint code number inside the 'package_clint_code_number_p_id' */
             document.getElementById('package_clint_code_number_p_id').innerText = packageClintCodeNumberInput;
@@ -4058,37 +4058,25 @@ openPdfDownloadBox = function () {
         overlayLayer.style.opacity = '1'; // Delayed opacity transition for smooth appearance
 
         // Slide to the center of the screen
-        namePdfBoxDiv.style.transform = 'translate(-50%, -50%)';
+        document.getElementById('name_pdf_file_div').style.transform = 'translate(-50%, -50%)';
     }, 100);
 
 
 
 
-    // get the name pdf file box
-    let namePdfBoxDiv = document.getElementById('name_pdf_file_div');
-
-
-    /* Function to hide the name pdf file box */
-    closeDownloadPdfBox = function () {
-
-        // Play a sound effect only if the website is not muted
-        if (!document.getElementById('mute_website_checkbox').checked) {
-            // Play a sound effect
-            new Audio('click.mp3').play();
-        }
-
-        // Hide edit/delete options div
-        namePdfBoxDiv.style.transform = 'translate(-50%, -100vh)';
+    // Event listener to close overlay and delete box div on click outside
+    overlayLayer.onclick = () => {
+        // Hide delete box options div
+        document.getElementById('name_pdf_file_div').style.transform = 'translate(-50%, -100vh)';
 
         // Hide overlay layer with opacity transition
         overlayLayer.style.opacity = '0';
 
-        // Remove overlay and edit/delete div from DOM after transition
+        // Remove overlay and delete box div from DOM after transition
         setTimeout(() => {
             document.body.removeChild(overlayLayer);
         }, 300); // Match transition duration in CSS
-    }
-
+    };
 };
 
 /* Function to download the pdf file wit hteh current user code name */
