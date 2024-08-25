@@ -663,15 +663,6 @@
     transition: transform 0.5s ease;
 }
 
-#name_pdf_file_div span {
-    position: absolute;
-    top: 55px;
-    right: 12px;
-    cursor: pointer;
-    font-size: 4vw;
-    color: #888;
-}
-
 #name_pdf_file_div input {
     width: 80%;
     font-size: 3vw;
@@ -857,10 +848,6 @@
         padding: 4px;
     }
 
-    #name_pdf_file_div span {
-        font-size: 6vw;
-    }
-
     #name_pdf_file_div p {
         font-size: 3vw;
     }
@@ -1041,9 +1028,6 @@
 
 
 
-    #name_pdf_file_div span {
-        font-size: 7vw;
-    }
 
     #name_pdf_file_div input {
         font-size: 5vw;
@@ -1185,10 +1169,6 @@
     #name_pdf_file_div {
         width: 100%;
         max-width: 100%;
-    }
-
-    #name_pdf_file_div span {
-        font-size: 10vw;
     }
 
     #name_pdf_file_div p {
