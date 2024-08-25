@@ -3394,9 +3394,15 @@ autoCreateALlClintMovementsData = function () {
         let firstCreatedClintMovementsRowDivForLastHotel = null; // Variable to store the first created div for the last hotel
 
 
+        let isFirstClintMovementsRowCreated = false; // Flag to track the first created clintMovementsRowTableDiv
+
+
         /* Variable to store if the h5 inside the first found 'hotel_row_class_for_editing' is "بونشاك" or "باندونق" */
         let firstHotelCityName = allHotelRows[0].querySelector('h5').innerText;
 
+
+        // Store the innerText of the h5 inside the last found hotel_row_class_for_editing
+        let lastHotelCityName = allHotelRows[totalHotels - 1].querySelector('h5').innerText;
 
 
         // Variable to store the combined city names for the last found hotel row
@@ -3574,8 +3580,13 @@ autoCreateALlClintMovementsData = function () {
                 document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
 
                 if (index === totalHotels - 1 && i === nights - 1) {
-                    let lastH3 = clintMovementsRowTableDiv.querySelector('h3');
-                    lastH3.innerText = lastHotelRowCombinedCityName;
+                    // Check if this is not the first created clintMovementsRowTableDiv
+                    if (isFirstClintMovementsRowCreated) {
+                        let lastH3 = clintMovementsRowTableDiv.querySelector('h3');
+                        lastH3.innerText = lastHotelCityName;
+                    } else {
+                        isFirstClintMovementsRowCreated = true; // Set the flag after the first creation
+                    }
                 }
             }
 
