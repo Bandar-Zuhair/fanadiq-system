@@ -28,6 +28,7 @@ let insertedClintMovementsRowDivUniqueId = 1;
 createWholePackageAndClintDataFunction = function () {
     // Get references to all input elements for later use
     let packageClintNameInput = document.getElementById('package_clint_name_input_id').value;
+    let packageClintCodeNumberInput = document.getElementById('package_clint_code_number_input_id').value;
     let adultPackagePersonAmountInput = document.getElementById('adult_package_person_amount_input_id').value;
     let kidsPackagePersonAmountInput = document.getElementById('kids_package_person_amount_input_id').value;
     let wholePackageStartDateInput = document.getElementById('whole_package_start_date_input_id').value;
@@ -342,19 +343,19 @@ createWholePackageAndClintDataFunction = function () {
 
 
         insertedClintDataRowDivContent = `
-                <div>
-                    <p>${combinedPersonAmount}</p>
-                </div>
-                <div>
-                    <p id="whole_package_first_date_p_id">${wholePackageStartDateInput}</p>
-                </div>
-                <div>
-                    <p>${wholePackageEndDateInput}</p>
-                </div>
-                <div>
-                    <p>${storePackageTotalNights}</p>
-                </div>
-            `;
+            <div>
+                <p>${combinedPersonAmount}</p>
+            </div>
+            <div>
+                <p id="whole_package_first_date_p_id">${wholePackageStartDateInput}</p>
+            </div>
+            <div>
+                <p>${wholePackageEndDateInput}</p>
+            </div>
+            <div>
+                <p>${storePackageTotalNights}</p>
+            </div>
+        `;
 
 
 
@@ -439,8 +440,8 @@ createWholePackageAndClintDataFunction = function () {
 
 
 
-                /* in 25 Aug 2026 delete the following if dondition if "store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing" exist or mo (I used it to avoid error in old packages) */
-                if(document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing')){
+                /* in 25 Aug 2026 delete the following if dondition if "store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing" exist or no (I used it to avoid error in old packages) */
+                if (document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing')) {
                     /* Store the package user name code with no year for later use when importing data */
                     document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing').innerText = `${websiteUsersNameInput}_${lastTwoNumbersOfTheCurrentYear}_${mostTopEmptyCellRowNumberValue}`;
                 }
@@ -452,6 +453,19 @@ createWholePackageAndClintDataFunction = function () {
         }
 
 
+
+
+
+        /* in 25 Aug 2026 delete the following if condition if 'package_clint_code_number_p_id' exist or no (I used it to avoid error in old packages) */
+        if(document.getElementById('package_clint_code_number_p_id')){
+
+            /* Set the inserted clint code number inside the 'package_clint_code_number_p_id' */
+            document.getElementById('package_clint_code_number_p_id').innerText = packageClintCodeNumberInput;
+
+
+            /* Also store the clint code number in the google sheet for later use (when importing data) */
+            document.getElementById('store_google_sheet_package_clint_code_number_value').innerText = document.getElementById('package_clint_code_number_p_id').innerText;
+        }
 
 
         /* Show up the 'downloaded_pdf_clint_data_page' section */
@@ -1498,33 +1512,12 @@ createHotelsDataFunction = function () {
 
 
 
-    // Play a sound effect only if the website is not muted
-    if (!document.getElementById('mute_website_checkbox').checked) {
-        // Play a sound effect
-        new Audio('success.mp3').play();
-    }
-
-    /* Change the 'تم' button color */
-    hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
-    // Set the background color of the submit icon back to default color
-    setTimeout(() => {
-        hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
-    }, 2000);
-
-
-
-
-    /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
-    let insertedHotelDataDivUniqueId = document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText !== ''
-        ? document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText
-        : 1;
-
-
 
 
 
     /* Stop the process if the 'hotel_location_input_id' is visible and it is empty */
     if (document.getElementById('hotel_location_input_id').style.display !== 'none') {
+
         if (document.getElementById('hotel_location_input_id').value === '') {
 
             // Play a sound effect only if the website is not muted
@@ -1564,6 +1557,35 @@ createHotelsDataFunction = function () {
             return;
         }
     }
+
+
+
+
+
+
+    // Play a sound effect only if the website is not muted
+    if (!document.getElementById('mute_website_checkbox').checked) {
+        // Play a sound effect
+        new Audio('success.mp3').play();
+    }
+
+    /* Change the 'تم' button color */
+    hotel_inputs_submit_icon.style.backgroundColor = 'rgb(0, 255, 0)';
+    // Set the background color of the submit icon back to default color
+    setTimeout(() => {
+        hotel_inputs_submit_icon.style.backgroundColor = 'rgb(255, 174, 0)';
+    }, 2000);
+
+
+
+
+    /* Set the 'insertedHotelDataDivUniqueId' value based on the following condition */
+    let insertedHotelDataDivUniqueId = document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText !== ''
+        ? document.getElementById('store_google_sheet_hotel_uniuqe_id_name_value').innerText
+        : 1;
+
+
+
 
 
 
@@ -2002,6 +2024,9 @@ createHotelsDataFunction = function () {
             handleClickEvent(element);
         });
     }
+
+
+
 
 
 
@@ -3366,11 +3391,16 @@ autoCreateALlClintMovementsData = function () {
 
         let isFirstJakartaHotelFound = false; // Flag to track the first Jakarta hotel found
 
+        let firstCreatedClintMovementsRowDivForLastHotel = null; // Variable to store the first created div for the last hotel
+
 
         /* Variable to store if the h5 inside the first found 'hotel_row_class_for_editing' is "بونشاك" or "باندونق" */
         let firstHotelCityName = allHotelRows[0].querySelector('h5').innerText;
 
 
+
+        // Variable to store the combined city names for the last found hotel row
+        let lastHotelRowCombinedCityName = '';
 
         allHotelRows.forEach((hotelRow, index) => {
             let hotelName = hotelRow.querySelector('h1').innerText;
@@ -3414,7 +3444,6 @@ autoCreateALlClintMovementsData = function () {
                 usedDays = usedVisitingPlaces.lombok;
             }
 
-
             if (!usedVisitingPlaces[cityName]) {
                 usedVisitingPlaces[cityName] = {};
             }
@@ -3455,6 +3484,7 @@ autoCreateALlClintMovementsData = function () {
 
                     if (cityName !== previousCityName) {
                         combinedCityName = `${previousCityName}-${cityName}`;
+                        lastHotelRowCombinedCityName = combinedCityName; // Update combined city name
                     }
 
                     let additionalText = "";
@@ -3486,15 +3516,11 @@ autoCreateALlClintMovementsData = function () {
                     isFirstHotelRowCreated = true;
                 }
 
-
-
                 // Additional condition for the first hotel row
                 if (!isFirstHotelRowCreated && index === 0 && isAirportWelcomeIncluded && (firstHotelCityName === "بونشاك" || firstHotelCityName === "باندونق")) {
                     checkInOutText = `الإستقبال في مطار جاكرتا + الذهاب الى ${cityName} + تسجيل الدخول في ${hotelName}`;
                     isFirstHotelRowCreated = true; // Set the flag to avoid reapplying this condition
                 }
-
-
 
                 // Clean up text to ensure no duplicated '+'
                 checkInOutText = cleanUpText(checkInOutText);
@@ -3512,7 +3538,6 @@ autoCreateALlClintMovementsData = function () {
                     currentH2.innerText = cleanUpText(currentH2.innerText); // Clean up text to ensure no duplicated '+'
                     isFirstJakartaHotelFound = true;
                 }
-
 
                 if (targetObject && i === 0) {
                     let dayIndex = 1;
@@ -3537,30 +3562,30 @@ autoCreateALlClintMovementsData = function () {
                         let textArray = targetObject[`visitingPlaceNamesDay${dayIndex}`];
                         usedDays[dayIndex] = true;
                         if (textArray && textArray.length > 0) {
-                            let currentH2 = clintMovementsRowTableDiv.querySelector('h2');
-                            currentH2.innerText = cleanUpText(currentH2.innerText.trim());
-                            if (currentH2.innerText) {
-                                currentH2.innerText += ` + ${textArray.join(' + ')}`;
-                            } else {
-                                currentH2.innerText = `${textArray.join(' + ')}`;
-                            }
+                            visitingPlacesText = `${textArray.join(' + ')} `;
                         }
                     }
                 }
 
+                if (i > 0 && visitingPlacesText) {
+                    clintMovementsRowTableDiv.querySelector('h2').innerText += `${visitingPlacesText}`;
+                }
 
                 document.getElementById('inserted_clint_movements_data_position_div').appendChild(clintMovementsRowTableDiv);
 
-                let clintMovementsRowImageController = clintMovementsRowTableDiv.querySelector('.clint_movements_row_controller');
-                clintMovementsRowImageController.onclick = function (event) {
-                    clintMovementsRowCityNameControllerFunction(event);
-                };
-
                 if (index === totalHotels - 1 && i === nights - 1) {
-                    let h3Element = clintMovementsRowTableDiv.querySelector('h3');
-                    h3Element.innerText = cityName;
+                    let lastH3 = clintMovementsRowTableDiv.querySelector('h3');
+                    lastH3.innerText = lastHotelRowCombinedCityName;
                 }
             }
+
+
+
+            // Print the content of the first created clintMovementsRowTableDiv for the last found hotel_row_class_for_editing
+            if (index === totalHotels - 1 && firstCreatedClintMovementsRowDivForLastHotel) {
+                console.log(firstCreatedClintMovementsRowDivForLastHotel.innerHTML);
+            }
+
 
             if (index === totalHotels - 1) {
                 let extraDate = incrementDate(checkInDate, nights);
