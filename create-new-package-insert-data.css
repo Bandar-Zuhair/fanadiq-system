@@ -20,13 +20,29 @@
 
 
 
-#package_user_code_name_for_later_import_reference_p_id {
-    width: 100%;
+#package_user_code_name_for_later_import_reference_p_id,
+#package_clint_code_number_p_id {
     font-size: 2vw;
-    padding-left: 10px;
-    text-align: end;
+    width: 50%;
+    box-sizing: border-box;
     display: inline-block;
 }
+
+#package_user_code_name_for_later_import_reference_p_id {
+    text-align: left;
+    float: left;
+    padding-left: 10px;
+}
+
+#package_clint_code_number_p_id {
+    text-align: right;
+    float: right;
+    padding-right: 10px;
+}
+
+
+
+
 
 
 #clint_full_name_p {
@@ -743,6 +759,9 @@
     #package_user_code_name_for_later_import_reference_p_id {
         font-size: 2.5vw;
     }
+    #package_clint_code_number_p_id {
+        font-size: 2.5vw;
+    }
 
 
 
@@ -860,6 +879,9 @@
         font-size: 3vw;
     }
 
+    #package_clint_code_number_p_id{
+        font-size: 3vw;
+    }
 
     .ensure_your_delete_action {
         padding: 10px;
@@ -1042,6 +1064,9 @@
 
 
     #package_user_code_name_for_later_import_reference_p_id {
+        font-size: 3.5vw;
+    }
+    #package_clint_code_number_p_id {
         font-size: 3.5vw;
     }
 
