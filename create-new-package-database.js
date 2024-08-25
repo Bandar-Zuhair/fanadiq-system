@@ -94,6 +94,8 @@ function cleanHTML(html) {
 
 let sheetURL = 'https://script.google.com/macros/s/AKfycbzfCsf83fAX5TGNob-dHpasi0YF3ZSPTxqwEqAgOMCgRDE0W7uFOxyu2vs_0vM8sFuZsA/exec'; // Replace with your web app URL
 let sheetData = [];
+let totalRivPackageNumberForUpdatingNewRivPackage = null;
+
 
 // Fetch data from Google Sheets via web app and store it locally
 function updateDataBaseSavedDataNames() {
@@ -209,7 +211,7 @@ function importContentFromLocalStorage() {
     document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
 
 
-    
+
     if (lastDownloadData) {
         let parsedData = JSON.parse(lastDownloadData);
         let contentColumns = parsedData.e;
@@ -242,14 +244,10 @@ function importContentFromLocalStorage() {
 
 
             /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-            existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
 
-
-            /* Store the package user name code for displaying in the pdf file */
-            document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_user_with_no_year_for_later_reference_when_importing').innerText}_${mostTopEmptyCellRowNumberValue}`;
 
 
 
@@ -272,6 +270,48 @@ function importContentFromLocalStorage() {
 
 
 
+
+            /* in 25 Aug 2026 delete the following if "" exist or no (I used it to avoid error in the old packages) */
+            /* in 25 Aug 2026 also delete the else code from the following code because it will be no needed (I used it to avoid error in the old packages) */
+            if (document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing')) {
+
+                // New functionality to count matching name values
+
+                // Get the innerText from 'package_user_code_name_for_later_import_reference_p_id' and process it
+                let packageUserCode = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
+
+                // Split the string to remove the '_riv_' and everything to the right
+                let basePackageUserCode = packageUserCode.split('_riv_')[0];
+
+                // Search through the first column of the Google Sheet data and count matches
+                totalRivPackageNumberForUpdatingNewRivPackage = sheetData.filter(row => {
+                    let rowBaseName = row[0].split('_riv_')[0]; // Ignore everything after '_riv_' in the row's first column
+                    return rowBaseName === basePackageUserCode;
+                }).length;
+
+
+                document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing').innerText}_riv_${totalRivPackageNumberForUpdatingNewRivPackage}`
+
+
+                /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
+                existingDataStatus = 'newData';
+
+
+            } else {
+
+                /* if there is no "" then just replcae the old package data with the new one without adding _riv_ */
+                // Change the value of 'existingDataStatus' for updating old data mode
+                existingDataStatus = 'existingData';
+
+            }
+
+
+
+
+            /* Call a function to make sure the hotel available dates are properly set */
+            updateAllowedDates();
+
+
         } catch (error) {
         }
     } else {
@@ -282,9 +322,6 @@ function importContentFromLocalStorage() {
             new Audio('error.mp3').play();
         }
     }
-
-    /* Show the 'inserted_company_name_image_position_div' element */
-    document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 }
 
 
@@ -296,8 +333,6 @@ function importContentForSelectedName(name) {
     // Assuming the first column is the name and subsequent columns are the contents
     let selectedRow = sheetData.find(row => row[0] === name);
 
-
-
     /* Hide all pdf pages content for re-show them if they exist in the inported packages data */
     document.getElementById('downloaded_pdf_clint_data_page').style.display = 'none';
     document.getElementById('downloaded_pdf_package_including_data_page').style.display = 'none';
@@ -306,8 +341,6 @@ function importContentForSelectedName(name) {
     document.getElementById('downloaded_pdf_clint_movements_data_page').style.display = 'none';
     document.getElementById('downloaded_pdf_total_price_data_page').style.display = 'none';
 
-
-    
     if (selectedRow) {
         let contentColumns = {
             downloaded_pdf_clint_data_page: selectedRow[1],
@@ -344,9 +377,7 @@ function importContentForSelectedName(name) {
             hideOverlay()
 
             /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-            existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
-
 
             // Make sure to hide all elements with the class name before checking visibility
             let images = document.querySelectorAll('.inserted_package_data_section_page_image_class');
@@ -354,28 +385,63 @@ function importContentForSelectedName(name) {
                 img.style.display = 'none';
             });
 
-
             // Make sure to hide all elements with the class name before checking visibility
             let images2 = document.querySelectorAll('.inserted_package_data_section_page_image_class_2');
             images2.forEach(img => {
                 img.style.display = 'none';
             });
 
-
             /* Show the 'inserted_company_name_image_position_div' element */
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-
+            
+            /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
+            existingDataStatus = 'newData';
 
 
         } catch (error) {
+            console.error(error);
         }
     }
 
 
-    /* Call a function to make sure the hotel available dates are propperly set */
+
+    /* in 25 Aug 2026 delete the following if "" exist or no (I used it to avoid error in the old packages) */
+    /* in 25 Aug 2026 also delete the else code from the following code because it will be no needed (I used it to avoid error in the old packages) */
+    if (document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing')) {
+
+        // New functionality to count matching name values
+
+        // Get the innerText from 'package_user_code_name_for_later_import_reference_p_id' and process it
+        let packageUserCode = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
+
+        // Split the string to remove the '_riv_' and everything to the right
+        let basePackageUserCode = packageUserCode.split('_riv_')[0];
+
+        // Search through the first column of the Google Sheet data and count matches
+        totalRivPackageNumberForUpdatingNewRivPackage = sheetData.filter(row => {
+            let rowBaseName = row[0].split('_riv_')[0]; // Ignore everything after '_riv_' in the row's first column
+            return rowBaseName === basePackageUserCode;
+        }).length;
+
+
+        document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing').innerText}_riv_${totalRivPackageNumberForUpdatingNewRivPackage}`
+
+    } else {
+
+        /* if there is no "" then just replcae the old package data with the new one without adding _riv_ */
+        // Change the value of 'existingDataStatus' for updating old data mode
+        existingDataStatus = 'existingData';
+
+    }
+
+
+
+
+    /* Call a function to make sure the hotel available dates are properly set */
     updateAllowedDates();
 }
+
 
 
 // Function to format the raw HTML content for placing in the website
@@ -667,7 +733,7 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
         /* in 24 Aug 2026 Delete the following if condition for checking if the 'store_google_sheet_package_infant_amount_value' exist or no (I used it to avoid issues in old packages) */
-        if(document.getElementById('store_google_sheet_package_infant_amount_value')){
+        if (document.getElementById('store_google_sheet_package_infant_amount_value')) {
             document.getElementById('infant_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_infant_amount_value').innerText;
         }
 
@@ -694,12 +760,6 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
 
 
-        /* Just for making sure no doublicated packegs will be saved with the same package user name code */
-        /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
-        existingDataStatus = 'existingData';
-        document.getElementById('website_users_name_input_id').disabled = true;
-
-        
 
 
         /* Check the package type checkbox based on the innerText of the 'store_google_sheet_clint_package_type_checkbox_value' */
