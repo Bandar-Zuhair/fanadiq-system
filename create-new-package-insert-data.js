@@ -1313,20 +1313,10 @@ addMoreFlightRowTableDivFunction = function (position) {
         h3Element.innerText = tempText;
     }
 
-    // Get all divs with the class name 'hotel_row_class_for_editing'
-    let allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
-    if (allHotelRows.length > 0) {
-        // Target the last found hotel_row_class_for_editing
-        let lastHotelRow = allHotelRows[allHotelRows.length - 1];
-
-        // Get the innerText of the h3 element of the last hotel row
-        let lastHotelRowH3Text = lastHotelRow.querySelector('h3')?.innerText;
-
-        // Clear the innerText of the h1 element inside the cloned row and set it to the last hotel's h3 text
-        let h1Element = clonedRow.querySelector('h1');
-        if (h1Element && lastHotelRowH3Text) {
-            h1Element.innerText = lastHotelRowH3Text;
-        }
+    // Clear the innerText of the h1 element inside the cloned row
+    let h1Element = clonedRow.querySelector('h1');
+    if (h1Element) {
+        h1Element.innerText = '';
     }
 
 
@@ -1340,6 +1330,23 @@ addMoreFlightRowTableDivFunction = function (position) {
     } else if (position === 'down') {
         // Insert the cloned div after the last found div
         allFlightRows[allFlightRows.length - 1].parentNode.insertBefore(clonedRow, allFlightRows[allFlightRows.length - 1].nextSibling);
+
+
+        // Get all divs with the class name 'hotel_row_class_for_editing'
+        let allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+        if (allHotelRows.length > 0) {
+            // Target the last found hotel_row_class_for_editing
+            let lastHotelRow = allHotelRows[allHotelRows.length - 1];
+
+            // Get the innerText of the h3 element of the last hotel row
+            let lastHotelRowH3Text = lastHotelRow.querySelector('h3')?.innerText;
+
+            // Clear the innerText of the h1 element inside the cloned row and set it to the last hotel's h3 text
+            let h1Element = clonedRow.querySelector('h1');
+            if (h1Element && lastHotelRowH3Text) {
+                h1Element.innerText = lastHotelRowH3Text;
+            }
+        }
     }
 
 
