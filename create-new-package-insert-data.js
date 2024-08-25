@@ -1313,12 +1313,6 @@ addMoreFlightRowTableDivFunction = function (position) {
         h3Element.innerText = tempText;
     }
 
-    // Clear the innerText of the h1 element inside the cloned row
-    let h1Element = clonedRow.querySelector('h1');
-    if (h1Element) {
-        h1Element.innerText = '';
-    }
-
 
     // Increment the unique ID for the next row
     insertedFlightDataDivUniqueId++;
@@ -1326,6 +1320,24 @@ addMoreFlightRowTableDivFunction = function (position) {
     if (position === 'up') {
         // Insert the cloned div above the first found div
         allFlightRows[0].parentNode.insertBefore(clonedRow, allFlightRows[0]);
+
+
+        // Get all divs with the class name 'hotel_row_class_for_editing'
+        let allHotelRows = document.querySelectorAll('.hotel_row_class_for_editing');
+        if (allHotelRows.length > 0) {
+            // Target the first found hotel_row_class_for_editing
+            let firstHotelRow = allHotelRows[0];
+
+            // Get the innerText of the h2 element of the first hotel row
+            let firstHotelRowH2Text = firstHotelRow.querySelector('h2')?.innerText;
+
+            // Clear the innerText of the h1 element inside the cloned row and set it to the first hotel's h2 text
+            let h1Element = clonedRow.querySelector('h1');
+            if (h1Element && firstHotelRowH2Text) {
+                h1Element.innerText = firstHotelRowH2Text;
+            }
+        }
+
 
     } else if (position === 'down') {
         // Insert the cloned div after the last found div
