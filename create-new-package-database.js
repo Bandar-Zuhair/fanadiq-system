@@ -394,7 +394,7 @@ function importContentForSelectedName(name) {
             /* Show the 'inserted_company_name_image_position_div' element */
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
-            
+
             /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
             existingDataStatus = 'newData';
 
@@ -460,18 +460,32 @@ function formatHtmlForWebsite(rawHtml) {
 
 // Function to pick google sheet data names
 function pickThisGoogleSheetDataName(clickedGoogleSheetDataName) {
-    // Get all <h3> elements inside the 'all_google_sheet_stored_data_names_for_importing_data_div' div
-    let allGoogleSheetStoredDataNamesForImportingDataDiv = document.querySelectorAll('#all_google_sheet_stored_data_names_for_importing_data_div h3');
 
-    // Loop through each <h3> element to reset their styles
-    allGoogleSheetStoredDataNamesForImportingDataDiv.forEach(function (dataName) {
-        dataName.style.backgroundColor = 'white';
-        dataName.style.color = 'black';
-    });
+    /* in case the clicked h3 is already picked then import it directly */
+    if (clickedGoogleSheetDataName.style.backgroundColor === 'rgb(0, 155, 0)') {
 
-    // Set the background color and text color of the clicked <h3> element
-    clickedGoogleSheetDataName.style.backgroundColor = 'rgb(0, 155, 0)';
-    clickedGoogleSheetDataName.style.color = 'white';
+        /* Run a function to import that picked h3 element from the google sheet databse */
+        findSelectedNameAndImportContent();
+
+
+        /* if the clikced h3 is not picked then just highlight it as a new picked one */
+    } else {
+
+        // Get all <h3> elements inside the 'all_google_sheet_stored_data_names_for_importing_data_div' div
+        let allGoogleSheetStoredDataNamesForImportingDataDiv = document.querySelectorAll('#all_google_sheet_stored_data_names_for_importing_data_div h3');
+
+        // Loop through each <h3> element to reset their styles
+        allGoogleSheetStoredDataNamesForImportingDataDiv.forEach(function (dataName) {
+            dataName.style.backgroundColor = 'white';
+            dataName.style.color = 'black';
+        });
+
+
+        // Set the background color and text color of the clicked <h3> element
+        clickedGoogleSheetDataName.style.backgroundColor = 'rgb(0, 155, 0)';
+        clickedGoogleSheetDataName.style.color = 'white';
+
+    }
 }
 
 
@@ -728,16 +742,17 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
 
         /* First Re-Enter the inputs values if they exist in the stored google sheet p elements */
         document.getElementById('package_clint_name_input_id').value = document.getElementById('store_google_sheet_clint_name_value').innerText;
+        document.getElementById('package_clint_code_number_input_id').value = '';
 
-        
+
 
         /* in 25 Aug 2026 delete the folloing if condition if 'store_google_sheet_package_clint_code_number_value' exist or no (I used it to avoid issues in old packages) */
-        if(document.getElementById('store_google_sheet_package_clint_code_number_value')){
+        if (document.getElementById('store_google_sheet_package_clint_code_number_value')) {
             document.getElementById('package_clint_code_number_input_id').value = document.getElementById('store_google_sheet_package_clint_code_number_value').innerText;
         }
 
 
-        
+
         document.getElementById('adult_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_adult_amount_value').innerText;
         document.getElementById('kids_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_kids_amount_value').innerText;
 
@@ -747,6 +762,8 @@ reActiveDragAndDropFunctionality = function (visiableDivIdName) {
         if (document.getElementById('store_google_sheet_package_infant_amount_value')) {
             document.getElementById('infant_package_person_amount_input_id').value = document.getElementById('store_google_sheet_package_infant_amount_value').innerText;
         }
+        /* in 25 Aug also delete the following code because the upper code line will be enough (I used it to avoid issues in old packages) */
+        document.getElementById('infant_package_person_amount_input_id').value = '';
 
 
 
