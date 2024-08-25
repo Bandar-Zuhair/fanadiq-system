@@ -1171,6 +1171,10 @@
         max-width: 100%;
     }
 
+    #name_pdf_file_div input {
+        width: 95%;
+    }
+
     #name_pdf_file_div p {
         font-size: 4.5vw;
     }
