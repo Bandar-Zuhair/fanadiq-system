@@ -9,7 +9,7 @@ window.addEventListener('beforeunload', function (event) {
     if (window.history && window.history.pushState) {
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function (event) {
-            const messages = [
+            let messages = [
                 "يالحبيب هدي شوية وانتبه",
                 "من جدك انت؟",
                 "لا معليش كذا زوتها",
@@ -24,7 +24,7 @@ window.addEventListener('beforeunload', function (event) {
                 "بصراحة انا تعبت"
             ];
             // Select a random message
-            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            let randomMessage = messages[Math.floor(Math.random() * messages.length)];
             alert(randomMessage);
         };
     }
@@ -81,6 +81,24 @@ function togglePriceDisplayInPDF() {
 
 
 
+
+
+
+/* Function to trach the first inserted letter in the inputs with the class name of "dynamic_direction_input_class" to set their direction value */
+document.querySelectorAll('.dynamic_direction_input_class').forEach(input => {
+    input.addEventListener('input', function() {
+        let firstChar = this.value.trim().charAt(0);
+
+        if (firstChar) {
+            // Check if the first character is Arabic
+            if (firstChar.match(/[\u0600-\u06FF]/)) {
+                this.style.direction = 'rtl';
+            } else {
+                this.style.direction = 'ltr';
+            }
+        }
+    });
+});
 
 
 
@@ -613,16 +631,16 @@ function createH3ElementsForAvailableDates() {
 /* Update the used dates and show only the left ones */
 updateLeftHotelDatesFunction = function () {
     // Get the check-in date value
-    const checkInDate = document.getElementById('hotel_check_in_input_id').value;
+    let checkInDate = document.getElementById('hotel_check_in_input_id').value;
 
     // Get all h3 elements inside the available dates div
-    const h3Elements = document.getElementById('hotel_available_dates_h3_elements_div_id').getElementsByTagName('h3');
+    let h3Elements = document.getElementById('hotel_available_dates_h3_elements_div_id').getElementsByTagName('h3');
 
     // Flag to start showing elements
     let startShowingFlag = false;
 
     for (let i = 0; i < h3Elements.length; i++) {
-        const h3 = h3Elements[i];
+        let h3 = h3Elements[i];
 
         if (h3.innerText === checkInDate) {
             // Set flag to true but hide this h3 element
@@ -642,17 +660,17 @@ updateLeftHotelDatesFunction = function () {
 
 /* Function to calculate the total number of nights */
 function calculateTotalNights() {
-    const checkInDate = document.getElementById('hotel_check_in_input_id').value;
-    const checkOutDate = document.getElementById('hotel_check_out_input_id').value;
+    let checkInDate = document.getElementById('hotel_check_in_input_id').value;
+    let checkOutDate = document.getElementById('hotel_check_out_input_id').value;
 
     if (checkInDate && checkOutDate) {
-        const h3Elements = document.getElementById('hotel_available_dates_h3_elements_div_id').getElementsByTagName('h3');
+        let h3Elements = document.getElementById('hotel_available_dates_h3_elements_div_id').getElementsByTagName('h3');
 
         let countNights = -1;
         let startCounting = false;
 
         for (let i = 0; i < h3Elements.length; i++) {
-            const h3 = h3Elements[i];
+            let h3 = h3Elements[i];
 
             if (h3.innerText === checkInDate) {
                 startCounting = true;
@@ -668,7 +686,7 @@ function calculateTotalNights() {
         }
 
         // Add 1 to the calculated number of nights
-        const totalNights = countNights;
+        let totalNights = countNights;
 
         // Store and update the hotel total nights input
         storeHotelTotalNights = totalNights;
@@ -2266,7 +2284,7 @@ function calculateDaysDifference(startDate, endDate) {
 
 
 // Arabic month names
-const arabicMonthNames = [
+let arabicMonthNames = [
     "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
 ];
