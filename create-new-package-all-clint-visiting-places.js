@@ -215,8 +215,8 @@ let allClintVisitingPlacesArray = [
     {
 
         honeymoon: {
-            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
-            visitingPlaceNamesDay2: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
+            visitingPlaceNamesDay2: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
             visitingPlaceNamesDay3: ['زيارة حديقة الجنة + زيارة حديقة الزهور + زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
             visitingPlaceNamesDay4: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay5: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
@@ -228,8 +228,8 @@ let allClintVisitingPlacesArray = [
 
 
         guys: {
-            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
-            visitingPlaceNamesDay2: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
+            visitingPlaceNamesDay2: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
             visitingPlaceNamesDay3: ['زيارة حديقة الجنة + زيارة حديقة الزهور + زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
             visitingPlaceNamesDay4: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay5: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
@@ -241,8 +241,8 @@ let allClintVisitingPlacesArray = [
 
 
         family: {
-            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
-            visitingPlaceNamesDay2: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
+            visitingPlaceNamesDay2: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
             visitingPlaceNamesDay3: ['زيارة حديقة الجنة + زيارة حديقة الزهور + زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
             visitingPlaceNamesDay4: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay5: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
@@ -254,8 +254,8 @@ let allClintVisitingPlacesArray = [
 
 
         twopeople: {
-            visitingPlaceNamesDay1: ['زيارة حديقة شيموري'],
-            visitingPlaceNamesDay2: ['زيارة حديقة شيموري'],
+            visitingPlaceNamesDay1: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
+            visitingPlaceNamesDay2: ['زيارة حديقة شيموري + زيارة حديقة ميني مانيا'],
             visitingPlaceNamesDay3: ['زيارة حديقة الجنة + زيارة حديقة الزهور + زيارة بحيرة فينيسيا + زيارة منتزة THE NICE FANTASTIC'],
             visitingPlaceNamesDay4: ['زيارة حديقة تامان سفاري (تحتاج لنهار كامل) + زيارة كافي DAMAR LANGIT'],
             visitingPlaceNamesDay5: ['زيارة كافي NICOLES + زيارة حديقة ميلريمبا'],
