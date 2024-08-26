@@ -140,8 +140,8 @@
 
 
         <div class="search_bar_div_class">
-            <input type="text" id="import_google_sheet_data_names_search_bar_input_id" class="search_bar_input_class"
-                placeholder="بحث.." style="direction: ltr;">
+            <input type="text" id="import_google_sheet_data_names_search_bar_input_id" class="search_bar_input_class dynamic_direction_input_class"
+                placeholder="بحث" style="direction: ltr;">
         </div>
 
 
@@ -192,9 +192,9 @@
 
             <div class="package_info_input_div">
 
-                <input type="text" id="package_clint_name_input_id" placeholder="اسم العميل" autocomplete="off">
+                <input type="text" id="package_clint_name_input_id" class="dynamic_direction_input_class" placeholder="اسم العميل" autocomplete="off">
 
-                <input type="text" id="package_clint_code_number_input_id" placeholder="رقم كود العميل"
+                <input type="text" id="package_clint_code_number_input_id" class="dynamic_direction_input_class" placeholder="رقم كود العميل"
                     autocomplete="off">
 
 
@@ -203,7 +203,7 @@
                     style="cursor: pointer;">
 
 
-                <input type="text" id="kids_package_person_amount_input_id" placeholder="عدد الأطفال"
+                <input type="text" id="kids_package_person_amount_input_id" class="dynamic_direction_input_class" placeholder="عدد الأطفال"
                     autocomplete="off">
 
 
@@ -498,19 +498,19 @@
 
             <div class="package_info_input_div">
 
-                <input type="text" id="hotel_name_input_id" placeholder="اسم الفندق" readonly autocomplete="off"
+                <input type="text" id="hotel_name_input_id" class="dynamic_direction_input_class" placeholder="اسم الفندق" readonly autocomplete="off"
                     onclick="showOverlay('all_hotel_names_dropdown')" style="cursor: pointer;">
 
 
 
                 <!-- Hidden input for hotel inserting writing system -->
-                <input type="text" id="hotel_location_input_id" placeholder="موقع الفندق" readonly autocomplete="off"
+                <input type="text" id="hotel_location_input_id" class="dynamic_direction_input_class" placeholder="موقع الفندق" readonly autocomplete="off"
                     onclick="showOverlay('hotel_location_dropdown')" style="display: none; cursor: pointer;">
 
 
 
                 <!-- Hidden input for hotel inserting writing system -->
-                <input type="text" id="hotel_bali_area_input_id" placeholder="المنطقة في بالي" readonly
+                <input type="text" id="hotel_bali_area_input_id" class="dynamic_direction_input_class" placeholder="المنطقة في بالي" readonly
                     autocomplete="off" onclick="showOverlay('hotel_bali_area_dropdown')"
                     style="display: none; cursor: pointer;">
 
@@ -534,7 +534,7 @@
                     <!-- First hotel room data inputs div -->
 
                     <div id="hotel_first_room_data_input_div">
-                        <input type="text" id="hotel_room_type_description_input_id" placeholder="نوع السكن" readonly
+                        <input type="text" id="hotel_room_type_description_input_id" class="dynamic_direction_input_class" placeholder="نوع السكن" readonly
                             autocomplete="off"
                             onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown')"
                             style="cursor: pointer;">
@@ -572,7 +572,7 @@
                             style="cursor: pointer;">
 
 
-                        <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class"
+                        <textarea id="hotel_room_extra_info_textarea_id" class="package_details_input_class dynamic_direction_input_class"
                             placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                         <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
                             onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('hotel_room_extra_info_textarea_id')"></ion-icon>
@@ -581,7 +581,7 @@
                     <!-- Second hotel room data inputs div -->
 
                     <div id="hotel_second_room_data_input_div">
-                        <input type="text" id="hotel_room_type_description_input_id_2" placeholder="نوع السكن" readonly
+                        <input type="text" id="hotel_room_type_description_input_id_2" class="dynamic_direction_input_class" placeholder="نوع السكن" readonly
                             autocomplete="off"
                             onclick="createRoomTypeDescripyionDropDown(); showOverlay('hotel_room_type_description_dropdown');"
                             style="cursor: pointer;">
@@ -618,7 +618,7 @@
                             style="cursor: pointer;">
 
 
-                        <textarea id="hotel_room_extra_info_textarea_id_2" class="package_details_input_class"
+                        <textarea id="hotel_room_extra_info_textarea_id_2" class="package_details_input_class dynamic_direction_input_class"
                             placeholder="معلومات اكثر؟" autocomplete="off"></textarea>
                         <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
                             onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('hotel_room_extra_info_textarea_id_2')"></ion-icon>
@@ -1111,13 +1111,13 @@
 
 
 
-                <textarea id="package_details_textarea_id" class="package_details_input_class"
+                <textarea id="package_details_textarea_id" class="package_details_input_class dynamic_direction_input_class"
                     placeholder="شامل معلومات اكثر..؟" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
                     onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('package_details_textarea_id')"></ion-icon>
 
 
-                <input type="text" id="package_totla_price_input_id" placeholder="إجمالي السعر" autocomplete="off">
+                <input type="text" id="package_totla_price_input_id" class="dynamic_direction_input_class" placeholder="إجمالي السعر" autocomplete="off">
 
 
 
@@ -1485,7 +1485,7 @@
                 </div>
 
 
-                <textarea id="clint_movements_whole_day_actions_details_textarea_id" class="package_details_input_class"
+                <textarea id="clint_movements_whole_day_actions_details_textarea_id" class="package_details_input_class dynamic_direction_input_class"
                     placeholder="المزارات" autocomplete="off"></textarea>
                 <ion-icon name="scan" class="textarea_open_fullscreen_icon_class"
                     onclick="if (!document.getElementById('mute_website_checkbox').checked) {new Audio('click.mp3').play()}; toggleFullscreen('clint_movements_whole_day_actions_details_textarea_id')"></ion-icon>
@@ -1504,7 +1504,7 @@
 
 
 
-                <input type="text" id="clint_movements_current_city_name_input_id" placeholder="المدينة">
+                <input type="text" id="clint_movements_current_city_name_input_id" class="dynamic_direction_input_class" placeholder="المدينة">
 
 
 
@@ -2304,7 +2304,7 @@
     <div id="name_pdf_file_div">
         <p id="use_website_user_code_name_as_downloaded_pdf_file_name_p_id"
             onclick="downloadPdfWithCurrentUserCodeName()"></p>
-        <input type="text" id="pdf_file_name_input_id" placeholder="إسم الملف..؟">
+        <input type="text" id="pdf_file_name_input_id" class="dynamic_direction_input_class" placeholder="إسم الملف..؟">
         <button id="check_pdf_name_button" onclick="checkThePdfNameToDownload()">تحميل</button>
     </div>
 
