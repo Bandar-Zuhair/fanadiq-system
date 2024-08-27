@@ -136,6 +136,12 @@ let allHotelDataArray = [
         hotelArea: 'اوبود',
         hotelRoomTypes: ['سويت مع حوض إستحمام سبا'],
     },
+    {
+        hotelName: 'Padma Ubud',
+        hotelLocation: 'بالي',
+        hotelArea: 'اوبود',
+        hotelRoomTypes: ['بريمير روم,', 'بريمير دلوكس روم','بريمير اوفرسايز توين','بريمير كلوب روم','سويت من غرفة نوم واحدة','سويت من غرفتين نوم','فاميلي سويت'],
+    },
 
 
 
@@ -513,7 +519,7 @@ let allHotelDataArray = [
         hotelRoomTypes: ['فيلا من غرفة نوم واحدة وحوض إستحمام', 'فيلا رويال من غرفة نوم واحدة وحوض إستحمام'],
     },
     {
-        hotelName: 'Padma Resort',
+        hotelName: 'Padma Legian',
         hotelLocation: 'بالي',
         hotelArea: 'ليجين',
         hotelRoomTypes: ['ديلوكس روم', 'ديلوكس شاليه', 'جاردن كلوب شاليه', 'بريمير دبل دبل'],
