@@ -59,9 +59,8 @@ function submitFormAndSaveData() {
 
 
             /* Re-enable the p element for saving the current package data in the same saved pakcage user code */
-            let useWebsiteUserCodeNameAsDownloadedPdfFileNameP = document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id');
-            useWebsiteUserCodeNameAsDownloadedPdfFileNameP.style.pointerEvents = 'auto';
-            useWebsiteUserCodeNameAsDownloadedPdfFileNameP.style.opacity = '1'; // Restore opacity
+            document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').style.pointerEvents = 'auto';
+            document.getElementById('check_pdf_name_button').style.pointerEvents = 'auto';
         });
 }
 
