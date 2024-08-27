@@ -4096,6 +4096,11 @@ downloadPdfWithCurrentUserCodeName = function () {
     /* If there is no value then change the 'check_pdf_name_button' color */
     if (document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id').style.backgroundColor !== 'red') {
 
+        let useWebsiteUserCodeNameAsDownloadedPdfFileNameP = document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id');
+        // Make the useWebsiteUserCodeNameAsDownloadedPdfFileNameP unclickable
+        useWebsiteUserCodeNameAsDownloadedPdfFileNameP.style.pointerEvents = 'none';
+
+
         // Play a sound effect only if the website is not muted
         if (!document.getElementById('mute_website_checkbox').checked) {
             // Play a sound effect
@@ -4500,5 +4505,3 @@ downloadPdfWithCustomName = async function (pdfName) {
 function isVisible(element) {
     return element.offsetWidth > 0 && element.offsetHeight > 0;
 }
-
-
