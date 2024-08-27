@@ -1,5 +1,5 @@
-let existingDataStatus = 'newData'; // Example status for updating existing data
-let websiteUserUniqueNumber = 'newUniqueNumber'; // Example status for updating existing data
+let existingDataStatus = 'newData'; // Variable to identify if the data will be saved as a new data in the google sheet or as an existing data
+let websiteUserUniqueNumber = 'newUniqueNumber'; // Variable to identify if the website user code number will be increased or no
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
 const form = document.forms['save-package'];
