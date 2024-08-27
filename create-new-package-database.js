@@ -7,65 +7,62 @@ function submitFormAndSaveData() {
     // Prevent the default form submission
     event.preventDefault();
 
-    if (document.getElementById('downloaded_pdf_clint_data_page').style.display !== 'none') {
-        // Play a sound effect
-        new Audio('success.mp3').play();
+    // Play a sound effect
+    new Audio('success.mp3').play();
 
-        let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
 
-        if (document.getElementById('downloaded_pdf_clint_data_page').style.display === 'none') {
-            alert('تأكد من إدخال معلومات العميل');
-            return;
+    /* Get the package user name scode to store it as a reference when importing */
+    let googleSheetNewSaveDataNameInput = document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText;
+
+    let newObject = {
+        name: googleSheetNewSaveDataNameInput,
+        content: {},
+        status: existingDataStatus
+    };
+
+    let divIds = [
+        'downloaded_pdf_clint_data_page',
+        'downloaded_pdf_package_including_data_page',
+        'downloaded_pdf_flight_data_page',
+        'downloaded_pdf_hotel_data_page',
+        'downloaded_pdf_clint_movements_data_page',
+        'downloaded_pdf_total_price_data_page'
+    ];
+
+    divIds.forEach(divId => {
+        let element = document.getElementById(divId);
+        if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+            newObject.content[divId] = cleanHTML(element.innerHTML);
         }
+    });
 
-        let newObject = {
-            name: googleSheetNewSaveDataNameInput,
-            content: {},
-            status: existingDataStatus
-        };
+    fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(newObject),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'no-cors'
+    })
+        .then(() => {
 
-        let divIds = [
-            'downloaded_pdf_clint_data_page',
-            'downloaded_pdf_package_including_data_page',
-            'downloaded_pdf_flight_data_page',
-            'downloaded_pdf_hotel_data_page',
-            'downloaded_pdf_clint_movements_data_page',
-            'downloaded_pdf_total_price_data_page'
-        ];
-
-        divIds.forEach(divId => {
-            let element = document.getElementById(divId);
-            if (element && element.style.display !== 'none' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-                newObject.content[divId] = cleanHTML(element.innerHTML);
+            // Only call submitForm if 'existingDataStatus' is equal to "newData"
+            if (existingDataStatus === "newData") {
+                submitForm();
             }
+
+            updateDataBaseSavedDataNames();
+
+            // Change the value of 'existingDataStatus' for editing old data mode
+            existingDataStatus = 'existingData';
+            document.getElementById('website_users_name_input_id').disabled = true;
+
+
+            /* Re-enable the p element for saving the current package data in the same saved pakcage user code */
+            let useWebsiteUserCodeNameAsDownloadedPdfFileNameP = document.getElementById('use_website_user_code_name_as_downloaded_pdf_file_name_p_id');
+            useWebsiteUserCodeNameAsDownloadedPdfFileNameP.style.pointerEvents = 'auto';
+            useWebsiteUserCodeNameAsDownloadedPdfFileNameP.style.opacity = '1'; // Restore opacity
         });
-
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(newObject),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'no-cors'
-        })
-            .then(() => {
-
-                // Only call submitForm if 'existingDataStatus' is equal to "newData"
-                if (existingDataStatus === "newData") {
-                    submitForm();
-                }
-
-                updateDataBaseSavedDataNames();
-
-                // Change the value of 'existingDataStatus' for editing old data mode
-                existingDataStatus = 'existingData';
-                document.getElementById('website_users_name_input_id').disabled = true;
-            });
-
-    } else {
-        // Play a sound effect
-        new Audio('error.mp3').play();
-    }
 }
 
 // Function to clean HTML
@@ -601,7 +598,6 @@ function processSheetData(data) {
 
     // Check if the package name is empty
     if (!packageName) {
-        alert('Please enter a package name.');
         return;
     }
 
