@@ -1,4 +1,5 @@
 let existingDataStatus = 'newData'; // Example status for updating existing data
+let websiteUserUniqueNumber = 'newUniqueNumber'; // Example status for updating existing data
 
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwqp6rBvBQOUNttF3vz5Z9mW3x3VOYVv_k7p-lIlsg5p0M_TStsic5jyuxgElqJ2Ye4jA/exec';
 const form = document.forms['save-package'];
@@ -46,8 +47,10 @@ function submitFormAndSaveData() {
     })
         .then(() => {
 
+            console.log(websiteUserUniqueNumber);
+
             // Only call submitForm if 'existingDataStatus' is equal to "newData"
-            if (existingDataStatus === "newData") {
+            if (websiteUserUniqueNumber === "newUniqueNumber") {
                 submitForm();
             }
 
@@ -56,6 +59,7 @@ function submitFormAndSaveData() {
             // Change the value of 'existingDataStatus' for editing old data mode
             existingDataStatus = 'existingData';
             document.getElementById('website_users_name_input_id').disabled = true;
+            websiteUserUniqueNumber = 'existingUniqueNumber';
 
 
             /* Re-enable the p element for saving the current package data in the same saved pakcage user code */
@@ -239,7 +243,7 @@ function importContentFromLocalStorage() {
             hideOverlay();
 
 
-            /* Change the value of the 'existingDataStatus' for making sure you are in editing old data mood */
+            /* make the 'website_users_name_input_id' unclickable */
             document.getElementById('website_users_name_input_id').disabled = true;
 
 
@@ -291,6 +295,7 @@ function importContentFromLocalStorage() {
 
                 /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
                 existingDataStatus = 'newData';
+                websiteUserUniqueNumber = 'existingUniqueNumber';
 
 
             } else {
@@ -298,6 +303,7 @@ function importContentFromLocalStorage() {
                 /* if there is no "" then just replcae the old package data with the new one without adding _riv_ */
                 // Change the value of 'existingDataStatus' for updating old data mode
                 existingDataStatus = 'existingData';
+                websiteUserUniqueNumber = 'existingUniqueNumber';
 
             }
 
@@ -391,10 +397,6 @@ function importContentForSelectedName(name) {
             document.getElementById('inserted_company_name_image_position_div').style.display = 'flex';
 
 
-            /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
-            existingDataStatus = 'newData';
-
-
         } catch (error) {
             console.error(error);
         }
@@ -423,11 +425,18 @@ function importContentForSelectedName(name) {
 
         document.getElementById('package_user_code_name_for_later_import_reference_p_id').innerText = `${document.getElementById('store_google_sheet_package_raw_user_with_no_riv_for_later_reference_when_importing').innerText}_riv_${totalRivPackageNumberForUpdatingNewRivPackage}`
 
+
+        /* When importing make sure to save the new _riv_ data as a new data in the google sheet */
+        existingDataStatus = 'newData';
+        websiteUserUniqueNumber = 'existingUniqueNumber';
+
+
     } else {
 
         /* if there is no "" then just replcae the old package data with the new one without adding _riv_ */
         // Change the value of 'existingDataStatus' for updating old data mode
         existingDataStatus = 'existingData';
+        websiteUserUniqueNumber = 'existingUniqueNumber';
 
     }
 
