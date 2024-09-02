@@ -280,6 +280,10 @@ body {
     align-items: center;
 }
 
+.two_icons_in_searchable_dropdown_div ion-icon {
+    transition: all 0.2s ease-in-out;
+}
+
 .google_sheet_dropdown_div_class h6 {
     background: darkred;
     color: white;
