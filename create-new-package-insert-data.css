@@ -365,6 +365,7 @@
 .clint_movements_row_class h1,
 .clint_movements_row_class h2,
 .clint_movements_row_class h3,
+.clint_movements_row_class h4,
 .clint_movements_row_class p {
     font-size: 2vw;
     font-weight: 600;
@@ -636,6 +637,7 @@
     .clint_movements_row_class h1,
     .clint_movements_row_class h2,
     .clint_movements_row_class h3,
+    .clint_movements_row_class h4,
     .clint_movements_row_class p {
         font-size: 2.5vw;
     }
