@@ -9,7 +9,7 @@
     margin-bottom: 10px;
     width: 20vw;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 3px;
 }
 
 #package_user_code_name_for_later_import_reference_p_id,
@@ -93,6 +93,7 @@
 .inserted_package_including_and_not_icluding_data_div_class p {
     width: fit-content;
     font-size: 2vw;
+    margin: 0 0 0.5vmax;
     padding: 5px 0;
     text-align: start;
     cursor: pointer;
@@ -113,7 +114,7 @@
 .special_package_including_data_background_color_text {
     background: rgb(85, 127, 137);
     color: white;
-    border-radius: 7px;
+    border-radius: 3px;
 }
 
 /* Pdf section title */
@@ -136,7 +137,7 @@
     padding: 5px 15px;
     font-weight: 600;
     text-align: center;
-    border-radius: 7px;
+    border-radius: 3px;
 }
 
 .pdf_section_title_div_class ion-icon {
@@ -186,7 +187,7 @@
 
 .hotel_row_class div:last-child img {
     width: 100%;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
@@ -267,14 +268,14 @@
     color: white;
     font-size: 5vw;
     padding: 5px 15px;
-    border-radius: 7px;
+    border-radius: 3px;
     text-align: center;
 }
 
 #package_total_price_div p {
     font-size: 5vw;
     padding: 5px 15px;
-    border-radius: 7px;
+    border-radius: 3px;
     text-align: center;
 }
 
@@ -404,7 +405,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 7px;
+    border-radius: 3px;
     text-align: center;
     box-shadow: 0 0 5px black;
     transform: translate(-50%, -100vh);
@@ -416,7 +417,7 @@
     margin: 0 5px;
     padding: 5px;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 0.5px solid black;
 }
 
@@ -454,7 +455,7 @@
     font-size: 3vw;
     text-align: center;
     border: 1px solid black;
-    border-radius: 7px;
+    border-radius: 3px;
 }
 
 #name_pdf_file_div p {
@@ -466,7 +467,7 @@
     padding: 1px 5px;
     text-align: center;
     border: 0.5px solid black;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
@@ -475,7 +476,7 @@
     margin-top: 10px;
     padding: 1px 10px;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 1px solid black;
     transition: all 0.1s ease-in-out;
 }
