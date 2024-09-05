@@ -72,7 +72,7 @@ body {
     padding: 5px;
     cursor: pointer;
     border: none;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 0.5px solid black;
     transition: all 0.1s ease-in-out;
 }
@@ -93,7 +93,7 @@ body {
     left: 0;
     border: none;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 1px solid black;
     transition: all 0.1s ease-in-out;
 }
@@ -223,7 +223,7 @@ body {
     text-decoration: none;
     text-align: center;
     border: 1px solid white;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
     transition: all 0.1s ease;
 }
@@ -300,7 +300,7 @@ body {
     padding: 1px 5px;
     text-align: center;
     border: 0.5px solid black;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
     align-self: flex-start;
     /* Position the button to the right */
@@ -316,7 +316,7 @@ body {
     padding: 1px 5px;
     text-align: center;
     border: 0.5px solid black;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
     align-self: flex-start;
     /* Position the button to the right */
@@ -397,12 +397,12 @@ body {
 }
 
 .package_info_input_div input {
-    direction: rtl; /* Arabic */
+    direction: rtl; /* English */
     width: 85vw;
     font-size: 2.5vw;
     margin: 5px 0;
     text-align: center;
-    border-radius: 7px;
+    border-radius: 3px;
     padding: 5px;
     height: 70px;
     box-sizing: border-box;
@@ -598,7 +598,7 @@ body {
     font-size: 3vw;
     padding: 15px;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 0.5px solid black;
     transition: all 0.1s ease-in-out;
 }
@@ -662,7 +662,7 @@ body {
     padding: 10px 0;
     border: none;
     outline: none;
-    border-radius: 7px;
+    border-radius: 3px;
     transition: all 0.1s ease-in-out;
     box-sizing: border-box;
     /* Ensure padding and border are included in the width */
@@ -693,7 +693,7 @@ body {
     font-size: 2.5vw;
     margin: 5px;
     padding: 0 10px;
-    border-radius: 7px;
+    border-radius: 3px;
     box-shadow: 0 0 0.5px 0.5px black;
     text-align: center;
     cursor: pointer;
@@ -790,7 +790,7 @@ body {
     padding: 1px 5px;
     text-align: center;
     border: 0.5px solid black;
-    border-radius: 7px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
