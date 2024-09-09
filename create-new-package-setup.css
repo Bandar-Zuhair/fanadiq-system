@@ -303,9 +303,7 @@ body {
     border-radius: 3px;
     cursor: pointer;
     align-self: flex-start;
-    /* Position the button to the right */
     margin-right: 5px;
-    /* Adjust margin as needed */
     transition: all 0.1s ease-in-out;
 }
 
@@ -319,9 +317,7 @@ body {
     border-radius: 3px;
     cursor: pointer;
     align-self: flex-start;
-    /* Position the button to the right */
-    margin-right: 5px;
-    /* Adjust margin as needed */
+    margin-left: 5px;
 }
 
 /* Create New hotel Package Section */
