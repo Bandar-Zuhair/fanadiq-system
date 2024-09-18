@@ -599,6 +599,17 @@ body {
     transition: all 0.1s ease-in-out;
 }
 
+.submit_package_pdf_div P {
+    background: rgb(255, 174, 0);
+    color: white;
+    font-size: 2vw;
+    padding: 0 5px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 0.5px solid black;
+    transition: all 0.1s ease-in-out;
+}
+
 /* Styling for separating two insert package data to pdf icons */
 .two_icons_insert_data_package_pdf_div {
     width: 100%;
@@ -979,6 +990,10 @@ body {
         padding: 10px;
     }
 
+    .submit_package_pdf_div p {
+        font-size: 3vw;
+    }
+
     .custom_checkbox label {
         font-size: 3.5vw;
     }
@@ -1184,6 +1199,10 @@ body {
         padding: 5px;
     }
 
+    .submit_package_pdf_div p {
+        font-size: 5vw;
+    }
+
     .custom_checkbox label {
         font-size: 4.5vw;
     }
@@ -1358,6 +1377,10 @@ body {
 
     .submit_package_pdf_div ion-icon {
         font-size: 9.5vw;
+    }
+
+    .submit_package_pdf_div p {
+        font-size: 7w;
     }
 
     .custom_checkbox {
