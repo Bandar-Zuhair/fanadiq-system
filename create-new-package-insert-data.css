@@ -415,6 +415,7 @@
 }
 
 .ensure_your_delete_action button {
+    color: black;
     font-size: 3vw;
     margin: 5px;
     padding: 5px;
