@@ -294,7 +294,7 @@ body {
 }
 
 .google_sheet_dropdown_div_class p {
-    background: rgb(255, 174, 0);
+    background: rgb(0, 120, 144);
     color: white;
     font-size: 2.5vw;
     padding: 1px 5px;
@@ -308,7 +308,7 @@ body {
 }
 
 .google_sheet_dropdown_div_class ion-icon {
-    background: rgb(255, 174, 0);
+    background: rgb(0, 120, 144);
     color: white;
     font-size: 5vw;
     padding: 1px 5px;
@@ -589,7 +589,7 @@ body {
 }
 
 .submit_package_pdf_div ion-icon {
-    background: rgb(255, 174, 0);
+    background: rgb(0, 120, 144);
     color: white;
     font-size: 3vw;
     padding: 15px;
@@ -600,7 +600,7 @@ body {
 }
 
 .submit_package_pdf_div P {
-    background: rgb(255, 174, 0);
+    background: rgb(0, 120, 144);
     color: white;
     font-size: 2vw;
     padding: 0 5px;
