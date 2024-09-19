@@ -567,16 +567,6 @@
 
 /* 760px */
 @media (max-width: 760px) {
-    .hotel_row_class {
-        flex-wrap: wrap; /* Ensure content wraps properly on smaller screens */
-    }
-
-    .hotel_row_class div {
-        flex-grow: inherit; /* Keep the original flex-grow values */
-        width: auto; /* Let the div widths be auto-calculated based on flex-grow */
-        max-width: 100%; /* Prevent overflow */
-        box-sizing: border-box; /* Include padding and borders in width calculations */
-    }
 }
 
 /* 650px */
@@ -639,6 +629,10 @@
 
     .hotel_row_class span {
         font-size: 2vw;
+    }
+
+    .inserted_main_row_color_class p {
+        font-size: 2.4vw;
     }
 
     .flight_row_class h1,
