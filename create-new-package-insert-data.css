@@ -223,14 +223,14 @@
     flex-grow: 1.2;
 }
 
-/* Reduce the width of "عدد الليالي" and "المدينة" cells */
+/* Reduce the width of "عدد الوحدات" cell */
 .hotel_row_class div:nth-child(6) {
-    flex-grow: 0.5;
+    flex-grow: 0.55;
 }
 
 /* Reduce the width of "المدينة" cells */
 .hotel_row_class div:nth-child(7) {
-    flex-grow: 0.6;
+    flex-grow: 0.65;
     font-size: 0.5vw;
     border-left: none;
 }
@@ -332,10 +332,10 @@
 /* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
 .flight_row_class div:nth-child(7),
 .flight_row_class div:nth-child(8) {
-    flex-grow: 0.7;
+    flex-grow: 0.75;
 }
 
-/* Reduce the width of "وقت الإقلاع" and "وقت الوصول" cells */
+/* Reduce the width of "وقت الوصول" cell */
 .flight_row_class div:nth-child(8) {
     border-left: none;
 }
@@ -631,8 +631,8 @@
         font-size: 2vw;
     }
 
-    .inserted_main_row_color_class p {
-        font-size: 2.4vw;
+    .smaller_main_hotel_row_text_size_class p {
+        font-size: 2.3vw;
     }
 
     .flight_row_class h1,
@@ -640,6 +640,10 @@
     .flight_row_class h3,
     .flight_row_class p {
         font-size: 2.5vw;
+    }
+
+    .smaller_main_flight_row_text_size_class p {
+        font-size: 2.3vw;
     }
 
     .clint_movements_row_class h1,
