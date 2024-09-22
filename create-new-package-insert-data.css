@@ -169,7 +169,7 @@
 }
 
 .hotel_row_class div:last-child {
-    flex-grow: 0.6;
+    flex-grow: 0.65;
 }
 
 .hotel_row_class div:last-child img {
@@ -215,7 +215,7 @@
     flex-grow: 0.55;
 }
 
-/* Reduce the width of "المدينة" cells */
+/* Reduce the width of "المدينة والصورة" cells */
 .hotel_row_class div:nth-child(7) {
     flex-grow: 0.65;
     font-size: 0.5vw;
@@ -224,6 +224,11 @@
 
 .hotel_row_class_for_editing div * {
     padding: 0 2px;
+}
+
+/* Reduce the width of "المدينة والصورة" cells */
+.hotel_row_class div:nth-child(7) * {
+    padding: 0;
 }
 
 /* Inserted package important note position */
