@@ -278,6 +278,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 3px;
 }
 
 .two_icons_in_searchable_dropdown_div ion-icon {
@@ -318,6 +319,31 @@ body {
     cursor: pointer;
     align-self: flex-start;
     margin-left: 5px;
+}
+
+#filter_google_sheet_packages_names_div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#filter_google_sheet_packages_names_div p {
+    pointer-events: none;
+    opacity: 0.5;
+    background: rgb(255, 174, 0);
+    flex: 1; /* Distribute the width equally among all <p> elements */
+    text-align: center; /* Center the text inside each <p> */
+    margin: 0; /* Remove any margins to ensure full width */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    border: 0;
+    border-left: 0.5px solid black;
+    border-radius: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+#filter_google_sheet_packages_names_div :first-child {
+    border-right: 0.5px solid black;
 }
 
 /* Create New hotel Package Section */
