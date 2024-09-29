@@ -623,7 +623,8 @@
         font-size: 2vw;
     }
 
-    .smaller_main_hotel_row_text_size_class p {
+    .smaller_main_hotel_row_text_size_class p,
+    .hotel_row_class h1 {
         font-size: 2.4vw;
     }
 
