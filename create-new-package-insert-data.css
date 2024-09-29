@@ -226,6 +226,11 @@
 }
 
 /* Reduce the width of "المدينة والصورة" cells */
+.hotel_row_class div:nth-child(1) * {
+    padding: 0 1.5px;
+}
+
+/* Reduce the width of "المدينة والصورة" cells */
 .hotel_row_class div:nth-child(7) * {
     padding: 0;
 }
