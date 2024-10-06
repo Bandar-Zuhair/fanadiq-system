@@ -429,8 +429,6 @@ body {
     height: 70px;
     box-sizing: border-box;
     border: 0.5px solid black;
-    user-select: text; /* Allow text selection */
-    pointer-events: auto; /* Ensure pointer events work */
 }
 
 .package_info_input_div input::placeholder {
