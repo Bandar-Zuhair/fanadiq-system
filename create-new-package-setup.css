@@ -332,10 +332,14 @@ body {
     pointer-events: none;
     opacity: 0.5;
     background: rgb(255, 174, 0);
-    flex: 1; /* Distribute the width equally among all <p> elements */
-    text-align: center; /* Center the text inside each <p> */
-    margin: 0; /* Remove any margins to ensure full width */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    flex: 1;
+    /* Distribute the width equally among all <p> elements */
+    text-align: center;
+    /* Center the text inside each <p> */
+    margin: 0;
+    /* Remove any margins to ensure full width */
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect width */
     border: 0;
     border-left: 0.5px solid black;
     border-radius: 0;
@@ -419,7 +423,8 @@ body {
 }
 
 .package_info_input_div input {
-    direction: rtl; /* English */
+    direction: rtl;
+    /* English */
     width: 85vw;
     font-size: 2.5vw;
     margin: 5px 0;
